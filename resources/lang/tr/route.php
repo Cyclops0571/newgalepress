@@ -99,7 +99,6 @@ return array(
     'interactivity_upload' => 'etkilesimli-pdf/yukle',
     'interactivity_loadpage' => 'etkilesimli-pdf/sayfayukle',
 
-    'website_products' => 'urunler',
     'website_advantages' => 'avantajlar',
     'website_tutorials' => 'calisma-yapisi',
     'website_contact' => 'iletisim',

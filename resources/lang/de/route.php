@@ -99,7 +99,6 @@ return array(
     'interactivity_upload' => 'interaktives-pdf/hochladen',
     'interactivity_loadpage' => 'interaktives-pdf/seite-laden',
 
-    'website_products' => 'produkte',
     'website_advantages' => 'vorteile',
     'website_tutorials' => 'tutorien',
     'website_contact' => 'kontakt',

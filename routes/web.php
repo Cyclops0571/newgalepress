@@ -1,45 +1,56 @@
 <?php
-/*
-Route::group(['prefix' => 'tr'], function () {
-    Route::get('/', function ()    {
-        return View::make('website.pages.home');
+
+
+Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+// <editor-fold defaultstate="collapsed" desc="website">
+    Route::get(__('route.website_showcase'), function () {
+        return View::make('website.pages.showcase');
     });
-    Route::get('/tr', function ()    {
-        return "aaaaaaaaa";
+    Route::get(__('route.website_tutorials'), function () {
+        return View::make('website.pages.tutorials');
     });
-    Route::get('/tr/serdar', function ()    {
-        return "bbbbbb";
+    Route::get(__('route.website_contact'), function () {
+        return View::make('website.pages.contact');
     });
+    Route::get(__('route.website_sectors'), function () {
+        return View::make('website.pages.sectors');
+    });
+    Route::get(__('route.website_sectors_retail'), function () {
+        return View::make('website.pages.sectors-retail');
+    });
+    Route::get(__('route.website_sectors_humanresources'), function () {
+        return View::make('website.pages.sectors-humanresources');
+    });
+    Route::get(__('route.website_sectors_education'), function () {
+        return View::make('website.pages.sectors-education');
+    });
+    Route::get(__('route.website_sectors_realty'), function () {
+        return View::make('website.pages.sectors-realty');
+    });
+    Route::get(__('route.website_sectors_medicine'), function () {
+        return View::make('website.pages.sectors-medicine');
+    });
+    Route::get(__('route.website_sectors_digitalpublishing'), function () {
+        return View::make('website.pages.sectors-digitalpublishing');
+    });
+    Route::get(__('route.website_why_galepress'), function () {
+        return View::make('website.pages.why-galepress');
+    });
+    Route::get(__('route.website_tryit'), function () {
+        return View::make('website.pages.tryit');
+    }); //571571 MeCaptcha\Captcha not found...
+    Route::get('deneyin-test', function () {
+        return View::make('website.pages.tryit-test');
+    });//571571 MeCaptcha\Captcha not found...
+
+
+// </editor-fold>
 });
-*/
-/*
-Route::get('/tr', function(){
-    return View::make('website.pages.home');
-});
-Route::get('test', 'TestController@index');;
 
-Route::get('/', function () {
-    return View::make('website.pages.home');
-});
-
-*/
-
-Route::get('/', function()
-{
-    return View::make('website.pages.home');
-});
-
-/*Route::group(['prefix' => ['tr', 'en']], function()
-{
-    Route::get('/', function()
-    {
-        return View::make('website.pages.home');
-    });
-
-    Route::get('test',function(){
-        return array('serdar' => 'mahmut');
-    });
-});*/
+/** Website Post */
+Route::post(__('route.website_tryit'), array('as' => 'website_tryit_post', 'uses' => 'WebsiteController@tryit')); //571571 Test It
+Route::post('deneyin-test', array('as' => 'website_tryit_test_post', 'uses' => 'WebsiteController@tryit'));//571571 Test It
+Route::post(__('route.facebook_attempt'), array('as' => 'website_facebook_attempt_post', 'uses' => 'common@facebookAttempt')); //571571 Test It
 
 
 /*
@@ -66,11 +77,10 @@ Route::get('test/interactive', 'test@interactive');
 // </editor-fold>
 
 //<editor-fold defaultstate="collapesd" desc="Qr Code">
-Route::get('iyzicoqr', 'iyzicoqr@index');
-Route::post('iyzicoqr', 'iyzicoqr@save');
-Route::get('open_iyzico_iframe', array('as' => 'get_iyzico_iframe', 'uses' => 'iyzicoqr@open_iyzico_iframe') );
-Route::get('checkout_result_form', array('as' => 'get_checkout_result_form', 'uses' => 'iyzicoqr@checkout_result_form'));
-Route::post('checkout_result_form', array('as' => 'post_checkout_result_form', 'uses' => 'iyzicoqr@checkout_result_form'));
+Route::get('iyzicoqr', 'IyzicoController@index');
+Route::post('iyzicoqr', 'IyzicoController@save');
+Route::get('open_iyzico_iframe', array('as' => 'get_iyzico_iframe', 'uses' => 'IyzicoController@openIyzicoIframe'));
+Route::any('checkout_result_form', array('as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm'));
 //</editor-fold>
 
 
@@ -80,54 +90,16 @@ Route::get("maps/delete", "maps@delete", array('before' => 'auth'));
 Route::post((string)__('route.contents_interactivity_status'), array('uses' => "contents@interactivity_status"));
 $languages = Config::get('application.languages', array());
 
-Route::post('/contactmail', array('as' => 'contactmail', 'uses' => 'website@contactform'));
+Route::post('/contactmail', array('as' => 'contactmail', 'uses' => 'WebsiteController@contactform'));
 Route::post('/search', 'webservice.search@search');
 Route::post('/searchgraff', 'webservice.search@searchgraff');
 
 
+Route::get(__('appcreatewithface'), array('as' => 'appcreatewithface', 'uses' => 'WebsiteController@app_create_face'));
 
-// <editor-fold defaultstate="collapsed" desc="website">
-Route::get(__('route.website_products'), array('as' => 'website_products_get', 'uses' => 'website@products'));
-Route::get(__('route.website_advantages'), array('as' => 'website_advantages_get', 'uses' => 'website@advantages'));
-Route::get(__('route.website_showcase'), array('as' => 'website_showcase_get', 'uses' => 'website@customers'));
-Route::get(__('route.website_tutorials'), array('as' => 'website_tutorials_get', 'uses' => 'website@tutorials'));
-Route::get(__('route.website_contact'), array('as' => 'website_contact_get', 'uses' => 'website@contact'));
-Route::get(__('route.website_sitemap'), array('as' => 'website_sitemap_get', 'uses' => 'website@sitemap'));
-Route::get(__('route.website_search'), array('as' => 'website_search_get', 'uses' => 'website@search'));
-// Route::get(__('route.website_blog'), array('as' => 'website_blog_get', 'uses' => 'website@blog'));
-// Route::get(__('route.website_blog_news'), array('as' => 'website_blog_news_get', 'uses' => 'website@blogNews'));
-// Route::get(__('route.website_blog_tutorials'), array('as' => 'website_blog_tutorials_get', 'uses' => 'website@blogTutorials'));
-Route::get(__('route.website_sectors'), array('as' => 'website_sectors_get', 'uses' => 'website@sectors'));
-Route::get(__('route.website_sectors_retail'), array('as' => 'website_sectors_retail_get', 'uses' => 'website@sectors_retail'));
-Route::get(__('route.website_sectors_humanresources'), array('as' => 'website_sectors_humanresources_get', 'uses' => 'website@sectors_humanresources'));
-Route::get(__('route.website_sectors_education'), array('as' => 'website_sectors_education_get', 'uses' => 'website@sectors_education'));
-Route::get(__('route.website_sectors_realty'), array('as' => 'website_sectors_realty_get', 'uses' => 'website@sectors_realty'));
-Route::get(__('route.website_sectors_medicine'), array('as' => 'website_sectors_medicine_get', 'uses' => 'website@sectors_medicine'));
-Route::get(__('route.website_sectors_digitalpublishing'), array('as' => 'website_sectors_digitalpublishing_get', 'uses' => 'website@sectors_digitalpublishing'));
-Route::get(__('route.website_why_galepress'), array('as' => 'website_why_galepress_get', 'uses' => 'website@why_galepress'));
-Route::get(__('route.website_tryit'), array('as' => 'website_tryit_get', 'uses' => 'website@tryit'));
-Route::post(__('route.website_tryit'), array('as' => 'website_tryit_post', 'uses' => 'website@tryit'));
-Route::get('deneyin-test', array('as' => 'website_tryit_test_post', 'uses' => 'website@tryit_test'));
-Route::post('deneyin-test', array('as' => 'website_tryit_test_post', 'uses' => 'website@tryit'));
-Route::get(__('route.website_landing_page_realty'), array('as' => 'website_landing_page_realty_get', 'uses' => 'website@landing_page_realty'));
-Route::post(__('route.website_landing_page_realty'), array('as' => 'website_landing_page_realty_post', 'uses' => 'website@landing_page_realty'));
-
-Route::get('webinar', array('as' => 'website_webinar', 'uses' => 'website@webinar'));
-Route::post('webinar', array('as' => 'website_webinar', 'uses' => 'website@webinar'));
-
-Route::get('namaz-vakitleri', array('as' => 'website_namaz-vakitleri_get', 'uses' => 'website@namaz'));
-Route::post('namaz-vakitleri?(:all)', array('as' => 'website_namaz-vakitleri_post', 'uses' => 'website@namaz'));
-
-
-Route::post(__('route.facebook_attempt'), array('as' => 'website_facebook_attempt_post', 'uses' => 'common@facebookAttempt'));
-Route::get(__('route.website_captcha'), array('as' => 'website_captcha_get', 'uses' => 'website@captcha_iframe'));
-// </editor-fold>
-
-Route::get(__('appcreatewithface'), array('as' => 'appcreatewithface', 'uses' => 'website@app_create_face'));
-
-Route::get(__('route.website_article_workflow'), array('as' => 'website_article_workflow_get', 'uses' => 'website@article_workflow'));
-Route::get(__('route.website_article_brandvalue'), array('as' => 'website_article_brandvalue_get', 'uses' => 'website@article_brandvalue'));
-Route::get(__('route.website_article_whymobile'), array('as' => 'website_article_whymobile_get', 'uses' => 'website@article_whymobile'));
+Route::get(__('route.website_article_workflow'), array('as' => 'website_article_workflow_get', 'uses' => 'WebsiteController@article_workflow'));
+Route::get(__('route.website_article_brandvalue'), array('as' => 'website_article_brandvalue_get', 'uses' => 'WebsiteController@article_brandvalue'));
+Route::get(__('route.website_article_whymobile'), array('as' => 'website_article_whymobile_get', 'uses' => 'WebsiteController@article_whymobile'));
 
 
 //<editor-fold desc="Payment">
@@ -290,14 +262,12 @@ Route::post(__('route.banners_setting_save'), array('as' => 'banners_save', 'bef
 
 // </editor-fold>
 
-Route::get(__('route.sign_up'), "website@signUp");
-Route::get(__('route.forgot_password'), "website@forgotPassword");
-Route::get(__('route.sign_in'), "website@signIn");
+Route::get(__('route.sign_up'), "WebsiteController@signUp");
+Route::get(__('route.forgot_password'), "WebsiteController@forgotPassword");
+Route::get(__('route.sign_in'), "WebsiteController@signIn");
 
 //	Route::post('/common/imageupload_ltie10', array('as' => 'banners_imageupload_ltie10', 'uses' => 'common@imageupload_ltie10'));
 //	Route::post('/common/imageupload', array('as' => 'banners_imageupload_ltie10', 'uses' => 'common@imageupload'));
-
-
 
 
 // <editor-fold defaultstate="collapsed" desc="managements">

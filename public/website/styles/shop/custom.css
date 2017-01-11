@@ -1,0 +1,75 @@
+/* Add here all your CSS customizations */
+* {
+    font-family: 'Titillium Web', sans-serif !important;
+}
+
+i[class~="icon"] {
+    font-family: FontAwesome !important;
+}
+
+.lead {
+    font-weight: 300 !important;
+}
+
+p .alternative-font {
+    top: 0 !important;
+    font-size: 1.1em !important;
+}
+
+.pricing-table h3 span {
+    font-weight: 300 !important;
+}
+
+#footer .footer-copyright nav ul li {
+    border: none !important;
+}
+
+#footer .container .row > div {
+    margin-bottom: 12px !important;
+}
+
+/*#header > .container{
+    height: 37px !important;
+}*/
+#header {
+    min-height: 0 !important;
+}
+
+#header nav ul.nav-main {
+    margin: 0 !important;
+}
+
+.sub-menu li a img {
+    border: 1px solid black;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.50);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.50);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.50);
+}
+
+.sub-menu a:hover img {
+    opacity: 0.3;
+}
+
+.sub-menu .read {
+    position: absolute;
+    top: 48%;
+    left: 28%;
+    font-size: 3em;
+    display: none;
+}
+
+.sub-menu li:hover .read {
+    display: block;
+}
+
+.sub-menu li {
+    max-width: 200px;
+}
+
+.modal {
+    overflow: hidden;
+}
+
+.logo.logo-sticky-active img {
+    top: 32px !important;
+}

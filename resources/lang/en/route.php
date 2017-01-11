@@ -99,7 +99,6 @@ return array(
     'interactivity_upload' => 'interactive-pdf/load',
     'interactivity_loadpage' => 'interactive-pdf/loadpage',
 
-    'website_products' => 'products',
     'website_advantages' => 'benefits',
     'website_tutorials' => 'tutorials',
     'website_contact' => 'contact',

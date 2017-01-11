@@ -1,4 +1,4 @@
-@layout('website.html')
+@extends('website.html')
 
 @section('body-content')
       <section style="background-image: url('/images/website/headers/showcase.jpg');" class="header-section parallax">

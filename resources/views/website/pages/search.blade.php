@@ -1,4 +1,4 @@
-@layout('website.html')
+@extends('website.html')
 
 @section('body-content')
 

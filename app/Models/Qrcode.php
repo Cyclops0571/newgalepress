@@ -1,5 +1,7 @@
 <?php namespace App\Models;
+use App\Helpers\MyPayment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 use Iyzipay\Model\Address;
 use Iyzipay\Model\BasketItem;
 use Iyzipay\Model\BasketItemType;
@@ -12,24 +14,42 @@ use Iyzipay\Options;
 use Iyzipay\Request\CreateCheckoutFormInitializeRequest;
 
 /**
- * @property mixed Name
- * @property mixed QrcodeID
- * @property mixed Price
- * @property mixed QrSiteClientID
- * @property mixed Email
- * @property mixed TcNo
- * @property mixed Address
- * @property mixed City
- * @property mixed CallbackUrl
- * @property mixed Parameter
- * @property mixed Phone
+ * App\Models\Qrcode
+ *
+ * @property int $QrcodeID
+ * @property int $QrSiteClientID
+ * @property string $Name
+ * @property string $Email
+ * @property string $TcNo
+ * @property string $Address
+ * @property string $City
+ * @property string $Phone
+ * @property float $Price
+ * @property string $Parameter
+ * @property string $CallbackUrl
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @method static Builder|Qrcode whereQrcodeID($value)
+ * @method static Builder|Qrcode whereQrSiteClientID($value)
+ * @method static Builder|Qrcode whereName($value)
+ * @method static Builder|Qrcode whereEmail($value)
+ * @method static Builder|Qrcode whereTcNo($value)
+ * @method static Builder|Qrcode whereAddress($value)
+ * @method static Builder|Qrcode whereCity($value)
+ * @method static Builder|Qrcode wherePhone($value)
+ * @method static Builder|Qrcode wherePrice($value)
+ * @method static Builder|Qrcode whereParameter($value)
+ * @method static Builder|Qrcode whereCallbackUrl($value)
+ * @method static Builder|Qrcode whereCreatedAt($value)
+ * @method static Builder|Qrcode whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class Qrcode extends Model
 {
     protected $table = 'Qrcode';
     protected $primaryKey = 'QrcodeID';
 
-    public function makeIyzicoIframeRequrest() {
+    public function makeIyzicoIframeRequest() {
         $name = explode(" ", $this->Name);
         $firstName = '';
         for($i = 0; $i < count($name) - 1; $i++) {
@@ -48,7 +68,7 @@ class Qrcode extends Model
         $request->setCurrency(Currency::TL);
         $request->setBasketId($this->QrcodeID);
         $request->setPaymentGroup(PaymentGroup::PRODUCT);
-        $request->setCallbackUrl(URL::to('checkout_result_form', null, false, false) . "?qrCodeId=" . $this->QrcodeID);
+        $request->setCallbackUrl(\URL::to('checkout_result_form', null, false) . "?qrCodeId=" . $this->QrcodeID);
         $request->setEnabledInstallments(array(1, 2, 3, 6, 9));
         //</editor-fold>
 

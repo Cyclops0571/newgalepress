@@ -1,21 +1,26 @@
 <?php
 namespace App\Http\Controllers;
+use App\Helpers\MyPayment;
+use App\Models\City;
 use App\Models\Qrcode;
+use App\User;
 use Illuminate\Http\Request;
 use Iyzipay\Model\CheckoutForm;
 use Iyzipay\Model\Locale;
 use Iyzipay\Model\PaymentItem;
 use Iyzipay\Options;
 use Iyzipay\Request\RetrieveCheckoutFormRequest;
+use Validator;
 
 class IyzicoController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(Request $request, User $user)
     {
         $qrCodeId = $request->get('qrCodeId', 0);
         $qrCode = new Qrcode();
-
+        $errors = null;
+        //iyzicoqr?qrCodeId=5
         if (empty($qrCodeId)) {
             $rules = array(
                 "id" => 'required|integer',
@@ -23,10 +28,12 @@ class IyzicoController extends Controller
                 "cb" => 'required',
                 "pm" => 'required'
             );
+
             $v = Validator::make($request->all(), $rules);
-            if ($v->fails()) {
-                $errorMessage = $v->errors->first();
+            if($v->fails()) {
+                $errors = $v->errors();
             }
+
             $cb = $request->get('cb');
             $price = $request->get('price');
             $id = $request->get('id');
@@ -50,18 +57,18 @@ class IyzicoController extends Controller
         $cities[] = City::where("CityID", "=", 34)->first();
         $cities[] = City::where("CityID", "=", 6)->first();
         $cities[] = City::where("CityID", "=", 35)->first();
-        $orderedCities = City::where_not_in("CityID", array(6, 34, 35))->order_by('CityName')->get();
-        $cities = array_merge($cities, $orderedCities);
+        $orderedCities = City::whereNotIn("CityID", array(6, 34, 35))->orderBy('CityName')->get();
+        $cities = array_merge($cities, $orderedCities->all());
         $data = array();
         $data["city"] = $cities;
         $data["id"] = $id;
         $data["price"] = $price;
         $data["cb"] = $cb;
         $data["pm"] = $pm;
-        $data["errorMessage"] = $errorMessage;
+        $data["errors"] = $errors;
         $data["qrCode"] = $qrCode;
 
-        return View::make('iyzicoqr.iframebilling', $data);
+        return view('iyzicoqr.billing', $data);
     }
 
     /**
@@ -70,6 +77,7 @@ class IyzicoController extends Controller
      */
     public function save(Request $request)
     {
+
         $rules = array(
             "qrCodeClientId" => 'required|integer',
             "price" => 'required',
@@ -94,29 +102,26 @@ class IyzicoController extends Controller
         $qrCode->save();
         $v = Validator::make($request->all(), $rules);
         if ($v->fails()) {
-            return Redirect::to(URL::to('iyzicoqr', null, false, false) . '?errMsg=' . urlencode($v->errors->first()));
+            return \Redirect::to(\URL::to('iyzicoqr', ['errMsg' => urlencode($v->errors()->first())]));
+            // 571571
         }
-        return Redirect::to(URL::to('open_iyzico_iframe', null, false, false) . '?qrCodeId=' . $qrCode->QrcodeID);
+        return \Redirect::to(\URL::to('open_iyzico_iframe', ['qrCodeId' => $qrCode->QrcodeID]));
     }
 
-    public function openIyzicoIframe(Request $request)
+    public function openIyzicoIframe(Qrcode $qrCode)
     {
-        $rules = array('qrCodeId' => 'integer|exists:Qrcode,QrcodeID');
-        $v = Validator::make($request->all(), $rules);
-        if ($v->fails()) {
-            return Redirect::to(URL::to('iyzicoqr', null, false, false) . '?errMsg=' . urlencode($v->errors->first()));
-        }
-        /** @var Qrcode $qrCode */
-        $qrCode = Qrcode::find($request->get('qrCodeId'));
-        $checkoutFormInitialize = $qrCode->makeIyzicoIframeRequrest();
+        var_dump($qrCode);
+        exit;
+        $checkoutFormInitialize = $qrCode->makeIyzicoIframeRequest();
         $errorMessage = $checkoutFormInitialize->getErrorMessage();
         if (!empty($errorMessage)) {
-            return Redirect::to(URL::to('iyzicoqr', null, false, false) . '?qrCodeId=' . $qrCode->QrcodeID . '&errMsg=' . urlencode($errorMessage));
+            return \Redirect::to(\URL::to('iyzicoqr', ['qrCodeId' => $qrCode->QrcodeID]));
+            // 571571
         }
 
         $data = array();
         $data["checkoutFormInitialize"] = $checkoutFormInitialize;
-        return View::make('iyzicoqr.paymentiframe', $data);
+        return view('iyzicoqr.payment', $data);
     }
 
     public function checkoutIyzicoResultForm(Request $request)
@@ -124,7 +129,7 @@ class IyzicoController extends Controller
         $rules = array("token" => "required", "qrCodeId" => "required|exists:Qrcode,QrcodeID");
         $v = Validator::make($request->all(), $rules);
         if ($v->fails()) {
-            return $v->errors->first();
+            return $v->errors()->first();
         }
 
         /** @var Qrcode $qrCode */
@@ -150,7 +155,7 @@ class IyzicoController extends Controller
         $resultUrl[] = "price=" . $qrCode->Price;
         $resultUrl[] = "id=" . $qrCode->QrSiteClientID;
         $resultUrl[] = "tid=" . ($items ? $items[0]->getPaymentTransactionId() : "");
-        return Redirect::to(implode('&', $resultUrl));
+        return \Redirect::to(implode('&', $resultUrl));
     }
 
 }

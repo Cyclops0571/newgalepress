@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.28 on 2017-01-06.
+ * Generated for Laravel 5.3.28 on 2017-01-16.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -11905,28 +11905,28 @@ namespace {
 
 
     class LaravelLocalization extends \Mcamara\LaravelLocalization\Facades\LaravelLocalization{
-
+        
         /**
          * Set and return current locale.
          *
          * @param string $locale Locale to set the App to (optional)
          * @return string Returns locale (if route has any) or null (if route does not have a locale)
-         * @static
+         * @static 
          */
         public static function setLocale($locale = null){
             return \Mcamara\LaravelLocalization\LaravelLocalization::setLocale($locale);
         }
-
+        
         /**
          * Set and return supported locales.
          *
          * @param array $locales Locales that the App supports
-         * @static
+         * @static 
          */
         public static function setSupportedLocales($locales){
             return \Mcamara\LaravelLocalization\LaravelLocalization::setSupportedLocales($locales);
         }
-
+        
         /**
          * Returns an URL adapted to $locale or current locale.
          *
@@ -11934,12 +11934,12 @@ namespace {
          * @param string|bool $locale Locale to adapt, false to remove locale
          * @throws UnsupportedLocaleException
          * @return string URL translated
-         * @static
+         * @static 
          */
         public static function localizeURL($url = null, $locale = null){
             return \Mcamara\LaravelLocalization\LaravelLocalization::localizeURL($url, $locale);
         }
-
+        
         /**
          * Returns an URL adapted to $locale.
          *
@@ -11949,12 +11949,12 @@ namespace {
          * @throws SupportedLocalesNotDefined
          * @throws UnsupportedLocaleException
          * @return string|false URL translated, False if url does not exist
-         * @static
+         * @static 
          */
         public static function getLocalizedURL($locale = null, $url = null, $attributes = array()){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getLocalizedURL($locale, $url, $attributes);
         }
-
+        
         /**
          * Returns an URL adapted to the route name and the locale given.
          *
@@ -11964,210 +11964,210 @@ namespace {
          * @throws SupportedLocalesNotDefined
          * @throws UnsupportedLocaleException
          * @return string|false URL translated
-         * @static
+         * @static 
          */
         public static function getURLFromRouteNameTranslated($locale, $transKeyName, $attributes = array()){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getURLFromRouteNameTranslated($locale, $transKeyName, $attributes);
         }
-
+        
         /**
          * It returns an URL without locale (if it has it)
          * Convenience function wrapping getLocalizedURL(false).
          *
          * @param string|false $url URL to clean, if false, current url would be taken
          * @return string URL with no locale in path
-         * @static
+         * @static 
          */
         public static function getNonLocalizedURL($url = null){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getNonLocalizedURL($url);
         }
-
+        
         /**
          * Returns default locale.
          *
-         * @return string
-         * @static
+         * @return string 
+         * @static 
          */
         public static function getDefaultLocale(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getDefaultLocale();
         }
-
+        
         /**
          * Return an array of all supported Locales.
          *
          * @throws SupportedLocalesNotDefined
-         * @return array
-         * @static
+         * @return array 
+         * @static 
          */
         public static function getSupportedLocales(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getSupportedLocales();
         }
-
+        
         /**
          * Returns current locale name.
          *
          * @return string current locale name
-         * @static
+         * @static 
          */
         public static function getCurrentLocaleName(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleName();
         }
-
+        
         /**
          * Returns current locale native name.
          *
          * @return string current locale native name
-         * @static
+         * @static 
          */
         public static function getCurrentLocaleNative(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleNative();
         }
-
+        
         /**
          * Returns current locale direction.
          *
          * @return string current locale direction
-         * @static
+         * @static 
          */
         public static function getCurrentLocaleDirection(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleDirection();
         }
-
+        
         /**
          * Returns current locale script.
          *
          * @return string current locale script
-         * @static
+         * @static 
          */
         public static function getCurrentLocaleScript(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleScript();
         }
-
+        
         /**
          * Returns current language's native reading.
          *
          * @return string current language's native reading
-         * @static
+         * @static 
          */
         public static function getCurrentLocaleNativeReading(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleNativeReading();
         }
-
+        
         /**
          * Returns current language.
          *
          * @return string current language
-         * @static
+         * @static 
          */
         public static function getCurrentLocale(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocale();
         }
-
+        
         /**
          * Returns current regional.
          *
          * @return string current regional
-         * @static
+         * @static 
          */
         public static function getCurrentLocaleRegional(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getCurrentLocaleRegional();
         }
-
+        
         /**
          * Returns supported languages language key.
          *
          * @return array keys of supported languages
-         * @static
+         * @static 
          */
         public static function getSupportedLanguagesKeys(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getSupportedLanguagesKeys();
         }
-
+        
         /**
          * Check if Locale exists on the supported locales array.
          *
          * @param string|bool $locale string|bool Locale to be checked
          * @throws SupportedLocalesNotDefined
          * @return bool is the locale supported?
-         * @static
+         * @static 
          */
         public static function checkLocaleInSupportedLocales($locale){
             return \Mcamara\LaravelLocalization\LaravelLocalization::checkLocaleInSupportedLocales($locale);
         }
-
+        
         /**
          * Set current route name.
          *
          * @param string $routeName current route name
-         * @static
+         * @static 
          */
         public static function setRouteName($routeName){
             return \Mcamara\LaravelLocalization\LaravelLocalization::setRouteName($routeName);
         }
-
+        
         /**
          * Translate routes and save them to the translated routes array (used in the localize route filter).
          *
          * @param string $routeName Key of the translated string
          * @return string Translated string
-         * @static
+         * @static 
          */
         public static function transRoute($routeName){
             return \Mcamara\LaravelLocalization\LaravelLocalization::transRoute($routeName);
         }
-
+        
         /**
          * Returns the translation key for a given path.
          *
          * @param string $path Path to get the key translated
          * @return string|false Key for translation, false if not exist
-         * @static
+         * @static 
          */
         public static function getRouteNameFromAPath($path){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getRouteNameFromAPath($path);
         }
-
+        
         /**
          * Returns the config repository for this instance.
          *
          * @return \Mcamara\LaravelLocalization\Repository Configuration repository
-         * @static
+         * @static 
          */
         public static function getConfigRepository(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::getConfigRepository();
         }
-
+        
         /**
          * Returns the translation key for a given path.
          *
          * @return bool Returns value of hideDefaultLocaleInURL in config.
-         * @static
+         * @static 
          */
         public static function hideDefaultLocaleInURL(){
             return \Mcamara\LaravelLocalization\LaravelLocalization::hideDefaultLocaleInURL();
         }
-
+        
         /**
          * Create an url from the uri.
          *
          * @param string $uri Uri
          * @return string Url for the given uri
-         * @static
+         * @static 
          */
         public static function createUrlFromUri($uri){
             return \Mcamara\LaravelLocalization\LaravelLocalization::createUrlFromUri($uri);
         }
-
+        
         /**
          * Sets the base url for the site.
          *
          * @param string $url Base url for the site
-         * @static
+         * @static 
          */
         public static function setBaseUrl($url){
             return \Mcamara\LaravelLocalization\LaravelLocalization::setBaseUrl($url);
         }
-
+        
     }
 
 

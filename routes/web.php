@@ -1,6 +1,6 @@
 <?php
 
-
+Route::get('test', 'TestController@index');
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 // <editor-fold defaultstate="collapsed" desc="website">
     Route::get(__('route.website_showcase'), function () {
@@ -62,8 +62,6 @@ Route::get('{path}', function(){
 
 // <editor-fold defaultstate="collapsed" desc="Test">
 Route::get('test/iosInternalTest', 'test@iosInternalTest');
-Route::get("test", "test@index");
-Route::post("test", "test@index");
 Route::get("test2", "test@test2");
 Route::post("test2", "test@test2");
 Route::get("move", "test@moveInteractivite");
@@ -75,12 +73,14 @@ Route::post("test/download", "test@download");
 Route::get('test/v(:num)', 'test@routetest');
 Route::get('test/interactive', 'test@interactive');
 // </editor-fold>
-
+Auth::setUser(\App\User::find(10));
 //<editor-fold defaultstate="collapesd" desc="Qr Code">
-Route::get('iyzicoqr', 'IyzicoController@index');
-Route::post('iyzicoqr', 'IyzicoController@save');
-Route::get('open_iyzico_iframe', array('as' => 'get_iyzico_iframe', 'uses' => 'IyzicoController@openIyzicoIframe'));
-Route::any('checkout_result_form', array('as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm'));
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('iyzicoqr/{user}', 'IyzicoController@index');
+    Route::post('iyzicoqr', 'IyzicoController@save');
+    Route::get('open_iyzico_iframe/{qrCode}', 'IyzicoController@openIyzicoIframe');
+    Route::any('checkout_result_form', array('as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm'));
+});
 //</editor-fold>
 
 

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use eStatus;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -79,4 +80,15 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * @param $username
+     * @return array|null|\stdClass|User
+     */
+    public static function getByUsername($username)
+    {
+        return self::getQuery()->where('Username', '=', $username)
+        ->where('StatusID', '=', eStatus::Active)
+        ->first();
+    }
 }

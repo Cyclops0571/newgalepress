@@ -1,5 +1,20 @@
 <?php
 
+define("ENV_TEST", "test");
+define("ENV_LOCAL", "local");
+define("ENV_LIVE", "live");
+define("APP_VER", 94);
+define("IMAGE_CROPPED_NAME", "cropped_image");
+define("IMAGE_CROPPED_2048", "cropped_image_1536x2048.jpg");
+define("IMAGE_ORJ_EXTENSION", "_org.jpg");
+define("IMAGE_ORIGINAL", "original");
+define("IMAGE_EXTENSION", ".jpg");
+define("CATEGORY_GENEL_ID", 1);
+define("SHOW_IMAGE_CROP", "showImageCrop");
+define("PATH_TEMP_FILE", "files/temp");
+define("TAB_COUNT", 2);
+define("GO_BACK_TO_SHOP", 'gobacktoshop');
+
 Route::get('test', 'TestController@index');
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 // <editor-fold defaultstate="collapsed" desc="website">
@@ -43,9 +58,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
         return View::make('website.pages.tryit-test');
     });//571571 MeCaptcha\Captcha not found...
 
+    Route::get(__('route.login'), array('as' => 'common_login_get', 'uses' => 'CommonController@showMyLoginForm'));
+    Route::post(__('route.login'), 'CommonController@login');
 
 // </editor-fold>
 });
+
 
 /** Website Post */
 Route::post(__('route.website_tryit'), array('as' => 'website_tryit_post', 'uses' => 'WebsiteController@tryit')); //571571 Test It
@@ -73,10 +91,9 @@ Route::post("test/download", "test@download");
 Route::get('test/v(:num)', 'test@routetest');
 Route::get('test/interactive', 'test@interactive');
 // </editor-fold>
-Auth::setUser(\App\User::find(10));
 //<editor-fold defaultstate="collapesd" desc="Qr Code">
+Route::get('iyzicoqr/{user}', 'IyzicoController@index');
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('iyzicoqr/{user}', 'IyzicoController@index');
     Route::post('iyzicoqr', 'IyzicoController@save');
     Route::get('open_iyzico_iframe/{qrCode}', 'IyzicoController@openIyzicoIframe');
     Route::any('checkout_result_form', array('as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm'));
@@ -113,9 +130,7 @@ Route::get(__('route.website_payment_result'), array('as' => 'website_payment_re
 
 // <editor-fold defaultstate="collapsed" desc="Common">
 
-Route::get(__('route.login'), array('as' => 'common_login_get', 'uses' => 'common@login'));
-Route::post(__('route.login'), array('as' => 'common_login_post', 'uses' => 'common@login'));
-//Route::post(__('route.login'), array('as' => 'common_login_post', 'before' => 'csrf', 'uses' => 'common@login'));
+
 
 Route::get(__('route.forgotmypassword'), array('as' => 'common_forgotmypassword_get', 'uses' => 'common@forgotmypassword'));
 Route::post(__('route.forgotmypassword'), array('as' => 'common_forgotmypassword_post', 'before' => 'csrf', 'uses' => 'common@forgotmypassword'));

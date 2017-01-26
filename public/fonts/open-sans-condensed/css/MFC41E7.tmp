@@ -1,0 +1,16 @@
+@font-face {
+font-family: 'Open Sans Condensed';
+src: url('../font/OpenSans-CondLight.eot');
+src: url('../font/OpenSans-CondLight.eot') format('embedded-opentype'),
+url('../font/OpenSans-CondLight.woff') format('woff'),
+url('../font/OpenSans-CondLight.ttf') format('truetype'),
+url('../font/OpenSans-CondLight.svg#Open Sans Condensed') format('svg'),
+url('Open Sans Condensed.otf') format('opentype');
+font-weight: normal;
+font-style: normal;
+
+}
+
+p { font-family: "Open Sans Condensed", serif; }
+
+div { font-family: "Open Sans Condensed", serif; }

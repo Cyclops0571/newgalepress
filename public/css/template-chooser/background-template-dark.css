@@ -1,0 +1,64 @@
+.templateScreen .header{
+    background:#1E1E20 !important;
+    border-bottom: 1px solid #1c1c1c !important;
+}
+.templateScreen > .container{
+    background: #1E1E20 !important;
+    border-top: 1px solid #1c1c1c !important;
+}
+.templateScreen > .container .content-bar{
+    background: rgba(30,30,32,0.7) !important;
+}
+.templateScreen .footer{
+    background: rgba(30,30,32,0.9) !important;
+}
+
+/********************************************************/
+.templateExtrasScreen .container .form-control::-webkit-input-placeholder {
+   color: #333333 !important;
+}
+
+.templateExtrasScreen .container form-control:-moz-placeholder { /* Firefox 18- */
+   color: #333333 !important;  
+}
+
+.templateExtrasScreen .container form-control::-moz-placeholder {  /* Firefox 19+ */
+   color: #333333 !important;  
+}
+
+.templateExtrasScreen .container form-control:-ms-input-placeholder {  
+   color: #333333 !important;
+}
+.templateExtrasScreen .container .form-row span.icon-search{
+    color:rgba(30,30,32,0.9) !important;;
+}
+.templateExtrasScreen .container .form-row.extrasBar{
+    background: #333333 !important;
+}
+.templateExtrasScreen .container .form-row input{
+    color: #333333 !important;
+}
+.templateExtrasScreen .container .form-row ul li span {
+    color: #333333 !important;
+}
+.templateExtrasScreen li .category-active{
+    background: url(/img/template-chooser/category_select_dark.png) center 5px;
+}
+.templateExtrasScreen .links.links-web{
+    background: url(/img/template-chooser/web_dark.png) center 5px;
+}
+.templateExtrasScreen .links.links-face{
+    background: url(/img/template-chooser/facebook_dark.png) center 5px;
+}
+.templateExtrasScreen .links.links-twitter{
+    background: url(/img/template-chooser/twitter_dark.png) center 5px;
+}
+.templateExtrasScreen .links.links-instagram{
+    background: url(/img/template-chooser/instagram_dark.png) center 5px;
+}
+.templateExtrasScreen .links.links-linkedin{
+    background: url(/img/template-chooser/linkedin_dark.png) center 5px;
+}
+.templateExtrasScreen .links.links-mail{
+    background: url(/img/template-chooser/mail_dark.png) center 5px;
+}

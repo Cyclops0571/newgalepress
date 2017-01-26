@@ -13,7 +13,8 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
-        $this->visit('/')
-             ->see('Laravel');
+        $this->visit('/test')->see('zzzzzzzzz');
+        $this->visit(__('route.login'))->see('currentLanguage');
+        $this->post(__('route.login'),   ['Username' => 'srdsaygili@gmail.com','Password' => 'serd12'])->see('success');
     }
 }

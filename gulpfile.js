@@ -72,6 +72,25 @@ elixir((mix) => {
     mix.version('/css/website.css');
     mix.version('/js/website.js');
 
+    mix.styles([
+        'bootstrap.min.css',
+        'bootstrap-editable.css',
+        'jquery-ui.min.css',
+        'font-awesome.min.css',
+        'select2.css',
+        'stylesheet.css',
+        'backgrounds.css',
+        'themes.css',
+        'general.css',
+        'myApp.css',
+        'mystyles.css',
+        'btn_interactive.css',
+        'device-mockups2.css',
+        'bootstrap-colorpicker.min.css'],
+        'public/css/galepress-all.css'
+    );
+    mix.version('/css/galepress-all.css');
+
    //mix.sass('animate.scss').version();
    /*mix.webpack('app.js');*/
    // mix.version('css/mystyles.css'); //elixir('css/styles.css')

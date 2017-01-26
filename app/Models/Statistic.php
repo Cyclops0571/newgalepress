@@ -8,6 +8,8 @@ use eStatus;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * App\Models\Statistic
+ *
  * @property int ServiceVersion
  * @property mixed UID
  * @property int Type
@@ -30,6 +32,61 @@ use Illuminate\Database\Eloquent\Model;
  * @property int StatusID
  * @property int ProcessUserID
  * @property DateTime ProcessDate
+ * @property int $StatisticID
+ * @property int $ServiceVersion
+ * @property string $UID
+ * @property int $Type
+ * @property string $RequestDate
+ * @property string $Time
+ * @property string $Lat
+ * @property string $Long
+ * @property string $Country
+ * @property string $City
+ * @property string $District
+ * @property string $Quarter
+ * @property string $Avenue
+ * @property string $DeviceID
+ * @property int $CustomerID
+ * @property int $ApplicationID
+ * @property int $ContentID
+ * @property int $Page
+ * @property string $Param5
+ * @property string $Param6
+ * @property string $Param7
+ * @property int $StatusID
+ * @property int $CreatorUserID
+ * @property string $DateCreated
+ * @property int $ProcessUserID
+ * @property string $ProcessDate
+ * @property int $ProcessTypeID
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereStatisticID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereServiceVersion($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereUID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereType($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereRequestDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereTime($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereLat($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereLong($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereCountry($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereCity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereDistrict($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereQuarter($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereAvenue($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereDeviceID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereCustomerID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereApplicationID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereContentID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic wherePage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereParam5($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereParam6($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereParam7($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereCreatorUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereDateCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereProcessDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Statistic whereProcessTypeID($value)
+ * @mixin \Eloquent
  */
 class Statistic extends Model
 {

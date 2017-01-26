@@ -13,6 +13,7 @@ class TestController extends Controller
 
     public function index()
     {
+        return 'zzzzzzzzz';
         $keys = ['google_api_key' => 'AIzaSyCj2v2727lBWLeXbgM_Hw_VEQgzjDgb8KY',
             'api_key1' => 'AIzaSyA7xMDIVl2332zCKP70HceFTuq2gdwBwx0',
             'api_key2' => 'AIzaSyCFt9FNEys_tXed-VHu5CaI2_9bezEiaJY',

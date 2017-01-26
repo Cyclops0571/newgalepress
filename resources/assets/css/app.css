@@ -1,0 +1,5008 @@
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/* line 3, ../sass/framework/_reset.scss */
+* {
+  padding: 0;
+  margin: 0;
+  outline: none;
+  font-size: 1em;
+}
+
+/* line 10, ../sass/framework/_reset.scss */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+/* line 24, ../sass/framework/_reset.scss */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+nav,
+section {
+  display: block;
+}
+
+/* line 28, ../sass/framework/_reset.scss */
+audio, canvas, video {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+/* line 34, ../sass/framework/_reset.scss */
+audio:not([controls]) {
+  display: none;
+}
+
+/* line 38, ../sass/framework/_reset.scss */
+img, iframe, fieldset, object, table {
+  border: none;
+}
+
+/* line 42, ../sass/framework/_reset.scss */
+caption, th {
+  font-weight: normal;
+  text-align: left;
+}
+
+/* line 47, ../sass/framework/_reset.scss */
+td {
+  vertical-align: top;
+}
+
+/* line 51, ../sass/framework/_reset.scss */
+sub, sup {
+  vertical-align: baseline;
+}
+
+/* line 55, ../sass/framework/_reset.scss */
+ol, ul {
+  list-style-type: none;
+}
+
+/* line 59, ../sass/framework/_reset.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 64, ../sass/framework/_reset.scss */
+th, h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+/* line 71, ../sass/framework/_reset.scss */
+button,
+input,
+select,
+textarea {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  font-size: 100%;
+  vertical-align: middle;
+}
+
+/* line 78, ../sass/framework/_reset.scss */
+button, input {
+  *overflow: visible;
+  line-height: normal;
+  outline: none !important;
+}
+
+/* line 85, ../sass/framework/_reset.scss */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* line 93, ../sass/framework/_reset.scss */
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+
+/* line 98, ../sass/framework/_reset.scss */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+/* line 106, ../sass/framework/_reset.scss */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* line 110, ../sass/framework/_reset.scss */
+textarea {
+  overflow: auto;
+  vertical-align: top;
+}
+
+/* normalize.css v2.1.0 | MIT License | git.io/normalize */
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+/**
+ * Correct `block` display not defined in IE 8/9.
+ */
+/* line 22, ../sass/framework/_normalize.scss */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+  display: block;
+}
+
+/**
+ * Correct `inline-block` display not defined in IE 8/9.
+ */
+/* line 32, ../sass/framework/_normalize.scss */
+audio,
+canvas,
+video {
+  display: inline-block;
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+/* line 41, ../sass/framework/_normalize.scss */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+/* line 50, ../sass/framework/_normalize.scss */
+[hidden] {
+  display: none;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+/* line 64, ../sass/framework/_normalize.scss */
+html {
+  font-family: sans-serif;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  -ms-text-size-adjust: 100%;
+  /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+/* line 74, ../sass/framework/_normalize.scss */
+body {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+/* line 86, ../sass/framework/_normalize.scss */
+a:focus {
+  outline: thin dotted;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+/* line 95, ../sass/framework/_normalize.scss */
+a:active,
+a:hover {
+  outline: 0;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari 5, and Chrome.
+ */
+/* line 108, ../sass/framework/_normalize.scss */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9, Safari 5, and Chrome.
+ */
+/* line 117, ../sass/framework/_normalize.scss */
+abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
+ */
+/* line 126, ../sass/framework/_normalize.scss */
+b,
+strong {
+  font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+/* line 134, ../sass/framework/_normalize.scss */
+dfn {
+  font-style: italic;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+/* line 142, ../sass/framework/_normalize.scss */
+hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+/* line 152, ../sass/framework/_normalize.scss */
+mark {
+  background: #ff0;
+  color: #000;
+}
+
+/**
+ * Correct font family set oddly in Safari 5 and Chrome.
+ */
+/* line 164, ../sass/framework/_normalize.scss */
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, serif;
+  font-size: 1em;
+}
+
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+/* line 173, ../sass/framework/_normalize.scss */
+pre {
+  white-space: pre-wrap;
+}
+
+/**
+ * Set consistent quote types.
+ */
+/* line 181, ../sass/framework/_normalize.scss */
+q {
+  quotes: "\201C" "\201D" "\2018" "\2019";
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+/* line 189, ../sass/framework/_normalize.scss */
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+/* line 198, ../sass/framework/_normalize.scss */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+/* line 205, ../sass/framework/_normalize.scss */
+sup {
+  top: -0.5em;
+}
+
+/* line 209, ../sass/framework/_normalize.scss */
+sub {
+  bottom: -0.25em;
+}
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+/**
+ * Remove border when inside `a` element in IE 8/9.
+ */
+/* line 221, ../sass/framework/_normalize.scss */
+img {
+  border: 0;
+}
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+/* line 229, ../sass/framework/_normalize.scss */
+svg:not(:root) {
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+/**
+ * Address margin not present in IE 8/9 and Safari 5.
+ */
+/* line 241, ../sass/framework/_normalize.scss */
+figure {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+/**
+ * Define consistent border, margin, and padding.
+ */
+/* line 253, ../sass/framework/_normalize.scss */
+fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+/* line 264, ../sass/framework/_normalize.scss */
+legend {
+  border: 0;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+ * 1. Correct font family not being inherited in all browsers.
+ * 2. Correct font size not being inherited in all browsers.
+ * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
+ */
+/* line 278, ../sass/framework/_normalize.scss */
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 2 */
+  margin: 0;
+  /* 3 */
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+/* line 290, ../sass/framework/_normalize.scss */
+button,
+input {
+  line-height: normal;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 8+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+/* line 302, ../sass/framework/_normalize.scss */
+button,
+select {
+  text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+/* line 317, ../sass/framework/_normalize.scss */
+button,
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  -webkit-appearance: button;
+  /* 2 */
+  cursor: pointer;
+  /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+/* line 327, ../sass/framework/_normalize.scss */
+button[disabled],
+html input[disabled] {
+  cursor: default;
+}
+
+/**
+ * 1. Address box sizing set to `content-box` in IE 8/9.
+ * 2. Remove excess padding in IE 8/9.
+ */
+/* line 337, ../sass/framework/_normalize.scss */
+input[type="checkbox"],
+input[type="radio"] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+/* line 348, ../sass/framework/_normalize.scss */
+input[type="search"] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  /* 2 */
+  box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+/* line 361, ../sass/framework/_normalize.scss */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+/* line 370, ../sass/framework/_normalize.scss */
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * 1. Remove default vertical scrollbar in IE 8/9.
+ * 2. Improve readability and alignment in all browsers.
+ */
+/* line 380, ../sass/framework/_normalize.scss */
+textarea {
+  overflow: auto;
+  /* 1 */
+  vertical-align: top;
+  /* 2 */
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+/**
+ * Remove most spacing between table cells.
+ */
+/* line 393, ../sass/framework/_normalize.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 1, ../sass/framework/_globals.scss */
+body {
+  background: #171717;
+  font-family: Arial, sans-serif;
+  line-height: 1;
+  color: #848484;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* line 3, ../sass/framework/_globals.scss */
+a {
+  text-decoration: none;
+  color: #1681bf;
+  font-weight: bold;
+  font-size: .9em;
+  outline: none !important;
+}
+
+/* line 4, ../sass/framework/_globals.scss */
+a:hover {
+  color: #116291;
+}
+
+/* line 5, ../sass/framework/_globals.scss */
+a:focus {
+  color: #116291;
+}
+
+/* line 6, ../sass/framework/_globals.scss */
+p a, p a:visited {
+  line-height: inherit;
+}
+
+/* line 7, ../sass/framework/_globals.scss */
+p {
+  font-size: .78em;
+  color: #bcbbbc;
+}
+/* line 8, ../sass/framework/_globals.scss */
+p a {
+  font-size: 1em;
+}
+/* line 9, ../sass/framework/_globals.scss */
+p a:hover {
+  text-decoration: underline;
+}
+
+/* line 13, ../sass/framework/_globals.scss */
+.text-center {
+  text-align: center;
+}
+
+/* line 15, ../sass/framework/_globals.scss */
+h1, h2, h3, h4, h5, h6 {
+  color: #848484;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+/* line 18, ../sass/framework/_globals.scss */
+h1 {
+  font-size: 20px;
+}
+
+/* line 19, ../sass/framework/_globals.scss */
+h2 {
+  font-size: 18px;
+}
+
+/* line 20, ../sass/framework/_globals.scss */
+h3 {
+  font-size: 14px;
+}
+
+/* line 21, ../sass/framework/_globals.scss */
+h4 {
+  font-size: 12px;
+}
+
+/* line 22, ../sass/framework/_globals.scss */
+h5 {
+  font-size: 11px;
+  font-weight: bold;
+}
+
+/* line 24, ../sass/framework/_globals.scss */
+.hide {
+  display: none !important;
+}
+
+/* line 25, ../sass/framework/_globals.scss */
+.expand {
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 28, ../sass/framework/_globals.scss */
+.error, .success, .warning, .info {
+  line-height: 16px;
+  margin-top: 8px;
+  float: left;
+  font-size: 12px;
+  font-weight: bold;
+}
+/* line 33, ../sass/framework/_globals.scss */
+.error i, .success i, .warning i, .info i {
+  font-size: 16px;
+  margin: 0 8px 18px 0;
+  float: left;
+  display: inline-block;
+}
+
+/* line 35, ../sass/framework/_globals.scss */
+.error {
+  color: #a40f00;
+}
+
+/* line 36, ../sass/framework/_globals.scss */
+.success {
+  color: #468847;
+}
+
+/* line 37, ../sass/framework/_globals.scss */
+.warning {
+  color: #3a87ad;
+}
+
+/* line 38, ../sass/framework/_globals.scss */
+.info {
+  color: #3a87ad;
+}
+
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/* line 3, ../sass/library/selects.scss */
+.select, .select-arrowed {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+/* line 6, ../sass/library/selects.scss */
+.select.opened, .opened.select-arrowed {
+  z-index: 999;
+}
+/* line 8, ../sass/library/selects.scss */
+.select.opened .options, .opened.select-arrowed .options {
+  display: block;
+}
+/* line 13, ../sass/library/selects.scss */
+.select.idle .selected, .idle.select-arrowed .selected {
+  color: #9da0ab;
+}
+/* line 19, ../sass/library/selects.scss */
+.select.negative:hover .selected, .negative.select-arrowed:hover .selected {
+  background-color: #000;
+}
+/* line 23, ../sass/library/selects.scss */
+.select.negative .selected, .negative.select-arrowed .selected {
+  background-color: #000;
+  color: #dcdcde;
+  -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.06);
+  -moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.2), 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+/* line 30, ../sass/library/selects.scss */
+.select .selected, .select-arrowed .selected {
+  background-color: #171717;
+  border-radius: 4px;
+  color: #dcdcde;
+  font-weight: normal;
+  cursor: pointer;
+  display: block;
+  height: 26px;
+  line-height: 18px;
+  padding: 4px 8px 6px;
+  position: relative;
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+  z-index: 5;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+  line-height: 16px \9;
+}
+/* line 47, ../sass/library/selects.scss */
+.select .selected:hover, .select-arrowed .selected:hover {
+  background-color: black;
+}
+/* line 49, ../sass/library/selects.scss */
+.select .selected:hover .icon, .select-arrowed .selected:hover .icon {
+  background-position: 0 -30px;
+}
+/* line 53, ../sass/library/selects.scss */
+.select .selected .icon, .select-arrowed .selected .icon {
+  background: url('/img/select/selected-icon.png?1362763283') 0 0 no-repeat;
+  border-radius: 50%;
+  height: 19px;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  width: 19px;
+}
+/* line 64, ../sass/library/selects.scss */
+.select .options, .select-arrowed .options {
+  background-color: #171717;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  display: none;
+  padding: 20px 0 8px;
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  z-index: 4;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+/* line 76, ../sass/library/selects.scss */
+.select .stack, .select-arrowed .stack {
+  padding-bottom: 2px;
+  max-height: 140px;
+  overflow: auto;
+}
+/* line 80, ../sass/library/selects.scss */
+.select .stack li, .select-arrowed .stack li {
+  color: #bcbbbc;
+  cursor: pointer;
+  height: 26px;
+  padding: 7px 16px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 89, ../sass/library/selects.scss */
+.select .stack li:hover, .select-arrowed .stack li:hover, .select .stack li:focus, .select-arrowed .stack li:focus, .select .stack li.highlighted, .select-arrowed .stack li.highlighted {
+  color: #171717;
+  -webkit-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.3);
+  background: #b7882f;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ebaf3c), color-stop(100%, #b7882f));
+  background-image: -webkit-linear-gradient(top, #ebaf3c, #b7882f);
+  background-image: -moz-linear-gradient(top, #ebaf3c, #b7882f);
+  background-image: -ms-linear-gradient(top, #ebaf3c, #b7882f);
+  background-image: -o-linear-gradient(top, #ebaf3c, #b7882f);
+  background-image: linear-gradient(top, #ebaf3c, #b7882f);
+  -pie-background: linear-gradient(#ebaf3c, #b7882f);
+}
+/* line 94, ../sass/library/selects.scss */
+.select .stack li.inactive-result, .select-arrowed .stack li.inactive-result {
+  display: none;
+}
+/* line 100, ../sass/library/selects.scss */
+.select .select-search, .select-arrowed .select-search {
+  display: none;
+  margin-bottom: 5px;
+  padding: 1px 9px 3px;
+}
+/* line 104, ../sass/library/selects.scss */
+.select .select-search input, .select-arrowed .select-search input {
+  background-color: #30333b;
+  border: 1px solid #252525;
+  border-radius: 2px;
+  color: white;
+  padding: 4px 9px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* line 121, ../sass/library/selects.scss */
+.select-arrowed .selected .icon {
+  background-image: url('/img/select/selected-icon-arrowed.png?1362763348');
+}
+
+/* line 128, ../sass/library/selects.scss */
+.select .selected, .select-arrowed .selected, .select-arrowed .selected, .select .stack li, .select-arrowed .stack li, .select-arrowed .stack li {
+  font-size: 12px;
+}
+
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/* line 5, ../sass/library/text-inputs.scss */
+input[type='text'],
+input[type='password'] {
+  border-radius: 4px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  height: 26px;
+  padding: 0 10px;
+  position: relative;
+  vertical-align: middle;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 15, ../sass/library/text-inputs.scss */
+input[type='text'].prefix, input[type='text'] .postfix,
+input[type='password'].prefix,
+input[type='password'] .postfix {
+  display: block;
+  position: relative;
+  z-index: 2;
+  text-align: left;
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 26px;
+  line-height: 26px;
+}
+/* line 25, ../sass/library/text-inputs.scss */
+input[type='text'].prefix,
+input[type='password'].prefix {
+  left: 2px;
+  -moz-border-radius-topleft: 4px;
+  -webkit-border-top-left-radius: 4px;
+  border-top-left-radius: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  -moz-border-radius-topright: 0px;
+  -webkit-border-top-right-radius: 0px;
+  border-top-right-radius: 0px;
+  -moz-border-radius-bottomright: 0px;
+  -webkit-border-bottom-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  overflow: hidden;
+}
+/* line 32, ../sass/library/text-inputs.scss */
+input[type='text'].postfix,
+input[type='password'].postfix {
+  right: 2px;
+  -moz-border-radius-topright: 2px;
+  -webkit-border-top-right-radius: 2px;
+  border-top-right-radius: 2px;
+  -moz-border-radius-bottomright: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+/* line 40, ../sass/library/text-inputs.scss */
+.text, .text-rounded {
+  position: relative;
+}
+/* line 45, ../sass/library/text-inputs.scss */
+.text.dark input[type='text'], .dark.text-rounded input[type='text'],
+.text.dark input[type='password'],
+.dark.text-rounded input[type='password'] {
+  background: #171717;
+  color: #bcbbbc;
+  border-top: 1px solid black;
+  border-bottom: 1px solid #171717;
+  border-right: 1px solid #171717;
+  border-left: 1px solid #171717;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  padding-top: 4px \9;
+}
+/* line 55, ../sass/framework/_mixins.scss */
+.text.dark input[type='text']:-moz-placeholder, .dark.text-rounded input[type='text']:-moz-placeholder,
+.text.dark input[type='password']:-moz-placeholder,
+.dark.text-rounded input[type='password']:-moz-placeholder {
+  color: #434343;
+}
+/* line 58, ../sass/framework/_mixins.scss */
+.text.dark input[type='text']::-webkit-input-placeholder, .dark.text-rounded input[type='text']::-webkit-input-placeholder,
+.text.dark input[type='password']::-webkit-input-placeholder,
+.dark.text-rounded input[type='password']::-webkit-input-placeholder {
+  color: #434343;
+}
+/* line 61, ../sass/framework/_mixins.scss */
+.text.dark input[type='text'].placeholder, .dark.text-rounded input[type='text'].placeholder,
+.text.dark input[type='password'].placeholder,
+.dark.text-rounded input[type='password'].placeholder {
+  color: #434343;
+}
+/* line 55, ../sass/library/text-inputs.scss */
+.text.dark input[type='text']:hover, .dark.text-rounded input[type='text']:hover,
+.text.dark input[type='password']:hover,
+.dark.text-rounded input[type='password']:hover {
+  -webkit-box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  -moz-box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+/* line 58, ../sass/library/text-inputs.scss */
+.text.dark input[type='text']:focus, .dark.text-rounded input[type='text']:focus,
+.text.dark input[type='password']:focus,
+.dark.text-rounded input[type='password']:focus {
+  -webkit-box-shadow: 0 0 0 1px #1681bf;
+  -moz-box-shadow: 0 0 0 1px #1681bf;
+  box-shadow: 0 0 0 1px #1681bf;
+}
+/* line 66, ../sass/library/text-inputs.scss */
+.text.light input[type='text'], .light.text-rounded input[type='text'],
+.text.light input[type='password'],
+.light.text-rounded input[type='password'] {
+  background: #dcdcde;
+  border: none;
+  color: black;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+  background: #9a9a9a;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fdfdfd), color-stop(100%, #9a9a9a));
+  background-image: -webkit-linear-gradient(top, #fdfdfd, #9a9a9a);
+  background-image: -moz-linear-gradient(top, #fdfdfd, #9a9a9a);
+  background-image: -ms-linear-gradient(top, #fdfdfd, #9a9a9a);
+  background-image: -o-linear-gradient(top, #fdfdfd, #9a9a9a);
+  background-image: linear-gradient(top, #fdfdfd, #9a9a9a);
+  -pie-background: linear-gradient(#fdfdfd, #9a9a9a);
+  padding-top: 5px \9;
+}
+/* line 55, ../sass/framework/_mixins.scss */
+.text.light input[type='text']:-moz-placeholder, .light.text-rounded input[type='text']:-moz-placeholder,
+.text.light input[type='password']:-moz-placeholder,
+.light.text-rounded input[type='password']:-moz-placeholder {
+  color: #848484;
+}
+/* line 58, ../sass/framework/_mixins.scss */
+.text.light input[type='text']::-webkit-input-placeholder, .light.text-rounded input[type='text']::-webkit-input-placeholder,
+.text.light input[type='password']::-webkit-input-placeholder,
+.light.text-rounded input[type='password']::-webkit-input-placeholder {
+  color: #848484;
+}
+/* line 61, ../sass/framework/_mixins.scss */
+.text.light input[type='text'].placeholder, .light.text-rounded input[type='text'].placeholder,
+.text.light input[type='password'].placeholder,
+.light.text-rounded input[type='password'].placeholder {
+  color: #848484;
+}
+/* line 74, ../sass/library/text-inputs.scss */
+.text.light input[type='text']:hover, .light.text-rounded input[type='text']:hover,
+.text.light input[type='password']:hover,
+.light.text-rounded input[type='password']:hover {
+  -webkit-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+  -moz-box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+/* line 77, ../sass/library/text-inputs.scss */
+.text.light input[type='text']:focus, .light.text-rounded input[type='text']:focus,
+.text.light input[type='password']:focus,
+.light.text-rounded input[type='password']:focus {
+  background: white;
+  -webkit-box-shadow: 0 0 0 3px #80a62d;
+  -moz-box-shadow: 0 0 0 3px #80a62d;
+  box-shadow: 0 0 0 3px #80a62d;
+}
+/* line 55, ../sass/framework/_mixins.scss */
+.text.light input[type='text']:focus:-moz-placeholder, .light.text-rounded input[type='text']:focus:-moz-placeholder,
+.text.light input[type='password']:focus:-moz-placeholder,
+.light.text-rounded input[type='password']:focus:-moz-placeholder {
+  color: #cccccc;
+}
+/* line 58, ../sass/framework/_mixins.scss */
+.text.light input[type='text']:focus::-webkit-input-placeholder, .light.text-rounded input[type='text']:focus::-webkit-input-placeholder,
+.text.light input[type='password']:focus::-webkit-input-placeholder,
+.light.text-rounded input[type='password']:focus::-webkit-input-placeholder {
+  color: #cccccc;
+}
+/* line 61, ../sass/framework/_mixins.scss */
+.text.light input[type='text']:focus.placeholder, .light.text-rounded input[type='text']:focus.placeholder,
+.text.light input[type='password']:focus.placeholder,
+.light.text-rounded input[type='password']:focus.placeholder {
+  color: #cccccc;
+}
+/* line 83, ../sass/library/text-inputs.scss */
+.text.light input[type='submit'], .light.text-rounded input[type='submit'] {
+  background-position: center -30px;
+}
+/* line 88, ../sass/library/text-inputs.scss */
+.text input[type='submit'], .text-rounded input[type='submit'] {
+  background-color: transparent;
+  background-position: center 0;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 1em;
+  height: 19px;
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  width: 19px;
+}
+/* line 102, ../sass/library/text-inputs.scss */
+.text input[type='submit']:hover, .text-rounded input[type='submit']:hover, .text input[type='submit']:focus, .text-rounded input[type='submit']:focus {
+  background-position: center -30px;
+}
+
+/* line 114, ../sass/library/text-inputs.scss */
+.text-rounded input[type='text'],
+.text-rounded input[type='password'] {
+  border-radius: 30px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+/* line 123, ../sass/library/text-inputs.scss */
+.text input.search-button, .text-rounded input.search-button {
+  background-image: url('/img/text-input/search-button.png?1332136382');
+}
+
+/* line 140, ../sass/library/text-inputs.scss */
+.input-append input[class*="span"],
+.input-append .uneditable-input[class*="span"],
+.input-prepend input[class*="span"],
+.input-prepend .uneditable-input[class*="span"],
+.row-fluid input[class*="span"],
+.row-fluid select[class*="span"],
+.row-fluid textarea[class*="span"],
+.row-fluid .uneditable-input[class*="span"],
+.row-fluid .input-prepend [class*="span"],
+.row-fluid .input-append [class*="span"] {
+  display: inline-block;
+}
+
+/* line 157, ../sass/library/text-inputs.scss */
+input[disabled],
+select[disabled],
+textarea[disabled],
+input[readonly],
+select[readonly],
+textarea[readonly] {
+  cursor: not-allowed;
+  background-color: #848484;
+}
+
+/* line 165, ../sass/library/text-inputs.scss */
+input[type="radio"][disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][readonly],
+input[type="checkbox"][readonly] {
+  background-color: transparent;
+}
+
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/* line 3, ../sass/library/checkboxes.scss */
+.checkbox, .checkbox-light, .radio, .radio-light {
+  background: url('/img/checkbox/square.png?1362760365') 0 0 no-repeat;
+  color: #848484;
+  cursor: pointer;
+  padding: 1px 0 3px 25px;
+  position: relative;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 15px;
+}
+/* line 13, ../sass/library/checkboxes.scss */
+.checkbox:hover, .checkbox-light:hover, .radio:hover, .radio-light:hover {
+  background-position: 0 -26px;
+  color: white;
+}
+/* line 17, ../sass/library/checkboxes.scss */
+.checkbox.checked, .checked.checkbox-light, .checked.radio, .checked.radio-light {
+  background-position: 0 -53px;
+}
+/* line 19, ../sass/library/checkboxes.scss */
+.checkbox.checked:hover, .checked.checkbox-light:hover, .checked.radio:hover, .checked.radio-light:hover {
+  background-position: 0 -80px;
+}
+
+/* line 26, ../sass/library/checkboxes.scss */
+.checkbox-light {
+  background-image: url('/img/checkbox/square-light.png?1332136382');
+}
+
+/* line 32, ../sass/library/checkboxes.scss */
+.radio {
+  background-image: url('/img/checkbox/disk.png?1362760198');
+}
+
+/* line 38, ../sass/library/checkboxes.scss */
+.radio-light {
+  background-image: url('/img/checkbox/disk-light.png?1332136382');
+}
+
+/* line 44, ../sass/library/checkboxes.scss */
+.form-row {
+  background: url('/img/checkbox/form-row.png?1332136382') 0 100% repeat-x;
+  margin-bottom: 7px;
+  padding-bottom: 7px;
+}
+/* line 48, ../sass/library/checkboxes.scss */
+.form-row.last {
+  background: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/* line 15, ../sass/modules/scrollbox.scss */
+.scrollbox {
+  background-color: #1e1f22;
+  border-radius: 10px;
+  height: 7px;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: inset 1px 1px 3px 0 black, 0 1px 0 rgba(255, 255, 255, 0.1);
+  -moz-box-shadow: inset 1px 1px 3px 0 black, 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: inset 1px 1px 3px 0 black, 0 1px 0 rgba(255, 255, 255, 0.1);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+/* line 25, ../sass/modules/scrollbox.scss */
+.scrollbox.dot .hitbox {
+  height: 11px;
+  top: -2px;
+}
+/* line 29, ../sass/modules/scrollbox.scss */
+.scrollbox.dot .ui-slider-handle {
+  top: 1px;
+  height: 7px;
+  margin-left: -3px;
+  right: -3px;
+  width: 7px;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y3ZjdmNyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzlmOWY5ZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #f7f7f7), color-stop(100%, #9f9f9f));
+  background-image: -webkit-linear-gradient(#f7f7f7, #9f9f9f);
+  background-image: -moz-linear-gradient(#f7f7f7, #9f9f9f);
+  background-image: -o-linear-gradient(#f7f7f7, #9f9f9f);
+  background-image: linear-gradient(#f7f7f7, #9f9f9f);
+}
+/* line 37, ../sass/modules/scrollbox.scss */
+.scrollbox.disk .hitbox {
+  height: 19px;
+  top: -6px;
+}
+/* line 41, ../sass/modules/scrollbox.scss */
+.scrollbox.disk .ui-slider-handle {
+  background: url('/img/scrollbox/sliders.png?1332136382') 0 0 no-repeat;
+  top: -2px;
+  height: 19px;
+  margin-left: -9px;
+  right: -9px;
+  width: 19px;
+  outline: none;
+}
+/* line 50, ../sass/modules/scrollbox.scss */
+.scrollbox.fat .hitbox {
+  height: 19px;
+  top: -6px;
+}
+/* line 54, ../sass/modules/scrollbox.scss */
+.scrollbox.fat .scale {
+  border: none;
+  height: 7px;
+  -webkit-box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.4);
+  -moz-box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.4);
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE2ODFiZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAxMzU1YiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #1681bf), color-stop(100%, #01355b));
+  background-image: -webkit-linear-gradient(#1681bf, #01355b);
+  background-image: -moz-linear-gradient(#1681bf, #01355b);
+  background-image: -o-linear-gradient(#1681bf, #01355b);
+  background-image: linear-gradient(#1681bf, #01355b);
+}
+/* line 60, ../sass/modules/scrollbox.scss */
+.scrollbox.fat .ui-slider-handle {
+  background: url('/img/scrollbox/sliders.png?1332136382') 0 0 no-repeat;
+  top: -2px;
+  height: 19px;
+  margin-left: -9px;
+  right: -9px;
+  width: 19px;
+}
+/* line 68, ../sass/modules/scrollbox.scss */
+.scrollbox.range .hitbox {
+  height: 19px;
+  top: -6px;
+}
+/* line 72, ../sass/modules/scrollbox.scss */
+.scrollbox.range .ui-slider-handle {
+  background: url('/img/scrollbox/sliders.png?1332136382') center -30px no-repeat;
+  top: -2px;
+  height: 19px;
+  margin-left: -9px;
+  right: -9px;
+  width: 19px;
+}
+/* line 77, ../sass/modules/scrollbox.scss */
+.scrollbox.range .ui-slider-handle:hover, .scrollbox.range .ui-slider-handle:active {
+  background-position: center -61px;
+  -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+/* line 83, ../sass/modules/scrollbox.scss */
+.scrollbox .scale {
+  background-color: #1681bf;
+  border: 2px solid #171717;
+  border-radius: 10px;
+  height: 3px;
+  position: relative;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE2ODFiZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzAxMzU1YiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #1681bf), color-stop(100%, #01355b));
+  background-image: -webkit-linear-gradient(#1681bf, #01355b);
+  background-image: -moz-linear-gradient(#1681bf, #01355b);
+  background-image: -o-linear-gradient(#1681bf, #01355b);
+  background-image: linear-gradient(#1681bf, #01355b);
+}
+/* line 91, ../sass/modules/scrollbox.scss */
+.scrollbox .ui-slider-handle {
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: 1px;
+  position: absolute;
+  z-index: 3;
+  -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+/* line 99, ../sass/modules/scrollbox.scss */
+.scrollbox .ui-slider-handle:hover {
+  -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 7px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 7px rgba(0, 0, 0, 0.5);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 7px rgba(0, 0, 0, 0.5);
+}
+/* line 102, ../sass/modules/scrollbox.scss */
+.scrollbox .ui-slider-handle:active {
+  -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 7px rgba(0, 0, 0, 0.8);
+  -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 7px rgba(0, 0, 0, 0.8);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 7px rgba(0, 0, 0, 0.8);
+}
+/* line 106, ../sass/modules/scrollbox.scss */
+.scrollbox .hitbox {
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}
+
+/* line 113, ../sass/modules/scrollbox.scss */
+.progress .scale {
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2U5NjYyYyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzkyM2YxYSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #e9662c), color-stop(100%, #923f1a));
+  background-image: -webkit-linear-gradient(#e9662c, #923f1a);
+  background-image: -moz-linear-gradient(#e9662c, #923f1a);
+  background-image: -o-linear-gradient(#e9662c, #923f1a);
+  background-image: linear-gradient(#e9662c, #923f1a);
+}
+
+/* line 114, ../sass/modules/scrollbox.scss */
+.progress label {
+  margin-bottom: 6px;
+  display: block;
+  color: #bcbbbc;
+}
+
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/* line 7, ../sass/modules/slideshow.scss */
+.slideshow {
+  width: 100%;
+}
+
+/* line 10, ../sass/modules/slideshow.scss */
+.slideshow .slideshow-slides-wrapper {
+  height: 60px;
+  width: 100%;
+}
+
+/* line 14, ../sass/modules/slideshow.scss */
+.slideshow .each-slide {
+  height: 60px;
+  width: 58px;
+}
+
+/* line 16, ../sass/modules/slideshow.scss */
+.slideshow {
+  display: inline-block;
+  position: relative;
+}
+/* line 19, ../sass/modules/slideshow.scss */
+.slideshow .slideshow-slides-wrapper {
+  overflow: hidden;
+  position: relative;
+}
+/* line 23, ../sass/modules/slideshow.scss */
+.slideshow .slideshow-slides {
+  position: absolute;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  -o-transition: all 0.2s;
+  transition: all 0.2s;
+}
+/* line 27, ../sass/modules/slideshow.scss */
+.slideshow .each-slide {
+  background-position: center;
+  background-repeat: no-repeat;
+  float: left;
+  position: relative;
+  overflow: hidden;
+}
+/* line 35, ../sass/modules/slideshow.scss */
+.slideshow .show-slide {
+  /*background: image-url("slideshow/prev.png") 0 0 no-repeat;*/
+  cursor: pointer;
+  height: 22px;
+  margin-top: -8px;
+  position: absolute;
+  top: 50%;
+  left: -20px;
+  width: 14px;
+}
+/* line 44, ../sass/modules/slideshow.scss */
+.slideshow .show-slide:hover {
+  background-position: 0 bottom;
+  color: #1681bf;
+}
+/* line 48, ../sass/modules/slideshow.scss */
+.slideshow .show-slide:active {
+  color: #01355b;
+}
+/* line 49, ../sass/modules/slideshow.scss */
+.slideshow .show-slide.next {
+  /*background-image: image-url("slideshow/next.png");*/
+  left: auto;
+  right: -20px;
+  z-index: 9994;
+}
+/* line 55, ../sass/modules/slideshow.scss */
+.slideshow .show-slide > i {
+  font-size: 14px;
+}
+/* line 58, ../sass/modules/slideshow.scss */
+.slideshow .slide-description {
+  background-color: black;
+  bottom: 0;
+  color: white;
+  padding: 11px 13px;
+  position: absolute;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/* line 3, ../sass/modules/colorpicker.scss */
+div.colorPicker-picker {
+  height: 20px;
+  width: 20px;
+  padding: 0 !important;
+  border-radius: 4px;
+  background: url('/img/btn-colorpicker.png?1363266081') no-repeat top right;
+  border-top: 1px solid black;
+  border-bottom: 1px solid #171717;
+  border-right: 1px solid #171717;
+  border-left: 1px solid #171717;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  line-height: 20px;
+}
+
+/* line 18, ../sass/modules/colorpicker.scss */
+div.colorPicker-palette {
+  width: 110px;
+  position: fixed;
+  border: 1px solid #272727;
+  background-color: #171717;
+  padding: 2px;
+  z-index: 9999;
+  right: 38px !important;
+}
+
+@-moz-document url-prefix() { 
+  div.colorPicker-palette {
+    width: 110px;
+    position: absolute;
+    border: 1px solid #272727;
+    background-color: #171717;
+    padding: 2px;
+    z-index: 9999;
+    right: 38px !important;
+  }
+}
+
+/* line 27, ../sass/modules/colorpicker.scss */
+div.colorPicker_hexWrap {
+  width: 100%;
+  float: left;
+}
+
+/* line 28, ../sass/modules/colorpicker.scss */
+div.colorPicker_hexWrap label {
+  font-size: 95%;
+  color: #2F2F2F;
+  margin: 5px 2px;
+  width: 25%;
+  color: #848484;
+}
+
+/* line 29, ../sass/modules/colorpicker.scss */
+div.colorPicker_hexWrap input {
+  margin: 5px 2px;
+  padding: 0;
+  font-size: 95%;
+  border: 1px solid #272727;
+  width: 65%;
+  background: #171717;
+  color: #dcdcde;
+}
+
+/* line 31, ../sass/modules/colorpicker.scss */
+div.colorPicker-swatch {
+  height: 12px;
+  width: 12px;
+  border: 1px solid #272727;
+  margin: 2px;
+  float: left;
+  cursor: pointer;
+  line-height: 12px;
+}
+
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/* line 3, ../sass/modules/commutator.scss */
+.commutator {
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  font-family: "Open Sans", sans-serif;
+  height: 26px;
+  overflow: hidden;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  font-size: 11px;
+}
+/* line 16, ../sass/modules/commutator.scss */
+.commutator.on {
+  color: #171717;
+  text-shadow: 0 1px rgba(23, 23, 23, 0.2);
+  -webkit-box-shadow: inset 1px 1px 0 rgba(220, 220, 222, 0.4), 1px 1px 1px rgba(23, 23, 23, 0.3);
+  -moz-box-shadow: inset 1px 1px 0 rgba(220, 220, 222, 0.4), 1px 1px 1px rgba(23, 23, 23, 0.3);
+  box-shadow: inset 1px 1px 0 rgba(220, 220, 222, 0.4), 1px 1px 1px rgba(23, 23, 23, 0.3);
+  background: #d59c2e;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ebaf3c), color-stop(100%, #d59c2e));
+  background-image: -webkit-linear-gradient(top, #ebaf3c, #d59c2e);
+  background-image: -moz-linear-gradient(top, #ebaf3c, #d59c2e);
+  background-image: -ms-linear-gradient(top, #ebaf3c, #d59c2e);
+  background-image: -o-linear-gradient(top, #ebaf3c, #d59c2e);
+  background-image: linear-gradient(top, #ebaf3c, #d59c2e);
+  -pie-background: linear-gradient(#ebaf3c, #d59c2e);
+}
+/* line 22, ../sass/modules/commutator.scss */
+.commutator.on .is.on {
+  left: 0;
+}
+/* line 25, ../sass/modules/commutator.scss */
+.commutator.on .is.off {
+  margin-right: 24px;
+}
+/* line 30, ../sass/modules/commutator.scss */
+.commutator.off {
+  background-color: #171717;
+  color: #848484;
+  -webkit-box-shadow: 0 1px 0 rgba(220, 220, 222, 0.06);
+  -moz-box-shadow: 0 1px 0 rgba(220, 220, 222, 0.06);
+  box-shadow: 0 1px 0 rgba(220, 220, 222, 0.06);
+}
+/* line 35, ../sass/modules/commutator.scss */
+.commutator.off .is.on {
+  left: -100%;
+}
+/* line 38, ../sass/modules/commutator.scss */
+.commutator.off .is.off {
+  margin-right: -3px;
+}
+/* line 45, ../sass/modules/commutator.scss */
+.commutator .is {
+  margin: 0 2px;
+  padding: 7px 35px 6px 10px;
+  position: relative;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: left 0.2s linear, margin 0.2s linear;
+  -moz-transition: left 0.2s linear, margin 0.2s linear;
+  -o-transition: left 0.2s linear, margin 0.2s linear;
+  transition: left 0.2s linear, margin 0.2s linear;
+}
+/* line 52, ../sass/modules/commutator.scss */
+.commutator .is.off {
+  background: url('/img/commutator/slider.png?1332136382') left 3px no-repeat;
+  right: -100%;
+  padding-left: 24px;
+  position: absolute;
+  top: 0;
+  font-size: 11px;
+}
+
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/* line 11, ../sass/library/buttons.scss */
+.btn {
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+  *zoom: 1;
+  padding: 4px 12px;
+  margin-bottom: 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  *font-size: 10px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  color: #848484;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+  background-color: #2e2e2e;
+  background-image: -moz-linear-gradient(top, #3a3a3a, #1e1e1e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3a3a3a), to(#1e1e1e));
+  background-image: -webkit-linear-gradient(top, #3a3a3a, #1e1e1e);
+  background-image: -o-linear-gradient(top, #3a3a3a, #1e1e1e);
+  background-image: linear-gradient(to bottom, #3a3a3a, #1e1e1e);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF3A3A3A', endColorstr='#FF1E1E1E', GradientType=0);
+  border-color: #1e1e1e #1e1e1e black;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #1e1e1e;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  border: 1px solid #141414;
+  *border: 0;
+  border-bottom-color: black;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  *margin-left: .3em;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0);
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.btn:hover, .btn:active, .btn.active, .btn.disabled, .btn[disabled] {
+  color: #dcdcde;
+  background-color: #1e1e1e;
+  *background-color: #111111;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.btn:active, .btn.active {
+  background-color: #040404 \9;
+}
+/* line 166, ../sass/framework/_mixins.scss */
+.btn:first-child {
+  *margin-left: 0;
+}
+/* line 34, ../sass/library/buttons.scss */
+.btn:hover {
+  color: #bcbbbc;
+  text-decoration: none;
+  background-position: 0 -5px;
+  -webkit-transition: background-position 0.1s linear;
+  -moz-transition: background-position 0.1s linear;
+  -o-transition: background-position 0.1s linear;
+  transition: background-position 0.1s linear;
+}
+/* line 45, ../sass/library/buttons.scss */
+.btn:focus {
+  outline: thin dotted #333;
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+/* line 51, ../sass/library/buttons.scss */
+.btn.active, .btn:active {
+  background-image: none;
+  outline: 0;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+/* line 59, ../sass/library/buttons.scss */
+.btn.disabled, .btn[disabled] {
+  cursor: default;
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=6500);
+  opacity: 65;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+/* line 74, ../sass/library/buttons.scss */
+.btn-large {
+  padding: 1em 1.25em;
+  font-size: 1.25em;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+}
+
+/* line 80, ../sass/library/buttons.scss */
+.btn-large [class^="icon-"],
+.btn-large [class*=" icon-"] {
+  margin-top: 4px;
+}
+
+/* line 85, ../sass/library/buttons.scss */
+.btn-small {
+  padding: 0.4em 0.8em;
+  font-size: 0.85em;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/* line 91, ../sass/library/buttons.scss */
+.btn-small [class^="icon-"],
+.btn-small [class*=" icon-"] {
+  margin-top: 0;
+}
+
+/* line 95, ../sass/library/buttons.scss */
+.btn-mini [class^="icon-"],
+.btn-mini [class*=" icon-"] {
+  margin-top: -1px;
+}
+
+/* line 100, ../sass/library/buttons.scss */
+.btn-mini {
+  padding: 0.4em 1em;
+  font-size: 0.65em;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/* line 110, ../sass/library/buttons.scss */
+.btn-block {
+  display: block;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 119, ../sass/library/buttons.scss */
+.btn-block + .btn-block {
+  margin-top: 5px;
+}
+
+/* line 127, ../sass/library/buttons.scss */
+input[type="submit"].btn-block,
+input[type="reset"].btn-block,
+input[type="button"].btn-block {
+  width: 100%;
+}
+
+/* line 143, ../sass/library/buttons.scss */
+.btn-primary.active,
+.btn-warning.active,
+.btn-danger.active,
+.btn-success.active,
+.btn-info.active,
+.btn-inverse.active {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* line 149, ../sass/library/buttons.scss */
+.btn {
+  border-color: #141414;
+  border-color: rgba(0, 0, 0, 0.6) rgba(0, 0, 0, 0.45) rgba(0, 0, 0, 0.65);
+}
+
+/* line 154, ../sass/library/buttons.scss */
+.btn-primary {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #2c85b9;
+  background-image: -moz-linear-gradient(top, #42ace9, #0d4c71);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#42ace9), to(#0d4c71));
+  background-image: -webkit-linear-gradient(top, #42ace9, #0d4c71);
+  background-image: -o-linear-gradient(top, #42ace9, #0d4c71);
+  background-image: linear-gradient(to bottom, #42ace9, #0d4c71);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF42ACE9', endColorstr='#FF0D4C71', GradientType=0);
+  border-color: #0d4c71 #0d4c71 #051e2d;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #0d4c71;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  border: 1px solid #0e537a;
+  border-bottom: 1px solid #09344d;
+  color: #01355b;
+  font-size: 11px;
+  text-shadow: none;
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.btn-primary:hover, .btn-primary:active, .btn-primary.active, .btn-primary.disabled, .btn-primary[disabled] {
+  color: #dcdcde;
+  background-color: #0d4c71;
+  *background-color: #0a3d5a;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.btn-primary:active, .btn-primary.active {
+  background-color: #082e44 \9;
+}
+
+/* line 163, ../sass/library/buttons.scss */
+.btn-secondary {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #d7ac5a;
+  background-image: -moz-linear-gradient(top, #f3cf8b, #af7912);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f3cf8b), to(#af7912));
+  background-image: -webkit-linear-gradient(top, #f3cf8b, #af7912);
+  background-image: -o-linear-gradient(top, #f3cf8b, #af7912);
+  background-image: linear-gradient(to bottom, #f3cf8b, #af7912);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF3CF8B', endColorstr='#FFAF7912', GradientType=0);
+  border-color: #af7912 #af7912 #6a490b;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #af7912;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  border: 1px solid #c68914;
+  border-bottom: 1px solid #986910;
+  color: #171717;
+  font-size: 11px;
+  text-shadow: none;
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.btn-secondary:hover, .btn-secondary:active, .btn-secondary.active, .btn-secondary.disabled, .btn-secondary[disabled] {
+  color: #dcdcde;
+  background-color: #af7912;
+  *background-color: #986910;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.btn-secondary:active, .btn-secondary.active {
+  background-color: #81590d \9;
+}
+/* line 170, ../sass/library/buttons.scss */
+.btn-secondary:hover {
+  color: #212121;
+}
+
+/* line 173, ../sass/library/buttons.scss */
+.btn-cancel {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #ebaf3c;
+  background-image: -moz-linear-gradient(top, #ebaf3c, #ebaf3c);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ebaf3c), to(#ebaf3c));
+  background-image: -webkit-linear-gradient(top, #ebaf3c, #ebaf3c);
+  background-image: -o-linear-gradient(top, #ebaf3c, #ebaf3c);
+  background-image: linear-gradient(to bottom, #ebaf3c, #ebaf3c);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFEBAF3C', endColorstr='#FFEBAF3C', GradientType=0);
+  border-color: #ebaf3c #ebaf3c #c68914;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #ebaf3c;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  border: 1px solid #c68914;
+  border-bottom: 1px solid #986910;
+  color: #171717;
+  text-shadow: none;
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.btn-cancel:hover, .btn-cancel:active, .btn-cancel.active, .btn-cancel.disabled, .btn-cancel[disabled] {
+  color: #dcdcde;
+  background-color: #ebaf3c;
+  *background-color: #e9a625;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.btn-cancel:active, .btn-cancel.active {
+  background-color: #dd9917 \9;
+}
+/* line 179, ../sass/library/buttons.scss */
+.btn-cancel:hover {
+  color: #212121;
+}
+
+/* line 183, ../sass/library/buttons.scss */
+.btn-warning {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #ed8455;
+  background-image: -moz-linear-gradient(top, #f09871, #e9662c);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f09871), to(#e9662c));
+  background-image: -webkit-linear-gradient(top, #f09871, #e9662c);
+  background-image: -o-linear-gradient(top, #f09871, #e9662c);
+  background-image: linear-gradient(to bottom, #f09871, #e9662c);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFF09871', endColorstr='#FFE9662C', GradientType=0);
+  border-color: #e9662c #e9662c #b64513;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #e9662c;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.btn-warning:hover, .btn-warning:active, .btn-warning.active, .btn-warning.disabled, .btn-warning[disabled] {
+  color: #dcdcde;
+  background-color: #e9662c;
+  *background-color: #e45618;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.btn-warning:active, .btn-warning.active {
+  background-color: #cd4e15 \9;
+}
+
+/* line 187, ../sass/library/buttons.scss */
+.btn-danger {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #870000;
+  background-image: -moz-linear-gradient(top, #980000, #6e0000);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#980000), to(#6e0000));
+  background-image: -webkit-linear-gradient(top, #980000, #6e0000);
+  background-image: -o-linear-gradient(top, #980000, #6e0000);
+  background-image: linear-gradient(to bottom, #980000, #6e0000);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF980000', endColorstr='#FF6E0000', GradientType=0);
+  border-color: #6e0000 #6e0000 #220000;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #6e0000;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.btn-danger:hover, .btn-danger:active, .btn-danger.active, .btn-danger.disabled, .btn-danger[disabled] {
+  color: #dcdcde;
+  background-color: #6e0000;
+  *background-color: #550000;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.btn-danger:active, .btn-danger.active {
+  background-color: #3b0000 \9;
+}
+
+/* line 191, ../sass/library/buttons.scss */
+.btn-success {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #5bb65b;
+  background-image: -moz-linear-gradient(top, #62c462, #51a351);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462), to(#51a351));
+  background-image: -webkit-linear-gradient(top, #62c462, #51a351);
+  background-image: -o-linear-gradient(top, #62c462, #51a351);
+  background-image: linear-gradient(to bottom, #62c462, #51a351);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF62C462', endColorstr='#FF51A351', GradientType=0);
+  border-color: #51a351 #51a351 #387038;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #51a351;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.btn-success:hover, .btn-success:active, .btn-success.active, .btn-success.disabled, .btn-success[disabled] {
+  color: #dcdcde;
+  background-color: #51a351;
+  *background-color: #499249;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.btn-success:active, .btn-success.active {
+  background-color: #408140 \9;
+}
+
+/* line 195, ../sass/library/buttons.scss */
+.btn-info {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #49afcd;
+  background-image: -moz-linear-gradient(top, #5bc0de, #2f96b4);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5bc0de), to(#2f96b4));
+  background-image: -webkit-linear-gradient(top, #5bc0de, #2f96b4);
+  background-image: -o-linear-gradient(top, #5bc0de, #2f96b4);
+  background-image: linear-gradient(to bottom, #5bc0de, #2f96b4);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF5BC0DE', endColorstr='#FF2F96B4', GradientType=0);
+  border-color: #2f96b4 #2f96b4 #1f6377;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #2f96b4;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.btn-info:hover, .btn-info:active, .btn-info.active, .btn-info.disabled, .btn-info[disabled] {
+  color: #dcdcde;
+  background-color: #2f96b4;
+  *background-color: #2a85a0;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.btn-info:active, .btn-info.active {
+  background-color: #24748c \9;
+}
+
+/* line 199, ../sass/library/buttons.scss */
+.btn-inverse {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #434343;
+  background-image: -moz-linear-gradient(top, #444444, #434343);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#444444), to(#434343));
+  background-image: -webkit-linear-gradient(top, #444444, #434343);
+  background-image: -o-linear-gradient(top, #444444, #434343);
+  background-image: linear-gradient(to bottom, #444444, #434343);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF444444', endColorstr='#FF434343', GradientType=0);
+  border-color: #434343 #434343 #1d1d1d;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #434343;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.btn-inverse:hover, .btn-inverse:active, .btn-inverse.active, .btn-inverse.disabled, .btn-inverse[disabled] {
+  color: #dcdcde;
+  background-color: #434343;
+  *background-color: #363636;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.btn-inverse:active, .btn-inverse.active {
+  background-color: #2a2a2a \9;
+}
+
+/* line 208, ../sass/library/buttons.scss */
+button.btn,
+input[type="submit"].btn {
+  *padding-top: 3px;
+  *padding-bottom: 3px;
+}
+/* line 211, ../sass/library/buttons.scss */
+button.btn::-moz-focus-inner,
+input[type="submit"].btn::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+/* line 220, ../sass/library/buttons.scss */
+button.btn.btn-large,
+input[type="submit"].btn.btn-large {
+  *padding-top: 7px;
+  *padding-bottom: 7px;
+}
+/* line 224, ../sass/library/buttons.scss */
+button.btn.btn-small,
+input[type="submit"].btn.btn-small {
+  *padding-top: 3px;
+  *padding-bottom: 3px;
+}
+/* line 228, ../sass/library/buttons.scss */
+button.btn.btn-mini,
+input[type="submit"].btn.btn-mini {
+  *padding-top: 1px;
+  *padding-bottom: 1px;
+}
+
+/* line 241, ../sass/library/buttons.scss */
+.btn-link,
+.btn-link:active,
+.btn-link[disabled] {
+  background-color: transparent;
+  background-image: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+/* line 246, ../sass/library/buttons.scss */
+.btn-link {
+  border-color: transparent;
+  cursor: pointer;
+  color: #1681bf;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 252, ../sass/library/buttons.scss */
+.btn-link:hover {
+  color: #0e537a;
+  text-decoration: underline;
+  background-color: transparent;
+}
+
+/* line 257, ../sass/library/buttons.scss */
+.btn-link[disabled]:hover {
+  color: #434343;
+  text-decoration: none;
+}
+
+/* line 263, ../sass/library/buttons.scss */
+.btn.delete {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+  display: block;
+  margin-top: 18px;
+  color: #848484;
+}
+
+/* line 264, ../sass/library/buttons.scss */
+.btn.delete:hover {
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #870000;
+  background-image: -moz-linear-gradient(top, #980000, #6e0000);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#980000), to(#6e0000));
+  background-image: -webkit-linear-gradient(top, #980000, #6e0000);
+  background-image: -o-linear-gradient(top, #980000, #6e0000);
+  background-image: linear-gradient(to bottom, #980000, #6e0000);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF980000', endColorstr='#FF6E0000', GradientType=0);
+  border-color: #6e0000 #6e0000 #220000;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #6e0000;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.btn.delete:hover:hover, .btn.delete:hover:active, .btn.delete:hover.active, .btn.delete:hover.disabled, .btn.delete:hover[disabled] {
+  color: #dcdcde;
+  background-color: #6e0000;
+  *background-color: #550000;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.btn.delete:hover:active, .btn.delete:hover.active {
+  background-color: #3b0000 \9;
+}
+
+/* line 265, ../sass/library/buttons.scss */
+.prefix, .postfix {
+  display: block;
+  position: relative;
+  z-index: 2;
+  text-align: left;
+  width: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 25px;
+  line-height: 25px;
+}
+
+/* line 275, ../sass/library/buttons.scss */
+.btn.prefix, .btn.postfix {
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+}
+
+/* line 279, ../sass/library/buttons.scss */
+span.prefix, span.postfix {
+  background: #cfcfd2;
+  border: 1px solid #a8a8ad;
+}
+
+/* line 283, ../sass/library/buttons.scss */
+.prefix {
+  left: 2px;
+  -moz-border-radius-topleft: 4px;
+  -webkit-border-top-left-radius: 4px;
+  border-top-left-radius: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  -moz-border-radius-topright: 0px;
+  -webkit-border-top-right-radius: 0px;
+  border-top-right-radius: 0px;
+  -moz-border-radius-bottomright: 0px;
+  -webkit-border-bottom-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  overflow: hidden;
+}
+
+/* line 290, ../sass/library/buttons.scss */
+.postfix {
+  right: 2px;
+  -moz-border-radius-topright: 4px;
+  -webkit-border-top-right-radius: 4px;
+  border-top-right-radius: 4px;
+  -moz-border-radius-bottomright: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  -moz-border-radius-topleft: 0px;
+  -webkit-border-top-left-radius: 0px;
+  border-top-left-radius: 0px;
+  -moz-border-radius-bottomleft: 0px;
+  -webkit-border-bottom-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+/*
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*/
+/* BOOTSTRAP MIXINS */
+/* line 8, ../sass/library/button-groups.scss */
+.btn-group {
+  position: relative;
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+  *zoom: 1;
+  vertical-align: middle;
+  white-space: nowrap;
+  *margin-left: .3em;
+  border: 1px solid #141414;
+  border-color: rgba(36, 36, 36, 0.4) rgba(50, 50, 50, 0.6) rgba(230, 230, 230, 0.1);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 166, ../sass/framework/_mixins.scss */
+.btn-group:first-child {
+  *margin-left: 0;
+}
+
+/* line 22, ../sass/library/button-groups.scss */
+.btn-group + .btn-group {
+  margin-left: 5px;
+}
+
+/* line 27, ../sass/library/button-groups.scss */
+.btn-toolbar {
+  font-size: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+/* line 33, ../sass/library/button-groups.scss */
+.btn-toolbar > .btn + .btn,
+.btn-toolbar > .btn-group + .btn,
+.btn-toolbar > .btn + .btn-group {
+  margin-left: 5px;
+}
+
+/* line 39, ../sass/library/button-groups.scss */
+.btn-group > .btn {
+  position: relative;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 43, ../sass/library/button-groups.scss */
+.btn-group > .btn + .btn {
+  margin-left: -5px;
+}
+
+/* line 48, ../sass/library/button-groups.scss */
+.btn-group > .btn,
+.btn-group > .dropdown-menu,
+.btn-group > .popover {
+  font-size: 1em;
+}
+
+/* line 53, ../sass/library/button-groups.scss */
+.btn-group > .btn-mini {
+  font-size: 0.65em;
+}
+
+/* line 56, ../sass/library/button-groups.scss */
+.btn-group > .btn-small {
+  font-size: 0.85em;
+}
+
+/* line 59, ../sass/library/button-groups.scss */
+.btn-group > .btn-large {
+  font-size: 1.25em;
+}
+
+/* line 64, ../sass/library/button-groups.scss */
+.btn-group > .btn:first-child {
+  margin-left: 0;
+  -moz-border-radius-topleft: 4px;
+  -webkit-border-top-left-radius: 4px;
+  border-top-left-radius: 4px;
+  -moz-border-radius-bottomleft: 4px;
+  -webkit-border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+/* line 71, ../sass/library/button-groups.scss */
+.btn-group > .btn:last-child,
+.btn-group > .dropdown-toggle {
+  -moz-border-radius-topright: 4px;
+  -webkit-border-top-right-radius: 4px;
+  border-top-right-radius: 4px;
+  -moz-border-radius-bottomright: 4px;
+  -webkit-border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* line 76, ../sass/library/button-groups.scss */
+.btn-group > .btn.large:first-child {
+  margin-left: 0;
+  -moz-border-radius-topleft: 6px;
+  -webkit-border-top-left-radius: 6px;
+  border-top-left-radius: 6px;
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+/* line 82, ../sass/library/button-groups.scss */
+.btn-group > .btn.large:last-child,
+.btn-group > .large.dropdown-toggle {
+  -moz-border-radius-topright: 6px;
+  -webkit-border-top-right-radius: 6px;
+  border-top-right-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+/* line 91, ../sass/library/button-groups.scss */
+.btn-group > .btn:hover,
+.btn-group > .btn:focus,
+.btn-group > .btn:active,
+.btn-group > .btn.active {
+  z-index: 2;
+}
+
+/* line 97, ../sass/library/button-groups.scss */
+.btn-group .dropdown-toggle:active,
+.btn-group.open .dropdown-toggle {
+  outline: 0;
+}
+
+/* line 107, ../sass/library/button-groups.scss */
+.btn-group > .btn + .dropdown-toggle {
+  padding-left: 8px;
+  padding-right: 8px;
+  -webkit-box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.125), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.125), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 1px 0 0 rgba(255, 255, 255, 0.125), inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  *padding-top: 5px;
+  *padding-bottom: 5px;
+}
+
+/* line 114, ../sass/library/button-groups.scss */
+.btn-group > .btn-mini + .dropdown-toggle {
+  padding-left: 5px;
+  padding-right: 5px;
+  *padding-top: 2px;
+  *padding-bottom: 2px;
+}
+
+/* line 120, ../sass/library/button-groups.scss */
+.btn-group > .btn-small + .dropdown-toggle {
+  *padding-top: 5px;
+  *padding-bottom: 4px;
+}
+
+/* line 124, ../sass/library/button-groups.scss */
+.btn-group > .btn-large + .dropdown-toggle {
+  padding-left: 12px;
+  padding-right: 12px;
+  *padding-top: 7px;
+  *padding-bottom: 7px;
+}
+
+/* line 135, ../sass/library/button-groups.scss */
+.btn-group.open .dropdown-toggle {
+  background-image: none;
+  -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+/* line 141, ../sass/library/button-groups.scss */
+.btn-group.open .btn.dropdown-toggle {
+  background-color: #3a3a3a;
+}
+/* line 144, ../sass/library/button-groups.scss */
+.btn-group.open .btn-primary.dropdown-toggle {
+  background-color: #42ace9;
+}
+/* line 147, ../sass/library/button-groups.scss */
+.btn-group.open .btn-warning.dropdown-toggle {
+  background-color: #e9662c;
+}
+/* line 150, ../sass/library/button-groups.scss */
+.btn-group.open .btn-danger.dropdown-toggle {
+  background-color: #6e0000;
+}
+/* line 153, ../sass/library/button-groups.scss */
+.btn-group.open .btn-success.dropdown-toggle {
+  background-color: #51a351;
+}
+/* line 156, ../sass/library/button-groups.scss */
+.btn-group.open .btn-info.dropdown-toggle {
+  background-color: #2f96b4;
+}
+/* line 159, ../sass/library/button-groups.scss */
+.btn-group.open .btn-inverse.dropdown-toggle {
+  background-color: #434343;
+}
+
+/* line 166, ../sass/library/button-groups.scss */
+.btn .caret {
+  margin-top: 8px;
+  margin-left: 0;
+}
+
+/* line 173, ../sass/library/button-groups.scss */
+.btn-mini .caret,
+.btn-small .caret,
+.btn-large .caret {
+  margin-top: 6px;
+}
+
+/* line 176, ../sass/library/button-groups.scss */
+.btn-large .caret {
+  border-left-width: 5px;
+  border-right-width: 5px;
+  border-top-width: 5px;
+}
+
+/* line 182, ../sass/library/button-groups.scss */
+.dropup .btn-large .caret {
+  border-bottom-width: 5px;
+}
+
+/* line 195, ../sass/library/button-groups.scss */
+.btn-primary .caret,
+.btn-warning .caret,
+.btn-danger .caret,
+.btn-info .caret,
+.btn-success .caret,
+.btn-inverse .caret {
+  border-top-color: #dcdcde;
+  border-bottom-color: #dcdcde;
+}
+
+/* line 206, ../sass/library/button-groups.scss */
+.btn-group-vertical {
+  display: inline-block;
+  *display: inline;
+  /* IE7 inline-block hack */
+  *zoom: 1;
+}
+
+/* line 210, ../sass/library/button-groups.scss */
+.btn-group-vertical > .btn {
+  display: block;
+  float: none;
+  max-width: 100%;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+
+/* line 216, ../sass/library/button-groups.scss */
+.btn-group-vertical > .btn + .btn {
+  margin-left: 0;
+  margin-top: -1px;
+}
+
+/* line 220, ../sass/library/button-groups.scss */
+.btn-group-vertical > .btn:first-child {
+  -webkit-border-radius: 4px 4px 0 0;
+  -moz-border-radius: 4px 4px 0 0;
+  -ms-border-radius: 4px 4px 0 0;
+  -o-border-radius: 4px 4px 0 0;
+  border-radius: 4px 4px 0 0;
+}
+
+/* line 223, ../sass/library/button-groups.scss */
+.btn-group-vertical > .btn:last-child {
+  -webkit-border-radius: 0 0 4px 4px;
+  -moz-border-radius: 0 0 4px 4px;
+  -ms-border-radius: 0 0 4px 4px;
+  -o-border-radius: 0 0 4px 4px;
+  border-radius: 0 0 4px 4px;
+}
+
+/* line 226, ../sass/library/button-groups.scss */
+.btn-group-vertical > .btn-large:first-child {
+  -webkit-border-radius: 6px 6px 0 0;
+  -moz-border-radius: 6px 6px 0 0;
+  -ms-border-radius: 6px 6px 0 0;
+  -o-border-radius: 6px 6px 0 0;
+  border-radius: 6px 6px 0 0;
+}
+
+/* line 229, ../sass/library/button-groups.scss */
+.btn-group-vertical > .btn-large:last-child {
+  -webkit-border-radius: 0 0 6px 6px;
+  -moz-border-radius: 0 0 6px 6px;
+  -ms-border-radius: 0 0 6px 6px;
+  -o-border-radius: 0 0 6px 6px;
+  border-radius: 0 0 6px 6px;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Layout */
+/* line 17, ../sass/app.scss */
+.container {
+  *zoom: 1;
+  max-width: 59em;
+  _width: 59em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 992px;
+}
+/* line 38, C:/Ruby200-x64/lib/ruby/gems/2.0.0/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+.container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 19, ../sass/app.scss */
+.container div#logo {
+  width: 23.72881%;
+  float: left;
+  margin-right: 1.69492%;
+  display: inline;
+}
+/* line 20, ../sass/app.scss */
+.container div#user-settings {
+  width: 23.72881%;
+  float: right;
+  margin-right: 0;
+  *margin-left: -1em;
+  display: inline;
+}
+/* line 21, ../sass/app.scss */
+.container div#pdf-controls {
+  width: 74.57627%;
+  float: left;
+  margin-right: 1.69492%;
+  display: inline;
+}
+/* line 22, ../sass/app.scss */
+.container div#pdf-save {
+  width: 23.72881%;
+  float: right;
+  margin-right: 0;
+  *margin-left: -1em;
+  display: inline;
+}
+/* line 23, ../sass/app.scss */
+.container div#full-screen {
+  width: 6.77966%;
+  float: left;
+  margin-right: 1.69492%;
+  display: inline;
+}
+/* line 25, ../sass/app.scss */
+.container div#thumbs {
+  width: 91.52542%;
+  float: right;
+  margin-right: 0;
+  *margin-left: -1em;
+  display: inline;
+}
+/* line 26, ../sass/app.scss */
+.container div#thumbs div.thumblist {
+  width: 85%;
+  margin-left: 70px;
+}
+/* line 27, ../sass/app.scss */
+.container div#thumbs .next {
+  right: -20px;
+}
+/* line 29, ../sass/app.scss */
+.container div.main {
+  width: 74.57627%;
+  float: left;
+  margin-right: 1.69492%;
+  display: inline;
+  position: relative;
+}
+/* line 30, ../sass/app.scss */
+.container div.sidebar {
+  width: 23.72881%;
+  float: right;
+  margin-right: 0;
+  *margin-left: -1em;
+  display: inline;
+}
+/* line 31, ../sass/app.scss */
+.container footer {
+  width: 100%;
+  float: right;
+  margin-right: 0;
+  *margin-left: -1em;
+  display: inline;
+  position: relative;
+}
+/* line 32, ../sass/app.scss */
+.container #credits {
+  width: 49.15254%;
+  float: left;
+  margin-right: 1.69492%;
+  display: inline;
+}
+/* line 33, ../sass/app.scss */
+.container #preview {
+  width: 23.72881%;
+  float: right;
+  margin-right: 0;
+  *margin-left: -1em;
+  display: inline;
+  margin-right: 25.42373%;
+}
+@media (min-width: 80em) {
+  /* line 17, ../sass/app.scss */
+  .container {
+    max-width: 79em;
+  }
+  /* line 40, ../sass/app.scss */
+  .container div#pdf-controls {
+    width: 81.01266%;
+    float: left;
+    margin-right: 1.26582%;
+  }
+  /* line 41, ../sass/app.scss */
+  .container div#full-screen {
+    width: 5.06329%;
+    float: left;
+    margin-right: 1.26582%;
+  }
+  /* line 43, ../sass/app.scss */
+  .container div#thumbs {
+    width: 93.67089%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 44, ../sass/app.scss */
+  .container div#thumbs div.thumblist {
+    width: 90%;
+    margin-left: 65px;
+  }
+  /* line 45, ../sass/app.scss */
+  .container div#thumbs .next {
+    right: -22px;
+  }
+  /* line 47, ../sass/app.scss */
+  .container div.main {
+    width: 81.01266%;
+    float: left;
+    margin-right: 1.26582%;
+    position: relative;
+  }
+  /* line 48, ../sass/app.scss */
+  .container div.sidebar {
+    width: 17.72152%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 49, ../sass/app.scss */
+  .container div#pdf-save {
+    width: 17.72152%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 50, ../sass/app.scss */
+  .container #credits {
+    width: 62.02532%;
+    float: left;
+    margin-right: 1.26582%;
+  }
+  /* line 51, ../sass/app.scss */
+  .container #preview {
+    width: 17.72152%;
+    float: right;
+    margin-right: 0;
+    margin-right: 18.98734%;
+  }
+}
+@media (min-width: 90em) {
+  /* line 17, ../sass/app.scss */
+  .container {
+    max-width: 89em;
+  }
+  /* line 55, ../sass/app.scss */
+  .container div#pdf-controls {
+    width: 83.14607%;
+    float: left;
+    margin-right: 1.1236%;
+  }
+  /* line 56, ../sass/app.scss */
+  .container div#full-screen {
+    width: 4.49438%;
+    float: left;
+    margin-right: 1.1236%;
+  }
+  /* line 58, ../sass/app.scss */
+  .container div#thumbs {
+    width: 94.38202%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 59, ../sass/app.scss */
+  .container div#thumbs div.thumblist {
+    width: 92%;
+    margin-left: 62px;
+  }
+  /* line 60, ../sass/app.scss */
+  .container div#thumbs .next {
+    right: -24px;
+  }
+  /* line 62, ../sass/app.scss */
+  .container div.main {
+    width: 83.14607%;
+    float: left;
+    margin-right: 1.1236%;
+    position: relative;
+  }
+  /* line 63, ../sass/app.scss */
+  .container div.sidebar {
+    width: 15.73034%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 64, ../sass/app.scss */
+  .container div#pdf-save {
+    width: 15.73034%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 65, ../sass/app.scss */
+  .container #credits {
+    width: 66.29213%;
+    float: left;
+    margin-right: 1.1236%;
+  }
+  /* line 66, ../sass/app.scss */
+  .container #preview {
+    width: 15.73034%;
+    float: right;
+    margin-right: 0;
+    margin-right: 16.85393%;
+  }
+}
+@media (min-width: 100em) {
+  /* line 17, ../sass/app.scss */
+  .container {
+    max-width: 99em;
+  }
+  /* line 70, ../sass/app.scss */
+  .container div#pdf-controls {
+    width: 84.84848%;
+    float: left;
+    margin-right: 1.0101%;
+  }
+  /* line 71, ../sass/app.scss */
+  .container div#full-screen {
+    width: 4.0404%;
+    float: left;
+    margin-right: 1.0101%;
+  }
+  /* line 73, ../sass/app.scss */
+  .container div#thumbs {
+    width: 94.94949%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 74, ../sass/app.scss */
+  .container div#thumbs div.thumblist {
+    width: 93%;
+    margin-left: 62px;
+  }
+  /* line 75, ../sass/app.scss */
+  .container div#thumbs .next {
+    right: -25px;
+  }
+  /* line 77, ../sass/app.scss */
+  .container div.main {
+    width: 84.84848%;
+    float: left;
+    margin-right: 1.0101%;
+    position: relative;
+  }
+  /* line 78, ../sass/app.scss */
+  .container div.sidebar {
+    width: 14.14141%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 79, ../sass/app.scss */
+  .container div#pdf-save {
+    width: 14.14141%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 80, ../sass/app.scss */
+  .container #credits {
+    width: 69.69697%;
+    float: left;
+    margin-right: 1.0101%;
+  }
+  /* line 81, ../sass/app.scss */
+  .container #preview {
+    width: 14.14141%;
+    float: right;
+    margin-right: 0;
+    margin-right: 15.15152%;
+  }
+}
+@media (min-width: 120em) {
+  /* line 17, ../sass/app.scss */
+  .container {
+    max-width: 119em;
+  }
+  /* line 85, ../sass/app.scss */
+  .container div#pdf-controls {
+    width: 87.39496%;
+    float: left;
+    margin-right: 0.84034%;
+  }
+  /* line 86, ../sass/app.scss */
+  .container div#full-screen {
+    width: 3.36134%;
+    float: left;
+    margin-right: 0.84034%;
+  }
+  /* line 88, ../sass/app.scss */
+  .container div#thumbs {
+    width: 95.79832%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 89, ../sass/app.scss */
+  .container div#thumbs div.thumblist {
+    width: 94%;
+    margin-left: 65px;
+  }
+  /* line 90, ../sass/app.scss */
+  .container div#thumbs .next {
+    right: -26px;
+  }
+  /* line 92, ../sass/app.scss */
+  .container div.main {
+    width: 87.39496%;
+    float: left;
+    margin-right: 0.84034%;
+    position: relative;
+  }
+  /* line 93, ../sass/app.scss */
+  .container div.sidebar {
+    width: 11.76471%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 94, ../sass/app.scss */
+  .container div#pdf-save {
+    width: 11.76471%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 95, ../sass/app.scss */
+  .container #credits {
+    width: 74.78992%;
+    float: left;
+    margin-right: 0.84034%;
+  }
+  /* line 96, ../sass/app.scss */
+  .container #preview {
+    width: 11.76471%;
+    float: right;
+    margin-right: 0;
+    margin-right: 12.60504%;
+  }
+}
+@media (min-width: 160em) {
+  /* line 17, ../sass/app.scss */
+  .container {
+    max-width: 159em;
+  }
+  /* line 100, ../sass/app.scss */
+  .container div#pdf-controls {
+    width: 90.56604%;
+    float: left;
+    margin-right: 0.62893%;
+  }
+  /* line 101, ../sass/app.scss */
+  .container div#full-screen {
+    width: 2.51572%;
+    float: left;
+    margin-right: 0.62893%;
+  }
+  /* line 103, ../sass/app.scss */
+  .container div#thumbs {
+    width: 96.85535%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 104, ../sass/app.scss */
+  .container div#thumbs div.thumblist {
+    width: 96%;
+    margin-left: 65px;
+  }
+  /* line 105, ../sass/app.scss */
+  .container div#thumbs .next {
+    right: -22px;
+  }
+  /* line 107, ../sass/app.scss */
+  .container div.main {
+    width: 90.56604%;
+    float: left;
+    margin-right: 0.62893%;
+    position: relative;
+  }
+  /* line 108, ../sass/app.scss */
+  .container div.sidebar {
+    width: 8.80503%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 109, ../sass/app.scss */
+  .container div#pdf-save {
+    width: 8.80503%;
+    float: right;
+    margin-right: 0;
+  }
+  /* line 110, ../sass/app.scss */
+  .container #credits {
+    width: 81.13208%;
+    float: left;
+    margin-right: 0.62893%;
+  }
+  /* line 111, ../sass/app.scss */
+  .container #preview {
+    width: 8.80503%;
+    float: right;
+    margin-right: 0;
+    margin-right: 9.43396%;
+  }
+}
+
+/* line 115, ../sass/app.scss */
+.inline-primary {
+  width: 83.05085%;
+  float: left;
+  margin-right: 1.69492%;
+  display: inline;
+}
+
+/* line 116, ../sass/app.scss */
+.inline-secondary {
+  width: 15.25424%;
+  float: right;
+  margin-right: 0;
+  *margin-left: -1em;
+  display: inline;
+}
+
+/* line 119, ../sass/app.scss */
+div.inline {
+  *zoom: 1;
+  position: relative;
+  margin-bottom: 8px;
+}
+/* line 120, ../sass/framework/_mixins.scss */
+div.inline:before, div.inline:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 127, ../sass/framework/_mixins.scss */
+div.inline:after {
+  clear: both;
+}
+/* line 120, ../sass/app.scss */
+div.inline label {
+  display: inline-block;
+  float: left;
+  height: 26px;
+  line-height: 26px;
+  width: 70;
+}
+/* line 121, ../sass/app.scss */
+div.inline .select, div.inline .select-arrowed {
+  display: inline-block;
+  float: right;
+  width: 35%;
+}
+/* line 122, ../sass/app.scss */
+div.inline input[type="text"], div.inline input[type="password"] {
+  display: inline-block;
+  float: right;
+  width: 35%;
+}
+/* line 123, ../sass/app.scss */
+div.inline .colorPicker-picker {
+  position: absolute;
+  right: 0;
+  top: 3px;
+}
+
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{
+	body{
+   overflow-y:scroll;
+   overflow-x:hidden;
+   -webkit-overflow-scrolling:touch;
+	}
+}
+*/
+/* line 136, ../sass/app.scss */
+html {
+  overflow: hidden;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* line 137, ../sass/app.scss */
+body {
+  background: #212121;
+  position: relative;
+  overflow-y: scroll;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* line 138, ../sass/app.scss */
+#wrapper {
+  background: #212121 url('/img/bg-top.png?1362678561') 0 0 repeat-x;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 140, ../sass/app.scss */
+header, footer, div#topbar, div#main, div#sidebar, div#pdf-controls {
+  *zoom: 1;
+}
+/* line 120, ../sass/framework/_mixins.scss */
+header:before, header:after, footer:before, footer:after, div#topbar:before, div#topbar:after, div#main:before, div#main:after, div#sidebar:before, div#sidebar:after, div#pdf-controls:before, div#pdf-controls:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 127, ../sass/framework/_mixins.scss */
+header:after, footer:after, div#topbar:after, div#main:after, div#sidebar:after, div#pdf-controls:after {
+  clear: both;
+}
+
+/* ---- HEADER ---- */
+/* line 143, ../sass/app.scss */
+header {
+  *zoom: 1;
+  margin-bottom: 25px;
+}
+/* line 120, ../sass/framework/_mixins.scss */
+header:before, header:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 127, ../sass/framework/_mixins.scss */
+header:after {
+  clear: both;
+}
+
+/* line 144, ../sass/app.scss */
+div#topbar {
+  height: 52px;
+}
+/* line 145, ../sass/app.scss */
+div#topbar ul > li {
+  height: 37px;
+  width: 52px;
+  padding-top: 14px;
+  overflow: hidden;
+  border-right: 1px solid #171717;
+  border-left: 1px solid #272727;
+  margin-bottom: 1px;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+/* line 146, ../sass/app.scss */
+div#topbar ul > li:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+/* line 147, ../sass/app.scss */
+div#topbar ul > li:last-child {
+  border-right: none;
+  padding-right: 0;
+  padding-left: 0;
+}
+/* line 148, ../sass/app.scss */
+div#topbar ul > li:hover a {
+  color: #848484;
+}
+/* line 149, ../sass/app.scss */
+div#topbar ul > li:hover i {
+  color: #848484;
+}
+/* line 151, ../sass/app.scss */
+div#topbar a {
+  color: #434343;
+  display: block;
+  clear: both;
+  text-align: center;
+  width: auto;
+  text-transform: uppercase;
+  font-size: 9px;
+  height: 52px;
+  overflow: hidden;
+  display: block;
+}
+/* line 153, ../sass/app.scss */
+div#topbar i {
+  display: block;
+  font-size: 13px;
+  color: #434343;
+  margin: 0 auto;
+}
+
+/* line 155, ../sass/app.scss */
+div#logo a img {
+  float: left;
+  margin-left: 6px;
+}
+
+/* line 156, ../sass/app.scss */
+div#pdf-controls {
+  background: url('/img/bg-thumbs.png?1362677304') 0 -3px repeat-x;
+  height: 74px;
+}
+
+/* User Section */
+/* line 159, ../sass/app.scss */
+#user-settings ul {
+  float: right;
+}
+/* line 160, ../sass/app.scss */
+#user-settings ul li {
+  float: left;
+  display: inline;
+}
+/* line 160, ../sass/app.scss */
+#user-settings ul li a {
+  display: block;
+}
+
+/* Full Screen */
+/* line 165, ../sass/app.scss */
+div#full-screen {
+  background: url('/img/bg-fullscreen.png?1362679881') 0 -2px no-repeat;
+  height: 74px;
+}
+/* line 166, ../sass/app.scss */
+div#full-screen a {
+  display: block;
+  height: 74px;
+}
+/* line 167, ../sass/app.scss */
+div#full-screen a:hover i {
+  color: #848484;
+}
+/* line 169, ../sass/app.scss */
+div#full-screen > a > i {
+  color: #434343;
+  font-size: 18px;
+  margin-left: 16px;
+  margin-top: 28px;
+}
+
+/* Zoom-In */
+/* line 174, ../sass/app.scss */
+div#zoom-in {
+  padding-top: 34px;
+}
+/* line 175, ../sass/app.scss */
+div#zoom-in .scrollbox {
+  width: 160px;
+}
+/* line 176, ../sass/app.scss */
+div#zoom-in #slider-value {
+  margin-top: 10px;
+  text-align: center;
+  padding-left: 4px;
+  width: 160px;
+}
+
+/* Thumbs */
+/* line 182, ../sass/app.scss */
+div#thumbs {
+  position: relative;
+}
+/* line 183, ../sass/app.scss */
+div#thumbs .text, div#thumbs .text-rounded {
+  position: absolute;
+  top: 2px;
+  left: -5px;
+  height: 76px;
+  width: 40px;
+}
+/* line 184, ../sass/app.scss */
+div#thumbs .text #pdf-page, div#thumbs .text-rounded #pdf-page {
+  margin-top: 24px;
+  padding: 4px;
+}
+/* line 186, ../sass/app.scss */
+div#thumbs .nav-arrow {
+  position: absolute;
+}
+/* line 187, ../sass/app.scss */
+div#thumbs .nav-arrow i {
+  padding-top: 32px;
+}
+/* line 189, ../sass/app.scss */
+div#thumbs #nav-left {
+  left: 53px;
+  height: 76px;
+  top: 0;
+}
+/* line 190, ../sass/app.scss */
+div#thumbs #nav-right {
+  border-right: 1px solid #171717;
+  right: 0;
+  top: 0;
+  height: 76px;
+  padding-right: 5px;
+}
+/* line 191, ../sass/app.scss */
+div#thumbs .thumblist {
+  float: left;
+  display: inline-block;
+  margin-left: 64px;
+  margin-top: 9px;
+}
+/* line 193, ../sass/app.scss */
+div#thumbs .thumblist ul li {
+  display: inline;
+  float: left;
+  height: 60px;
+  margin-bottom: 20px;
+}
+/* line 194, ../sass/app.scss */
+div#thumbs .thumblist ul li.active a {
+  border: 1px solid #1681bf;
+}
+/* line 195, ../sass/app.scss */
+div#thumbs .thumblist ul li a {
+  border: 1px solid #171717;
+  display: block;
+  height: 58px;
+  width: 48px;
+  position: relative;
+}
+/* line 196, ../sass/app.scss */
+div#thumbs .thumblist ul li a span {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  display: block;
+  font-weight: bold;
+  color: #171717;
+  width: 12px;
+  height: 12px;
+  background: #848484;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
+  padding: 2px;
+  font-size: 11px;
+  line-height: 13px;
+  text-align: center;
+}
+/* line 197, ../sass/app.scss */
+div#thumbs .thumblist ul li a img {
+  width: 48px;
+  height: 58px;
+}
+/* line 198, ../sass/app.scss */
+div#thumbs .thumblist ul li a:hover {
+  border: 1px solid #1681bf;
+}
+/* line 199, ../sass/app.scss */
+div#thumbs .thumblist ul li a:hover span {
+  background: #171717;
+  color: #1681bf;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+/* line 202, ../sass/app.scss */
+div#thumbs .thumblist ul li.active a {
+  border: 1px solid #1681bf;
+}
+/* line 203, ../sass/app.scss */
+div#thumbs .thumblist ul li:last-child {
+  margin-right: 0;
+}
+
+/* PDF - Save */
+/* line 211, ../sass/app.scss */
+div#pdf-save {
+  height: 76px;
+  position: relative;
+}
+/* line 212, ../sass/app.scss */
+div#pdf-save .btn-group {
+  margin-left: 10px;
+  float: left;
+}
+/* line 213, ../sass/app.scss */
+div#pdf-save .btn-group .btn-mini {
+  font-size: 10px;
+}
+/* line 214, ../sass/app.scss */
+div#pdf-save p {
+  color: #848484;
+  text-align: right;
+  margin: 10px 0 4px;
+  font-size: 10px;
+  height: 12px;
+  line-height: 12px;
+  overflow: hidden;
+}
+/* line 215, ../sass/app.scss */
+div#pdf-save span {
+  font-size: 10px;
+    color: #f38621;
+  float: right;
+  margin-top: 4px;
+}
+/* line 216, ../sass/app.scss */
+div#pdf-save div.seperator {
+  background: url('/img/bg-thumbs.png?1362677304') 0 -3px repeat-x;
+  position: absolute;
+  left: -36px;
+  top: 0;
+  height: 74px;
+  width: 20px;
+  border-right: 1px solid #171717;
+}
+
+/* MAIN */
+/* line 222, ../sass/app.scss */
+div.sidebar {
+  position: relative;
+  z-index: 2;
+}
+
+/* PDF Container */
+/* line 225, ../sass/app.scss */
+div#pdf-container {
+  background: #cccccc !important;
+}
+/* line 226, ../sass/app.scss */
+div#pdf-container.loading {
+  background: url("/img/loading.gif") no-repeat center center !important;
+  width: 100%;
+  height: 100%;
+  min-width: 50px;
+  min-height: 50px;
+}
+
+/* FOOTER */
+/* line 232, ../sass/app.scss */
+footer {
+  padding: 16px 0;
+  z-index: 1;
+}
+/* line 233, ../sass/app.scss */
+footer p {
+  font-weight: bold;
+  font-size: 11px;
+}
+
+/* Tabs */
+/* line 239, ../sass/app.scss */
+.etabs {
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: hidden;
+  height: 28px;
+  width: 240px;
+}
+/* line 240, ../sass/app.scss */
+.etabs li {
+  overflow: hidden;
+  width: 112px;
+  float: left;
+  display: inline-block;
+}
+/* line 241, ../sass/app.scss */
+.etabs li:last-child {
+  margin-left: 1px !important;
+  width: 126px;
+}
+
+/* line 245, ../sass/app.scss */
+div.tab-element {
+  background: url('/img/bg-mediabuttons.png?1363092247') 0 0 no-repeat;
+}
+
+/* line 246, ../sass/app.scss */
+.tab {
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  margin: 0 !important;
+}
+/* line 248, ../sass/app.scss */
+.tab a {
+  display: inline-block;
+  width: 100%;
+  *display: inline;
+  /* IE7 inline-block hack */
+  *zoom: 1;
+  padding: 4px 7px 3px 10px;
+  margin-bottom: 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: middle;
+  cursor: pointer;
+  color: #848484;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+  background-color: #2e2e2e;
+  background-image: -moz-linear-gradient(top, #3a3a3a, #1e1e1e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3a3a3a), to(#1e1e1e));
+  background-image: -webkit-linear-gradient(top, #3a3a3a, #1e1e1e);
+  background-image: -o-linear-gradient(top, #3a3a3a, #1e1e1e);
+  background-image: linear-gradient(to bottom, #3a3a3a, #1e1e1e);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF3A3A3A', endColorstr='#FF1E1E1E', GradientType=0);
+  border-color: #1e1e1e #1e1e1e black;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #1e1e1e;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  border-bottom: 1px solid #141414;
+  *border: 0;
+  *padding: 4px 4px;
+  *margin-left: .3em;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0);
+}
+/* line 602, ../sass/framework/_mixins.scss */
+.tab a:hover, .tab a:active, .tab a.active, .tab a.disabled, .tab a[disabled] {
+  color: #dcdcde;
+  background-color: #1e1e1e;
+  *background-color: #111111;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+.tab a:active, .tab a.active {
+  background-color: #040404 \9;
+}
+/* line 166, ../sass/framework/_mixins.scss */
+.tab a:first-child {
+  *margin-left: 0;
+}
+/* line 266, ../sass/app.scss */
+.tab a:hover {
+  color: #bcbbbc;
+}
+/* line 267, ../sass/app.scss */
+.tab a i {
+  font-size: 14px;
+}
+/* line 269, ../sass/app.scss */
+.tab.active a {
+  background: #1681bf;
+  color: #dcdcde;
+  -webkit-box-shadow: inset 1px 1px 6px 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 1px 1px 6px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 1px 1px 6px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Component Buttons */
+/* line 282, ../sass/app.scss */
+div#components {
+  background: #212121;
+  left: -15px;
+  position: absolute;
+  top: 0;
+  width: 236px;
+}
+
+/* line 289, ../sass/app.scss */
+ul.components {
+  margin-top: 0px;
+  overflow: hidden;
+  padding: 24px 0 0 14px;
+  width: 100%;
+  margin-bottom: 14px;
+}
+/* line 290, ../sass/app.scss */
+ul.components li {
+  float: left;
+  display: inline;
+  margin-right: 9px;
+  margin-bottom: 9px;
+  position: relative;
+  background: url('/img/bg-component2.png?1363102889') 0 0 no-repeat;
+}
+/* line 291, ../sass/app.scss */
+ul.components li:nth-child(4n) {
+  margin-right: 0;
+}
+/* line 292, ../sass/app.scss */
+ul.components li > a {
+  display: block;
+  width: 47px;
+  height: 48px;
+  line-height: 48px;
+  color: #848484;
+  background: url('/img/my-sprites-s885126e02a.png') 0 0;
+}
+/* line 293, ../sass/app.scss */
+ul.components li > a#comp-video {
+  background-position: 0px 0px;
+}
+/* line 294, ../sass/app.scss */
+ul.components li > a#comp-video:hover {
+  background-position: -47px 0px;
+}
+/* line 296, ../sass/app.scss */
+ul.components li > a#comp-audio {
+  background-position: 0px -50px;
+}
+/* line 297, ../sass/app.scss */
+ul.components li > a#comp-audio:hover {
+  background-position: -47px -50px;
+}
+/* line 299, ../sass/app.scss */
+ul.components li > a#comp-map {
+  background-position: 0px -100px;
+}
+/* line 300, ../sass/app.scss */
+ul.components li > a#comp-map:hover {
+  background-position: -47px -100px;
+}
+/* line 302, ../sass/app.scss */
+ul.components li > a#comp-link {
+  background-position: 0px -150px;
+}
+/* line 303, ../sass/app.scss */
+ul.components li > a#comp-link:hover {
+  background-position: -47px -150px;
+}
+/* line 305, ../sass/app.scss */
+ul.components li > a#comp-webcontent {
+  background-position: 0px -200px;
+}
+/* line 306, ../sass/app.scss */
+ul.components li > a#comp-webcontent:hover {
+  background-position: -47px -200px;
+}
+/* line 308, ../sass/app.scss */
+ul.components li > a#comp-tooltip {
+  background-position: 0px -250px;
+}
+/* line 309, ../sass/app.scss */
+ul.components li > a#comp-tooltip:hover {
+  background-position: -47px -250px;
+}
+/* line 311, ../sass/app.scss */
+ul.components li > a#comp-scroll {
+  background-position: 0px -300px;
+}
+/* line 312, ../sass/app.scss */
+ul.components li > a#comp-scroll:hover {
+  background-position: -47px -300px;
+}
+/* line 314, ../sass/app.scss */
+ul.components li > a#comp-slideshow {
+  background-position: 0px -350px;
+}
+/* line 315, ../sass/app.scss */
+ul.components li > a#comp-slideshow:hover {
+  background-position: -47px -350px;
+}
+/* line 317, ../sass/app.scss */
+ul.components li > a#comp-gal360 {
+  background-position: 0px -400px;
+}
+/* line 318, ../sass/app.scss */
+ul.components li > a#comp-gal360:hover {
+  background-position: -47px -400px;
+}
+/* line 320, ../sass/app.scss */
+ul.components li > a#comp-bookmark {
+  background-position: 0px -450px;
+}
+/* line 321, ../sass/app.scss */
+ul.components li > a#comp-bookmark:hover {
+  background-position: -47px -450px;
+}
+/* line 323, ../sass/app.scss */
+ul.components li > a:hover {
+  color: #1681bf;
+}
+/* line 324, ../sass/app.scss */
+ul.components li > a > span {
+  width: 44px;
+  height: 44px;
+  display: block;
+  position: absolute;
+  color: #1681bf;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif;
+  left: 0;
+  top: -27px;
+  width: 47px;
+  text-align: center;
+  display: none;
+}
+/* line 327, ../sass/app.scss */
+ul.components li.active {
+  background-position: 0 -48px;
+}
+/* line 328, ../sass/app.scss */
+ul.components li.active > a#comp-video {
+  background-position: -94px 0px;
+}
+/* line 329, ../sass/app.scss */
+ul.components li.active > a#comp-audio {
+  background-position: -94px -50px;
+}
+/* line 330, ../sass/app.scss */
+ul.components li.active > a#comp-map {
+  background-position: -94px -100px;
+}
+/* line 331, ../sass/app.scss */
+ul.components li.active > a#comp-link {
+  background-position: -94px -150px;
+}
+/* line 332, ../sass/app.scss */
+ul.components li.active > a#comp-webcontent {
+  background-position: -94px -200px;
+}
+/* line 333, ../sass/app.scss */
+ul.components li.active > a#comp-tooltip {
+  background-position: -94px -250px;
+}
+/* line 334, ../sass/app.scss */
+ul.components li.active > a#comp-scroll {
+  background-position: -94px -300px;
+}
+/* line 335, ../sass/app.scss */
+ul.components li.active > a#comp-slideshow {
+  background-position: -94px -350px;
+}
+/* line 336, ../sass/app.scss */
+ul.components li.active > a#comp-gal360 {
+  background-position: -94px -400px;
+}
+/* line 337, ../sass/app.scss */
+ul.components li.active > a#comp-bookmark {
+  background-position: -94px -450px;
+}
+/* line 338, ../sass/app.scss */
+ul.components li.active > a span {
+  display: none;
+}
+
+/* line 345, ../sass/app.scss */
+.component-info {
+  width: auto;
+  position: relative;
+}
+/* line 348, ../sass/app.scss */
+.component-info h3 {
+  position: relative;
+  width: 94%;
+  margin-bottom: 8px;
+  padding-left: 26px;
+}
+/* line 349, ../sass/app.scss */
+.component-info h3 span {
+  background: url('/img/my-sprites-s885126e02a.png') 0 0;
+  width: 36px;
+  height: 36px;
+  display: block;
+  position: absolute;
+  top: -17px;
+  left: -12px;
+}
+/* line 351, ../sass/app.scss */
+.component-info p {
+  padding-left: 26px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 1.2em;
+}
+/* line 352, ../sass/app.scss */
+.component-info div.invisible {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  z-index: -10;
+}
+/* line 353, ../sass/app.scss */
+.component-info div {
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+  -webkit-transition-duration: 0.2s;
+  -moz-transition-duration: 0.2s;
+  -o-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: auto;
+  padding-bottom: 700px;
+  z-index: 10;
+  padding-left: 16px;
+  width: 230px;
+  -webkit-perspective: 1000;
+  -webkit-backface-visibility: hidden;
+}
+
+/* line 358, ../sass/app.scss */
+#info-video h3 span {
+  background-position: 0px 0px;
+}
+
+/* line 359, ../sass/app.scss */
+#info-audio h3 span {
+  background-position: 0px -50px;
+}
+
+/* line 360, ../sass/app.scss */
+#info-map h3 span {
+  background-position: 0px -100px;
+}
+
+/* line 361, ../sass/app.scss */
+#info-link h3 span {
+  background-position: 0px -150px;
+}
+
+/* line 362, ../sass/app.scss */
+#info-webcontent h3 span {
+  background-position: 0px -200px;
+}
+
+/* line 363, ../sass/app.scss */
+#info-tooltip h3 span {
+  background-position: 0px -250px;
+}
+
+/* line 364, ../sass/app.scss */
+#info-scroll h3 span {
+  background-position: 0px -300px;
+}
+
+/* line 365, ../sass/app.scss */
+#info-slideshow h3 span {
+  background-position: 0px -350px;
+}
+
+/* line 366, ../sass/app.scss */
+#info-gal360 h3 span {
+  background-position: 0px -400px;
+}
+
+/* line 367, ../sass/app.scss */
+#info-bookmark h3 span {
+  background-position: 0px -450px;
+}
+
+/* COMPONENT SETTINGS */
+/* line 373, ../sass/app.scss */
+div#component-container {
+  position: relative;
+  *zoom: 1;
+  background: #171717;
+  height: auto;
+}
+/* line 120, ../sass/framework/_mixins.scss */
+div#component-container:before, div#component-container:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 127, ../sass/framework/_mixins.scss */
+div#component-container:after {
+  clear: both;
+}
+
+/* line 375, ../sass/app.scss */
+div.component {
+  *zoom: 1;
+  padding-top: 32px;
+}
+/* line 120, ../sass/framework/_mixins.scss */
+div.component:before, div.component:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 127, ../sass/framework/_mixins.scss */
+div.component:after {
+  clear: both;
+}
+/* line 376, ../sass/app.scss */
+div.component label {
+  font-size: .7em;
+  font-weight: bold;
+  color: #dcdcde;
+}
+/* line 377, ../sass/app.scss */
+div.component input[type="checkbox"], div.component input[type="radio"] {
+  float: left;
+  display: inline;
+  margin-right: 4px;
+}
+
+/* line 381, ../sass/app.scss */
+div.component-header {
+  background: #1681bf;
+  line-height: 32px;
+  height: 32px;
+  position: relative;
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: -4px;
+  width: 246px;
+}
+/* line 382, ../sass/app.scss */
+div.component-header h3 {
+  color: #dcdcde;
+  padding-left: 38px;
+}
+/* line 383, ../sass/app.scss */
+div.component-header h3 a {
+  color: #015898;
+}
+/* line 384, ../sass/app.scss */
+div.component-header h3 a:hover {
+  color: #01355b;
+}
+/* line 387, ../sass/app.scss */
+div.component-header .delete {
+  position: absolute;
+  top: 0px;
+  right: 6px;
+  display: block;
+  text-decoration: none;
+  color: #015898;
+  font-size: 15px;
+}
+/* line 388, ../sass/app.scss */
+div.component-header .delete:hover {
+  color: #970000;
+}
+
+/* line 392, ../sass/app.scss */
+.component-header h3 span {
+  background: url('/img/my-sprites-s885126e02a.png') 0 -503px;
+  width: 36px;
+  height: 36px;
+  display: block;
+  position: absolute;
+  top: -8px;
+  left: 0px;
+}
+
+/* line 393, ../sass/app.scss */
+.video > .component-header > h3 > span {
+  background-position: -567px -503px !important;
+}
+
+/* line 394, ../sass/app.scss */
+.audio .component-header > h3 > span {
+  background-position: -567px -554px;
+}
+
+/* line 395, ../sass/app.scss */
+.map .component-header h3 span {
+  background-position: -567px -604px;
+}
+
+/* line 396, ../sass/app.scss */
+.link .component-header h3 span {
+  background-position: -567px -652px;
+}
+
+/* line 397, ../sass/app.scss */
+.webcontent .component-header h3 span {
+  background-position: -567px -702px;
+}
+
+/* line 398, ../sass/app.scss */
+.tooltip .component-header h3 span {
+  background-position: -567px -752px;
+}
+
+/* line 399, ../sass/app.scss */
+.scroll .component-header h3 span {
+  background-position: -567px -802px;
+}
+
+/* line 400, ../sass/app.scss */
+.slideshow .component-header h3 span {
+  background-position: -567px -852px;
+}
+
+/* line 401, ../sass/app.scss */
+.gal360 .component-header h3 span {
+  background-position: -567px -902px;
+}
+
+/* line 402, ../sass/app.scss */
+.bookmark .component-header h3 span {
+  background-position: -567px -952px;
+}
+
+/* line 405, ../sass/app.scss */
+div.settings {
+  padding: 24px 12px 12px;
+  *zoom: 1;
+}
+/* line 120, ../sass/framework/_mixins.scss */
+div.settings:before, div.settings:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 127, ../sass/framework/_mixins.scss */
+div.settings:after {
+  clear: both;
+}
+
+/* line 408, ../sass/app.scss */
+div.upload, div.upload-poster {
+  *zoom: 1;
+  background: #212121;
+}
+/* line 120, ../sass/framework/_mixins.scss */
+div.upload:before, div.upload:after, div.upload-poster:before, div.upload-poster:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 127, ../sass/framework/_mixins.scss */
+div.upload:after, div.upload-poster:after {
+  clear: both;
+}
+/* line 410, ../sass/app.scss */
+div.upload div.radiogroup, div.upload-poster div.radiogroup {
+  margin-bottom: 8px;
+}
+/* line 411, ../sass/app.scss */
+div.upload div.radio, div.upload-poster div.radio {
+  margin-bottom: 4px;
+}
+
+/* line 414, ../sass/app.scss */
+div.progress {
+  margin-top: 12px;
+}
+/* line 415, ../sass/app.scss */
+div.progress a {
+  cursor: pointer;
+  color: #e9662c;
+  float: right;
+  font-size: 12px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 2px;
+}
+/* line 423, ../sass/app.scss */
+div.progress a:hover {
+  color: #923f1a;
+}
+
+/* line 427, ../sass/app.scss */
+div.upload {
+  padding: 18px 12px 12px;
+}
+
+/* line 428, ../sass/app.scss */
+div.upload-poster a {
+  cursor: pointer;
+}
+
+/* line 429, ../sass/app.scss */
+div.upload-poster a.close {
+  float: right;
+}
+
+/* Component Panel */
+/* line 433, ../sass/app.scss */
+div.component-panel {
+  padding: 12px;
+  background: #212121;
+  border: 1px solid #272727;
+  margin-left: 2px;
+  width: 186px;
+  *zoom: 1;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+/* line 120, ../sass/framework/_mixins.scss */
+div.component-panel:before, div.component-panel:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 127, ../sass/framework/_mixins.scss */
+div.component-panel:after {
+  clear: both;
+}
+/* line 435, ../sass/app.scss */
+div.component-panel div.file-header {
+  position: relative;
+  height: 22px;
+  overflow: hidden;
+  width: 188px;
+  margin-left: -14px;
+  margin-top: -14px;
+  margin-bottom: 20px;
+  color: #848484;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0);
+  background-color: #2e2e2e;
+  background-image: -moz-linear-gradient(top, #3a3a3a, #1e1e1e);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3a3a3a), to(#1e1e1e));
+  background-image: -webkit-linear-gradient(top, #3a3a3a, #1e1e1e);
+  background-image: -o-linear-gradient(top, #3a3a3a, #1e1e1e);
+  background-image: linear-gradient(to bottom, #3a3a3a, #1e1e1e);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF3A3A3A', endColorstr='#FF1E1E1E', GradientType=0);
+  border-color: #1e1e1e #1e1e1e black;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #1e1e1e;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+  padding: 8px 12px;
+  border: 1px solid #141414;
+  border-bottom-color: #111111;
+  -moz-border-radius-topleft: 4px;
+  -webkit-border-top-left-radius: 4px;
+  border-top-left-radius: 4px;
+  -moz-border-radius-topright: 4px;
+  -webkit-border-top-right-radius: 4px;
+  border-top-right-radius: 4px;
+  *margin-left: .3em;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 2px rgba(0, 0, 0, 0);
+}
+/* line 602, ../sass/framework/_mixins.scss */
+div.component-panel div.file-header:hover, div.component-panel div.file-header:active, div.component-panel div.file-header.active, div.component-panel div.file-header.disabled, div.component-panel div.file-header[disabled] {
+  color: #dcdcde;
+  background-color: #1e1e1e;
+  *background-color: #111111;
+}
+/* line 610, ../sass/framework/_mixins.scss */
+div.component-panel div.file-header:active, div.component-panel div.file-header.active {
+  background-color: #040404 \9;
+}
+/* line 166, ../sass/framework/_mixins.scss */
+div.component-panel div.file-header:first-child {
+  *margin-left: 0;
+}
+/* line 445, ../sass/app.scss */
+div.component-panel div.file-header .delete {
+  position: absolute;
+  top: 10px;
+  right: 6px;
+  display: block;
+  text-decoration: none;
+  color: #1e1e1e;
+}
+/* line 446, ../sass/app.scss */
+div.component-panel div.file-header .delete:hover {
+  color: #970000;
+}
+/* line 448, ../sass/app.scss */
+div.component-panel div.file-header h4 {
+  color: #ebaf3c;
+  font-size: 11px;
+  font-weight: bold;
+  height: 16px;
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 2px;
+}
+/* line 449, ../sass/app.scss */
+div.component-panel div.file-header span {
+  color: #434343;
+  font-size: 11px;
+  font-weight: bold;
+  display: block;
+  clear: both;
+}
+/* line 451, ../sass/app.scss */
+div.component-panel h5 {
+  color: #434343;
+  border-bottom: 1px dashed #434343;
+  margin-bottom: 22px;
+  margin-top: 4px;
+  padding-bottom: 3px;
+}
+/* line 452, ../sass/app.scss */
+div.component-panel h5 i {
+  font-size: 14px;
+  float: right;
+  margin-top: -2px;
+}
+/* line 453, ../sass/app.scss */
+div.component-panel h5:hover {
+  color: #ebaf3c;
+}
+/* line 455, ../sass/app.scss */
+div.component-panel div.checkbox, div.component-panel div.checkbox-light, div.component-panel div.radio, div.component-panel div.radio-light {
+  margin-bottom: 10px;
+}
+/* line 456, ../sass/app.scss */
+div.component-panel label {
+  color: #848484;
+  margin-bottom: 4px;
+  display: inline-block;
+}
+/* line 457, ../sass/app.scss */
+div.component-panel .select, div.component-panel .select-arrowed {
+  margin-bottom: 24px;
+}
+
+/* line 460, ../sass/app.scss */
+div.coordinates {
+  margin-top: 24px;
+}
+/* line 461, ../sass/app.scss */
+div.coordinates .component-panel {
+  padding-top: 0;
+}
+/* line 462, ../sass/app.scss */
+div.coordinates a {
+  color: #ebaf3c;
+  display: block;
+  width: 99%;
+  margin-bottom: 7px;
+  font-size: 11px;
+}
+/* line 463, ../sass/app.scss */
+div.coordinates a:hover {
+  color: #b7882f;
+}
+/* line 464, ../sass/app.scss */
+div.coordinates a i:before {
+  content: "\f078";
+}
+/* line 465, ../sass/app.scss */
+div.coordinates a i {
+  float: right;
+}
+/* line 468, ../sass/app.scss */
+div.coordinates a.collapse i:before {
+  content: "\f077";
+}
+
+/* line 471, ../sass/app.scss */
+div.coordinates div.text, div.coordinates div.text-rounded {
+  width: 84px;
+  float: left;
+  display: inline-block;
+  margin-right: 14px;
+  display: inline-block;
+}
+/* line 472, ../sass/app.scss */
+div.coordinates div.text label, div.coordinates div.text-rounded label {
+  display: block;
+  margin-bottom: 4px;
+  margin-top: 12px;
+}
+/* line 473, ../sass/app.scss */
+div.coordinates div.text input, div.coordinates div.text-rounded input {
+  float: left;
+}
+/* line 474, ../sass/app.scss */
+div.coordinates div.text:nth-child(2n), div.coordinates div.text-rounded:nth-child(2n) {
+  margin-right: 0;
+}
+/* line 475, ../sass/app.scss */
+div.coordinates div.text:nth-child(4n), div.coordinates div.text-rounded:nth-child(4n) {
+  margin-right: 0;
+}
+
+/* Drop Area */
+/* line 481, ../sass/app.scss */
+.drop-area {
+  -webkit-box-shadow: inset 0 1px 2px 2px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: inset 0 1px 2px 2px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 1px 2px 2px rgba(0, 0, 0, 0.6);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  background: #bcbbbc;
+  padding-bottom: 16px;
+}
+/* line 482, ../sass/app.scss */
+.drop-area p {
+  color: #848484;
+  padding: 12px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.2em;
+  background: url('/img/bg-drop.png?1363269383') no-repeat center bottom;
+  padding-bottom: 60px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+}
+
+/* line 485, ../sass/app.scss */
+ul.file-rack {
+  margin-top: 8px;
+  border-bottom: 1px solid #171717;
+}
+/* line 486, ../sass/app.scss */
+ul.file-rack li {
+  height: 26px;
+  border-left: 1px solid #171717;
+  border-right: 1px solid #171717;
+  border-bottom: 1px solid #171717;
+  color: #ebaf3c;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 26px;
+  padding-left: 7px;
+  position: relative;
+  cursor: move;
+  overflow: hidden;
+}
+/* line 487, ../sass/app.scss */
+ul.file-rack li:first-child {
+  border-top: 1px solid #171717;
+}
+/* line 488, ../sass/app.scss */
+ul.file-rack li:last-child {
+  border-bottom: none;
+}
+/* line 489, ../sass/app.scss */
+ul.file-rack li a.delete {
+  position: absolute;
+  top: 0px;
+  right: 6px;
+  display: block;
+  text-decoration: none;
+  color: #434343;
+  font-size: 12px;
+}
+/* line 490, ../sass/app.scss */
+ul.file-rack li a.delete:hover {
+  color: #970000;
+  text-decoration: none;
+}
+
+/* TREE */
+/* line 499, ../sass/app.scss */
+div.tree {
+  padding-top: 25px;
+  margin-bottom: 32px;
+}
+/* line 500, ../sass/app.scss */
+div.tree h5 {
+  padding: 0 0 6px 15px;
+}
+/* line 501, ../sass/app.scss */
+div.tree h5 i {
+  font-size: 14px;
+  float: right;
+  margin-top: -2px;
+}
+/* line 502, ../sass/app.scss */
+div.tree h5:hover {
+  color: #ebaf3c;
+}
+/* line 504, ../sass/app.scss */
+div.tree > ul {
+  margin-left: 15px;
+  background: #171717;
+  padding: 12px;
+  border-radius: 4px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid #171717;
+  height: 100%;
+  max-height: 140px;
+  overflow-y: scroll;
+  overflow-x: hide;
+  *zoom: 1;
+}
+/* line 120, ../sass/framework/_mixins.scss */
+div.tree > ul:before, div.tree > ul:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+/* line 127, ../sass/framework/_mixins.scss */
+div.tree > ul:after {
+  clear: both;
+}
+/* line 505, ../sass/app.scss */
+div.tree > ul > li {
+  line-height: 20px;
+  margin-bottom: 4px;
+}
+/* line 506, ../sass/app.scss */
+div.tree > ul > li a {
+  font-size: 12px;
+  line-height: 20px;
+  height: 20px;
+}
+/* line 507, ../sass/app.scss */
+div.tree > ul > li a a > i {
+  font-size: 14px;
+  display: inline-block;
+}
+/* line 508, ../sass/app.scss */
+div.tree > ul > li a > a {
+  text-transform: uppercase;
+}
+/* line 510, ../sass/app.scss */
+div.tree > ul > li a.close > a {
+  color: #848484;
+}
+/* line 511, ../sass/app.scss */
+div.tree > ul > li a.close > a i:before {
+  content: "\f07b";
+  color: #434343;
+}
+/* line 513, ../sass/app.scss */
+div.tree > ul > li a.open > a {
+  color: #1681bf;
+}
+/* line 514, ../sass/app.scss */
+div.tree > ul > li a.open > a i:before {
+  content: "\f07c";
+  color: #1681bf;
+}
+/* line 517, ../sass/app.scss */
+div.tree > ul > li > ul {
+  margin-left: 21px;
+}
+/* line 518, ../sass/app.scss */
+div.tree > ul > li > ul > li > a {
+  font-size: 11px;
+  color: #e9662c !important;
+}
+/* line 519, ../sass/app.scss */
+div.tree > ul > li > ul > li > a.close > a {
+  color: #e9662c;
+}
+/* line 520, ../sass/app.scss */
+div.tree > ul > li > ul > li > a.close > a i:before {
+  color: #e9662c;
+}
+/* line 522, ../sass/app.scss */
+div.tree > ul > li > ul > li > a.open > a {
+  color: #ebaf3c;
+}
+/* line 523, ../sass/app.scss */
+div.tree > ul > li > ul > li > a.open > a i:before {
+  color: #ebaf3c;
+}
+/* line 525, ../sass/app.scss */
+div.tree > ul > li > ul > li > a#tree-video a i:before {
+  content: "\f01d";
+}
+/* line 526, ../sass/app.scss */
+div.tree > ul > li > ul > li > a#tree-audio a i:before {
+  content: "\f028";
+}
+/* line 527, ../sass/app.scss */
+div.tree > ul > li > ul > li > a#tree-map a i:before {
+  content: "\f041";
+}
+/* line 528, ../sass/app.scss */
+div.tree > ul > li > ul > li > a#tree-link a i:before {
+  content: "\f0c1";
+}
+/* line 529, ../sass/app.scss */
+div.tree > ul > li > ul > li > a#tree-tooltip a i:before {
+  content: "\f075";
+}
+/* line 530, ../sass/app.scss */
+div.tree > ul > li > ul > li > a#tree-scroll a i:before {
+  content: "\f0dc";
+}
+/* line 531, ../sass/app.scss */
+div.tree > ul > li > ul > li > a#tree-slideshow a i:before {
+  content: "\f0db";
+}
+/* line 532, ../sass/app.scss */
+div.tree > ul > li > ul > li > a#tree-gal360 a i:before {
+  content: "\f021";
+}
+/* line 533, ../sass/app.scss */
+div.tree > ul > li > ul > li > a#tree-bookmark a i:before {
+  content: "\f02e";
+}
+/* line 536, ../sass/app.scss */
+div.tree > ul > li > ul > li > ul {
+  margin-left: 12px;
+}
+/* line 537, ../sass/app.scss */
+div.tree > ul > li > ul > li > ul > li {
+  margin-left: 12px;
+}
+/* line 538, ../sass/app.scss */
+div.tree > ul > li > ul > li > ul > li > a {
+  font-size: 11px;
+  color: #dcdcde;
+}
+/* line 539, ../sass/app.scss */
+div.tree > ul > li > ul > li > ul > li > a:hover {
+  text-decoration: underline;
+}
+/* line 540, ../sass/app.scss */
+div.tree > ul > li > ul > li > ul > li > a.active {
+  color: #ebaf3c;
+}
+
+/* line 550, ../sass/app.scss */
+div.modal-component {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: crosshair;
+  border: 1px dashed #212121;
+  background: url('/img/bg-modal.png?1363284458') repeat top left;
+  -webkit-box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 551, ../sass/app.scss */
+div.modal-component span.xy, div.modal-component span.wh {
+  position: absolute;
+  bottom: -28px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #171717;
+}
+/* line 552, ../sass/app.scss */
+div.modal-component span.xy {
+  left: 0;
+}
+/* line 553, ../sass/app.scss */
+div.modal-component span.wh {
+  right: 0;
+}
+/* line 554, ../sass/app.scss */
+div.modal-component.selected {
+  border: 1px dashed #1681bf;
+  z-index: 10 !important;
+}
+/* line 555, ../sass/app.scss */
+div.modal-component p {
+  position: absolute;
+  left: 25% !important;
+  top: 35% !important;
+  padding-right: 25%;
+  font-weight: bold;
+  color: #1681bf;
+  width: 50%;
+  height: 65%;
+  overflow: hidden;
+  text-align: center;
+  z-index: 10;
+}
+/* line 556, ../sass/app.scss */
+div.modal-component p i {
+  display: block;
+  font-size: 40px;
+}
+
+/* line 560, ../sass/app.scss */
+.tooltip-trigger {
+  width: 20px;
+  height: 20px;
+  cursor: crosshair;
+  padding: 2px;
+}
+/* line 561, ../sass/app.scss */
+.tooltip-trigger i:before {
+  font-size: 30px;
+}
+
+/* line 567, ../sass/app.scss */
+.scroller-item:hover .btn {
+  display: block;
+}
+/* line 568, ../sass/app.scss */
+.scroller-item .btn {
+  bottom: 0px;
+  position: absolute;
+  display: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+  height: 23px;
+  line-height: 21px;
+  padding: 0;
+  font-size: 10px;
+  z-index: 10;
+}
+
+/* line 573, ../sass/app.scss */
+.modal-mask {
+  background: #848484;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
+}
+
+/* line 574, ../sass/app.scss */
+.editor {
+  width: 530px;
+  height: 215px;
+  z-index: 1000;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  -webkit-box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  margin-top: -122px;
+  margin-left: -265px;
+}
+/* line 575, ../sass/app.scss */
+.editor p {
+  color: #171717;
+}
+/* line 576, ../sass/app.scss */
+.editor .action {
+  background: #ebaf3c;
+  width: 100%;
+  height: 40px;
+  text-align: right;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 6px 12px;
+}
+/* line 577, ../sass/app.scss */
+.editor .action .btn {
+  margin-left: 8px;
+}
+
+/* line 581, ../sass/app.scss */
+.compression-settings {
+  position: absolute;
+  width: 250px;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  margin-left: -125px;
+  margin-top: -60px;
+  z-index: 1000;
+  background: #212121;
+  padding: 36px 18px 18px 18px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0px 0px 5px #333333;
+  -moz-box-shadow: 0px 0px 5px #333333;
+  box-shadow: 0px 0px 5px #333333;
+  -webkit-box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.3);
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* line 582, ../sass/app.scss */
+.compression-settings .close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+}
+/* line 583, ../sass/app.scss */
+.compression-settings .command {
+  margin-top: 18px;
+}
+/* line 584, ../sass/app.scss */
+.compression-settings h5 {
+  margin-bottom: 30px;
+}
+/* line 585, ../sass/app.scss */
+.compression-settings label {
+  font-size: 11px;
+}
+/* line 587, ../sass/app.scss */
+.compression-settings ul > li {
+  display: block;
+  margin-bottom: 12px;
+}
+
+/* line 591, ../sass/app.scss */
+.ui-resizable {
+  position: relative;
+}
+
+/* line 594, ../sass/app.scss */
+.ui-resizable-handle {
+  display: block;
+  font-size: 0.1px;
+  position: absolute;
+  background: #000;
+}
+
+/* line 600, ../sass/app.scss */
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle {
+  display: none;
+}
+
+/* line 603, ../sass/app.scss */
+.ui-resizable-se {
+  bottom: -5px;
+  cursor: se-resize;
+  right: -5px;
+}
+
+/* line 608, ../sass/app.scss */
+.ui-resizable-sw {
+  bottom: -5px;
+  cursor: sw-resize;
+  left: -5px;
+}
+
+/* line 613, ../sass/app.scss */
+.ui-resizable-nw {
+  cursor: nw-resize;
+  left: -5px;
+  top: -5px;
+}
+
+/* line 618, ../sass/app.scss */
+.ui-resizable-ne {
+  cursor: ne-resize;
+  right: -5px;
+  top: -5px;
+}
+
+/* line 624, ../sass/app.scss */
+.ui-resizable-se, .ui-resizable-ne, .ui-resizable-nw, .ui-resizable-sw {
+  height: 12px;
+  width: 12px;
+}
+
+/* line 627, ../sass/app.scss */
+.ui-tooltip, .arrow:after {
+  background: #ebaf3c;
+  border: 1px solid #493d26;
+  width: 15%;
+  z-index: 9999;
+}
+
+/* line 633, ../sass/app.scss */
+.ui-tooltip {
+  padding: 10px 20px;
+  color: #584013;
+  border-radius: 4px;
+  font: bold 12px Arial, Sans-Serif;
+  box-shadow: 0 0 7px black;
+  width: 160px !important;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+
+/* line 644, ../sass/app.scss */
+.arrow {
+  width: 70px;
+  height: 16px;
+  overflow: hidden;
+  position: absolute;
+  left: 50%;
+  margin-left: -35px;
+  bottom: -16px;
+}
+
+/* line 653, ../sass/app.scss */
+.arrow.top {
+  top: -16px;
+  bottom: auto;
+}
+
+/* line 657, ../sass/app.scss */
+.arrow.left {
+  left: 20%;
+}
+
+/* line 660, ../sass/app.scss */
+.arrow:after {
+  content: "";
+  position: absolute;
+  left: 20px;
+  top: -20px;
+  width: 25px;
+  height: 25px;
+  box-shadow: 6px 5px 9px -9px black;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  tranform: rotate(45deg);
+}
+
+/* line 674, ../sass/app.scss */
+.arrow.top:after {
+  bottom: -20px;
+  top: auto;
+}
+
+/* line 679, ../sass/app.scss */
+.image-tooltip {
+  background: none !important;
+  border: none !important;
+  height: 116px !important;
+  width: auto !important;
+  box-shadow: none !important;
+}
+
+/* line 680, ../sass/app.scss */
+.image-tooltip img {
+  border: 1px solid #171717;
+  height: 115px !important;
+  width: auto !important;
+}
+
+/* line 682, ../sass/app.scss */
+.zoom-info-container {
+  position: absolute;
+  left: 50px;
+  top: 30%;
+  z-index: 1000;
+}
+
+/* line 683, ../sass/app.scss */
+.landmarks {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+/* line 687, ../sass/app.scss */
+.landmarks > .item {
+  background: #000;
+}
+
+/* line 690, ../sass/app.scss */
+div#preview {
+  height: 24px;
+  position: relative;
+}
+/* line 691, ../sass/app.scss */
+div#preview div.switch {
+  position: absolute;
+  right: 0;
+  top: -6px;
+}
+/* line 695, ../sass/app.scss */
+div#preview div.switch label {
+  font-size: 10px;
+  color: #848484;
+  display: inline-block;
+  float: left;
+  font-size: 10px;
+  height: 26px;
+  line-height: 26px;
+  margin-bottom: 3px;
+  margin-right: 10px;
+}
+
+/* line 699, ../sass/app.scss */
+div.text, div.text-rounded {
+  margin-bottom: 10px;
+}
+/* line 700, ../sass/app.scss */
+div.text select, div.text-rounded select {
+  float: right;
+  width: 100%;
+  display: block;
+}
+
+/* BOOTSTRAP PROGRESS BAR */
+@-webkit-keyframes progress-bar-stripes {
+    from {
+        background-position: 40px 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+
+@-moz-keyframes progress-bar-stripes {
+    from {
+        background-position: 40px 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+
+@-o-keyframes progress-bar-stripes {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 40px 0;
+    }
+}
+
+@keyframes progress-bar-stripes {
+    from {
+        background-position: 40px 0;
+    }
+    to {
+        background-position: 0 0;
+    }
+}
+
+.progress {
+    overflow: hidden;
+    height: 17px;
+    margin-bottom: 17px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+    float: left;
+    width: 0%;
+    height: 100%;
+    font-size: 11px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #428bca;
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+    -webkit-transition: width 0.6s ease;
+    transition: width 0.6s ease;
+}
+
+.progress-striped .progress-bar {
+    background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-size: 40px 40px;
+}
+
+.progress.active .progress-bar {
+    -webkit-animation: progress-bar-stripes 2s linear infinite;
+    -moz-animation: progress-bar-stripes 2s linear infinite;
+    -ms-animation: progress-bar-stripes 2s linear infinite;
+    -o-animation: progress-bar-stripes 2s linear infinite;
+    animation: progress-bar-stripes 2s linear infinite;
+}
+
+.progress-bar-success {
+    background-color: #5cb85c;
+}
+
+.progress-striped .progress-bar-success {
+    background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+}
+
+.progress-bar-info {
+    background-color: #5bc0de;
+}
+
+.progress-striped .progress-bar-info {
+    background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+}
+
+.progress-bar-warning {
+    background-color: #f0ad4e;
+}
+
+.progress-striped .progress-bar-warning {
+    background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+}
+
+.progress-bar-danger {
+    background-color: #d9534f;
+}
+
+.progress-striped .progress-bar-danger {
+    background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
+    background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: -moz-linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+}
+
+.progress.progress-small {
+    height: 5px;
+    margin: 2px 0px 0px;
+}

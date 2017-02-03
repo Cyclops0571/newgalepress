@@ -15,13 +15,13 @@
     <link rel="shortcut icon" href="/website/img/favicon2.ico">
 
     <!-- Latest compiled and minified CSS -->
-    {{ HTML::style('css/mobilestyle.css?v=' . APP_VER); }}
-    {{ HTML::style('css/bootstrap.min.css?v=' . APP_VER); }}
-    {{ HTML::script('js/jquery-2.1.4.min.js'); }}
-    {{ HTML::script('js/jquery-ui-1.10.4.custom.min.js'); }}
-    {{ HTML::script('js/bootstrap.min.js'); }}
-    {{ HTML::script('js/generic.js?v=' . APP_VER); }}
-    {{ HTML::script('js/client.js?v=' . APP_VER); }}
+    {{ HTML::style('css/mobilestyle.css?v=' . APP_VER) }}
+    {{ HTML::style('css/bootstrap.min.css?v=' . APP_VER) }}
+    {{ HTML::script('js/jquery-2.1.4.min.js') }}
+    {{ HTML::script('js/jquery-ui-1.10.4.custom.min.js') }}
+    {{ HTML::script('js/bootstrap.min.js') }}
+    {{ HTML::script('js/generic.js?v=' . APP_VER) }}
+    {{ HTML::script('js/client.js?v=' . APP_VER) }}
 </head>
 <body>
 <script>

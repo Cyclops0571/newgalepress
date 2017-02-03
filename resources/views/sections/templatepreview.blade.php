@@ -234,7 +234,7 @@ $defaultSliderImage = '/img/bannerSlider/defaultPreview.jpg';
                                         <?php $categoryClass = "category-active"; ?>
                                         <?php foreach ($categorySet as $category): ?>
                                         <li>
-                                            <span class="<?php echo $categoryClass; ?>"></span><span>{{$category->Name;}}</span>
+                                            <span class="<?php echo $categoryClass; ?>"></span><span>{{$category->Name}}</span>
                                         </li>
                                         <?php $categoryClass = "category-disable"; ?>
                                         <?php endforeach; ?>
@@ -273,7 +273,7 @@ $defaultSliderImage = '/img/bannerSlider/defaultPreview.jpg';
     </div>
 </div>
 
-{{ HTML::script('js/chosen_v1.0.0/chosen.jquery.min.js'); }}
+{{ HTML::script('js/chosen_v1.0.0/chosen.jquery.min.js') }}
 <script type="text/javascript">
     $(document).ready(function () {
 	cTemplate.initialize();

@@ -4,6 +4,8 @@
 namespace App\Helpers;
 
 
+use App\Models\Customer;
+use App\Models\PaymentAccount;
 use Iyzipay\Model\BasicPayment;
 use Iyzipay\Model\BasicThreedsInitialize;
 use Iyzipay\Model\BasicThreedsPayment;

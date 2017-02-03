@@ -3,14 +3,14 @@ if (FALSE) {
 	$cropSet = new Crop();
 }
 ?>
-{{ HTML::style('css/mystyles.css?v=' . APP_VER); }}
-{{ HTML::style('css/bootstrap.min.css?v=' . APP_VER); }}
-{{ HTML::style('js/jcrop/jquery.Jcrop.css?v=' . APP_VER); }}
+{{ HTML::style('css/mystyles.css?v=' . APP_VER) }}
+{{ HTML::style('css/bootstrap.min.css?v=' . APP_VER) }}
+{{ HTML::style('js/jcrop/jquery.Jcrop.css?v=' . APP_VER) }}
 
-{{ HTML::script('js/jquery-2.1.4.min.js?v=' . APP_VER); }}
-{{ HTML::script('js/jquery-ui-1.10.4.custom.min.js?v=' . APP_VER); }}
-{{ HTML::script('js/bootstrap.min.js?v=' . APP_VER); }}
-{{ HTML::script('js/jcrop/jquery.Jcrop.min.js?v=' . APP_VER); }}
+{{ HTML::script('js/jquery-2.1.4.min.js?v=' . APP_VER) }}
+{{ HTML::script('js/jquery-ui-1.10.4.custom.min.js?v=' . APP_VER) }}
+{{ HTML::script('js/bootstrap.min.js?v=' . APP_VER) }}
+{{ HTML::script('js/jcrop/jquery.Jcrop.min.js?v=' . APP_VER) }}
 <div class="col-md-12">
 	<script type="text/javascript" language="Javascript">
         var api, current_id;

@@ -272,7 +272,7 @@
                         <div class="head-panel nm" style="border-top: 1px solid">
                             <div class="hp-info hp-simple pull-left hp-inline">
                                 <span class="icon-user"></span>&nbsp;{{__('common.statistics_user')}}&nbsp;<span
-                                        class="reportSubtitle">{{ Auth::user()->Username; }}</span>
+                                        class="reportSubtitle">{{ Auth::user()->Username}}</span>
                             </div>
                             <?php
                             /* @var $s Sessionn */
@@ -286,7 +286,7 @@
                             ?>
                             <div class="hp-info hp-simple pull-left hp-inline">
                                 <span class="icon-calendar"></span>&nbsp;{{__('common.statistics_lastlogin')}}
-                                &nbsp;<span class="reportSubtitle">{{ $lastLoginDate }}</span>
+                                &nbsp;<span class="reportSubtitle">{{ Common::dateRead(Auth::user()->lastLoginDate(), 'd.m.Y') }}</span>
                             </div>
                             <div class="hp-info hp-simple pull-left hp-inline">
                                 <span class="icon-time"></span>&nbsp;{{__('common.dashboard_lastlogin_time')}}
@@ -297,11 +297,11 @@
                             <div class="user">
                                 <div class="info" style="text-align:center">
                                     <div class="informer informer-three">
-                                        <span>{{ $applicationCount; }}</span>
+                                        <span>{{ $applicationCount }}</span>
                                         {{ __('common.dashboard_app_count') }}
                                     </div>
                                     <div class="informer informer-four">
-                                        <span>{{ $contentCount; }}</span>
+                                        <span>{{ $contentCount }}</span>
                                         {{ __('common.dashboard_content_count') }}
                                     </div>
                                     <span class="icon-dropbox usrBlckIcnDrpbx"></span>
@@ -326,7 +326,7 @@
                             </div>
                             <div class="hp-info hp-simple pull-left hp-inline">
                                 <span class="icon-calendar"></span>&nbsp;{{__('common.header_enddate')}}&nbsp;<span
-                                        class="reportSubtitle">{{ Common::dateRead($appDetail->ExpirationDate, 'd.m.Y'); }}</span>
+                                        class="reportSubtitle">{{ Common::dateRead($appDetail->ExpirationDate, 'd.m.Y') }}</span>
                             </div>
                             <div class="hp-info hp-simple pull-left hp-inline">
                                 <span class="icon-thumbs-up"></span>&nbsp;{{__('common.header_status')}}&nbsp;<span
@@ -343,9 +343,9 @@
                         <div class="head-panel nm">
                             <div class="hp-info hp-simple pull-left hp-inline" style="text-align:center;">
                                 <div style="float:left;" id="startDate"
-                                     value="{{ Common::dateRead($appDetail->StartDate, 'Y-m-d'); }}">{{ Common::dateRead($appDetail->StartDate, 'd.m.Y'); }}</div>
+                                     value="{{ Common::dateRead($appDetail->StartDate, 'Y-m-d') }}">{{ Common::dateRead($appDetail->StartDate, 'd.m.Y') }}</div>
                                 <div style="float:right;" id="endDate"
-                                     value="{{ Common::dateRead($appDetail->ExpirationDate, 'Y-m-d'); }}">{{ Common::dateRead($appDetail->ExpirationDate, 'd.m.Y'); }}</div>
+                                     value="{{ Common::dateRead($appDetail->ExpirationDate, 'Y-m-d') }}">{{ Common::dateRead($appDetail->ExpirationDate, 'd.m.Y') }}</div>
                                 <span id="datePerValue"></span>
 
                                 <div class="hp-sm">

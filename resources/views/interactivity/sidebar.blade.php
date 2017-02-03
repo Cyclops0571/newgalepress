@@ -18,7 +18,7 @@ $components = DB::table('Component')
                     @foreach($components as $component)
                         <li componentid="0" componentname="{{ $component->Class }}">
                             <a href="javascript:void(0);"
-                               id="comp-{{ $component->Class }}"><span>{{ __('interactivity.'.$component->Class . '_name'); }}</span></a>
+                               id="comp-{{ $component->Class }}"><span>{{ __('interactivity.'.$component->Class . '_name') }}</span></a>
                         </li>
                     @endforeach
                 </ul>
@@ -35,7 +35,7 @@ $components = DB::table('Component')
             @foreach($components as $component)
                 <div id="info-{{ $component->Class }}" class="invisible"
                      style='background: url("<?php echo __('filelang.drag-drop');?>") no-repeat center 80px #212121;'>
-                    <h3><span></span>{{ __('interactivity.'.$component->Class . '_name'); }}</h3>
+                    <h3><span></span>{{ __('interactivity.'.$component->Class . '_name') }}</h3>
                     <p>{{ __('interactivity.'.$component->Class.'_component_description') }}</p>
                 </div>
             @endforeach

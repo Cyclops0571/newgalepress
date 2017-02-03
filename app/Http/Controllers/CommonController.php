@@ -2,16 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ReportFilter;
 use App\Models\Application;
+use App\Models\Content;
 use App\Models\Customer;
+use App\Models\LoginHistory;
 use App\User;
 use Auth;
+use Common;
+use Config;
+use Cookie;
+use DateTime;
 use DB;
+use eProcessTypes;
 use eStatus;
 use eUserTypes;
+use File;
 use Hash;
 use Illuminate\Http\Request;
 use Redirect;
+use Validator;
+use View;
 
 class CommonController extends Controller
 {
@@ -26,12 +37,10 @@ class CommonController extends Controller
         }
     }
 
-    public function login(Request $request)
+    public function login(Request $request, LoginHistory $loginHistory)
     {
         $username = $request->get('Username', '');
         $password = $request->get('Password', '');
-        $remember = $request->get('Remember', '');
-        $localDate = date("Y-m-d H:i:s", $request->get('LocalTime', time()));
 
         $validUser = false;
         $activeApps = false;
@@ -40,9 +49,7 @@ class CommonController extends Controller
 
         if ($user) {
             if (Hash::check($password, $user->Password)) {
-
-                if ((int)$user->UserTypeID == (int)eUserTypes::Customer) {
-                    DB::enableQueryLog();
+                if ($user->UserTypeID == eUserTypes::Customer) {
                     $customer = Customer::getCustomerByID($user->CustomerID, eStatus::Active);
                     if ($customer) {
                         $validUser = true;
@@ -54,13 +61,12 @@ class CommonController extends Controller
                 }
             }
         }
-
         if (!$validUser) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.login_error'));
+            return  "success=false&errmsg="  . __('common.login_error');
         }
 
         if (!$activeApps) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.login_error_expiration'));
+            return  "success=false&errmsg="  . __('common.login_error_expiration');
         }
 
         //Kullanici aktif & Musteriyse (musteri aktif & aktif uygulamaya sahip)
@@ -68,40 +74,23 @@ class CommonController extends Controller
         if (Auth::attempt(array('username' => $username, 'password' => $password, 'StatusID' => eStatus::Active))) {
             //once biz kontrol ettik simdi laravele diyoruz ki git kontrol et bilgileri tekrardan duzgun kullaniciyi login et - salaklik 572572
             $user = Auth::user();
-            $s = new Sessionn;
-            $s->UserID = $user->UserID;
-            $s->IP = $request->ip(); //getenv("REMOTE_ADDR");
-            $s->Session = Session::instance()->session['id'];
-            $s->LoginDate = new DateTime();
-            $s->LocalLoginDate = $localDate;
-            $s->save();
 
-            if ($remember == "on") {
-                Cookie::forever('DSCATALOG_USERNAME', $user->Username);
-            } else {
-                Cookie::forever('DSCATALOG_USERNAME', '');
-            }
-
+            $loginHistory->login($user);
+            Cookie::forever('DSCATALOG_USERNAME', $user->Username);
             setcookie("loggedin", "true", time() + Config::get('session.lifetime') * 60, "/");
-            return "success=" . base64_encode("true") . "&msg=" . base64_encode(__('common.login_success_redirect'));
+            return  "success=true&msg="  . __('common.login_success_redirect');
         } else {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.login_error'));
+            return  "success=false&errmsg="  . __('common.login_error');
         }
     }
 
-    //forgotmypassword
-    public function get_forgotmypassword()
-    {
-        return View::make('pages.forgotmypassword');
-    }
-
-    public function post_forgotmypassword()
+    public function forgotmypassword(Request $request)
     {
         $email = $request->get('Email');
         $rules = array(
             'Email' => 'required|email'
         );
-        $v = Validator::make(Input::all(), $rules);
+        $v = Validator::make($request->all(), $rules);
         if ($v->passes()) {
             /** @var User $user */
             $user = User::where('Email', '=', $email)
@@ -129,18 +118,17 @@ class CommonController extends Controller
                 );
 
                 Common::sendEmail($user->Email, $user->FirstName . ' ' . $user->LastName, $subject, $msg);
-
-                return "success=" . base64_encode("true") . "&msg=" . base64_encode(__('common.login_emailsent'));
+                return  "success=true&msg="  . __('common.login_emailsent');
             } else {
-                return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.login_emailnotfound'));
+                return  "success=false&errmsg="  . __('common.login_emailnotfound');
             }
         } else {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return  "success=false&errmsg="  . __('common.detailpage_validation');
         }
     }
 
     //resetmypassword
-    public function get_resetmypassword()
+    public function resetPasswordPage(Request $request)
     {
         $email = $request->get('email');
         $code = $request->get('code');
@@ -160,7 +148,7 @@ class CommonController extends Controller
         }
     }
 
-    public function post_resetmypassword()
+    public function resetmypassword(Request $request)
     {
         $email = $request->get('Email');
         $code = $request->get('Code');
@@ -172,10 +160,10 @@ class CommonController extends Controller
             'Password' => 'required|min:4|max:12',
             'Password2' => 'required|min:4|max:12|same:Password'
         );
-        $v = Validator::make(Input::all(), $rules);
+        $v = Validator::make($request->all(), $rules);
         if (!$v->passes()) {
-            $errMsg = $v->errors->first();
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode($errMsg);
+            $errMsg = $v->errors()->first();
+            return  "success=false&errmsg="  . $errMsg;
         }
 
 
@@ -194,30 +182,19 @@ class CommonController extends Controller
             $s->ProcessTypeID = eProcessTypes::Update;
             $s->save();
 
-            return "success=" . base64_encode("true") . "&msg=" . base64_encode(__('common.login_passwordhasbeenchanged'));
+            return  "success=true&msg="  . __('common.login_passwordhasbeenchanged');
+
         } else {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.login_ticketnotfound'));
+            return  "success=false&errmsg="  . __('common.login_ticketnotfound');
+
         }
     }
 
-    public function get_logout()
+    public function logout(LoginHistory $history)
     {
         if (Auth::check()) {
             $user = Auth::user();
-
-            $sessionID = DB::table('Session')
-                ->where('UserID', '=', $user->UserID)
-                ->where('Session', '=', Session::instance()->session['id'])
-                ->max('SessionID');
-
-            if ((int)$sessionID > 0) {
-                $s = Sessionn::find($sessionID);
-                $s->LogoutDate = new DateTime();
-                $s->ProcessUserID = $user->UserID;
-                $s->ProcessDate = new DateTime();
-                $s->ProcessTypeID = eProcessTypes::Update;
-                $s->save();
-            }
+            $history->logout($user);
             Auth::logout();
         }
 
@@ -228,16 +205,16 @@ class CommonController extends Controller
     }
 
     //home
-    public function get_home()
+    public function home(Request $request)
     {
         if ((int)Auth::user()->UserTypeID == eUserTypes::Manager) {
             return View::make('pages.homeadmin');
         }
 
-        $applications = DB::table('Application')
+        $applications = Application::query()
             ->where('CustomerID', '=', Auth::user()->CustomerID)
             ->where('StatusID', '=', eStatus::Active)
-            ->order_by('Name', 'ASC')
+            ->orderBy('Name', 'ASC')
             ->get();
 
         //parametrik olacak
@@ -259,7 +236,10 @@ class CommonController extends Controller
         foreach ($applications as $app) {
             array_push($arrApp, (int)$app->ApplicationID);
         }
-        $contentCount = DB::table('Content')->where_in('ApplicationID', $arrApp)->where('StatusID', '=', eStatus::Active)->count();
+        $contentCount = Content::getQuery()
+            ->whereIn('ApplicationID', $arrApp)
+            ->where('StatusID', '=', eStatus::Active)
+            ->count();
 
         //indirilme raporu son hafta
         $w = array_fill(1, 7, '0');
@@ -267,7 +247,7 @@ class CommonController extends Controller
         $downloadTotalData = 0;
         $downloadTodayTotalData = 0;
         $downloadMonthTotalData = 0;
-        $sql = File::get(path('app') . ReportFilter::SqlFolder . 'Dashboard1.sql');
+        $sql = File::get(app_path(ReportFilter::SqlFolder . 'Dashboard1.sql'));
         $sql = str_replace('{DATE}', $date, $sql);
         $sql = str_replace('{CUSTOMERID}', ($customerID > 0 ? '' . $customerID : 'null'), $sql);
         $sql = str_replace('{APPLICATIONID}', ($applicationID > 0 ? '' . $applicationID : 'null'), $sql);
@@ -299,7 +279,7 @@ class CommonController extends Controller
         }
 
         //indirilme raporu son 5 ay
-        $sql = File::get(path('app') . ReportFilter::SqlFolder . 'Dashboard2.sql');
+        $sql = File::get(app_path(ReportFilter::SqlFolder . 'Dashboard2.sql'));
         $sql = str_replace('{DATE}', $date, $sql);
         $sql = str_replace('{CUSTOMERID}', ($customerID > 0 ? '' . $customerID : 'null'), $sql);
         $sql = str_replace('{APPLICATIONID}', ($applicationID > 0 ? '' . $applicationID : 'null'), $sql);
@@ -313,7 +293,7 @@ class CommonController extends Controller
         }
 
         //cihaz son 5 ay
-        $sql = File::get(path('app') . ReportFilter::SqlFolder . 'Dashboard3.sql');
+        $sql = File::get(app_path(ReportFilter::SqlFolder . 'Dashboard3.sql'));
         $sql = str_replace('{DATE}', $date, $sql);
         $sql = str_replace('{CUSTOMERID}', ($customerID > 0 ? '' . $customerID : 'null'), $sql);
         $sql = str_replace('{APPLICATIONID}', ($applicationID > 0 ? '' . $applicationID : 'null'), $sql);
@@ -370,7 +350,7 @@ class CommonController extends Controller
     }
 
     //mydetail
-    public function get_mydetail()
+    public function myDetailPage()
     {
         $data = array(
             'page' => __('route.mydetail'),
@@ -380,7 +360,7 @@ class CommonController extends Controller
             ->nest('filterbar', 'sections.filterbar', $data);
     }
 
-    public function post_mydetail()
+    public function mydetail()
     {
         $firstName = $request->get('FirstName');
         $lastName = $request->get('LastName');
@@ -393,7 +373,7 @@ class CommonController extends Controller
             'LastName' => 'required',
             'Email' => 'required|email'
         );
-        $v = Validator::make(Input::all(), $rules);
+        $v = Validator::make($request->all(), $rules);
         if ($v->passes()) {
             /** @var User $s */
             $s = User::find(Auth::user()->UserID);
@@ -409,13 +389,14 @@ class CommonController extends Controller
             $s->ProcessTypeID = eProcessTypes::Update;
             $s->save();
 
-            return "success=" . base64_encode("true");
+            return "success=true";
         } else {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return  "success=false&errmsg="  . __('common.detailpage_validation');
+
         }
     }
 
-    public function get_confirmemail()
+    public function confirmEmailPage(Request $request)
     {
         $email = $request->get('email');
         $code = $request->get('code');
@@ -424,7 +405,7 @@ class CommonController extends Controller
             'email' => 'required|email',
             'code' => 'required',
         );
-        $v = Validator::make(Input::all(), $rules);
+        $v = Validator::make($request->all(), $rules);
         if ($v->passes()) {
             $user = DB::table('User')
                 ->where('Email', '=', $email)
@@ -437,9 +418,6 @@ class CommonController extends Controller
                 $s->ProcessDate = new DateTime();
                 $s->ProcessTypeID = eProcessTypes::Update;
                 $s->save();
-
-                // return View::make('pages.login')
-                // ->with('message', "success=".base64_encode("false")."&errmsg=".base64_encode(__('common.login_accounthasbeenconfirmed')));
 
                 $subject = __('common.welcome_email_title');
                 $mailData = array(
@@ -464,16 +442,15 @@ class CommonController extends Controller
                 return Redirect::to(__('route.login'))
                     ->with('confirm', __('common.login_accounthasbeenconfirmed'));
 
-                //return "success=".base64_encode("true")."&msg=".base64_encode(__('common.login_accounthasbeenconfirmed'));
             } else {
-                return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.login_accountticketnotfound'));
+                return  "success=false&errmsg="  . __('common.login_accountticketnotfound');
             }
         } else {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return  "success=false&errmsg="  . __('common.detailpage_validation');
         }
     }
 
-    public function post_facebookAttempt()
+    public function facebookAttempt(Request $request)
     {
         $facebookData = $request->get('formData', '');
         $faceUserObj = json_decode($facebookData);
@@ -481,10 +458,10 @@ class CommonController extends Controller
 
         if (isset($faceUserObj->email)) {
 
-            $userEmailControl = DB::table('User')
+            $userEmailControl = User::getQuery()
                 ->where('Email', '=', $faceUserObj->email)
                 ->where('StatusID', '=', eStatus::Active)
-                ->or_where('FbUsername', '=', $faceUserObj->id)
+                ->orWhere('FbUsername', '=', $faceUserObj->id)
                 ->first();
 
             if ($userEmailControl) {
@@ -593,7 +570,7 @@ class CommonController extends Controller
 
                 setcookie("loggedin", "true", time() + 3600, "/");
 
-                return "success=" . base64_encode("true") . "&msg=" . base64_encode(__('common.login_success_redirect'));
+                return "success=true&msg=" . __('common.login_success_redirect');
             }
         } else {
 
@@ -617,55 +594,19 @@ class CommonController extends Controller
 
                 setcookie("loggedin", "true", time() + 3600, "/");
 
-                return "success=" . base64_encode("true") . "&msg=" . base64_encode(__('common.login_success_redirect'));
+                return "success=true&msg=" . __('common.login_success_redirect');
+
             }
         }
-    }
-
-    public function post_imageupload()
-    {
-        ob_start();
-        $element = $request->get('element');
-
-        $options = array(
-            'upload_dir' => path('public') . 'files/temp/',
-            'upload_url' => URL::base() . '/files/temp/',
-            'param_name' => $element,
-            'accept_file_types' => '/\.(gif|jpe?g|png|tiff)$/i'
-        );
-        $upload_handler = new UploadHandler($options);
-
-        if (!Request::ajax()) {
-            return;
-        }
-
-        $upload_handler->post(false);
-
-        $ob = ob_get_contents();
-        ob_end_clean();
-
-        $json = get_object_vars(json_decode($ob));
-        $arr = $json[$element];
-        $obj = $arr[0];
-        $tempFile = $obj->name;
-        //var_dump($obj->name);
-        Uploader::CmykControl($tempFile);
-        return Response::json(array("fileName" => $tempFile));
-    }
-
-    public function post_imageupload_ltie10()
-    {
-
     }
 
     /**
      * if user not exits creates user to the ticket system
      * Authenticates the user to the ticket system
-     * @return boolean
      */
-    public function get_ticket()
+    public function ticketPage()
     {
-        include(path('public') . "ticket/bootstrap.php");
+        include(public_path("ticket/bootstrap.php"));
         //find out if user exists
         $users = sts\singleton::get('sts\users');
         /** @var User $laravelUser */
@@ -707,8 +648,7 @@ class CommonController extends Controller
 
         }
         $result = $api->receive(array("data" => json_encode($data)));
-        return \Laravel\Redirect::to(Laravel\Config::get('custom.url') . '/ticket');
-
+        return Redirect::to(Config::get('custom.url') . '/ticket');
     }
 
 }

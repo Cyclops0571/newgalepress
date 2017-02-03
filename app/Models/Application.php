@@ -136,6 +136,8 @@ use Subscription;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereProcessDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereProcessTypeID($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationUser[] $Users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationTag[] $Tags
  */
 class Application extends Model
 {
@@ -146,6 +148,7 @@ class Application extends Model
 
     public $timestamps = false;
     protected $table = 'Application';
+    public static $key = 'ApplicationID';
     protected $primaryKey = 'ApplicationID';
 
     public function __construct($attributes = array())
@@ -165,7 +168,7 @@ class Application extends Model
      */
     public static function find($applicationID, $columns = array('*'))
     {
-        return Application::query()->where(self::getKey(), "=", $applicationID)->first($columns);
+        return Application::query()->where(self::$key, "=", $applicationID)->first($columns);
     }
 
     public static function getActiveAppCountByCustomerID($CustomerID)
@@ -201,8 +204,9 @@ class Application extends Model
      */
     public function Categories($statusID = eStatus::Active)
     {
-        return $this->hasMany('App\Models\Category', self::getKey())->getQuery()->where('StatusID', '=', $statusID)->get();
+        return $this->hasMany('App\Models\Category', self::$key)->getQuery()->where('StatusID', '=', $statusID)->get();
     }
+
 
 
     /**
@@ -212,7 +216,7 @@ class Application extends Model
      */
     public function Contents($statusID = eStatus::All)
     {
-        $rs = $this->hasMany('App\Models\Content', self::getKey())->getQuery();
+        $rs = $this->hasMany('App\Models\Content', self::$key)->getQuery();
         if ($statusID != eStatus::All) {
             $rs->where('StatusID', '=', $statusID);
         }
@@ -312,7 +316,7 @@ class Application extends Model
      */
     public function Tabs()
     {
-        return $this->hasMany('App\Models\Tab', $this->getKey())->getQuery()->where('StatusID', '=', eStatus::Active)
+        return $this->hasMany('App\Models\Tab', self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)
             ->take(TAB_COUNT)
             ->get();
     }
@@ -514,7 +518,7 @@ class Application extends Model
      */
     public function ApplicationTopics()
     {
-        return $this->hasMany('App\Models\ApplicationTopic', self::getKey());
+        return $this->hasMany('App\Models\ApplicationTopic', self::$key);
     }
 
     public function setTopics($newTopicIds)

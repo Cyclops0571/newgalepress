@@ -34,7 +34,7 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
     ?>
     <ul class="page-navigation bg-light">
         <li>
-            <a href="{{URL::to(__('route.home'))}}"><span class="icon-home"></span>{{ __('common.home') }}</a>
+            <a href="{{  route('home') }}"><span class="icon-home"></span>{{ __('common.home') }}</a>
         </li>
         <li>
             @if(count($applicationSet) == 1)

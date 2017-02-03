@@ -1,5 +1,24 @@
 <?php
 
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function (){
+    Route::get(__('route.home'), array('as' => 'CommonController_home', 'uses' => 'CommonController@home'));
+    Route::get(__('route.dashboard'), array('as' => 'common_dashboard', 'before' => 'auth', 'uses' => 'CommonController@dashboard'));
+    Route::get(__('route.forgotmypassword'), array('as' => 'common_forgotmypassword_get', function() {
+        return View::make('pages.forgotmypassword');
+    }));
+    Route::post(__('route.forgotmypassword'), array('as' => 'Co0mmonController_forgotmypassword', 'uses' => 'CommonController@forgotmypassword'));
+
+    Route::get(__('route.resetmypassword'), array('as' => 'common_resetmypassword_get', 'uses' => 'CommonController@resetPasswordPage'));
+    Route::post(__('route.resetmypassword'), array('as' => 'common_resetmypassword_post', 'before' => 'csrf', 'uses' => 'CommonController@resetmypassword'));
+
+    Route::get(__('route.logout'), array('as' => 'common_logout', 'uses' => 'CommonController@logout'));
+
+    Route::get(__('route.mydetail'), array('as' => 'common_mydetail_get', 'uses' => 'CommonController@myDetailPage'));
+    Route::post(__('route.mydetail'), array('as' => 'common_mydetail_post', 'uses' => 'CommonController@mydetail'));
+});
+
+
+
 define("ENV_TEST", "test");
 define("ENV_LOCAL", "local");
 define("ENV_LIVE", "live");
@@ -59,24 +78,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     });//571571 MeCaptcha\Captcha not found...
 
     Route::get(__('route.login'), array('as' => 'common_login_get', 'uses' => 'CommonController@showMyLoginForm'));
-    Route::post(__('route.login'), 'CommonController@login');
+    Route::post(__('route.login'), array('as' => 'loginPage', 'uses' => 'CommonController@login'));
 
 // </editor-fold>
 });
 
 
+
 /** Website Post */
 Route::post(__('route.website_tryit'), array('as' => 'website_tryit_post', 'uses' => 'WebsiteController@tryit')); //571571 Test It
 Route::post('deneyin-test', array('as' => 'website_tryit_test_post', 'uses' => 'WebsiteController@tryit'));//571571 Test It
-Route::post(__('route.facebook_attempt'), array('as' => 'website_facebook_attempt_post', 'uses' => 'common@facebookAttempt')); //571571 Test It
-
-
-/*
-Route::get('{path}', function(){
-    echo "zzzzzzzzz"; exit;
-})->where('path', '.*');
-
-*/
+Route::post(__('route.facebook_attempt'), array('as' => 'website_facebook_attempt_post', 'uses' => 'CommonController@facebookAttempt')); //571571 Test It
 
 // <editor-fold defaultstate="collapsed" desc="Test">
 Route::get('test/iosInternalTest', 'test@iosInternalTest');
@@ -105,7 +117,6 @@ Route::post("clients/excelupload", array('before' => 'auth', 'uses' => "clients@
 Route::post("maps/excelupload/(:num)", array('before' => 'auth', 'uses' => "maps@excelupload"));
 Route::get("maps/delete", "maps@delete", array('before' => 'auth'));
 Route::post((string)__('route.contents_interactivity_status'), array('uses' => "contents@interactivity_status"));
-$languages = Config::get('application.languages', array());
 
 Route::post('/contactmail', array('as' => 'contactmail', 'uses' => 'WebsiteController@contactform'));
 Route::post('/search', 'webservice.search@search');
@@ -132,24 +143,9 @@ Route::get(__('route.website_payment_result'), array('as' => 'website_payment_re
 
 
 
-Route::get(__('route.forgotmypassword'), array('as' => 'common_forgotmypassword_get', 'uses' => 'common@forgotmypassword'));
-Route::post(__('route.forgotmypassword'), array('as' => 'common_forgotmypassword_post', 'before' => 'csrf', 'uses' => 'common@forgotmypassword'));
+Route::get(__('route.confirmemail'), array('as' => 'common_confirmemail_get', 'uses' => 'CommonController@confirmEmailPage'));
+Route::get(__('route.my_ticket'), array('as' => 'my_ticket', 'before' => 'auth', 'uses' => 'CommonController@ticketPage'));
 
-Route::get(__('route.resetmypassword'), array('as' => 'common_resetmypassword_get', 'uses' => 'common@resetmypassword'));
-Route::post(__('route.resetmypassword'), array('as' => 'common_resetmypassword_post', 'before' => 'csrf', 'uses' => 'common@resetmypassword'));
-
-Route::get(__('route.logout'), array('as' => 'common_logout', 'uses' => 'common@logout'));
-
-Route::get(__('route.home'), array('as' => 'common_home', 'before' => 'auth', 'uses' => 'common@home'));
-Route::get("myhome", array('as' => 'common_myhome', 'uses' => 'test@myhome'));
-Route::get(__('route.dashboard'), array('as' => 'common_dashboard', 'before' => 'auth', 'uses' => 'common@dashboard'));
-
-Route::get(__('route.mydetail'), array('as' => 'common_mydetail_get', 'before' => 'auth', 'uses' => 'common@mydetail'));
-Route::post(__('route.mydetail'), array('as' => 'common_mydetail_post', 'before' => 'auth|csrf', 'uses' => 'common@mydetail'));
-
-Route::get(__('route.confirmemail'), array('as' => 'common_confirmemail_get', 'uses' => 'common@confirmemail'));
-
-Route::get(__('route.my_ticket'), array('as' => 'my_ticket', 'before' => 'auth', 'uses' => 'common@ticket'));
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Users">
@@ -281,9 +277,6 @@ Route::get(__('route.sign_up'), "WebsiteController@signUp");
 Route::get(__('route.forgot_password'), "WebsiteController@forgotPassword");
 Route::get(__('route.sign_in'), "WebsiteController@signIn");
 
-//	Route::post('/common/imageupload_ltie10', array('as' => 'banners_imageupload_ltie10', 'uses' => 'common@imageupload_ltie10'));
-//	Route::post('/common/imageupload', array('as' => 'banners_imageupload_ltie10', 'uses' => 'common@imageupload'));
-
 
 // <editor-fold defaultstate="collapsed" desc="managements">
 Route::get(__('route.managements_list'), array('as' => 'managements_list', 'uses' => 'managements@list'));
@@ -414,19 +407,6 @@ Route::any('webservice/(:num)/application-topic', array('uses' => 'webservice.to
 | uncaught exception thrown in the application.
 |
 */
-
-/*Event::listen('404', function () {
-    $serverErrorLog = new ServerErrorLog();
-    $serverErrorLog->Header = 404;
-    $serverErrorLog->Parameters = \Laravel\Input::all();
-    $serverErrorLog->Url = \Laravel\Request::uri();
-    $serverErrorLog->save();
-    return Response::error('404');
-});
-
-Event::listen('500', function () {
-    return Response::error('500');
-});*/
 
 /*
 |--------------------------------------------------------------------------

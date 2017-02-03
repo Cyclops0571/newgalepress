@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\ContentFile;
+
 class localize {
     public function get() {
         return 'test';
@@ -155,7 +157,7 @@ class eTemplateColor
             }
         }
 
-        $fileContent = File::get(path('app') . "csstemplates/color.css");
+        $fileContent = File::get(app_path("/csstemplates/color.css"));
         $fileContent = str_replace("#TemplateColor#", $templateColorCode, $fileContent);
         $fileContent = str_replace("#APP_VER#", APP_VER, $fileContent);
         return $fileContent;
@@ -473,7 +475,7 @@ class Common
                 }
             }
 
-            $cf = DB::table('ContentFile')
+            $cf = ContentFile::getQuery()
                 ->where('ContentID', '=', $oContentID)
                 ->where('StatusID', '=', eStatus::Active)
                 ->order_by('ContentFileID', 'DESC')
@@ -1049,7 +1051,7 @@ class Common
 
     public static function monthName($month)
     {
-        $m = __('common.month_names')->get();
+        $m = __('common.month_names');
         return $m[$month];
     }
 

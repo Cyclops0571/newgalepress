@@ -46,7 +46,7 @@ String.prototype.getDate = function (inputFormat, outputFormat) {
 
 String.prototype.getValue = function (key, base64) {
     ret = "";
-    base64 = (typeof base64 == "undefined") ? true : base64
+    base64 = (typeof base64 == "undefined") ? false : base64
     var a = this.split("&");
     for (var i = 0; i < a.length; i++) {
         var pair = a[i].split("=");

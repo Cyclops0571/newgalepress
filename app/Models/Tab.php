@@ -32,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tab extends Model
 {
     protected $table = 'Tabs';
-    protected $key = 'TabID';
+    protected $primaryKey = 'TabID';
+    protected static $key = 'TabID';
 
 }

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\LoginHistory;
 use eStatus;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -55,6 +56,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereProcessDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereProcessTypeID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereConfirmCode($value)
+ * @property string $remember_token
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
  */
 class User extends Authenticatable
 {
@@ -62,6 +65,7 @@ class User extends Authenticatable
 
     protected $table = 'User';
     protected $primaryKey = 'UserID';
+    private static $key = 'UserID';
 
     /**
      * The attributes that are mass assignable.
@@ -69,7 +73,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'Username', 'Email', 'Password',
     ];
 
     /**
@@ -78,7 +82,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'Password', 'remember_token',
     ];
 
     /**
@@ -90,5 +94,25 @@ class User extends Authenticatable
         return self::getQuery()->where('Username', '=', $username)
         ->where('StatusID', '=', eStatus::Active)
         ->first();
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->Password;
+    }
+
+    /**
+     * @return LoginHistory|\Illuminate\Database\Eloquent\Builder
+     */
+    public function lastLoginDate() {
+        $loginHistory = $this->hasMany('App\Models\LoginHistory', self::$key)
+            ->getQuery()
+            ->where('action', 'login')
+            ->orderBy('id', 'Desc')->first();
+        if($loginHistory) {
+            return $loginHistory->created_at;
+        }
+
+        return date('Y:m:d H:i');
     }
 }

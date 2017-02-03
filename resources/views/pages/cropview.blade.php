@@ -72,8 +72,8 @@
             $i = 1;
             ?>
 
-            {{ HTML::style('js/jcrop/jquery.Jcrop.css?v=' . APP_VER); }}
-            {{ HTML::script('js/jcrop/jquery.Jcrop.min.js?v=' . APP_VER); }}
+            {{ HTML::style('js/jcrop/jquery.Jcrop.css?v=' . APP_VER) }}
+            {{ HTML::script('js/jcrop/jquery.Jcrop.min.js?v=' . APP_VER) }}
 
             <script type="text/javascript" language="Javascript">
                 var api, current_id;

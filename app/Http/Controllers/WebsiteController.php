@@ -1,5 +1,8 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\Customer;
+use App\User;
+use Validator;
 use View;
 
 class WebsiteController extends Controller
@@ -30,7 +33,7 @@ class WebsiteController extends Controller
         );
         //company comment
 
-        $v = \Laravel\Validator::make(\Laravel\Input::all(), $rules);
+        $v = Validator::make($request->all(), $rules);
         if (!$v->passes()) {
             return $v->errors->first();
         }
@@ -94,7 +97,7 @@ class WebsiteController extends Controller
             $errors['last_name'] = (string)__('website.tryit_form_error_required_lastname');
 
         $rule = array('email' => 'required|email');
-        $validationEmail = Validator::make(Input::all(), $rule);
+        $validationEmail = Validator::make($request->all(), $rule);
         if ($validationEmail->invalid()) {
             $errors['email'] = (string)__('website.tryit_form_error_required_email');
         }
@@ -127,7 +130,7 @@ class WebsiteController extends Controller
             $rules = array(
                 'captcha' => 'mecaptcha|required',
             );
-            $validation = Validator::make(Input::all(), $rules);
+            $validation = Validator::make($request->all(), $rules);
             if ($validation->valid()) {
                 //$errors['captcha'] = 'Invalid captcha';
             } else if ($captcha && !empty($captcha)) {

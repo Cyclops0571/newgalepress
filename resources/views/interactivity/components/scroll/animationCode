@@ -1,0 +1,72 @@
+
+	<div class="icon-arrow-down"></div>
+	<div class="icon-arrow-down two"></div>
+
+
+///////////
+JS
+
+
+<script type="text/javascript">
+	var overview = document.getElementsByClassName('overview');
+	var animeIcons = document.getElementsByClassName('icon-arrow-down');
+	overview[0].addEventListener("scroll",  myFunction);
+	function myFunction(){
+		animeIcons[0].parentNode.removeChild(animeIcons[0]);
+		animeIcons[0].parentNode.removeChild(animeIcons[0]);
+		overview[0].removeEventListener("scroll",  myFunction);
+	}
+</script>
+
+////////////
+CSS
+
+.icon-arrow-down:after{
+			content: "\27AE";
+		}
+		.icon-arrow-down{
+			display: inline-block;
+			-webkit-transform: rotate(90deg);
+		    -moz-transform: rotate(90deg);
+		    -o-transform: rotate(90deg);
+		    -ms-transform: rotate(90deg);
+		    transform: rotate(90deg);
+		    font-size: 1em;
+		    position: absolute;
+		    top: -20px;
+		    right: 0;
+
+			animation: dragArrow 2s infinite;
+			-webkit-animation: dragArrow 2s infinite;
+			animation-timing-function: linear;
+			-webkit-animation-timing-function: linear;
+		}
+		.icon-arrow-down.two{
+			animation: dragArrowTwo 2s infinite 0.9s forwards;
+			-webkit-animation: dragArrowTwo 2s infinite 0.9s forwards;
+			animation-timing-function: linear;
+			-webkit-animation-timing-function: linear;
+		}
+		/* Chrome, Safari, Opera */
+		@-webkit-keyframes dragArrow {
+		    0%   {top:-20px; opacity: 1;}
+		    75%  {top:0px; opacity: 1;}
+		    100%  {top:5px; opacity: 0;}
+		}
+		@-webkit-keyframes dragArrowTwo {
+		    0%   {top:-25px; opacity: 1;}
+		    75%  {top:0px; opacity: 1;}
+		    100%  {top:5px; opacity: 0;}
+		}
+
+		/* Standard syntax */
+		@keyframes dragArrow {
+		    0%   {top:-20px; opacity: 1;}
+		    75%  {top:0px; opacity: 1;}
+		    100%  {top:5px; opacity: 0;}
+		}
+		@keyframes dragArrowTwo {
+		    0%   {top:-25px; opacity: 1;}
+		    75%  {top:0px; opacity: 1;}
+		    100%  {top:5px; opacity: 0;}
+		}

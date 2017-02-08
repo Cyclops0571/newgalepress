@@ -9,7 +9,7 @@
                 <!--commanbar start-->
                 <div class="col-md-5" style="padding-top:5px; float:left;">
                     <div class="input-group commands">
-                        <a href="{{URL::to(__('route.'.$page.'_new'))}}" title="{{__('common.commandbar_add')}}"
+                        <a href="{{route($page.'_new')}}" title="{{__('common.commandbar_add')}}"
                            class="widget-icon widget-icon-circle">
                             <span class="icon-plus-sign" style="font-size: 20px;"></span>
                         </a>
@@ -40,12 +40,12 @@
                 <div class="col-md-4" style="float:right; max-width:300px;">
                     {{ Form::open($route, 'GET') }}
                     {{ Form::hidden('page', '1') }}
-                    {{ Form::hidden('sort', Input::get('sort', $pk)) }}
-                    {{ Form::hidden('sort_dir', Input::get('sort_dir', 'DESC')) }}
-                    {{ Form::hidden('applicationID', Input::get('applicationID', '0')) }}
+                    {{ Form::hidden('sort', request('sort', $pk)) }}
+                    {{ Form::hidden('sort_dir', request('sort_dir', 'DESC')) }}
+                    {{ Form::hidden('applicationID', request('applicationID', '0')) }}
                     <div class="input-group">
                         <div class="input-group-addon"><span class="icon-search"></span></div>
-                        <input class="form-control" name="search" value="{{ Input::get('search', '') }}" type="text">
+                        <input class="form-control" name="search" value="{{ request('search', '') }}" type="text">
                         <input type="submit" class="btn hidden" value="{{ __('common.commandbar_search') }}"/>
                     </div>
                     {{ Form::close() }}
@@ -56,7 +56,7 @@
                     <table id="DataTables_Table_1" cellpadding="0" cellspacing="0" width="100%"
                            class="table table_main table-bordered table-striped table-hover">
                         <?php
-                        $appQS = ((int)Input::get('ApplicationID', 0) > 0 ? '&ApplicationID=' . Input::get('ApplicationID', 0) : '');
+                        $appQS = ((int)request('ApplicationID', 0) > 0 ? '&ApplicationID=' . request('ApplicationID', 0) : '');
                         $searchQS = '&search=' . $search;
                         $sortDirection = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                         $classUp = array('class' => 'sort_up');
@@ -68,7 +68,7 @@
                             <th scope="col">
                                 <?php $attributes = ($sort == $fields[$i][2]) ? ($sort_dir == 'ASC' ? $classUp : $classDown) : array(); ?>
                                 <?php $sortQS = '&sort=' . $fields[$i][2]; ?>
-                                <?php echo HTML::link($route . '?page=1' . $appQS . $searchQS . $sortQS . $sortDirection, $fields[$i][1], $attributes); ?>
+                                <?php echo Html::link($route . '?page=1' . $appQS . $searchQS . $sortQS . $sortDirection, $fields[$i][1], $attributes); ?>
                             </th>
                             <?php endfor; ?>
                         </tr>
@@ -77,14 +77,14 @@
                         <?php if (!empty($rows)): ?>
                         <?php foreach ($rows->results as $row): ?>
                         <?php /* @var $row Client */ ?>
-                        <tr class="{{ HTML::oddeven($page) }}">
-                            <td><?php echo HTML::link($route . '/' . $row->ClientID, $row->Username); ?> </td>
-                            <td><?php echo HTML::link($route . '/' . $row->ClientID, $row->Name); ?> </td>
-                            <td><?php echo HTML::link($route . '/' . $row->ClientID, $row->Surname); ?> </td>
-                            <td><?php echo HTML::link($route . '/' . $row->ClientID, $row->Email); ?> </td>
-                            <td><?php echo HTML::link($route . '/' . $row->ClientID, $row->Application->Name); ?> </td>
-                            <td><?php echo HTML::link($route . '/' . $row->ClientID, Common::dateRead($row->LastLoginDate, 'd.m.Y')); ?> </td>
-                            <td><?php echo HTML::link($route . '/' . $row->ClientID, $row->ClientID); ?> </td>
+                        <tr class="{{ Html::oddeven($page) }}">
+                            <td><?php echo Html::link($route . '/' . $row->ClientID, $row->Username); ?> </td>
+                            <td><?php echo Html::link($route . '/' . $row->ClientID, $row->Name); ?> </td>
+                            <td><?php echo Html::link($route . '/' . $row->ClientID, $row->Surname); ?> </td>
+                            <td><?php echo Html::link($route . '/' . $row->ClientID, $row->Email); ?> </td>
+                            <td><?php echo Html::link($route . '/' . $row->ClientID, $row->Application->Name); ?> </td>
+                            <td><?php echo Html::link($route . '/' . $row->ClientID, Common::dateRead($row->LastLoginDate, 'd.m.Y')); ?> </td>
+                            <td><?php echo Html::link($route . '/' . $row->ClientID, $row->ClientID); ?> </td>
                         </tr>
                         <?php endforeach; ?>
                         <?php else: ?>
@@ -100,8 +100,8 @@
 
             <!-- end tabular_content-->
             <div class="select">
-                @if((int)Input::get('customerID', 0) > 0)
-                    {{ $rows->appends(array('customerID' => Input::get('customerID', 0), 'search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
+                @if((int)request('customerID', 0) > 0)
+                    {{ $rows->appends(array('customerID' => request('customerID', 0), 'search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
                 @else
                     {{ $rows->appends(array('search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
                 @endif

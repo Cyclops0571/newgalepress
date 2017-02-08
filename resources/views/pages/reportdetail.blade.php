@@ -78,7 +78,7 @@
                             @endif
             			</tbody>
                     </table>
-                    {{ $rows->appends(array('sd' => Input::get('sd'), 'ed' => Input::get('ed'), 'customerID' => Input::get('customerID'), 'applicationID' => Input::get('applicationID'), 'contentID' => Input::get('contentID'), 'country' => Input::get('country'), 'city' => Input::get('city'), 'district' => Input::get('district')))->links() }}
+                    {{ $rows->appends(array('sd' => request('sd'), 'ed' => request('ed'), 'customerID' => request('customerID'), 'applicationID' => request('applicationID'), 'contentID' => request('contentID'), 'country' => request('country'), 'city' => request('city'), 'district' => request('district')))->links() }}
                     <script type="text/javascript">
                         $(function() {
                             $("div.pagination ul").addClass("pagination");

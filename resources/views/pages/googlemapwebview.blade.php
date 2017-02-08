@@ -98,14 +98,14 @@
     </style>
     <!-- Begin CSS-->
     <link rel="stylesheet" href="/css/font-awesome.min.css?v=<?php echo APP_VER; ?>" type="text/css">
-    {{ HTML::style('css/bootstrap.min.css?v=' . APP_VER, array('media' => 'screen')) }}
-    {{ HTML::style('css/jquery-ui.min.css?v=' . APP_VER, array('media' => 'screen')) }}
+    {{ Html::style('css/bootstrap.min.css?v=' . APP_VER, array('media' => 'screen')) }}
+    {{ Html::style('css/jquery-ui.min.css?v=' . APP_VER, array('media' => 'screen')) }}
 
             <!-- Begin JavaScript -->
-    {{ HTML::script('js/jquery-2.1.4.min.js') }}
-    {{ HTML::script('js/jquery-ui-1.10.4.custom.min.js') }}
-    {{ HTML::script('js/bootstrap.min.js') }}
-    {{ HTML::script('js/jquery.uniform.min.js') }}
+    {{ Html::script('js/jquery-2.1.4.min.js') }}
+    {{ Html::script('js/jquery-ui-1.10.4.custom.min.js') }}
+    {{ Html::script('js/bootstrap.min.js') }}
+    {{ Html::script('js/jquery.uniform.min.js') }}
     <script src="http://maps.google.com/maps/api/js"></script>
     <script type="text/javascript">
         var coordinates = <?php echo json_encode($initialLocation);?>;

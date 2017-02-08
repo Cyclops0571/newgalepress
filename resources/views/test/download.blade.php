@@ -7,8 +7,8 @@
 	    <h2><?php echo __('common.detailpage_caption'); ?> </h2>
 	</div>
 	<div class="content controls">
-	    <?php echo Laravel\Form::open('http://localhost/test', 'POST', array('enctype' => 'multipart/form-data')); ?>
-	    <?php echo Laravel\Form::token(); ?>
+	    <?php echo Form::open('http://localhost/test', 'POST', array('enctype' => 'multipart/form-data')); ?>
+	    <?php echo Form::token(); ?>
 	    <div class="form-row">
 		<div class="col-md-2" id="contentPdfFile">
                     <input type="file" name="File" class="btn btn-mini hidden" id="File" style="opacity:0;" />
@@ -43,7 +43,7 @@
 		    <input type="submit" value="Gönder" class="btn">
 		</div>
 	    </div>
-	    <?php echo Laravel\Form::close(); ?>
+	    <?php echo Form::close(); ?>
 	</div>
     </div>
 </div>

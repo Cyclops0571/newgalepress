@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-xs-2" style="padding: 0">
                         <a class="banner-setting-link"
-                           href="<?php echo Laravel\URL::to(__('route.banners') . '?applicationID=' . $application->ApplicationID); ?>"
+                           href="{{route('banners_list', ['applicationID' => 10])}}"
                            title="Banner">
                             <span class="icon-arrow-right"></span>
                         </a>
@@ -97,7 +97,7 @@
                     </div>
                     <div class="col-xs-2" style="padding: 0">
                         <a class="banner-setting-link"
-                           href="<?php echo Laravel\URL::to(__('route.maps') . '?applicationID=' . $application->ApplicationID); ?>"
+                           href="{{route('maps_list', ['applicationID' => $application->ApplicationID])}}"
                            title="Store Locator">
                             <span class="icon-arrow-right"></span>
                         </a>

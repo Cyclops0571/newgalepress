@@ -1,9 +1,14 @@
 <?php
 
+use App\Models\Application;
+use App\Models\Content;
 use App\Models\ContentFile;
+use Illuminate\Support\Str;
 
-class localize {
-    public function get() {
+class localize
+{
+    public function get()
+    {
         return 'test';
     }
 
@@ -13,19 +18,29 @@ class localize {
     }
 }
 
-abstract class eStatus {
+abstract class Interactivity
+{
+    const ProcessAvailable = 0;
+    const ProcessQueued = 1;
+    const ProcessContinues = 2;
+}
+
+abstract class eStatus
+{
     const All = 0;
     const Active = 1;
     const Passive = 2;
     const Deleted = 3;
 }
 
-abstract class eDeviceType {
+abstract class eDeviceType
+{
     const ios = 'ios';
     const android = 'android';
 }
 
-abstract class eRemoveFromMobile {
+abstract class eRemoveFromMobile
+{
     const Active = 1;
     const Passive = 0;
 }
@@ -50,7 +65,8 @@ abstract class eProcessTypes
     const Delete = 53;
 }
 
-class eServiceError {
+class eServiceError
+{
 
     const ServiceNotFound = 1;
     const IncorrectPassword = 101;
@@ -72,9 +88,11 @@ class eServiceError {
     /**
      *
      * @param Int $errorNo
-     * @return \Exception
+     * @param string $errorMsg
+     * @return Exception
      */
-    public static function getException($errorNo, $errorMsg = "") {
+    public static function getException($errorNo, $errorMsg = "")
+    {
         switch ($errorNo) {
             case eServiceError::ServiceNotFound:
                 $exception = new Exception("Servis versiyonu hatalı", $errorNo);
@@ -150,9 +168,9 @@ class eTemplateColor
     {
         $templateColorCode = basename($fileName, '.css');
         foreach (self::$requiredImageSet as $requiredImageTmp) {
-            $requiredImageWithPath = path('public') . self::$imageGeneratedFolder . str_replace('1', $templateColorCode, $requiredImageTmp);
-            $origImgWithPath = path('public') . self::$imageFolder . $requiredImageTmp;
-            if (!\Laravel\File::exists($requiredImageWithPath)) {
+            $requiredImageWithPath = public_path(self::$imageGeneratedFolder . str_replace('1', $templateColorCode, $requiredImageTmp));
+            $origImgWithPath = public_path(self::$imageFolder . $requiredImageTmp);
+            if (!File::exists($requiredImageWithPath)) {
                 exec("convert " . $origImgWithPath . ' -fuzz 90% -fill \'#' . $templateColorCode . '\' -opaque blue ' . $requiredImageWithPath);
             }
         }
@@ -165,12 +183,14 @@ class eTemplateColor
 
 }
 
-class Subscription {
+class Subscription
+{
     const week = 1;
     const mounth = 2;
     const year = 3;
 
-    public static function types() {
+    public static function types()
+    {
         return array(
             1 => "week_subscription",
             2 => "month_subscription",
@@ -184,9 +204,9 @@ class Subscription {
 /**
  * Retrieve a language line.
  *
- * @param  string  $key
- * @param  array   $replacements
- * @param  string  $language
+ * @param  string $key
+ * @param  array $replacements
+ * @param  string $language
  * @return \Symfony\Component\Translation\TranslatorInterface|string
  */
 function __($key, $replacements = array(), $language = null)
@@ -194,7 +214,8 @@ function __($key, $replacements = array(), $language = null)
     return trans($key, $replacements, 'messages', $language);
 }
 
-function dj($value) {
+function dj($value)
+{
     echo json_encode($value);
     die;
 }
@@ -202,26 +223,22 @@ function dj($value) {
 /**
  * Recursively remove slashes from array keys and values.
  *
- * @param  array  $array
+ * @param  array $array
  * @return array
  */
 function array_strip_slashes($array)
 {
     $result = array();
 
-    foreach($array as $key => $value)
-    {
+    foreach ($array as $key => $value) {
         $key = stripslashes($key);
 
         // If the value is an array, we will just recurse back into the
         // function to keep stripping the slashes out of the array,
         // otherwise we will set the stripped value.
-        if (is_array($value))
-        {
+        if (is_array($value)) {
             $result[$key] = array_strip_slashes($value);
-        }
-        else
-        {
+        } else {
             $result[$key] = stripslashes($value);
         }
     }
@@ -478,7 +495,7 @@ class Common
             $cf = ContentFile::getQuery()
                 ->where('ContentID', '=', $oContentID)
                 ->where('StatusID', '=', eStatus::Active)
-                ->order_by('ContentFileID', 'DESC')
+                ->orderBy('ContentFileID', 'DESC')
                 ->first();
             if ($cf) {
                 $oContentFileID = (int)$cf->ContentFileID;
@@ -503,7 +520,7 @@ class Common
 
     public static function download($RequestTypeID, $CustomerID, $ApplicationID, $ContentID, $ContentFileID, $ContentCoverImageFileID, $filepath, $filename)
     {
-        $file = path('public') . $filepath . '/' . $filename;
+        $file = public_path($filepath . '/' . $filename);
 
         if (file_exists($file) && is_file($file)) {
             $fileSize = File::size($file);
@@ -613,7 +630,7 @@ class Common
         $contentFile = DB::table('ContentFile')
             ->where('ContentID', '=', $ContentID)
             ->where('StatusID', '=', eStatus::Active)
-            ->order_by('ContentFileID', 'DESC')
+            ->orderBy('ContentFileID', 'DESC')
             ->first();
 
         if (!$contentFile) {
@@ -622,7 +639,7 @@ class Common
         $contentCoverImageFile = DB::table('ContentCoverImageFile')
             ->where('ContentFileID', '=', $contentFile->ContentFileID)
             ->where('StatusID', '=', eStatus::Active)
-            ->order_by('ContentCoverImageFileID', 'DESC')
+            ->orderBy('ContentCoverImageFileID', 'DESC')
             ->first();
         if (!$contentCoverImageFile) {
             throw new Exception(__('common.list_norecord'), "102");
@@ -630,9 +647,9 @@ class Common
 
         if ($Width > 0 && $Height > 0) {
             //image var mi kontrol edip yok ise olusturup, ismini set edelim;
-            $originalImage = path('public') . $contentCoverImageFile->FilePath . '/' . IMAGE_CROPPED_2048;
+            $originalImage = public_path($contentCoverImageFile->FilePath . '/' . IMAGE_CROPPED_2048);
             if (!is_file($originalImage)) {
-                $originalImage = path('public') . $contentCoverImageFile->FilePath . '/' . $contentCoverImageFile->SourceFileName;
+                $originalImage = public_path($contentCoverImageFile->FilePath . '/' . $contentCoverImageFile->SourceFileName);
             }
             $pathInfoOI = pathinfo($originalImage);
             $fileName = IMAGE_CROPPED_NAME . "_" . $Width . "x" . $Height . ".jpg";
@@ -659,8 +676,7 @@ class Common
             }
         }
 
-
-        $file = path('public') . $contentCoverImageFile->FilePath . '/' . $fileName;
+        $file = public_path($contentCoverImageFile->FilePath . '/' . $fileName);
         if (!is_file($file)) {
             throw new Exception(__('common.file_notfound'), "102");
         }
@@ -1027,7 +1043,8 @@ class Common
         if ($useLocal) {
             $date = Common::convert2Localzone($date);
         }
-        if (Laravel\Config::get('application.language') == 'usa') {
+
+        if (App::isLocale('usa')) {
             if ($format == 'd.m.Y') {
                 $format = 'm/d/Y';
             } else if ($format == 'd.m.Y H:i') {
@@ -1103,7 +1120,7 @@ class Common
                 }
             })
             ->distinct()
-            ->order_by($column, 'ASC')
+            ->orderBy($column, 'ASC')
             ->get($column);
 
         return $rs;
@@ -1181,7 +1198,9 @@ class Common
 
     public static function localize($key, $replacements = array(), $language = null)
     {
-        $result = Laravel\Lang::line(Laravel\Request::$route->controller . '.' . $key, $replacements, $language);
+        $action = app('request')->route()->getAction();
+
+        $result = trans(class_basename($action['controller']) . '.' . $key, $replacements, 'messages', $language);
         if (empty($result)) {
             $result = $key;
         }
@@ -1194,8 +1213,9 @@ class Common
         return str_replace(",", ".", str_replace(".", "", $input));
     }
 
-    public static function metaContentLanguage() {
-        switch(Config::get('application.language')) {
+    public static function metaContentLanguage()
+    {
+        switch (Config::get('application.language')) {
             case 'tr':
                 return 'tr';
             case 'en':
@@ -1264,6 +1284,24 @@ class Common
             } else {
                 $destination->{$name} = $source->$name;
             }
+        }
+    }
+
+    public static function getLocaleId()
+    {
+        $langs = Config::get('app.langs');
+        return $langs[App::getLocale()];
+    }
+}
+
+
+function localDateFormat($format = 'dd.MM.yyyy') {
+    $currentLang = Config::get('application.language');
+    if($currentLang != 'usa') {
+        return $format;
+    } else {
+        if($format == 'dd.MM.yyyy') {
+            return 'mm/dd/yyyy';
         }
     }
 

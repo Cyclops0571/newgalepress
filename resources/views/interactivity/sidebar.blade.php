@@ -1,7 +1,7 @@
 <?php
 $components = DB::table('Component')
         ->where('StatusID', '=', eStatus::Active)
-        ->order_by('DisplayOrder', 'ASC')
+        ->orderBy('DisplayOrder', 'ASC')
         ->get();
 ?>
 <div class="sidebar">

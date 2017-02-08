@@ -407,7 +407,7 @@ $tabIndex = 1;
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h4 class="modal-title"><?php echo __('website.towards_payment_page'); ?></h4>
             </div>
-            <form action="{{URL::to_route((string)__('route.payment_card_info'))}}" method="post" id="userInfos"
+            <form action="{{route('payment_card_info')}}" method="post" id="userInfos"
                   class="form-horizontal" novalidate>
                 <div class="modal-body">
                     <?php if (count($applications) > 1): ?>

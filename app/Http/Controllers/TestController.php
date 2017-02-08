@@ -6,16 +6,34 @@ use App\Models\Application;
 use App\Models\Statistic;
 use Auth;
 use Config;
+use Html;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
-use MongoDB\Driver\Query;
+use View;
 
 class TestController extends Controller
 {
 
+    public function test2() {
+       return View::make('Test/test2');
+    }
+
     public function index()
     {
-        dd(Auth::user()->lastLoginDate());
+        echo Html::link(str_replace('(:num)', 15, __('route.applications_usersettings')), 'APPNAME', 'CLASSS');
+
+//        echo request('deneme');
+//        echo request()->get('deneme');
+        exit;
+        echo route('banners_list', ['applicationID' => 10]);
+        exit;
+        var_dump(Config::get('app.langs'));
+        exit;
+        echo Html::link(__('route.contents') . '?applicationID=' , 'nasdfasdf', 'zzzzzzzzz');
+        exit;
+        foreach (Auth::user()->expiringApps() as $expiringApp) {
+            echo $expiringApp->ApplicationID;
+        }
+        dd(Auth::user()->expiringApps()[0]->ApplicationID);
         return Application::find(178)->Users();
         $keys = ['google_api_key' => 'AIzaSyCj2v2727lBWLeXbgM_Hw_VEQgzjDgb8KY',
             'api_key1' => 'AIzaSyA7xMDIVl2332zCKP70HceFTuq2gdwBwx0',

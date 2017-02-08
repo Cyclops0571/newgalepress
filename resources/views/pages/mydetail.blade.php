@@ -4,7 +4,7 @@
     
     <?php
     $timezones = DB::table('Timezone')
-                    ->order_by('TimezoneID', 'ASC')
+                    ->orderBy('TimezoneID', 'ASC')
                     ->get();
     ?>
     <div class="col-md-8">    

@@ -25,7 +25,7 @@
 		</div>
 		<div class="form-row">
 		    <div class="col-md-6">
-			<a style="display:block;" class="btn btn-mini" href="{{URL::to(__('route.login'))}}">{{ __('common.login_goback') }}</a>
+			<a style="display:block;" class="btn btn-mini" href="{{route('common_login_get')}}">{{ __('common.login_goback') }}</a>
 		    </div>      
 		    <div class="col-md-6">			
 			<input type="button" name="login" id="login" class="btn btn-mini" value="{{ __('common.login_button_resetmypassword') }}" onclick="cUser.forgotMyPassword();" />

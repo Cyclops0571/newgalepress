@@ -1,17 +1,16 @@
 <?php
-$title = Config::get('custom.companyname');
+use App\Models\Application;$title = Config::get('custom.companyname');
 $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
 ?>
 
-<div class="page-navigation-panel"
-     style="background: url('/img/background/bt_cubs.png') left top repeat;background-color: rgba(29,29,29,1);">
-    @if(Str::length($title) < 17)
-        <div class="name">{{ __('common.welcome') }}, {{ $title }}</div>
-    @else
-        <div class="name">{{ __('common.welcome') }},<br/> {{ $title }}</div>
-    @endif
-    <div class="control"><a href="#" class="psn-control"><span class="icon-reorder" style="color:#1681bf;"></span></a>
-    </div>
+<div class="page-navigation-panel">
+  @if(mb_strlen($title) < 17)
+    <div class="name">{{ __('common.welcome') }}, {{ $title }}</div>
+  @else
+    <div class="name">{{ __('common.welcome') }},<br/> {{ $title }}</div>
+  @endif
+  <div class="control"><a href="#" class="psn-control"><span class="icon-reorder" style="color:#1681bf;"></span></a>
+  </div>
 </div>
 @if(Auth::user()->UserTypeID == eUserTypes::Customer)
     <?php
@@ -27,120 +26,120 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
         if ($app->Price > 0) {
             $showPaymentLink = true;
         }
-        if($app->InAppPurchaseActive) {
+        if ($app->InAppPurchaseActive) {
             $showInAppPuchaseLink = true;
         }
     }
     ?>
     <ul class="page-navigation bg-light">
-        <li>
-            <a href="{{  route('home') }}"><span class="icon-home"></span>{{ __('common.home') }}</a>
-        </li>
-        <li>
-            @if(count($applicationSet) == 1)
-                <a href="{{URL::to(__('route.contents') . '?applicationID=' . $applicationSet[0]->ApplicationID)}}" {{$applicationSet[0]->sidebarClass(true)}}>
-                    <span class="icon-dropbox"></span>{{ $applicationSet[0]->Name }}
-                </a>
-            @else
-                <a href="#"><span class="icon-dropbox"></span>{{ __('common.menu_caption_applications') }}</a>
-                <ul id="allApps">
-                    <?php foreach ($applicationSet as $app): ?>
-                    <li style="width:100%;">
-                        <?php echo HTML::link(__('route.contents') . '?applicationID=' . $app->ApplicationID, $app->Name, $app->sidebarClass()); ?>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-            @endif
-        </li>
-        <li>
-            <a href="#"><span class="icon-file-text-alt"></span> {{ __('common.menu_caption_reports') }}</a>
-            <ul id="allReports">
-                <?php
-                foreach ($reportLinks as $reportLink) {
-                    echo HTML::nav_link(__('route.reports') . '?r=' . $reportLink, __('common.menu_report_' . $reportLink));
-                }
-                ?>
-            </ul>
-        </li>
-        <li>
-            <a href="{{URL::to(__('route.mydetail'))}}"><span class="icon-user"></span>{{ __('common.menu_mydetail') }}
-            </a>
-        </li>
-        <li>
-            @if(count($applicationSet) == 1)
-                <a href="{{URL::to(str_replace('(:num)', $applicationSet[0]->ApplicationID, __('route.applications_usersettings')))}}">
-                    <span class="icon-cogs"></span>{{__('common.application_settings_caption_detail')}}
-                </a>
-            @else
-                <a href="#"><span class="icon-cogs"></span>{{__('common.application_settings_caption_detail')}}</a>
-                <ul id="allSettings">
-                    <?php foreach ($applicationSet as $app): ?>
-                    <li style="width:100%;">
-                        <?php echo HTML::link(str_replace('(:num)', $app->ApplicationID, __('route.applications_usersettings')), $app->Name, $app->sidebarClass()); ?>
-                    </li>
-                    <?php endforeach; ?>
-                </ul>
-            @endif
-        </li>
-        @if($showInAppPuchaseLink)
-        <li>
-            <a href="<?php echo Laravel\URL::to(__('route.clients')) ?>">
-                <span class="icon-mobile-phone"></span><?php echo __('common.client_list') ?>
-            </a>
-        </li>
-        @endif
-        @if($showPaymentLink)
-            <li>
-                <a href="{{URL::to(__('route.shop'))}}" ><span
-                            class="icon-credit-card"></span>{{ __('common.application_payment') }}</a>
+      <li>
+        <a href="{{  route('home') }}"><span class="icon-home"></span>{{ __('common.home') }}</a>
+      </li>
+      <li>
+        @if(count($applicationSet) == 1)
+          <a href="{{route('contents_list', ['applicationID' => $applicationSet[0]->ApplicationID])}}" {{$applicationSet[0]->sidebarClass(true)}}>
+            <span class="icon-dropbox"></span>{{ $applicationSet[0]->Name }}
+          </a>
+        @else
+          <a href="#"><span class="icon-dropbox"></span>{{ __('common.menu_caption_applications') }}</a>
+          <ul id="allApps">
+              <?php foreach ($applicationSet as $app): ?>
+            <li class="full-width">
+                <?php echo Html::link(__('route.contents') . '?applicationID=' . $app->ApplicationID, $app->Name, $app->sidebarClass()); ?>
             </li>
+              <?php endforeach; ?>
+          </ul>
         @endif
+      </li>
+      <li>
+        <a href="#"><span class="icon-file-text-alt"></span> {{ __('common.menu_caption_reports') }}</a>
+        <ul id="allReports">
+            <?php
+            foreach ($reportLinks as $reportLink) {
+                echo Html::nav_link(__('route.reports') . '?r=' . $reportLink, __('common.menu_report_' . $reportLink));
+            }
+            ?>
+        </ul>
+      </li>
+      <li>
+        <a href="{{route('common_mydetail_get')}}"><span class="icon-user"></span>{{ __('common.menu_mydetail') }}
+        </a>
+      </li>
+      <li>
+        @if(count($applicationSet) == 1)
+          <a href="{{route('applications_usersettings', $applicationSet[0]->ApplicationID)}}">
+            <span class="icon-cogs"></span>{{__('common.application_settings_caption_detail')}}
+          </a>
+        @else
+          <a href="#"><span class="icon-cogs"></span>{{__('common.application_settings_caption_detail')}}</a>
+          <ul id="allSettings">
+              <?php foreach ($applicationSet as $app): ?>
+            <li style="width:100%;">
+                <?php echo Html::link(str_replace('(:num)', $app->ApplicationID, __('route.applications_usersettings')), $app->Name, $app->sidebarClass()); ?>
+            </li>
+              <?php endforeach; ?>
+          </ul>
+        @endif
+      </li>
+      @if($showInAppPuchaseLink)
         <li>
-            <a href="{{__('common.tutorial_link')}}" target="_blank">
-                <span class="icon-question-sign"></span> {{__('common.tutorial')}}
-            </a>
+          <a href="{{route('clients_list')}}">
+            <span class="icon-mobile-phone"></span><?php echo __('common.client_list') ?>
+          </a>
         </li>
+      @endif
+      @if($showPaymentLink)
+        <li>
+          <a href="{{route('payment_shop')}}"><span
+                class="icon-credit-card"></span>{{ __('common.application_payment') }}</a>
+        </li>
+      @endif
+      <li>
+        <a href="{{__('common.tutorial_link')}}" target="_blank">
+          <span class="icon-question-sign"></span> {{__('common.tutorial')}}
+        </a>
+      </li>
     </ul>
 @else
-    <ul class="page-navigation bg-light">
-        <li>
-            <a href="{{URL::to(__('route.home'))}}"><span class="icon-home"></span>{{ __('common.home') }}</a>
-        </li>
-        <li>
-            <a href="{{URL::to(__('route.managements_list'))}}"><span
-                        class="icon-wrench"></span>{{ __('common.management') }}</a>
-        </li>
-        <li>
-            <a href="#"><span class="icon-sitemap"></span> {{ __('common.menu_caption') }}</a>
-            <ul>
-                {{ HTML::nav_link(__('route.customers'), __('common.menu_customers')) }}
-                {{ HTML::nav_link(__('route.applications'), __('common.menu_applications')) }}
-                {{ HTML::nav_link(__('route.contents'), __('common.menu_contents')) }}
-                {{ HTML::nav_link(__('route.orders'), __('common.menu_orders')) }}
-            </ul>
-        </li>
-        <li>
-            <a href="#"><span class="icon-file-text-alt"></span> {{ __('common.menu_caption_reports') }}</a>
-            <ul id="allReports">
-                <?php
-                foreach ($reportLinks as $reportLink) {
-                    echo HTML::nav_link(__('route.reports') . '?r=' . $reportLink, __('common.menu_report_' . $reportLink));
-                }
-                ?>
-            </ul>
-        </li>
-        <li>
-            <a href="#"><span class="icon-user"></span>Kullanıcı Ayarları</a>
-            <ul>
-                {{ HTML::nav_link(__('route.users'), __('common.menu_users')) }}
-                {{ HTML::nav_link(__('route.mydetail'), __('common.menu_mydetail')) }}
-            </ul>
-        </li>
-        <li>
-            <a href="{{URL::to(__('route.mydetail'))}}"><span class="icon-user"></span>{{ __('common.menu_mydetail') }}
-            </a>
-        </li>
-    </ul>
+  <ul class="page-navigation bg-light">
+    <li>
+      <a href="{{route('home')}}"><span class="icon-home"></span>{{ __('common.home') }}</a>
+    </li>
+    <li>
+      <a href="{{route('managements_list')}}"><span
+            class="icon-wrench"></span>{{ __('common.management') }}</a>
+    </li>
+    <li>
+      <a href="#"><span class="icon-sitemap"></span> {{ __('common.menu_caption') }}</a>
+      <ul>
+        {{ Html::nav_link(__('route.customers'), __('common.menu_customers')) }}
+        {{ Html::nav_link(__('route.applications'), __('common.menu_applications')) }}
+        {{ Html::nav_link(__('route.contents'), __('common.menu_contents')) }}
+        {{ Html::nav_link(__('route.orders'), __('common.menu_orders')) }}
+      </ul>
+    </li>
+    <li>
+      <a href="#"><span class="icon-file-text-alt"></span> {{ __('common.menu_caption_reports') }}</a>
+      <ul id="allReports">
+          <?php
+          foreach ($reportLinks as $reportLink) {
+              echo Html::nav_link(__('route.reports') . '?r=' . $reportLink, __('common.menu_report_' . $reportLink));
+          }
+          ?>
+      </ul>
+    </li>
+    <li>
+      <a href="#"><span class="icon-user"></span>Kullanıcı Ayarları</a>
+      <ul>
+        {{ Html::nav_link(__('route.users'), __('common.menu_users')) }}
+        {{ Html::nav_link(__('route.mydetail'), __('common.menu_mydetail')) }}
+      </ul>
+    </li>
+    <li>
+      <a href="{{route('common_mydetail_get')}}"><span class="icon-user"></span>{{ __('common.menu_mydetail') }}
+      </a>
+    </li>
+  </ul>
 @endif
 
 

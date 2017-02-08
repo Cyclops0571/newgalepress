@@ -19,9 +19,9 @@
     <div class="login-info">
 	<form id="loginForm" name="signUp" method="POST">
 	    <?php echo Form::token(); ?>
-	    <?php echo Form::hidden('ApplicationID', Input::get('ApplicationID')); ?>
-	    <?php echo Form::hidden('Email', Input::get('email')); ?>
-	    <?php echo Form::hidden('Code', Input::get('code')) ?>
+	    <?php echo Form::hidden('ApplicationID', request('ApplicationID')); ?>
+	    <?php echo Form::hidden('Email', request('email')); ?>
+	    <?php echo Form::hidden('Code', request('code')) ?>
 	    <div id="input_container">
 		<input type="password" name="Password" id="Password" placeholder="{{ __('common.users_password') }}" required autocomplete="off" onkeypress='return sForm.bindEnterKey(event, sClient.resetMyPassword);'/>
 		<img id="input_img" src="/images/lock.png"/>	

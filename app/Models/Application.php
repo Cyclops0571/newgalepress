@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App;
 use Auth;
+use Common;
 use Config;
 use DateTime;
 use DB;
@@ -11,7 +13,6 @@ use eStatus;
 use eUserTypes;
 use File;
 use Illuminate\Database\Eloquent\Model;
-use Session;
 use Subscription;
 
 /**
@@ -180,15 +181,19 @@ class Application extends Model
                 ->count() > 0;
     }
 
-    public function ApplicationStatus($languageID)
+    public function ApplicationStatus($languageID = null)
     {
+        if($languageID === null) {
+            $languageID = Common::getLocaleId();
+        }
+        $applicationStatusName = '';
         if ((int)$this->ApplicationStatusID > 0) {
             $gc = GroupCode::find($this->ApplicationStatusID)->first();
             if ($gc) {
-                return $gc->DisplayName($languageID);
+                $applicationStatusName = $gc->getDisplayName($languageID);
             }
         }
-        return '';
+        return (strlen(trim($applicationStatusName)) == 0 ? __('common.header_upload') : $applicationStatusName);
     }
 
 
@@ -491,7 +496,7 @@ class Application extends Model
     {
         $currentLang = $this->ApplicationLanguage;
         if (Auth::user()) {
-            $currentLang = Session::get('language');
+            $currentLang = App::getLocale();
         }
 
         $location = array();

@@ -966,3 +966,12 @@ transform: rotateY(180deg);
 .icon-my-upload:before {
     content: "\62";
 }
+
+.page-navigation-panel {
+    background: url('/img/background/bt_cubs.png') left top repeat;
+    background-color: rgba(29, 29, 29, 1);
+}
+
+full-width {
+    width: 100%;
+}

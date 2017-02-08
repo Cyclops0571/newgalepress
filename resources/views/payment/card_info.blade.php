@@ -120,7 +120,7 @@ if (false) {
     <div class="card-wrapper"></div>
 
     <div class="form-container active">
-        <form action="<?php echo URL::to(__('route.payment_approvement')); ?>" method="post" id="paymentForm" class="form-horizontal" autocomplete="off">
+        <form action="{{route('payment_approvement')}}" method="post" id="paymentForm" class="form-horizontal" autocomplete="off">
             <input type="hidden" name="card_brand" id="card_brand" value=""/>
             <div class="form-group">
                 <label class="control-label col-md-5">{{__('website.price')}}</label>

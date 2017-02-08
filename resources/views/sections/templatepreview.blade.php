@@ -91,7 +91,7 @@ $defaultSliderImage = '/img/bannerSlider/defaultPreview.jpg';
             <div class="device">
                 <div class="screen">
                     <div class="templateSplashScreen" style="opacity:0; height:100%;">
-			<?php $fileSplash = path('public') . dirname($templateResults[0]->FilePath) . "/splash.jpg"; ?>
+			<?php $fileSplash = public_path(dirname($templateResults[0]->FilePath) . "/splash.jpg"); ?>
                         @if(!file_exists($fileSplash))
                         <img src="/img/template-chooser/content-pages/empty-splash.jpg" width="100%">
                         @else
@@ -273,7 +273,7 @@ $defaultSliderImage = '/img/bannerSlider/defaultPreview.jpg';
     </div>
 </div>
 
-{{ HTML::script('js/chosen_v1.0.0/chosen.jquery.min.js') }}
+{{ Html::script('js/chosen_v1.0.0/chosen.jquery.min.js') }}
 <script type="text/javascript">
     $(document).ready(function () {
 	cTemplate.initialize();

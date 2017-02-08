@@ -1,5 +1,5 @@
 <?php
-$vFile = path('public').$filename;
+$vFile = public_path($filename);
 if(File::exists($vFile) && is_file($vFile)) {
 	$fname = File::name($vFile);
 	$fext = File::extension($vFile);

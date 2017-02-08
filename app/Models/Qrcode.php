@@ -68,7 +68,7 @@ class Qrcode extends Model
         $request->setCurrency(Currency::TL);
         $request->setBasketId($this->QrcodeID);
         $request->setPaymentGroup(PaymentGroup::PRODUCT);
-        $request->setCallbackUrl(\URL::to('checkout_result_form', null, false) . "?qrCodeId=" . $this->QrcodeID);
+        $request->setCallbackUrl(route('get_checkout_result_form', ['qrCodeId' => $this->QrcodeID]));
         $request->setEnabledInstallments(array(1, 2, 3, 6, 9));
         //</editor-fold>
 

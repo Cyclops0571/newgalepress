@@ -3,7 +3,7 @@
     <td></td>
 </tr>
 @foreach($rows as $row)
-    <tr id="category{{ $row->CategoryID }}" class="{{ HTML::oddeven('category') }}">
+    <tr id="category{{ $row->CategoryID }}" class="{{ Html::oddeven('category') }}">
         <td>{{ $row->Name }}</td>
         <td>
             <a href="javascript:cContent.modifyCategory({{ $row->CategoryID }});">{{ __('common.contents_category_list_modify') }}</a>

@@ -2,8 +2,8 @@
 
 @section('content')
     <?php
-    $currentPageNo = (int)Input::get('page', 0);
-    $applicationID = (int)Input::get('applicationID', 0);
+    $currentPageNo = (int)request('page', 0);
+    $applicationID = (int)request('applicationID', 0);
     $appLink = $applicationID > 0 ? '&applicationID=' . $applicationID : '';
     $searchLink = '&search=' . $search;
     $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
@@ -56,7 +56,7 @@
                                 <?php foreach ($fields as $field): ?>
                                 <?php $sortLink = '&sort=' . $field[1]; ?>
                                 <?php $sort == $field[1] ? ($sort_dir == 'ASC' ? array('class' => 'sort_up') : array('class' => 'sort_down')) : array(); ?>
-                                <th scope="col">{{ HTML::link($route.'?page=1'. $appLink  . $searchLink . $sortLink . $sortDirLink, $field[0], $sort) }}</th>
+                                <th scope="col">{{ Html::link($route.'?page=1'. $appLink  . $searchLink . $sortLink . $sortDirLink, $field[0], $sort) }}</th>
                                 <?php endforeach; ?>
                             </tr>
                             </thead>
@@ -64,16 +64,16 @@
                             <form id="contentOrderForm">
                                 @forelse($rows->results as $row)
                                     @if((int)Auth::user()->UserTypeID == eUserTypes::Manager)
-                                        <tr id="contentIDSet_{{$row->ContentID}}" class="{{ HTML::oddeven($page) }}">
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->CustomerName) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->ApplicationName) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->Name) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->Blocked) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->Status) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->ContentID) }}</td>
+                                        <tr id="contentIDSet_{{$row->ContentID}}" class="{{ Html::oddeven($page) }}">
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->CustomerName) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->ApplicationName) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Name) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Blocked) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Status) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->ContentID) }}</td>
                                         </tr>
                                     @elseif((int)Auth::user()->UserTypeID == eUserTypes::Customer)
-                                        <tr id="contentIDSet_{{$row->ContentID}}" class="{{ HTML::oddeven($page) }}"
+                                        <tr id="contentIDSet_{{$row->ContentID}}" class="{{ Html::oddeven($page) }}"
                                             @if($row->IsMaster==1)style="background:#5D5D5D;"@endif>
                                             <?php if ($page < 2): ?>
                                             <td style="cursor:pointer;">
@@ -85,15 +85,15 @@
     				    </span>
                                             </td>
                                             <?php endif; ?>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->Name) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->Detail) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->MonthlyName) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->CategoryName) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, Common::dateRead($row->PublishDate, 'd.m.Y')) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, Common::dateRead($row->UnpublishDate, 'd.m.Y')) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->Blocked) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->Status) }}</td>
-                                            <td>{{ HTML::link($route.'/'.$row->ContentID, $row->ContentID) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Name) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Detail) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->MonthlyName) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->CategoryName) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, Common::dateRead($row->PublishDate, 'd.m.Y')) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, Common::dateRead($row->UnpublishDate, 'd.m.Y')) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Blocked) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Status) }}</td>
+                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->ContentID) }}</td>
                                         </tr>
                                     @endif
                                 @empty

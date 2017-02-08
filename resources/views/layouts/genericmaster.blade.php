@@ -15,13 +15,13 @@
     <link rel="shortcut icon" href="/website/img/favicon2.ico">
 
     <!-- Latest compiled and minified CSS -->
-    {{ HTML::style('css/mobilestyle.css?v=' . APP_VER) }}
-    {{ HTML::style('css/bootstrap.min.css?v=' . APP_VER) }}
-    {{ HTML::script('js/jquery-2.1.4.min.js') }}
-    {{ HTML::script('js/jquery-ui-1.10.4.custom.min.js') }}
-    {{ HTML::script('js/bootstrap.min.js') }}
-    {{ HTML::script('js/generic.js?v=' . APP_VER) }}
-    {{ HTML::script('js/client.js?v=' . APP_VER) }}
+    {{ Html::style('css/mobilestyle.css?v=' . APP_VER) }}
+    {{ Html::style('css/bootstrap.min.css?v=' . APP_VER) }}
+    {{ Html::script('js/jquery-2.1.4.min.js') }}
+    {{ Html::script('js/jquery-ui-1.10.4.custom.min.js') }}
+    {{ Html::script('js/bootstrap.min.js') }}
+    {{ Html::script('js/generic.js?v=' . APP_VER) }}
+    {{ Html::script('js/client.js?v=' . APP_VER) }}
 </head>
 <body>
 <script>
@@ -101,7 +101,7 @@
     /* eof statusbar */
 </style>
 <div class="col-md-12">
-    @_yield('content')
+    @yield('content')
 </div>
 </body>
 </html>

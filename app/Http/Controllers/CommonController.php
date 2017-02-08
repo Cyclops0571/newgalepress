@@ -488,7 +488,7 @@ class CommonController extends Controller
 
         if (!$user) {
             $lastCustomerNo = DB::table('Customer')
-                ->order_by('CustomerID', 'DESC')
+                ->orderBy('CustomerID', 'DESC')
                 ->take(1)
                 ->only('CustomerNo');
 
@@ -513,7 +513,7 @@ class CommonController extends Controller
             $Customer->save();
 
             $lastCustomerID = DB::table('Customer')
-                ->order_by('CustomerID', 'DESC')
+                ->orderBy('CustomerID', 'DESC')
                 ->take(1)
                 ->only('CustomerID');
 
@@ -556,7 +556,6 @@ class CommonController extends Controller
                 $s = new Sessionn;
                 $s->UserID = $user->UserID;
                 $s->IP = Request::ip(); //getenv("REMOTE_ADDR");
-                $s->Session = Session::instance()->session['id'];
                 $s->LoginDate = new DateTime();
                 $s->StatusID = eStatus::Active;
                 $s->CreatorUserID = $user->UserID;
@@ -580,7 +579,6 @@ class CommonController extends Controller
                 $s = new Sessionn;
                 $s->UserID = $user->UserID;
                 $s->IP = Request::ip(); //getenv("REMOTE_ADDR");
-                $s->Session = Session::instance()->session['id'];
                 $s->LoginDate = new DateTime();
                 $s->StatusID = eStatus::Active;
                 $s->CreatorUserID = $user->UserID;

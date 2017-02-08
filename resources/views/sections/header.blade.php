@@ -11,7 +11,7 @@ if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
 ?>
 <div id="header">
     <div id="logo">
-        <h1>{{ HTML::link(__('route.home'), __('common.home')) }}</h1>
+        <h1>{{ Html::link(__('route.home'), __('common.home')) }}</h1>
     </div>
     <!-- end logo-->
     <div id="site_info">
@@ -21,7 +21,7 @@ if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
     <div id="date">
         @if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
             <?php
-            $applicationID = (int)Input::get('applicationID', 0);
+            $applicationID = (int)request('applicationID', 0);
             
             if(Common::CheckApplicationOwnership($applicationID))
             {
@@ -45,8 +45,8 @@ if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
             ?>
         @endif
 
-        {{-- HTML::link_to_language('tr', 'Turkish version') --}}
-        {{-- HTML::link_to_language('en', 'English version') --}}
+        {{-- Html::link_to_language('tr', 'Turkish version') --}}
+        {{-- Html::link_to_language('en', 'English version') --}}
 
     </div>
     <!-- end date-->
@@ -57,7 +57,7 @@ if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
 <div id="header-background"></div>
 <nav class="navbar brb" role="navigation">
     <div class="col-md-2">
-        <a href="{{URL::to(__('route.home'))}}" style="line-height:55px; float:left;"><img src="/img/myLogo4.png"/></a>
+        <a href="{{route('home')}}" style="line-height:55px; float:left;"><img src="/img/myLogo4.png"/></a>
     </div>
 
     <?php
@@ -84,7 +84,7 @@ if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
             <?php if(count(Config::get('application.languages')) > 1): ?>
             <li id="lang-settings"><a href="#modalChangeLanguage" onclick="modalOpen()"></a></li>
             <?php endif; ?>
-            <li class='last' id="logout"><a href="{{URL::to(__('route.logout'))}}"></a></li>
+            <li class='last' id="logout"><a href="{{route('common_logout')}}"></a></li>
         </ul>
     </div>
 </nav>

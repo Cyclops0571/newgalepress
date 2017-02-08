@@ -39,7 +39,7 @@ if(isset($Properties))
         if($prop->Name == 'option') $option = (int)$prop->Value;
         if($prop->Name == 'filename')
         {
-            $filename = path('public').$prop->Value;
+            $filename = public_path($prop->Value);
             if(File::exists($filename) && is_file($filename)) {
                 $fileSelected = 1;
                 $fileSize = round((File::size($filename) / (1024 * 1024)), 1).' MB';
@@ -53,7 +53,7 @@ if(isset($Properties))
         }
         if($prop->Name == 'filename2')
         {
-            $filename2 = path('public').$prop->Value;
+            $filename2 = public_path($prop->Value);
             if(File::exists($filename2) && is_file($filename2)) {
                 $fileSelected2 = 1;
                 $fileSize2 = round((File::size($filename2) / (1024 * 1024)), 1).' MB';

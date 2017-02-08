@@ -24,7 +24,7 @@
         $Timezone = $row->Timezone;
     } else {
         $UserTypeID = eUserTypes::Customer;
-        $CustomerID = (int)Input::get('customerID', 0);
+        $CustomerID = (int)request('customerID', 0);
     }
 
     $groupcodes = DB::table('GroupCode AS gc')
@@ -34,17 +34,17 @@
             })
             ->where('gc.GroupName', '=', 'UserTypes')
             ->where('gc.StatusID', '=', eStatus::Active)
-            ->order_by('gc.DisplayOrder', 'ASC')
-            ->order_by('gcl.DisplayName', 'ASC')
+            ->orderBy('gc.DisplayOrder', 'ASC')
+            ->orderBy('gcl.DisplayName', 'ASC')
             ->get();
 
     $customers = DB::table('Customer')
             ->where('StatusID', '=', eStatus::Active)
-            ->order_by('CustomerName', 'ASC')
+            ->orderBy('CustomerName', 'ASC')
             ->get();
 
     $timezones = DB::table('Timezone')
-            ->order_by('TimezoneID', 'ASC')
+            ->orderBy('TimezoneID', 'ASC')
             ->get();
     ?>
     <div class="col-md-8">

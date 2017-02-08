@@ -39,7 +39,7 @@
 					<li>
 						<i class="icon-caret-right">&nbsp</i><a href="/{{ Session::get('language') }}/{{__('route.website_contact')}}">{{__('website.page_contact')}}</a>
 					</li>
-					<?php if(Laravel\Config::get('application.language') == 'tr'): ?>
+					<?php if(app()->isLocale('tr')): ?>
 					    <li>
 						    <i class="icon-caret-right">&nbsp</i><a href="/blog">Blog</a>
 					    </li>

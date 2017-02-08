@@ -8,8 +8,7 @@ $myArray = array();
 $counter=0;
 foreach($files as $file)
 {
-    //$filename = path('public').$file->Value;
-    $filename = path('public').$file;
+    $filename = public_path($file);
     if(File::exists($filename) && is_file($filename)) {
         $fname = File::name($filename);
         $fext = File::extension($filename);

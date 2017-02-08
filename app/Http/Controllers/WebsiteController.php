@@ -39,17 +39,17 @@ class WebsiteController extends Controller
         }
 
         $body = '';
-        $body .= "<b>Sender Name: </b>" . \Laravel\Input::get('senderName') . '<br/>';
-        $body .= "<b>Sender Phone: </b>" . \Laravel\Input::get('phone') . '<br/>';
-        if (Input::get('company', '')) {
-            $body .= "<b>Company: </b>" . Input::get('company', '') . '<br/>';
+        $body .= "<b>Sender Name: </b>" . request()->get('senderName') . '<br/>';
+        $body .= "<b>Sender Phone: </b>" . request()->get('phone') . '<br/>';
+        if (request('company', '')) {
+            $body .= "<b>Company: </b>" . request('company', '') . '<br/>';
         }
-        $body .= "<b>Comment: </b>" . \Laravel\Input::get('comment') . '<br/>';
+        $body .= "<b>Comment: </b>" . request()->get('comment') . '<br/>';
         $toEmail = (string)__('maillang.contanct_email');
         $toName = (string)__('maillang.contactform_recipient');
         $subject = (string)__('maillang.contactform_subject');
-        $senderEmail = Input::get('senderEmail');
-        $senderName = Input::get('senderName');
+        $senderEmail = request('senderEmail');
+        $senderName = request('senderName');
         if (Message::send(function ($m) use ($toEmail, $toName, $senderEmail, $senderName, $subject, $body) {
             /** @var  $m \Swiftmailer\Drivers\SMTP */
             $m->from($senderEmail, $senderName);
@@ -73,21 +73,21 @@ class WebsiteController extends Controller
         $errors = array();
         $data = array();
 
-        $customerName = Input::get('name', '');
+        $customerName = request('name', '');
 
-        $customerLastName = Input::get('last_name', '');
+        $customerLastName = request('last_name', '');
 
-        $email = Input::get('email', '');
+        $email = request('email', '');
 
-        $appName = Input::get('app_name', '');
+        $appName = request('app_name', '');
 
-        $userName = Input::get('user_name', '');
+        $userName = request('user_name', '');
 
-        $password = Input::get('password', '');
+        $password = request('password', '');
 
-        $password_verify = Input::get('password_verify', '');
+        $password_verify = request('password_verify', '');
 
-        $captcha = Input::get('captcha', '');
+        $captcha = request('captcha', '');
 
 
         if (empty($customerName) || $customerName == "undefined")
@@ -126,7 +126,7 @@ class WebsiteController extends Controller
         if (empty($captcha) || $captcha == "undefined")
             $errors['captcha'] = (string)__('website.tryit_form_error_required_securitycode');
 
-        if (\Laravel\Request::env() != ENV_LOCAL) {
+        if (app()->environment() != ENV_LOCAL) {
             $rules = array(
                 'captcha' => 'mecaptcha|required',
             );
@@ -165,7 +165,7 @@ class WebsiteController extends Controller
 
             //$data['userNameExist'] = $userNameExist;
             $highestCustomerID = DB::table('Customer')
-                ->order_by('CustomerID', 'DESC')
+                ->orderBy('CustomerID', 'DESC')
                 ->take(1)
                 ->only('CustomerID');
 
@@ -281,15 +281,15 @@ class WebsiteController extends Controller
         $errors = array();
         $data = array();
 
-        $customerName = Input::get('name', '');
+        $customerName = request('name', '');
 
-        $email = Input::get('email', '');
+        $email = request('email', '');
 
-        $userName = Input::get('user_name', '');
+        $userName = request('user_name', '');
 
-        $password = Input::get('password', '');
+        $password = request('password', '');
 
-        $password_verify = Input::get('password_verify', '');
+        $password_verify = request('password_verify', '');
 
         if (empty($customerName) || $customerName == "undefined")
             $errors['name'] = __('website.tryit_form_error_required_firstname');
@@ -333,7 +333,7 @@ class WebsiteController extends Controller
         } else {
             //$data['userNameExist'] = $userNameExist;
             $lastCustomerNo = DB::table('Customer')
-                ->order_by('CustomerID', 'DESC')
+                ->orderBy('CustomerID', 'DESC')
                 ->take(1)
                 ->only('CustomerNo');
 
@@ -361,7 +361,7 @@ class WebsiteController extends Controller
             $s->save();
 
             $lastCustomerID = DB::table('Customer')
-                ->order_by('CustomerID', 'DESC')
+                ->orderBy('CustomerID', 'DESC')
                 ->take(1)
                 ->only('CustomerID');
 
@@ -433,7 +433,7 @@ class WebsiteController extends Controller
 
     public function post_namaz()
     {
-        $myLocation = Input::get('location');
+        $myLocation = request('location');
 
         $getDistrictCode = DB::table('Towns')
             ->where('TownName', '=', $myLocation)
@@ -474,15 +474,15 @@ class WebsiteController extends Controller
     }
 
     public function get_signUp() {
-        return Laravel\View::make('website.signup');
+        return View::make('website.signup');
     }
 
     public function get_forgotPassword() {
-        return Laravel\View::make('website.forgotpassword');
+        return View::make('website.forgotpassword');
     }
 
     public function get_signIn() {
-        return Laravel\View::make('website.signin');
+        return View::make('website.signin');
     }
 
 }

@@ -50,6 +50,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereProcessDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereProcessTypeID($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $Application
  */
 class Customer extends Model
 {
@@ -90,14 +91,23 @@ class Customer extends Model
         ->first();
     }
 
+
+    /**
+     * @param int $statusID
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function Applications($statusID = eStatus::All) {
+        return $this->Application()->getQuery()->where('StatusID', '=', $statusID)->get();
+    }
+
     /**
      *
      * @param int $statusID
-     * @return Application[]|\Illuminate\Database\Eloquent\Collection|static[]
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function Applications($statusID = \eStatus::All)
+    public function Application()
     {
-        return $this->hasMany('App\Models\Application', $this->primaryKey)->getQuery()->where('StatusID', '=', $statusID)->get();
+        return $this->hasMany(Application::class, $this->primaryKey);
     }
 
     /**

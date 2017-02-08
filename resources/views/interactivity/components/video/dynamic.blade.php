@@ -1,5 +1,5 @@
 <?php
-$vFile = path('public') . $filename;
+$vFile = public_path($filename);
 if (File::exists($vFile) && is_file($vFile)) {
     $fname = File::name($vFile);
     $fext = File::extension($vFile);
@@ -8,7 +8,7 @@ if (File::exists($vFile) && is_file($vFile)) {
     $vFile = '';
 }
 
-$vPosterImageFile = path('public') . $posterimagename;
+$vPosterImageFile = public_path($posterimagename);
 if (File::exists($vPosterImageFile) && is_file($vPosterImageFile)) {
     $fname = File::name($vPosterImageFile);
     $fext = File::extension($vPosterImageFile);

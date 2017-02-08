@@ -42,23 +42,22 @@
     $authMaxPDF = Common::AuthMaxPDF($app->ApplicationID);
 
     $applications = Application::where('StatusID', '=', eStatus::Active)
-            ->order_by('Name', 'ASC')
+            ->orderBy('Name', 'ASC')
             ->get();
 
     $categories = Category::where('ApplicationID', '=', $app->ApplicationID)
             ->where('StatusID', '=', eStatus::Active)
-            ->order_by('Name', 'ASC')
+            ->orderBy('Name', 'ASC')
             ->get();
     $groupCodes = DB::table('GroupCode AS gc')
             ->join('GroupCodeLanguage AS gcl', function ($join) {
-                /** @var \Laravel\Database\Query\Join $join */
                 $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
                 $join->on('gcl.LanguageID', '=', DB::raw((int)Session::get('language_id')));
             })
             ->where('gc.GroupName', '=', 'Currencies')
             ->where('gc.StatusID', '=', eStatus::Active)
-            ->order_by('gc.DisplayOrder', 'ASC')
-            ->order_by('gcl.DisplayName', 'ASC')
+            ->orderBy('gc.DisplayOrder', 'ASC')
+            ->orderBy('gcl.DisplayName', 'ASC')
             ->get();
 
     ?>

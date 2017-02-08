@@ -51,7 +51,7 @@ return array(
     'applications_save' => 'uygulamalar/kaydet',
     'applications_delete' => 'uygulamalar/sil',
     'applications_uploadfile' => 'uygulamalar/dosya-yukle',
-    'applications_usersettings' => 'uygulamalar/(:num)/ayarlar',
+    'applications_usersettings' => 'uygulamalar/{id}/ayarlar',
     'application_usersettings_save' => 'applications/applicationSetting',
 
     'contents' => 'icerikler',

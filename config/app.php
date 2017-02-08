@@ -198,7 +198,9 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Mcamara\LaravelLocalization\LaravelLocalizationServiceProvider::class,
         Way\Generators\GeneratorsServiceProvider::class,
-        Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class
+        Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
+        \Illuminate\Html\HtmlServiceProvider::class
+
 
     ],
 
@@ -248,7 +250,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
-
+        'Html' => Illuminate\Html\HtmlFacade::class,
+        'Form' => \Illuminate\Html\FormFacade::class
     ],
 
 ];

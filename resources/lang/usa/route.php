@@ -51,7 +51,7 @@ return array(
     'applications_save' => 'applications/save',
     'applications_delete' => 'applications/delete',
     'applications_uploadfile' => 'applications/load-file',
-    'applications_usersettings' => 'applications/(:num)/settings',
+    'applications_usersettings' => 'applications/{id}/settings',
     'application_usersettings_save' => 'applications/applicationSetting',
 
     'contents' => 'contents',

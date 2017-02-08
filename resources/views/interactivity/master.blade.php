@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        {{ View::make('sections.sessionmodal') }}
+        @include('sections.sessionmodal')
         
         <div class="compression-settings hide">
             <a title="{{ __('interactivity.settings_close') }}" class="close" href="javascript:void(0);" onclick="cInteractivity.closeSettings();"><i class="icon-remove"></i></a>

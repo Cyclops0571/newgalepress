@@ -166,7 +166,7 @@ if(!$preview) {
     <?php
     //var_dump($files);
     foreach ($files as $file) {
-        $filename = path('public') . $file;
+        $filename = public_path($file);
         if (File::exists($filename) && is_file($filename)) {
             $fname = File::name($filename);
             $fext = File::extension($filename);

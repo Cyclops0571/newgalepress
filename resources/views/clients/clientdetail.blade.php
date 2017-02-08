@@ -35,8 +35,8 @@
                 <h2><?php echo __('common.detailpage_caption'); ?> </h2>
             </div>
             <div class="content controls">
-                <?php echo Laravel\Form::open(__('route.clients_save'), 'POST'); ?>
-                <?php echo Laravel\Form::token(); ?>
+                <?php echo Form::open(__('route.clients_save'), 'POST'); ?>
+                <?php echo Form::token(); ?>
                 <input type="hidden" name="ClientID" id="ClientID" value="<?php echo $ClientID; ?>"/>
                 <?php if (count($applications) > 1): ?>
                 <div class="form-row">
@@ -201,7 +201,7 @@
                                onclick="cClient.save(<?php echo $ClientID; ?>);"/>
                     </div>
                 </div>
-                <?php echo Laravel\Form::close(); ?>
+                <?php echo Form::close(); ?>
             </div>
         </div>
     </div>

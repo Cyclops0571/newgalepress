@@ -13,7 +13,7 @@ if(isset($Properties))
 		{
 			$index += 1;
 			
-			$filename = path('public').$prop->Value;
+			$filename = public_path($prop->Value);
 			if(File::exists($filename) && is_file($filename)) {
 				$fname = File::name($filename);
 				$fext = File::extension($filename);

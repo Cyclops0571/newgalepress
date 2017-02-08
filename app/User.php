@@ -2,8 +2,12 @@
 
 namespace App;
 
+use App\Models\Application;
+use App\Models\Customer;
 use App\Models\LoginHistory;
+use DB;
 use eStatus;
+use eUserTypes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -58,14 +62,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereConfirmCode($value)
  * @property string $remember_token
  * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
+ * @property-read \App\Models\Customer $Customer
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $Applications
  */
 class User extends Authenticatable
 {
     use Notifiable;
 
+    public $timestamps = false;
     protected $table = 'User';
     protected $primaryKey = 'UserID';
     private static $key = 'UserID';
+
 
     /**
      * The attributes that are mass assignable.
@@ -92,8 +100,8 @@ class User extends Authenticatable
     public static function getByUsername($username)
     {
         return self::getQuery()->where('Username', '=', $username)
-        ->where('StatusID', '=', eStatus::Active)
-        ->first();
+            ->where('StatusID', '=', eStatus::Active)
+            ->first();
     }
 
     public function getAuthPassword()
@@ -104,15 +112,62 @@ class User extends Authenticatable
     /**
      * @return LoginHistory|\Illuminate\Database\Eloquent\Builder
      */
-    public function lastLoginDate() {
+    public function lastLoginDate()
+    {
         $loginHistory = $this->hasMany('App\Models\LoginHistory', self::$key)
             ->getQuery()
             ->where('action', 'login')
             ->orderBy('id', 'Desc')->first();
-        if($loginHistory) {
+        if ($loginHistory) {
             return $loginHistory->created_at;
         }
 
         return date('Y:m:d H:i');
     }
+
+
+    /**
+     * @return Application[]|\Illuminate\Database\Eloquent\Collection
+     */
+    public function expiringApps()
+    {
+        return $this->Applications()->getQuery()
+            ->where('ExpirationDate', '>=', DB::raw('CURDATE()'))
+            ->get();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function Applications()
+    {
+        return $this->hasMany(Application::class, 'CustomerID');
+    }
+
+
+    /**
+     *
+     * @param int $statusID
+     * @return Application[]|\Illuminate\Database\Eloquent\Collection|static[]
+     */
+    public function Application($statusID = eStatus::Active)
+    {
+
+        if ($this->UserTypeID == eUserTypes::Manager) {
+            $applications = Application::where('StatusID', '=', $statusID)->get();
+        } else {
+            $applications = $this->Applications()->getQuery()->where('StatusID', '=', $statusID)->get();
+        }
+        return $applications;
+    }
+
+    /**
+     *
+     * @return Customer|\Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function Customer()
+    {
+        return $this->belongsTo(Customer::class, 'CustomerID');
+    }
+
 }

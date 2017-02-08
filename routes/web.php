@@ -1,7 +1,10 @@
 <?php
+Route::get('test2', 'TestController@test2');
+Route::get('test3', function(){ return View::make('test/test3'); });
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function (){
-    Route::get(__('route.home'), array('as' => 'CommonController_home', 'uses' => 'CommonController@home'));
+    Route::get('test', 'TestController@index');
+    Route::get(__('route.home'), array('as' => 'home', 'uses' => 'CommonController@home'));
     Route::get(__('route.dashboard'), array('as' => 'common_dashboard', 'before' => 'auth', 'uses' => 'CommonController@dashboard'));
     Route::get(__('route.forgotmypassword'), array('as' => 'common_forgotmypassword_get', function() {
         return View::make('pages.forgotmypassword');
@@ -15,6 +18,64 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
 
     Route::get(__('route.mydetail'), array('as' => 'common_mydetail_get', 'uses' => 'CommonController@myDetailPage'));
     Route::post(__('route.mydetail'), array('as' => 'common_mydetail_post', 'uses' => 'CommonController@mydetail'));
+
+    // <editor-fold defaultstate="collapsed" desc="Banners">
+    Route::get(__('route.banners'), array('as' => 'banners_list', 'uses' => 'banners@index'));
+    Route::get(__('route.banners_show'), array('as' => 'banners_show', 'uses' => 'banners@show'));
+    Route::get(__('route.banners_new'), array('as' => 'banners_new', 'uses' => 'banners@new'));
+    Route::post(__('route.banners_save'), array('as' => 'banners_save', 'uses' => 'banners@save'));
+    Route::post(__('route.banners_setting_save'), array('as' => 'banners_setting_save', 'uses' => 'banners@save_banner_setting'));
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="maps">
+    Route::get(__('route.maps'), array('as' => 'maps_list', 'uses' => 'maps@index'));
+    Route::get(__('route.maps_show'), array('as' => 'maps_show', 'uses' => 'maps@show'));
+    Route::get(__('route.maps_new'), array('as' => 'map_new', 'uses' => 'maps@new'));
+    Route::post(__('route.maps_save'), array('as' => 'maps_save', 'uses' => 'maps@save'));
+    Route::get(__('route.maps_location') . "{id}", array('as' => 'maps_location', 'uses' => 'maps@location'));
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Clients">
+    Route::get(__('route.clients'), array('as' => 'clients_list', 'uses' => 'clients@index'));
+    Route::get(__('route.clients_new'), array('as' => 'clients_new', 'uses' => 'clients@new'));
+    Route::get(__('route.clients_show'), array('as' => 'clients_show', 'uses' => 'clients@show'));
+    Route::post(__('route.clients_save'), array('as' => 'clients_save', 'uses' => 'clients@save'));
+    Route::post(__('route.clients_send'), array('as' => 'clients_send', 'uses' => 'clients@send'));
+    Route::post(__('route.clients_delete'), array('as' => 'clients_delete', 'uses' => 'clients@delete'));
+
+    Route::get(__('route.clients_register'), array('as' => 'clients_register', 'uses' => 'clients@clientregister'));
+    Route::get(__('route.clients_update'), array('as' => 'clients_register_save', 'uses' => 'clients@updateclient'));
+    Route::get(__('route.clients_registered'), array('as' => 'clients_registered', 'uses' => 'clients@registered'));
+    Route::get(__('route.clients_forgotpassword'), array('as' => 'clients_forgot_password', 'uses' => 'clients@forgotpassword'));
+    Route::get(__('route.clients_resetpw'), array('as' => 'clients_reset_password', 'uses' => 'clients@resetpw'));
+    Route::get(__('route.clients_pw_reseted'), array('as' => 'clients_password_renewed', 'uses' => 'clients@passwordreseted'));
+
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Applications">
+    Route::get(__('route.applications'), array('as' => 'applications', 'uses' => 'applications@index'));
+    Route::get(__('route.applications_new'), array('as' => 'applications_new', 'uses' => 'applications@new'));
+    Route::get(__('route.applications_show'), array('as' => 'applications_show', 'uses' => 'applications@show'));
+    Route::post(__('route.applications_pushnotification'), array('as' => 'applications_push', 'uses' => 'applications@push'));
+    Route::post(__('route.applications_save'), array('as' => 'applications_save', 'uses' => 'applications@save'));
+    Route::post(__('route.applications_delete'), array('as' => 'applications_delete', 'uses' => 'applications@delete'));
+    Route::post(__('route.applications_uploadfile'), array('as' => 'applications_uploadfile', 'uses' => 'applications@uploadfile'));
+    Route::get(__('route.applications_usersettings'), array('as' => 'applications_usersettings', 'uses' => 'applications@applicationSetting'));
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Contents">
+    Route::post("contents/order/(:num)", array('as' => 'contents_order', 'before' => 'auth', 'uses' => 'contents@order'));
+    Route::get("contents/remove_from_mobile/(:num)", array("as" => "content_remove_from_mobile", 'before' => 'auth', 'uses' => 'contents@remove_from_mobile'));
+    Route::get(__('route.contents'), array('as' => 'contents_list', 'uses' => 'contents@index'));
+    Route::get(__('route.contents_request'), array('as' => 'contents_request', 'uses' => 'contents@request'));
+    Route::get(__('route.contents_new'), array('as' => 'contents_new', 'uses' => 'contents@new'));
+    Route::get(__('route.contents_show'), array('as' => 'contents_show','uses' => 'contents@show'));
+    Route::post(__('route.contents_save'), array('as' => 'contents_save','uses' => 'contents@save'));
+    Route::get('/copy/(:num)/(:all)', array('as' => 'copy','uses' => 'contents@copy'));
+    Route::post(__('route.contents_delete'), array('as' => 'contents_delete','uses' => 'contents@delete'));
+    Route::post(__('route.contents_uploadfile'), array('as' => 'contents_uploadfile','uses' => 'contents@uploadfile'));
+    Route::post(__('route.contents_uploadcoverimage'), array('as' => 'contents_uploadcoverimage', 'uses' => 'contents@uploadcoverimage'));
+// </editor-fold>
 });
 
 
@@ -34,7 +95,8 @@ define("PATH_TEMP_FILE", "files/temp");
 define("TAB_COUNT", 2);
 define("GO_BACK_TO_SHOP", 'gobacktoshop');
 
-Route::get('test', 'TestController@index');
+
+
 Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 // <editor-fold defaultstate="collapsed" desc="website">
     Route::get(__('route.website_showcase'), function () {
@@ -78,7 +140,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
     });//571571 MeCaptcha\Captcha not found...
 
     Route::get(__('route.login'), array('as' => 'common_login_get', 'uses' => 'CommonController@showMyLoginForm'));
-    Route::post(__('route.login'), array('as' => 'loginPage', 'uses' => 'CommonController@login'));
+    Route::post(__('route.login'), array('as' => 'common_login_post', 'uses' => 'CommonController@login'));
 
 // </editor-fold>
 });
@@ -92,8 +154,6 @@ Route::post(__('route.facebook_attempt'), array('as' => 'website_facebook_attemp
 
 // <editor-fold defaultstate="collapsed" desc="Test">
 Route::get('test/iosInternalTest', 'test@iosInternalTest');
-Route::get("test2", "test@test2");
-Route::post("test2", "test@test2");
 Route::get("move", "test@moveInteractivite");
 Route::get("test/image", "test@image");
 Route::post("test/image", "test@image");
@@ -131,10 +191,10 @@ Route::get(__('route.website_article_whymobile'), array('as' => 'website_article
 
 
 //<editor-fold desc="Payment">
-Route::get(__('route.shop'), array('as' => 'website_shop', 'uses' => 'payment@shop'));
+Route::get(__('route.shop'), array('as' => 'payment_shop', 'uses' => 'payment@shop'));
 Route::get('payment-galepress', array('as' => 'website_payment_galepress_get', 'before' => 'auth', 'uses' => 'payment@payment_galepress'));
 Route::post('payment-galepress', array('as' => 'website_payment_galepress_post', 'before' => 'auth', 'uses' => 'payment@payment_galepress'));
-Route::post(__('route.payment_card_info'), array('as' => __('route.payment_card_info'), 'before' => 'auth', 'uses' => 'payment@card_info'));
+Route::post(__('route.payment_card_info'), array('as' => 'payment_card_info', 'before' => 'auth', 'uses' => 'payment@card_info'));
 Route::post(__('route.payment_approvement'), array('as' => 'payment_approvement', 'before' => 'auth', 'uses' => 'payment@payment_approval'));
 Route::get(__('route.website_payment_result'), array('as' => 'website_payment_result_get', 'uses' => 'payment@payment_result'));
 //</editor-fold>
@@ -157,22 +217,7 @@ Route::post(__('route.users_send'), array('as' => 'users_send', 'before' => 'aut
 Route::post(__('route.users_delete'), array('as' => 'users_delete', 'before' => 'auth|csrf', 'uses' => 'users@delete'));
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Clients">
-Route::get(__('route.clients'), array('as' => 'clients', 'before' => 'auth', 'uses' => 'clients@index'));
-Route::get(__('route.clients_new'), array('as' => 'clients_new', 'before' => 'auth', 'uses' => 'clients@new'));
-Route::get(__('route.clients_show'), array('as' => 'clients_show', 'before' => 'auth', 'uses' => 'clients@show'));
-Route::post(__('route.clients_save'), array('as' => 'clients_save', 'before' => 'auth|csrf', 'uses' => 'clients@save'));
-Route::post(__('route.clients_send'), array('as' => 'clients_send', 'before' => 'auth|csrf', 'uses' => 'clients@send'));
-Route::post(__('route.clients_delete'), array('as' => 'clients_delete', 'before' => 'auth|csrf', 'uses' => 'clients@delete'));
 
-Route::get(__('route.clients_register'), array('as' => 'clientsregister', 'uses' => 'clients@clientregister'));
-Route::get(__('route.clients_update'), array('as' => 'saveclientsregister', 'uses' => 'clients@updateclient'));
-Route::get(__('route.clients_registered'), array('as' => 'clientsregistered', 'uses' => 'clients@registered'));
-Route::get(__('route.clients_forgotpassword'), array('as' => 'clientsregistered', 'uses' => 'clients@forgotpassword'));
-Route::get(__('route.clients_resetpw'), array('as' => 'clientsresetpw', 'uses' => 'clients@resetpw'));
-Route::get(__('route.clients_pw_reseted'), array('as' => 'pwreseted', 'uses' => 'clients@passwordreseted'));
-
-// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Customers">
 Route::get(__('route.customers'), array('as' => 'customers', 'before' => 'auth', 'uses' => 'customers@index'));
@@ -182,30 +227,9 @@ Route::post(__('route.customers_save'), array('as' => 'customers_save', 'before'
 Route::post(__('route.customers_delete'), array('as' => 'customers_delete', 'before' => 'auth|csrf', 'uses' => 'customers@delete'));
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Applications">
-Route::get(__('route.applications'), array('as' => 'applications', 'before' => 'auth', 'uses' => 'applications@index'));
-Route::get(__('route.applications_new'), array('as' => 'applications_new', 'before' => 'auth', 'uses' => 'applications@new'));
-Route::get(__('route.applications_show'), array('as' => 'applications_show', 'before' => 'auth', 'uses' => 'applications@show'));
-Route::post(__('route.applications_pushnotification'), array('as' => 'applications_push', 'before' => 'auth', 'uses' => 'applications@push'));
-Route::post(__('route.applications_save'), array('as' => 'applications_save', 'before' => 'auth|csrf', 'uses' => 'applications@save'));
-Route::post(__('route.applications_delete'), array('as' => 'applications_delete', 'before' => 'auth|csrf', 'uses' => 'applications@delete'));
-Route::post(__('route.applications_uploadfile'), array('as' => 'applications_uploadfile', 'before' => 'auth', 'uses' => 'applications@uploadfile'));
-Route::get(__('route.applications_usersettings'), array('as' => 'applications_usersettings', 'before' => 'auth', 'uses' => 'applications@applicationSetting'));
-// </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Contents">
-Route::post("contents/order/(:num)", array('as' => 'contents_order', 'before' => 'auth', 'uses' => 'contents@order'));
-Route::get("contents/remove_from_mobile/(:num)", array("as" => "content_remove_from_mobile", 'before' => 'auth', 'uses' => 'contents@remove_from_mobile'));
-Route::get(__('route.contents'), array('as' => 'contents', 'before' => 'auth', 'uses' => 'contents@index'));
-Route::get(__('route.contents_request'), array('as' => 'contents_request', 'uses' => 'contents@request'));
-Route::get(__('route.contents_new'), array('as' => 'contents_new', 'before' => 'auth', 'uses' => 'contents@new'));
-Route::get(__('route.contents_show'), array('as' => 'contents_show', 'before' => 'auth', 'uses' => 'contents@show'));
-Route::post(__('route.contents_save'), array('as' => 'contents_save', 'before' => 'auth|csrf', 'uses' => 'contents@save'));
-Route::get('/copy/(:num)/(:all)', array('as' => 'copy', 'before' => 'auth', 'uses' => 'contents@copy'));
-Route::post(__('route.contents_delete'), array('as' => 'contents_delete', 'before' => 'auth|csrf', 'uses' => 'contents@delete'));
-Route::post(__('route.contents_uploadfile'), array('as' => 'contents_uploadfile', 'before' => 'auth', 'uses' => 'contents@uploadfile'));
-Route::post(__('route.contents_uploadcoverimage'), array('as' => 'contents_uploadcoverimage', 'before' => 'auth', 'uses' => 'contents@uploadcoverimage'));
-// </editor-fold>
+
+
 
 // <editor-fold defaultstate="collapsed" desc="Password">
 Route::get(__('route.contents_passwords'), array('as' => 'contents_passwords', 'before' => 'auth', 'uses' => 'contentpasswords@index'));
@@ -256,22 +280,8 @@ Route::get(__('route.crop_image'), array('as' => 'crop_image', 'before' => 'auth
 Route::post(__('route.crop_image'), array('as' => 'crop_image', 'before' => 'auth', 'uses' => 'crop@image'));
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="maps">
-Route::get(__('route.maps'), array('as' => 'maps_list', 'before' => 'auth', 'uses' => 'maps@index'));
-Route::get(__('route.maps_show'), array('as' => 'maps_show', 'before' => 'auth', 'uses' => 'maps@show'));
-Route::get(__('route.maps_new'), array('before' => 'auth', 'uses' => 'maps@new'));
-Route::post(__('route.maps_save'), array('as' => 'maps_save', 'before' => 'crsf|auth', 'uses' => 'maps@save'));
-Route::get(__('route.maps_location') . "(:num)", array('as' => 'maps_location', 'before' => 'auth', 'uses' => 'maps@location'));
-// </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Banners">
-Route::get(__('route.banners'), array('as' => 'banners_list', 'before' => 'auth', 'uses' => 'banners@index'));
-Route::get(__('route.banners_show'), array('as' => 'banners_show', 'before' => 'auth', 'uses' => 'banners@show'));
-Route::get(__('route.banners_new'), array('before' => 'auth', 'uses' => 'banners@new'));
-Route::post(__('route.banners_save'), array('as' => 'banners_save', 'before' => 'crsf|auth', 'uses' => 'banners@save'));
-Route::post(__('route.banners_setting_save'), array('as' => 'banners_save', 'before' => 'crsf|auth', 'uses' => 'banners@save_banner_setting'));
 
-// </editor-fold>
 
 Route::get(__('route.sign_up'), "WebsiteController@signUp");
 Route::get(__('route.forgot_password'), "WebsiteController@forgotPassword");

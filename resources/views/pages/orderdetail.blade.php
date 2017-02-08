@@ -46,7 +46,7 @@
 
     $applications = DB::table('Application')
             ->where('StatusID', '=', eStatus::Active)
-            ->order_by('Name', 'ASC')
+            ->orderBy('Name', 'ASC')
             ->get();
     ?>
     <div class="col-md-8">

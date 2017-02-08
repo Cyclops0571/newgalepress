@@ -62,7 +62,7 @@
 <![endif]-->
 </head>
 <body>
-@_yield('body-content')
+@yield('body-content')
 <script src="/js/jquery.collapse.js?v=<?php echo APP_VER; ?>" type="text/javascript"></script>
 <script src="/js/jquery.easytabs.js?v=<?php echo APP_VER; ?>" type="text/javascript"></script>
 <script src="/js/redactor.min.js?v=<?php echo APP_VER; ?>" type="text/javascript"></script>
@@ -74,7 +74,7 @@
 <?php
 $components = DB::table('Component')
 	->where('StatusID', '=', eStatus::Active)
-	->order_by('DisplayOrder', 'ASC')
+	->orderBy('DisplayOrder', 'ASC')
 	->get();
 ?>
 @foreach($components as $component)

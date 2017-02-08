@@ -6,7 +6,7 @@
 			->where('ContentFileID', '=', $ContentFileID)
 			->raw_where('(SELECT COUNT(*) FROM `PageComponent` WHERE ContentFilePageID=`ContentFilePage`.ContentFilePageID AND StatusID=1) > 0')
 			->where('StatusID', '=', eStatus::Active)
-			->order_by('No', 'ASC')
+			->orderBy('No', 'ASC')
 			->get();
 		?>
         @foreach($pagess as $page)
@@ -17,7 +17,7 @@
 				$comps = DB::table('Component')
 					->raw_where('ComponentID IN (SELECT ComponentID FROM `PageComponent` WHERE ContentFilePageID='.(int)$page->ContentFilePageID.' AND StatusID=1)')
 					->where('StatusID', '=', eStatus::Active)
-					->order_by('DisplayOrder', 'ASC')
+					->orderBy('DisplayOrder', 'ASC')
 					->get();
 				?>
                 @foreach($comps as $comp)
@@ -29,7 +29,7 @@
 							->where('ContentFilePageID', '=', $page->ContentFilePageID)
 							->where('ComponentID', '=', $comp->ComponentID)
 							->where('StatusID', '=', eStatus::Active)
-							->order_by('No', 'ASC')
+							->orderBy('No', 'ASC')
 							->get();
 						?>
                     	@foreach($pcs as $pc)

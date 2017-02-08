@@ -1,7 +1,7 @@
 @layout('layouts.master')
 
 @section('content')
-    {{ HTML::script('js/managements.js?v=' . APP_VER) }}
+    {{ Html::script('js/managements.js?v=' . APP_VER) }}
     <div class="col-md-12" xmlns="http://www.w3.org/1999/html">
         <div class="block block-drop-shadow">
             <div class="header">
@@ -30,7 +30,7 @@
                             <tbody>
                             <form id="contentOrderForm">
                                 @foreach($rows as $size => $customer)
-                                    <tr class="{{ HTML::oddeven() }}">
+                                    <tr class="{{ Html::oddeven() }}">
                                         <td>{{$customer->CustomerID}}</td>
                                         <td>{{$customer->CustomerName}}</td>
                                         <td>{{$size}}</td>

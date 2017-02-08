@@ -2,7 +2,11 @@
 
 namespace App\Models;
 
+use App;
+use DB;
+use eStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\JoinClause;
 
 /**
  * App\Models\GroupCode
@@ -32,4 +36,26 @@ class GroupCode extends Model
     public $timestamps = false;
     protected $table = 'GroupCode';
     protected $primaryKey = 'GroupCodeID';
+
+    public function getDisplayName($languageID)
+    {
+        $gcl = $this->belongsTo(GroupCodeLanguage::class, 'GroupCodeID')->getQuery()->where('LanguageID', '=', $languageID)->first();
+        if($gcl) {
+            return $gcl->DisplayName;
+        }
+        return '';
+    }
+
+    public static function getGroupCodes() {
+        return DB::table('GroupCode AS gc')
+            ->join('GroupCodeLanguage AS gcl', function (/** @var JoinClause $join */ $join) {
+                $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
+                $join->on('gcl.LanguageID', '=', DB::raw(App::getLocale()));
+            })
+            ->where('gc.GroupName', '=', 'Currencies')
+            ->where('gc.StatusID', '=', eStatus::Active)
+            ->orderBy('gc.DisplayOrder', 'ASC')
+            ->orderBy('gcl.DisplayName', 'ASC')
+            ->get();
+    }
 }

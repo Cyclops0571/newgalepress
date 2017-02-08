@@ -20,7 +20,7 @@ if(isset($Properties))
 		if($prop->Name == 'option') $option = (int)$prop->Value;
 		if($prop->Name == 'filename')
 		{
-			$filename = path('public').$prop->Value;
+			$filename = public_path($prop->Value);
 			if(File::exists($filename) && is_file($filename)) {
 				$fileSelected = 1;
 				$fileSize = round((File::size($filename) / (1024 * 1024)), 1).' MB';
@@ -40,7 +40,7 @@ if(isset($Properties))
 		if($prop->Name == 'posteroption') $posteroption = (int)$prop->Value;
 		if($prop->Name == 'posterimagename')
 		{
-			$posterimagename = path('public').$prop->Value;
+			$posterimagename = public_path($prop->Value);
 			if(File::exists($posterimagename) && is_file($posterimagename)) {
 				$posterImageSelected = 1;
 				$fname = File::name($posterimagename);

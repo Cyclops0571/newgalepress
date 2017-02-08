@@ -30,7 +30,7 @@ elixir((mix) => {
         'website/main.scss',
         'website/main-responsive.scss',
         'website/theme_royalblue.scss',
-        'website/myStyles.scss'
+        'website/myWebsiteStyles.scss'
     ], 'public/css/website.css');
 
     mix.scripts([

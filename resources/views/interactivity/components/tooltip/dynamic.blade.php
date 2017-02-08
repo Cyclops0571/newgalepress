@@ -8,7 +8,7 @@ if($transparent == 1)
     $bgcolor = "transparent";
     $boxopacity = 0;
 }
-$vFile = path('public').$filename;
+$vFile = public_path($filename);
 if(File::exists($vFile) && is_file($vFile)) {
     $fname = File::name($vFile);
     $fext = File::extension($vFile);
@@ -25,7 +25,7 @@ if(!$preview) {
     $baseDirectory = $baseDirectory . "comp_";
 }
 
-$vFile2 = path('public').$filename2;
+$vFile2 = public_path($filename2);
 if(File::exists($vFile2) && is_file($vFile2)) {
     $fname2 = File::name($vFile2);
     $fext2 = File::extension($vFile2);

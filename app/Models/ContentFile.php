@@ -2,19 +2,84 @@
 
 namespace App\Models;
 
+use Auth;
+use Common;
+use DateTime;
+use eProcessTypes;
+use eStatus;
+use Exception;
+use File;
 use Illuminate\Database\Eloquent\Model;
+use Imagick;
+use Interactivity;
+use ZipArchive;
 
+/**
+ * App\Models\ContentFile
+ *
+ * @property int $ContentFileID
+ * @property int $ContentID
+ * @property string $DateAdded
+ * @property string $FilePath
+ * @property string $FileName
+ * @property string $FileName2
+ * @property int $FileSize
+ * @property int $PageCreateProgress
+ * @property int $Transferred
+ * @property int $Interactivity
+ * @property int $HasCreated
+ * @property int $ErrorCount
+ * @property string $LastErrorDetail
+ * @property string $InteractiveFilePath
+ * @property string $InteractiveFileName
+ * @property string $InteractiveFileName2
+ * @property int $InteractiveFileSize
+ * @property int $TotalFileSize
+ * @property int $Included
+ * @property int $Indexed
+ * @property int $StatusID
+ * @property int $CreatorUserID
+ * @property string $DateCreated
+ * @property int $ProcessUserID
+ * @property string $ProcessDate
+ * @property int $ProcessTypeID
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereContentFileID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereContentID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereDateAdded($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFilePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFileName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFileName2($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFileSize($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile wherePageCreateProgress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereTransferred($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractivity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereHasCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereErrorCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereLastErrorDetail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFilePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFileName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFileName2($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFileSize($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereTotalFileSize($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereIncluded($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereIndexed($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereCreatorUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereDateCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessTypeID($value)
+ * @mixin \Eloquent
+ */
 class ContentFile extends Model
 {
     const ContentFileInUse = 1;
     const ContentFileAvailable = 0;
     public $timestamps = false;
     protected $table = 'ContentFile';
-    protected $primaryKey = 'ContentFileID'
+    protected $primaryKey = 'ContentFileID';
     public static $key = 'ContentFileID';
-    private static $_bookmarkAdded = false;
     private $_pfdName = '';
-    private $_pdfRelativePath = '';
 
     /**
      * After pdf uploaded this function creates page snap shots, bookmarks and annotation
@@ -39,11 +104,11 @@ class ContentFile extends Model
 
         //create folder if does not exist
         if (!File::exists($cf->pdfFolderPathAbsolute())) {
-            File::mkdir($cf->pdfFolderPathAbsolute());
+            File::makeDirectory($cf->pdfFolderPathAbsolute());
         }
 
         try {
-            $targetFileNameFull = path('public') . $cf->FilePath . '/' . $cf->FileName;
+            $targetFileNameFull = public_path($cf->FilePath . '/' . $cf->FileName);
             //extract zip file
             $zip = new ZipArchive();
             $res = $zip->open($targetFileNameFull);
@@ -92,13 +157,13 @@ class ContentFile extends Model
 
     public function Content()
     {
-        return $this->belongs_to('Content', 'ContentID');
+        return $this->belongsTo('Content', 'ContentID');
     }
 
     private function createOutputFolder()
     {
         if (!File::exists($this->pdfFolderPathAbsolute() . '/output')) {
-            File::mkdir($this->pdfFolderPathAbsolute() . '/output');
+            File::makeDirectory($this->pdfFolderPathAbsolute() . '/output');
         }
     }
 
@@ -310,9 +375,9 @@ class ContentFile extends Model
         $zip->close();
     }
 
-    public function save($closing = false)
+    public function save(array $options = [])
     {
-        if ($closing) {
+        if (isset($options['closing'])) {
             $this->Included = 1;
             $this->Interactivity = Interactivity::ProcessQueued;
             $this->HasCreated = 0;
@@ -323,7 +388,7 @@ class ContentFile extends Model
             $this->InteractiveFileSize = 0;
         }
 
-        if (!$this->dirty()) {
+        if ($this->isClean()) {
             return true;
         }
         $userID = -1;
@@ -351,7 +416,7 @@ class ContentFile extends Model
      */
     public function pdfFolderPathAbsolute()
     {
-        return path('public') . $this->FilePath . '/file_' . $this->ContentFileID;
+        return public_path($this->FilePath . '/file_' . $this->ContentFileID);
     }
 
     public function pdfFolderPathRelative()
@@ -413,7 +478,7 @@ class ContentFile extends Model
                 if (count($oldContentFilePage->PageComponent) == 0) {
                     continue;
                 }
-                $oldPage = new imagick(path('public') . $oldContentFilePage->FilePath . '/' . $oldContentFilePage->FileName);
+                $oldPage = new imagick(public_path($oldContentFilePage->FilePath . '/' . $oldContentFilePage->FileName));
                 for ($j = 0; $j < count($this->ContentFilePages); $j++) {
                     try {
                         $newContentFilePage = $this->ContentFilePages[$i];
@@ -471,7 +536,7 @@ class ContentFile extends Model
             ->where('ContentID', '=', $this->ContentID)
             ->where('Interactivity', '=', 1)
             ->where('StatusID', '=', eStatus::Active)
-            ->order_by('ContentFileID', 'DESC')
+            ->orderBy('ContentFileID', 'DESC')
             ->first();
     }
 
@@ -482,25 +547,22 @@ class ContentFile extends Model
 
     public function Pages($statusID)
     {
-        return $this->has_many('ContentFilePage', $this->key())->where('StatusID', '=', $statusID)->get();
+        return $this->hasMany('ContentFilePage', self::$key)->getQuery()->where('StatusID', '=', $statusID)->get();
     }
 
     public function ActivePages()
     {
-        return $this->has_many('ContentFilePage', $this->key())->where('StatusID', '=', eStatus::Active)->get();
+        return $this->hasMany('ContentFilePage', self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->get();
     }
 
     public function ActiveCoverImageFile()
     {
-        return $this->has_many('ContentCoverImageFile', $this->key())->where('StatusID', '=', eStatus::Active)->first();
+        return $this->hasMany('ContentCoverImageFile', self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->first();
     }
 
-    /**
-     * @return \Laravel\Database\Eloquent\Query
-     */
     public function ContentFilePages()
     {
-        return $this->has_many('ContentFilePage', $this->key())->where('StatusID', '=', eStatus::Active);
+        return $this->hasMany('ContentFilePage', self::$key)->getQuery()->where('StatusID', '=', eStatus::Active);
     }
 
 

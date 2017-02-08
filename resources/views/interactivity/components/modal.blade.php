@@ -11,7 +11,7 @@ if(isset($Properties))
         if($prop->Name == 'modal') $modal = (int)$prop->Value;
         if($prop->Name == 'modaliconname')
         {
-            $modaliconname = path('public').$prop->Value;
+            $modaliconname = public_path($prop->Value);
             if(File::exists($modaliconname) && is_file($modaliconname)) {
                 $modalIconSelected = 1;
                 $fname = File::name($modaliconname);

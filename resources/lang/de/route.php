@@ -51,7 +51,7 @@ return array(
     'applications_save' => 'apps/speichern',
     'applications_delete' => 'apps/loeschen',
     'applications_uploadfile' => 'apps/dateihochladen',
-    'applications_usersettings' => 'apps/(:num)/einstellungen',
+    'applications_usersettings' => 'apps/{id}/einstellungen',
     'application_usersettings_save' => 'apps/einstellungenspeichern',
 
     'contents' => 'inhalte',

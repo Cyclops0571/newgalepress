@@ -240,7 +240,7 @@
                                                                 accessToken: accessToken
                                                             }
                                                         }).success(function (msg) {
-                                                            window.location.href = "<?php echo URL::to(__('route.home'));?>";
+                                                            window.location.href = "<?php echo route('home');?>";
                                                         }).fail(function (msg) {
                                                         });
                                                     });
@@ -532,7 +532,7 @@
                                 $scope.errorCaptchaInvalid = false;
                                 $("#succesMessage").show();
                                 setTimeout(function () {
-                                    window.location.href = '<?php echo URL::to(__('route.login'));?>';
+                                    window.location.href = '<?php echo route('home');?>';
                                 }, 3000);
 
 

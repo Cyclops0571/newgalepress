@@ -2,7 +2,7 @@
 
 @section('content')
 <?php
-$appLink = (int)Input::get('applicationID', 0) > 0 ? '&applicationID=' . Input::get('applicationID', 0) : '';
+$appLink = (int)request('applicationID', 0) > 0 ? '&applicationID=' . request('applicationID', 0) : '';
 $searchLink = '&search=' . $search;
 $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
 ?>
@@ -15,7 +15,7 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
             <div class="form-row ">
                 <div class="col-md-5" style="padding-top:5px; float:left;">
                     <div class="input-group commands">
-                        <a href="{{URL::to(__('route.'.$page.'_new') .'?applicationID='.Input::get('applicationID', 0) )}}"
+                        <a href="{{route($page.'_new', ['applicationID' => request('applicationID', 0) ] )}}"
                            title="{{__('common.commandbar_add')}}" class="widget-icon widget-icon-circle">
                             <span class="icon-map-marker location-icon-map-stacked">
                                 <i class="icon-plus location-icon-plus-stacked"></i>
@@ -40,7 +40,7 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                             <span class="icon-upload" style="font-size: 15px;"></span>
                         </a>
                         <script>
-                            var ApplicationID = <?php echo Input::get('applicationID', 0); ?>;
+                            var ApplicationID = <?php echo request('applicationID', 0); ?>;
                             cCommon.fileUploadInit('/maps/excelupload/' + ApplicationID,
                                     function (response) {
                                         if (response.responseMsg.length) {
@@ -58,12 +58,12 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
 
                     {{ Form::open($route, 'GET') }}
                     {{ Form::hidden('page', '1') }}
-                    {{ Form::hidden('sort', Input::get('sort', $pk)) }}
-                    {{ Form::hidden('sort_dir', Input::get('sort_dir', 'DESC')) }}
-                    {{ Form::hidden('applicationID', Input::get('applicationID', '0')) }}
+                    {{ Form::hidden('sort', request('sort', $pk)) }}
+                    {{ Form::hidden('sort_dir', request('sort_dir', 'DESC')) }}
+                    {{ Form::hidden('applicationID', request('applicationID', '0')) }}
                     <div class="input-group">
                         <div class="input-group-addon"><span class="icon-search"></span></div>
-                        <input class="form-control" name="search" value="{{ Input::get('search', '') }}" type="text">
+                        <input class="form-control" name="search" value="{{ request('search', '') }}" type="text">
                         <input type="submit" class="btn hidden" value="{{ __('common.commandbar_search') }}"/>
                     </div>
                     {{ Form::close() }}
@@ -80,7 +80,7 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                             <?php foreach ($fields as $field): ?>
                             <?php $sortLink = '&sort=' . $field[1]; ?>
                             <?php $sort == $field[1] ? ($sort_dir == 'ASC' ? array('class' => 'sort_up') : array('class' => 'sort_down')) : array(); ?>
-                            <th scope="col">{{ HTML::link($route.'?page=1'. $appLink  . $searchLink . $sortLink . $sortDirLink, $field[0], $sort) }}</th>
+                            <th scope="col">{{ Html::link($route.'?page=1'. $appLink  . $searchLink . $sortLink . $sortDirLink, $field[0], $sort) }}</th>
                             <?php endforeach; ?>
                             <th scope="col" class="text-center">{{ __('common.detailpage_delete') }}</th>
                         </tr>
@@ -88,14 +88,14 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                         <tbody>
                         @forelse($rows->results as $row)
                             @if((int)Auth::user()->UserTypeID == eUserTypes::Manager)
-                                <tr class="{{ HTML::oddeven($page) }}"
+                                <tr class="{{ Html::oddeven($page) }}"
                                     id="googleMapIDSet_<?php echo $row->GoogleMapID?>">
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->CustomerName) }}</td>
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->ApplicationName) }}</td>
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->Name) }}</td>
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->Latitude) }}</td>
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->Longitude) }}</td>
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->GoogleMapID) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->CustomerName) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->ApplicationName) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->Name) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->Latitude) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->Longitude) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->GoogleMapID) }}</td>
                                     <td class="text-center">
                                         <a href="#" onclick="cGoogleMap.delete(<?php echo $row->GoogleMapID; ?>)">
                                             <span class="icon-remove-sign"></span>
@@ -103,14 +103,14 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                                     </td>
                                 </tr>
                             @elseif((int)Auth::user()->UserTypeID == eUserTypes::Customer)
-                                <tr class="{{ HTML::oddeven($page) }}"
+                                <tr class="{{ Html::oddeven($page) }}"
                                     id="googleMapIDSet_<?php echo $row->GoogleMapID?>">
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->Name) }}</td>
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->Address) }}</td>
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->Description) }}</td>
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->Latitude) }}</td>
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->Longitude) }}</td>
-                                    <td>{{ HTML::link($route.'/'.$row->GoogleMapID, $row->GoogleMapID) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->Name) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->Address) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->Description) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->Latitude) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->Longitude) }}</td>
+                                    <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->GoogleMapID) }}</td>
                                     <td class="text-center">
                                         <a href="#" onclick="cGoogleMap.delete(<?php echo $row->GoogleMapID; ?>)">
                                             <span class="icon-remove-sign"></span>

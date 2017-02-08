@@ -12,11 +12,7 @@
     height:20px;
 }
 </style>
-<?php
-//support-settings-button 
-
-//echo Laravel\Lang:: ?>
-<?php if(Laravel\Config::get('application.language') != 'de'): ?>
+<?php if(app()->getLocale() != 'de'): ?>
 <div class="support-settings">
     <div class="support-settings-button vertical" onclick="location.href='<?php echo route('my_ticket') ?>'">
 	<span class="icon-question-sign"></span> 

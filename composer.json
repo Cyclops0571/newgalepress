@@ -8,6 +8,7 @@
         "php": ">=5.6.4",
         "barryvdh/laravel-ide-helper": "^2.2",
         "doctrine/dbal": "^2.5",
+        "illuminate/html": "^5.0",
         "iyzico/iyzipay-php": "^2.0",
         "laravel/framework": "5.3.*",
         "mcamara/laravel-localization": "1.1.*"

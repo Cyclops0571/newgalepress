@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use App\Models\Application;
 use App\Models\Customer;
 use App\User;
 use Validator;

@@ -1,7 +1,7 @@
 <?php
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.3.28 on 2017-02-06.
+ * Generated for Laravel 5.3.28 on 2017-02-09.
  *
  * @author Barry vd. Heuvel <barryvdh@gmail.com>
  * @see https://github.com/barryvdh/laravel-ide-helper
@@ -12247,6 +12247,24 @@ namespace {
          */
         public static function link($url, $title = null, $attributes = array(), $secure = null){
             return \Illuminate\Html\HtmlBuilder::link($url, $title, $attributes, $secure);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function nav_link($route, $text){
+            return \Illuminate\Html\HtmlBuilder::nav_link($route, $text);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */
+        public static function oddeven($name){
+            return \Illuminate\Html\HtmlBuilder::oddeven($name);
         }
         
         /**

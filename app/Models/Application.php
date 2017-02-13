@@ -199,7 +199,7 @@ class Application extends Model
 
     public function Package()
     {
-        return $this->belongsTo('App\Models\Package', 'PackageID')->getQuery()->first();
+        return $this->belongsTo(Package::class, 'PackageID')->getQuery()->first();
     }
 
 
@@ -209,7 +209,7 @@ class Application extends Model
      */
     public function Categories($statusID = eStatus::Active)
     {
-        return $this->hasMany('App\Models\Category', self::$key)->getQuery()->where('StatusID', '=', $statusID)->get();
+        return $this->hasMany(Category::class, self::$key)->getQuery()->where('StatusID', '=', $statusID)->get();
     }
 
 
@@ -221,7 +221,7 @@ class Application extends Model
      */
     public function Contents($statusID = eStatus::All)
     {
-        $rs = $this->hasMany('App\Models\Content', self::$key)->getQuery();
+        $rs = $this->hasMany(Content::class, self::$key)->getQuery();
         if ($statusID != eStatus::All) {
             $rs->where('StatusID', '=', $statusID);
         }
@@ -230,12 +230,12 @@ class Application extends Model
 
     public function Users()
     {
-        return $this->hasMany('App\Models\ApplicationUser', $this->primaryKey);
+        return $this->hasMany(ApplicationUser::class, $this->primaryKey);
     }
 
     public function Tags()
     {
-        return $this->hasMany('App\Models\ApplicationTag', $this->primaryKey);
+        return $this->hasMany(ApplicationTag::class, $this->primaryKey);
     }
 
     /**
@@ -276,7 +276,7 @@ class Application extends Model
      */
     public function Customer()
     {
-        return $this->belongsTo('App\Models\Customer', 'CustomerID');
+        return $this->belongsTo(Customer::class, 'CustomerID');
     }
 
     public function incrementAppVersion()
@@ -321,7 +321,7 @@ class Application extends Model
      */
     public function Tabs()
     {
-        return $this->hasMany('App\Models\Tab', self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)
+        return $this->hasMany(Tab::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)
             ->take(TAB_COUNT)
             ->get();
     }
@@ -332,7 +332,7 @@ class Application extends Model
      */
     public function PaymentAccount()
     {
-        return $this->hasOne('App\Models\PaymentAccount', "ApplicationID")->getQuery()->first();
+        return $this->hasOne(PaymentAccount::class, "ApplicationID")->getQuery()->first();
     }
 
     /**
@@ -523,7 +523,7 @@ class Application extends Model
      */
     public function ApplicationTopics()
     {
-        return $this->hasMany('App\Models\ApplicationTopic', self::$key);
+        return $this->hasMany(ApplicationTopic::class, self::$key);
     }
 
     public function setTopics($newTopicIds)

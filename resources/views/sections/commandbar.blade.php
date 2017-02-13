@@ -1,3 +1,6 @@
+<?php
+use App\Models\Application;
+?>
 <div class="col-md-5 pull-left">
     <div class="col-md-offset-0 input-group commands">
         <?php if ((int)request('customerID', 0) > 0): ?>
@@ -33,17 +36,16 @@
     </div>
 </div>
 <div class="col-md-4 commandbar-search">
-
-    {{ Form::open($route, 'GET') }}
-    {{ Form::hidden('page', '1') }}
-    {{ Form::hidden('sort', request('sort', $pk)) }}
-    {{ Form::hidden('sort_dir', request('sort_dir', 'DESC')) }}
-    {{ Form::hidden('applicationID', request('applicationID', '0')) }}
+    <form method="get" action="{{$route}}" >
+      <input type="hidden" name="page" value="1" >
+      <input type="hidden" name="sort" value="{{request('sort', $pk)}}" >
+      <input type="hidden" name="sort_dir" value="{{request('sort_dir', 'DESC')}}" >
+      <input type="hidden" name="applicationID" value="{{request('applicationID', '0')}}" >
     <div class="input-group">
         <div class="input-group-addon"><span class="icon-search"></span></div>
         <input class="form-control" name="search" value="{{ request('search', '') }}" type="text">
-        <input type="submit" class="btn hidden" value="{{ __('common.commandbar_search') }}"/>
+        <input type="submit" class="btn hidden" value="{{ __('common.commandbar_search') }}" >
     </div>
-    {{ Form::close() }}
+    </form>
 
 </div>

@@ -114,7 +114,7 @@ class User extends Authenticatable
      */
     public function lastLoginDate()
     {
-        $loginHistory = $this->hasMany('App\Models\LoginHistory', self::$key)
+        $loginHistory = $this->hasMany(LoginHistory::class, self::$key)
             ->getQuery()
             ->where('action', 'login')
             ->orderBy('id', 'Desc')->first();

@@ -2,7 +2,22 @@
 
 namespace App\Models;
 
+use App\Library\ImageClass\ImageClass;
+use Auth;
+use Common;
+use Config;
+use Cookie;
+use DateTime;
+use DB;
+use eProcessTypes;
+use eRemoveFromMobile;
+use eStatus;
+use eUserTypes;
+use File;
+use Hash;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Http\Request;
 
 /**
  * App\Models\Content
@@ -76,10 +91,635 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereProcessDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereProcessTypeID($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Application $Application
+ * @property-read \App\Models\Category $Category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentTopic[] $ContentTopics
  */
 class Content extends Model
 {
     public $timestamps = false;
     protected $table = 'Content';
     protected $primaryKey = 'ContentID';
+    public static $key = 'ContentID';
+
+    private const defaultSort = 'OrderNo';
+    public static function getContents(Request $request)
+    {
+
+        //$applicationID, $search, $p, $option, $sort, $sort_dir
+        $applicationID = $request->get('applicationID', 0);
+        $search = $request->get('search', '');
+        $sort = $request->get('sort', self::defaultSort);
+        $sort_dir = $request->get('sort_dir', 'DESC');
+        $p = $request->get('page', 1);
+        $option = (int)$request->get('option', 0);
+
+        $rowCount = Config::get('custom.rowcount');
+        $rowCount = 10;
+        $sqlCat = '(IFNULL((SELECT GROUP_CONCAT(`Name` ORDER BY `Name` SEPARATOR \', \')'
+            . ' FROM `Category` WHERE ApplicationID=a.ApplicationID AND CategoryID IN '
+            . '(SELECT CategoryID FROM `ContentCategory` WHERE ContentID = o.ContentID) AND StatusID = 1), \'\'))';
+
+        $sql = '' .
+            'SELECT ' .
+            'c.CustomerID, ' .
+            'c.CustomerName, ' .
+            'o.OrderNo,' .
+            'o.Detail,' .
+            'o.MonthlyName,' .
+            'a.ApplicationID, ' .
+            'a.Name AS ApplicationName, ' .
+            'o.Name, ' .
+            '(' .
+            'CASE WHEN (SELECT COUNT(*) FROM `ContentCategory` WHERE ContentID = o.ContentID AND CategoryID = 0) > 0 ' .
+            'THEN CONCAT(\'' . __('common.contents_category_list_general') . ', \', ' . $sqlCat . ') ' .
+            'ELSE ' . $sqlCat . ' ' .
+            'END' .
+            ') AS CategoryName, ' .
+            'o.PublishDate, ' .
+            'o.UnpublishDate, ' .
+            'o.IsMaster, ' .
+            '(CASE o.Blocked WHEN 1 THEN \'' . __('common.contents_list_blocked1') . '\' ELSE \'' . __('common.contents_list_blocked0') . '\' END) AS Blocked, ' .
+            '(CASE WHEN ('
+            . 'o.Status = 1 AND '
+            . '(o.PublishDate <= CURDATE()) AND '
+            . '(o.IsUnpublishActive = 0 OR o.UnpublishDate > CURDATE())) '
+            . 'THEN \'' . __('common.contents_list_status1') . '\' ' .
+            'ELSE \'' . __('common.contents_list_status0') . '\' END) AS Status, ' .
+            'o.ContentID ' .
+            'FROM `Customer` AS c ' .
+            'INNER JOIN `Application` AS a ON a.CustomerID=c.CustomerID AND a.StatusID=1 ' .
+            'INNER JOIN `Content` AS o ON o.ApplicationID=a.ApplicationID AND o.StatusID=1 ' .
+            'WHERE c.StatusID=1';
+        $rs = DB::table(DB::raw('(' . $sql . ') t'))
+            ->where(function (Builder $query) use ($applicationID, $search) {
+                if ((int)Auth::user()->UserTypeID == eUserTypes::Manager) {
+                    if ($applicationID > 0) {
+                        $query->where('ApplicationID', '=', $applicationID);
+                    }
+
+                    if (strlen(trim($search)) > 0) {
+                        $query->where(function (Builder $q) use ($search) {
+                            $q->where('CustomerName', 'LIKE', '%' . $search . '%');
+                            $q->orWhere('ApplicationName', 'LIKE', '%' . $search . '%');
+                            $q->orWhere('Blocked', 'LIKE', '%' . $search . '%');
+                            $q->orWhere('Status', 'LIKE', '%' . $search . '%');
+                            $q->orWhere('ContentID', 'LIKE', '%' . $search . '%');
+                        });
+                    }
+                } elseif (Auth::user()->UserTypeID == eUserTypes::Customer) {
+                    if (Common::CheckApplicationOwnership($applicationID)) {
+                        if (strlen(trim($search)) > 0) {
+                            $query->where('ApplicationID', '=', $applicationID);
+                            $query->where(function (Builder $q) use ($search) {
+                                $q->where('Name', 'LIKE', '%' . $search . '%');
+                                $q->orWhere('CategoryName', 'LIKE', '%' . $search . '%');
+                                $q->orWhere('PublishDate', 'LIKE', '%' . $search . '%');
+                                $q->orWhere('Blocked', 'LIKE', '%' . $search . '%');
+                                $q->orWhere('Status', 'LIKE', '%' . $search . '%');
+                                $q->orWhere('ContentID', 'LIKE', '%' . $search . '%');
+                            });
+                        } else {
+                            $query->where('ApplicationID', '=', $applicationID);
+                        }
+                    } else {
+                        $query->where('ApplicationID', '=', -1);
+                    }
+                }
+            })
+            ->orderBy($sort, $sort_dir);
+        if ($sort != self::defaultSort) {
+            $rs->orderBy(self::defaultSort, 'DESC');
+        }
+
+        if ($option == 1) {
+            $data = array(
+                'rows' => $rs->get()
+            );
+            return view('pages.contentoptionlist', $data);
+        }
+
+        $count = $rs->count();
+        //$results = $rs->forPage($p, $rowCount)->get();
+        $rows = $rs->forPage($p, $rowCount)->paginate($rowCount);
+//        dd($rows);
+        return $rows;
+        //Paginator::make($results, $count, $rowCount);
+
+    }
+
+
+    public function Application()
+    {
+        return $this->belongsTo(Application::class, 'ApplicationID');
+    }
+
+    public function Category()
+    {
+        return $this->belongsTo(Category::class, 'CategoryID');
+    }
+
+    public function Currency($languageID)
+    {
+        $gc = GroupCode::where('GroupCodeID', '=', $this->CurrencyID)->first();
+        if ($gc) {
+            return $gc->getDisplayName($languageID);
+        }
+        return '';
+    }
+
+    public function Files($statusID = eStatus::Active)
+    {
+        return $this->hasMany(ContentFile::class, self::$key)->getQuery()->where('StatusID', '=', $statusID)->get();
+    }
+
+    public function ActiveFile()
+    {
+        return $this->hasMany(ContentFile::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->first();
+    }
+
+
+    public function ifModifiedDoNecessarySettings($selectedCategories)
+    {
+        $currentCategories = array();
+        $rows = $this->getCategoryIDSet();
+        foreach ($rows as $row) {
+            $categoryIDArray = array($row->CategoryID != CATEGORY_GENEL_ID ? $row->CategoryID : "");
+            $currentCategories = array_merge($currentCategories, $categoryIDArray);
+        }
+
+        $pdfUploaded = (int)request('hdnFileSelected', 0);
+        $imageUploaded = (int)request('hdnCoverImageFileSelected', 0);
+        if ($this->isDirty() || $pdfUploaded || $imageUploaded || $currentCategories != $selectedCategories) {
+            $this->Version = (int)$this->Version + 1;
+        }
+    }
+
+    public function getCategoryIDSet()
+    {
+        return ContentCategory::getQuery()
+        ->where('ContentID', '=', $this->ContentID)
+        ->get();
+    }
+
+    public function setPassword($password)
+    {
+        if (strlen(trim($password)) > 0) {
+            $this->Password = Hash::make(request('Password'));
+        }
+    }
+
+    public function setMaster($isMaster)
+    {
+        $this->IsMaster = $isMaster;
+        if ($isMaster) {
+            //Unset IsProtected & password field due to https://github.com/galepress/gp/issues/7
+            $this->IsProtected = 0;
+            $this->Password = '';
+            $contents = Content::getQuery()->where('ApplicationID', '=', $this->ApplicationID)->get();
+            foreach ($contents as $content) {
+                //INFO:Added due to https://github.com/galepress/gp/issues/18
+                if ((int)$this->ContentID !== (int)$content->ContentID) {
+                    $a = Content::find($content->ContentID);
+                    $a->IsMaster = 0;
+                    $a->Version = (int)$a->Version + 1;
+                    $a->ProcessUserID = Auth::user()->UserID;
+                    $a->ProcessDate = new DateTime();
+                    $a->ProcessTypeID = eProcessTypes::Update;
+                    $a->save();
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     * @param int $contentID
+     * @param array $columns
+     * @return Content
+     */
+    public static function find($contentID, $columns = array('*'))
+    {
+        return Content::where(self::$key, "=", $contentID)->first($columns);
+    }
+
+    public function save(array $options = [])
+    {
+        if (!isset($options['updateAppVersion'])) {
+            $options['updateAppVersion'] = true;
+        }
+        if (!$this->isDirty()) {
+            return true;
+        }
+        $userID = -1;
+        if (Auth::user()) {
+            $userID = Auth::user()->UserID;
+        }
+
+        if ((int)$this->ContentID == 0) {
+            $this->DateCreated = new DateTime();
+            $this->ProcessTypeID = eProcessTypes::Insert;
+            $this->CreatorUserID = $userID;
+            $this->StatusID = eStatus::Active;
+            $this->PdfVersion = 1;
+            $this->CoverImageVersion = 1;
+        } else {
+            $this->ProcessTypeID = eProcessTypes::Update;
+        }
+
+        $this->ProcessUserID = $userID;
+        $this->Version = (int)$this->Version + 1;
+        $this->ProcessDate = new DateTime();
+        if ($options['updateAppVersion']) {
+            $contentApp = Application::find($this->ApplicationID);
+            if ($contentApp) {
+                $contentApp->incrementAppVersion();
+            }
+        }
+        parent::save();
+    }
+
+    public function setCategory($selectedCategories)
+    {
+        //content categories
+//        571571
+//        DB::table('ContentCategory')->where('ContentID', '=', $this->ContentID)->delete();
+//        foreach ($selectedCategories as $value) {
+//            //add category
+//            $cat = new ContentCategory();
+//            $cat->ContentID = $this->ContentID;
+//            $cat->CategoryID = (int)$value;
+//            $cat->save();
+//        }
+    }
+
+    /**
+     * @param int $customerID
+     * @return ContentFile|int|null
+     */
+    public function processPdf()
+    {
+        if ((int)request('hdnFileSelected', 0) != 1) {
+            return ContentFile::where('ContentID', '=', $this->ContentID)
+                ->where('StatusID', '=', eStatus::Active)
+                ->orderBy('ContentFileID', 'DESC')
+                ->first();
+        }
+
+
+        $ContentFile = null;
+        $sourceFileName = request('hdnFileName');
+        $sourceFilePath = 'files/temp';
+        $sourceRealPath = public_path() . $sourceFilePath;
+        $sourceFileNameFull = $sourceRealPath . '/' . $sourceFileName;
+
+        $targetFileName = Auth::user()->UserID . '_' . date("YmdHis") . '_' . $sourceFileName;
+        $targetFilePath = 'files/customer_' . $this->Application->CustomerID . '/application_' . $this->ApplicationID . '/content_' . $this->ContentID;
+        $destinationFolder = public_path() . $targetFilePath;
+        $targetFileNameFull = $destinationFolder . '/' . $targetFileName;
+
+        if (File::exists($sourceFileNameFull)) {
+            if (!File::exists($destinationFolder)) {
+                File::makeDirectory($destinationFolder);
+            }
+
+            $this->PdfVersion += 1;
+            $this->save();
+
+            $originalImageFileName = pathinfo($sourceFileNameFull, PATHINFO_FILENAME) . IMAGE_ORJ_EXTENSION;
+            File::move($sourceFileNameFull, $targetFileNameFull);
+            if (File::exists($sourceRealPath . "/" . $originalImageFileName)) {
+                File::move($sourceRealPath . "/" . $originalImageFileName, $destinationFolder . "/" . IMAGE_ORIGINAL . IMAGE_EXTENSION);
+            }
+
+
+            $ContentFile = new ContentFile();
+            $ContentFile->ContentID = $this->ContentID;
+            $ContentFile->DateAdded = new DateTime();
+            $ContentFile->FilePath = $targetFilePath;
+            $ContentFile->FileName = $targetFileName;
+            $ContentFile->FileSize = File::size($targetFileNameFull);
+            $ContentFile->Transferred = (int)request('Transferred', '0');
+            $ContentFile->StatusID = eStatus::Active;
+            $ContentFile->CreatorUserID = Auth::user()->UserID;
+            $ContentFile->DateCreated = new DateTime();
+            $ContentFile->ProcessUserID = Auth::user()->UserID;
+            $ContentFile->ProcessDate = new DateTime();
+            $ContentFile->ProcessTypeID = eProcessTypes::Insert;
+            $ContentFile->save();
+        }
+
+        return $ContentFile;
+    }
+
+    /**
+     * @desc Calls an outer service for indexing pdfs
+     * @param ContentFile $contentFile
+     */
+    public function callIndexingService(ContentFile $contentFile)
+    {
+        //http://37.9.205.205/indexing?path=customer_127/application_135/content_5207/file_6688/file.pdf'
+
+        $contentFile->Indexed = 0;
+        $pdfPath = 'customer_' . $this->Application->CustomerID . '/application_' . $this->ApplicationID . '/content_' . $this->ContentID . '/file_' . $contentFile->ContentFileID . '/file.pdf';
+        $requestUrl = 'http://37.9.205.205/indexing?path=' . $pdfPath;
+        @$ch = curl_init($requestUrl);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($ch);
+        if (!empty($result)) {
+            $resultJson = json_decode($result, true);
+            if (isset($resultJson['status']) && $resultJson['status'] == 1) {
+                $contentFile->Indexed = 1;
+            }
+        }
+
+        if ($contentFile->Indexed == 0) {
+            $error = new ServerErrorLog();
+            $error->ErrorMessage = "Indexing error - ContentFileID: " . $contentFile->ContentFileID . " -  response: " . json_encode($result);
+            $error->Parameters = $requestUrl;
+            $error->save();
+        }
+        $contentFile->save();
+    }
+
+    /**
+     * @param int $customerID
+     * @param ContentFile $contentFile
+     * @param int $coverImageFileSelected
+     * @param string $coverImageFileName
+     * @throws Exception
+     */
+    public function processImage($contentFile, $coverImageFileSelected, $coverImageFileName)
+    {
+
+        if (!$contentFile) {
+            return;
+        }
+
+        if ($coverImageFileSelected != 1) {
+            return;
+        }
+
+        $sourceFileName = $coverImageFileName;
+        $sourceFilePath = 'files/temp';
+        $sourceRealPath = public_path() . $sourceFilePath;
+        $sourceFileNameFull = $sourceRealPath . '/' . $sourceFileName;
+
+        $targetFileName = Auth::user()->UserID . '_' . date("YmdHis") . '_' . $sourceFileName;
+        $targetFilePath = 'files/customer_' . $this->Application->CustomerID . '/application_' . $this->ApplicationID . '/content_' . $this->ContentID;
+        $destinationFolder = public_path() . $targetFilePath;
+        $targetFileNameFull = $destinationFolder . '/' . $targetFileName;
+
+        $targetMainFileName = $targetFileName . '_main';
+        $targetThumbFileName = $targetFileName . '_thumb';
+
+        if (File::exists($sourceFileNameFull) && is_file($sourceFileNameFull)) {
+            if (!File::exists($destinationFolder)) {
+                File::makeDirectory($destinationFolder);
+            }
+
+
+            //<editor-fold desc="Delete Old Images">
+            foreach (scandir($destinationFolder . "/") as $fileName) {
+                if (substr($fileName, 0, strlen(IMAGE_CROPPED_NAME)) === IMAGE_CROPPED_NAME) {
+                    unlink($destinationFolder . "/" . $fileName);
+                }
+            }
+            //</editor-fold>
+
+            File::move($sourceFileNameFull, $targetFileNameFull);
+            if ((int)request('hdnFileSelected', 0) == 0) {
+                sleep(1);
+                File::copy($targetFileNameFull, $destinationFolder . '/' . IMAGE_ORIGINAL . IMAGE_EXTENSION);
+            }
+            $pictureInfoSet = array();
+            $pictureInfoSet[] = array("width" => 110, "height" => 157, "imageName" => $targetMainFileName);
+            $pictureInfoSet[] = array("width" => 468, "height" => 667, "imageName" => $targetThumbFileName);
+            foreach ($pictureInfoSet as $pInfo) {
+                ImageClass::cropImage($targetFileNameFull, $destinationFolder, $pInfo["width"], $pInfo["height"], $pInfo["imageName"], FALSE);
+            }
+
+            $cropSet = Crop::get();
+            $sourceFile = $destinationFolder . "/" . IMAGE_ORIGINAL . IMAGE_EXTENSION;
+            foreach ($cropSet as $crop) {
+                //create neccessary image versions
+                ImageClass::cropImage($sourceFile, $destinationFolder, $crop->Width, $crop->Height);
+            }
+
+            $this->CoverImageVersion += 1;
+            $this->save();
+
+            $c = new ContentCoverImageFile();
+            $c->ContentFileID = $contentFile->ContentFileID;
+            $c->DateAdded = new DateTime();
+            $c->FilePath = $targetFilePath;
+            $c->SourceFileName = $targetFileName;
+            $c->FileName = $targetMainFileName . IMAGE_EXTENSION;
+            $c->FileName2 = $targetThumbFileName . IMAGE_EXTENSION;
+            $c->FileSize = File::size($destinationFolder . "/" . $targetMainFileName . ".jpg");
+            $c->StatusID = eStatus::Active;
+            $c->CreatorUserID = Auth::user()->UserID;
+            $c->DateCreated = new DateTime();
+            $c->ProcessUserID = Auth::user()->UserID;
+            $c->ProcessDate = new DateTime();
+            $c->ProcessTypeID = eProcessTypes::Insert;
+            $c->save();
+            Cookie::make(SHOW_IMAGE_CROP, SHOW_IMAGE_CROP);
+        }
+    }
+
+    public function getIdentifier($refreshIdentifier = false)
+    {
+        if (!$this->ContentID) {
+            return $this->Identifier;
+        }
+        if (empty($this->Identifier) || $refreshIdentifier) {
+            if (empty($this->Application->BundleText)) {
+                $identifier = "www.galepress.com." . $this->ContentID . "t" . time();
+            } else {
+                $identifier = strtolower($this->Application->BundleText) . "." . $this->ContentID . "t" . time();
+            }
+            if (empty($this->Identifier)) {
+                $this->Identifier = $identifier;
+                $this->save();
+            } else {
+                $this->Identifier = $identifier;
+            }
+        }
+        return $this->Identifier;
+    }
+
+    /**
+     * @desc Returns content categories for webservice
+     * @param int $ServiceVersion
+     * @return array
+     */
+    public function WebserviceCategories($ServiceVersion)
+    {
+        $categories = array();
+        $sql = '' .
+            'SELECT ct.CategoryID, ct.Name ' .
+            'FROM `ContentCategory` cc ' .
+            'LEFT OUTER JOIN `Category` ct ON cc.`CategoryID` = ct.`CategoryID` AND ct.`StatusID` = 1 ' .
+            'WHERE cc.`ContentID`=' . (int)$this->ContentID . ' ' .
+            'ORDER BY ct.`Name` ASC';
+        $rs = DB::query($sql);
+        foreach ($rs as $r) {
+            array_push($categories, array(
+                'CategoryID' => (int)$r->CategoryID,
+                'CategoryName' => ((int)$r->CategoryID === 0 ? trans('common.contents_category_list_general', [], 'messages', $this->Application->ApplicationLanguage) : $r->Name)
+            ));
+        }
+        return $categories;
+    }
+
+    public function ContentTopics()
+    {
+        return $this->hasMany(ContentTopic::class, 'ContentID');
+    }
+
+    /**
+     * @desc Saves Topic - Content relations to ContentTopic table
+     * @param array $topicIds
+     */
+    public function setTopics($topicIds)
+    {
+        if ($this->TopicStatus != eStatus::Active) {
+            return;
+        }
+
+        if (empty($topicIds)) {
+            foreach ($this->ContentTopics as $contentTopic) {
+                $contentTopic->delete();
+            }
+            return;
+        }
+        $myTopicIds = array();
+        foreach ($this->ContentTopics as $contentTopic) {
+            $myTopicIds[] = $contentTopic->TopicID;
+        }
+
+
+        foreach ($topicIds as $topicId) {
+            foreach ($this->ContentTopics as $contentTopic) {
+                if (!in_array($contentTopic->TopicID, $topicIds)) {
+                    $contentTopic->delete();
+                }
+            }
+            if (!in_array($topicId, $myTopicIds)) {
+                $contentTopic = new ContentTopic();
+                $contentTopic->ContentID = $this->ContentID;
+                $contentTopic->TopicID = $topicId;
+                $contentTopic->save();
+            }
+        }
+    }
+
+    public function ContentFile()
+    {
+        return $this->hasOne(ContentFile::class, 'ContentID')->getQuery()
+            ->where('StatusID', '=', eStatus::Active)
+            ->orderBy('ContentFileID', 'DESC')->take(1);
+    }
+
+
+    public function serveContent()
+    {
+        $serveContent = $this->PublishDate <= date("Y-m-d H:i:s");
+        $serveContent = $serveContent && ($this->IsUnpublishActive == 0 || $this->UnpublishDate > date("Y-m-d"));
+        $serveContent = $serveContent || ($this->RemoveFromMobile == eRemoveFromMobile::Active);
+        return $serveContent;
+    }
+
+    public function getServiceData($addStatusCode = true)
+    {
+        $result = array(
+            'ContentID' => (int)$this->ContentID,
+            'ApplicationID' => (int)$this->ApplicationID,
+            'ContentOrderNo' => (int)$this->OrderNo,
+            'ContentName' => $this->Name,
+            'ContentDetail' => $this->Detail,
+            'ContentMonthlyName' => $this->MonthlyName,
+            'ContentIsProtected' => ((int)$this->IsProtected == 1 ? true : false),
+            'ContentIsBuyable' => ((int)$this->IsBuyable == 1 ? true : false),
+            'ContentPrice' => '',
+            'ContentCurrency' => $this->Currency(1),
+            'ContentIdentifier' => $this->getIdentifier(),
+            'ContentIsMaster' => ((int)$this->IsMaster == 1 ? true : false),
+            'ContentOrientation' => (int)$this->Orientation,
+            'ContentAutoDownload' => ((int)$this->AutoDownload == 1 ? true : false),
+            'ContentBlocked' => (bool)$this->Blocked,
+            'ContentStatus' => (bool)$this->Status,
+            'ContentVersion' => (int)$this->Version,
+            'ContentPdfVersion' => (int)$this->PdfVersion,
+            'ContentCoverImageVersion' => (int)$this->CoverImageVersion,
+            'RemoveFromMobile' => (bool)$this->RemoveFromMobile
+        );
+        if ($addStatusCode) {
+            $status = array();
+            $status["status"] = 0;
+            $status["error"] = "";
+            $result = array_merge($result, $status);
+        }
+        return $result;
+    }
+
+    public function getServiceDataDetailed($serviceVersion)
+    {
+        return array_merge($this->getServiceData(), array('ContentCategories' => $this->WebserviceCategories($serviceVersion)));
+    }
+
+    /**
+     * @param int[] $contentIds
+     * @return Content[]|\Illuminate\Support\Collection
+     */
+    public static function getAccessibleContents($contentIds)
+    {
+        if (empty($contentIds)) {
+            return array();
+        }
+        return Content::getQuery()->whereIn('ContentID', $contentIds)
+            ->where('StatusID', '=', eStatus::Active)
+            ->where('PublishDate', '<=', DB::raw('now()'))
+            ->where(function ($query) {
+                $query->where('IsUnpublishActive', '=', 0);
+                $query->orWhere('UnpublishDate', '>', DB::raw('now()'));
+            })
+            ->orderBy('OrderNo', 'DESC')
+            ->orderBy('MonthlyName', 'ASC')
+            ->orderBy('Name', 'ASC')->get();
+    }
+
+    /**
+     * @param int[] $contentIds
+     * @return Content[]|\Illuminate\Support\Collection
+     */
+    public static function getAccessibleTopicContents($contentIds)
+    {
+        if (empty($contentIds)) {
+            return array();
+        }
+        return Content::getQuery()->whereIn('Content.ContentID', $contentIds)
+            ->where('StatusID', '=', eStatus::Active)
+            ->where('PublishDate', '<=', DB::raw('now()'))
+            ->where(function ($query) {
+                $query->where('IsUnpublishActive', '=', 0);
+                $query->orWhere('UnpublishDate', '>', DB::raw('now()'));
+            })
+            ->join('ContentTopic', 'Content.ContentID', '=', 'ContentTopic.ContentID')
+            ->orderBy('OrderNo', 'DESC')
+            ->orderBy('MonthlyName', 'ASC')
+            ->orderBy('Name', 'ASC')->get();
+    }
+
+    public function getMonthlyName()
+    {
+        if ($this->ContentID) {
+            return $this->MonthlyName;
+        }
+        return Common::monthName((int)date('m')) . ' ' . date('Y');
+
+    }
+
 }

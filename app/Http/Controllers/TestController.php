@@ -7,7 +7,7 @@ use App\Models\Statistic;
 use Auth;
 use Config;
 use Html;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 use View;
 
 class TestController extends Controller
@@ -19,6 +19,8 @@ class TestController extends Controller
 
     public function index()
     {
+        echo Config::get('custom.rowcount');
+exit;
         echo Html::link(str_replace('(:num)', 15, __('route.applications_usersettings')), 'APPNAME', 'CLASSS');
 
 //        echo request('deneme');

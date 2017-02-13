@@ -70,6 +70,7 @@ use ZipArchive;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessTypeID($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Content $Content
  */
 class ContentFile extends Model
 {
@@ -157,7 +158,7 @@ class ContentFile extends Model
 
     public function Content()
     {
-        return $this->belongsTo('Content', 'ContentID');
+        return $this->belongsTo(Content::class, 'ContentID');
     }
 
     private function createOutputFolder()
@@ -545,24 +546,24 @@ class ContentFile extends Model
         return '/' . $this->pdfFolderPathRelative() . '/file.pdf';
     }
 
-    public function Pages($statusID)
+    public function Pages($statusID = eStatus::Active)
     {
-        return $this->hasMany('ContentFilePage', self::$key)->getQuery()->where('StatusID', '=', $statusID)->get();
+        return $this->hasMany(ContentFilePage::class , self::$key)->getQuery()->where('StatusID', '=', $statusID)->get();
     }
 
     public function ActivePages()
     {
-        return $this->hasMany('ContentFilePage', self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->get();
+        return $this->hasMany(ContentFilePage::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->get();
     }
 
     public function ActiveCoverImageFile()
     {
-        return $this->hasMany('ContentCoverImageFile', self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->first();
+        return $this->hasMany(ContentCoverImageFile::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->first();
     }
 
     public function ContentFilePages()
     {
-        return $this->hasMany('ContentFilePage', self::$key)->getQuery()->where('StatusID', '=', eStatus::Active);
+        return $this->hasMany(ContentFilePage::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active);
     }
 
 

@@ -240,7 +240,7 @@ return array(
     'contents_list_application' => 'Application',
     'contents_list_content_name' => 'Content Name',
     'contents_list_contents_detail' => 'Detail',
-    'contents_list_contents_monthlyname' => 'Issue',
+    'contents_list_contents_monthlyName' => 'Issue',
     'contents_list_content_category' => 'Category',
     'contents_list_content_publishdate' => 'Publishing Date',
     'contents_list_content_unpublishdate' => 'Expiration Date',

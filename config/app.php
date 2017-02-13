@@ -251,7 +251,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         'Html' => Illuminate\Html\HtmlFacade::class,
-        'Form' => \Illuminate\Html\FormFacade::class
+        'Form' => Illuminate\Html\FormFacade::class
     ],
 
 ];

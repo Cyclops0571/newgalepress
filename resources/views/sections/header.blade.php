@@ -90,6 +90,6 @@ if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
 </nav>
 @if(isset($caption))
     <div class="myBreadCrumb">
-        {{ $filterbar }}
+      @include('sections.filterbar')
     </div>
 @endif

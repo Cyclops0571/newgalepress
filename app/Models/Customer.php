@@ -116,7 +116,7 @@ class Customer extends Model
      */
     public function getLastSelectedPaymentAccount()
     {
-        return $this->hasOne('App\Models\PaymentAccount', "CustomerID")->getQuery()->orderBy("selected_at", "DESC")->first();
+        return $this->hasOne(PaymentAccount::class, "CustomerID")->getQuery()->orderBy("selected_at", "DESC")->first();
     }
 
     /**
@@ -125,7 +125,7 @@ class Customer extends Model
      */
     public function PaymentAccount()
     {
-        return $this->hasOne('App\Models\PaymentAccount', "CustomerID")->getQuery()->first();
+        return $this->hasOne(PaymentAccount::class, "CustomerID")->getQuery()->first();
     }
 
 }

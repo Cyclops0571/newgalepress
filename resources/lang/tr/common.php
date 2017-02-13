@@ -240,7 +240,7 @@ return array(
     'contents_list_application' => 'Uygulama',
     'contents_list_content_name' => 'İçerik Adı',
     'contents_list_contents_detail' => 'Detay',
-    'contents_list_contents_monthlyname' => 'Sayı',
+    'contents_list_contents_monthlyName' => 'Sayı',
     'contents_list_content_category' => 'Kategori',
     'contents_list_content_publishdate' => 'Yayın. T',
     'contents_list_content_unpublishdate' => 'Yayından Alınma T.',

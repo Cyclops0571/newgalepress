@@ -37,92 +37,34 @@
     </script>
     <!--<form id="list">-->
     <div class="col-md-12">
-        <div class="block bg-light-ltr">
-            <div class="content controls bg-light-rtl">
-                <div class="form-row ">
-                    <?php if(Auth::user()->UserTypeID == eUserTypes::Customer): ?>
-                    {{ $commandbar }}
-                    <?php endif; ?>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-12">
-                        <table id="DataTables_Table_1" cellpadding="0" cellspacing="0" width="100%"
-                               class="table table-bordered table-striped table-hover">
-                            <thead>
-                            <tr>
-                                @if($currentPageNo < 2 && (int)Auth::user()->UserTypeID == eUserTypes::Customer)
-                                    <th><?php echo __('common.sort'); ?></th>
-                                @endif
-                                <?php foreach ($fields as $field): ?>
-                                <?php $sortLink = '&sort=' . $field[1]; ?>
-                                <?php $sort == $field[1] ? ($sort_dir == 'ASC' ? array('class' => 'sort_up') : array('class' => 'sort_down')) : array(); ?>
-                                <th scope="col">{{ Html::link($route.'?page=1'. $appLink  . $searchLink . $sortLink . $sortDirLink, $field[0], $sort) }}</th>
-                                <?php endforeach; ?>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <form id="contentOrderForm">
-                                @forelse($rows->results as $row)
-                                    @if((int)Auth::user()->UserTypeID == eUserTypes::Manager)
-                                        <tr id="contentIDSet_{{$row->ContentID}}" class="{{ Html::oddeven($page) }}">
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->CustomerName) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->ApplicationName) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Name) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Blocked) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Status) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->ContentID) }}</td>
-                                        </tr>
-                                    @elseif((int)Auth::user()->UserTypeID == eUserTypes::Customer)
-                                        <tr id="contentIDSet_{{$row->ContentID}}" class="{{ Html::oddeven($page) }}"
-                                            @if($row->IsMaster==1)style="background:#5D5D5D;"@endif>
-                                            <?php if ($page < 2): ?>
-                                            <td style="cursor:pointer;">
-    				    <span class="icon-resize-vertical list-draggable-icon"
-                              @if($row->IsMaster==1)style="margin-left:-5px;"@endif>
-    					  @if($row->IsMaster==1)
-                                <i style="font-size:11px;">(Master)</i>
-                            @endif
-    				    </span>
-                                            </td>
-                                            <?php endif; ?>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Name) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Detail) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->MonthlyName) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->CategoryName) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, Common::dateRead($row->PublishDate, 'd.m.Y')) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, Common::dateRead($row->UnpublishDate, 'd.m.Y')) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Blocked) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->Status) }}</td>
-                                            <td>{{ Html::link($route.'/'.$row->ContentID, $row->ContentID) }}</td>
-                                        </tr>
-                                    @endif
-                                @empty
-                                    <tr>
-                                        <td class="select">&nbsp;</td>
-                                        <td colspan="{{ count($fields) - 1 }}">{{ __('common.list_norecord') }}</td>
-                                    </tr>
-                                @endforelse
-                            </form>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+      <div class="block bg-light-ltr">
+        <div class="content controls bg-light-rtl">
+          <div class="form-row ">
+              <?php if(Auth::user()->UserTypeID == eUserTypes::Customer): ?>
+            @include('sections.commandbar')
+              <?php endif; ?>
+          </div>
+          <div class="form-row">
+            <div class="col-md-12">
+              @include('content.contentListTable')
             </div>
-            <!-- end tabular_content-->
-            <div class="select">
-                @if($applicationID > 0)
-                    {{ $rows->appends(array('applicationID' => $applicationID, 'search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
-                @else
-                    {{ $rows->appends(array('search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
-                @endif
-            </div>
-            <script type="text/javascript">
-                $(function () {
-                    $("div.pagination ul").addClass("pagination");
-                });
-            </script>
-            <!-- end select-->
+          </div>
         </div>
+        <!-- end tabular_content-->
+        <div class="select">
+          @if($applicationID > 0)
+            {{ $rows->appends(array('applicationID' => $applicationID, 'search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
+          @else
+            {{ $rows->appends(array('search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
+          @endif
+        </div>
+        <script type="text/javascript">
+            $(function () {
+                $("div.pagination ul").addClass("pagination");
+            });
+        </script>
+        <!-- end select-->
+      </div>
     </div>
     <!--</form>-->
 @endsection

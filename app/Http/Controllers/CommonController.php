@@ -204,7 +204,6 @@ class CommonController extends Controller
             ->with('message', __('common.login_succesfullyloggedout'));
     }
 
-    //home
     public function home(Request $request)
     {
         if ((int)Auth::user()->UserTypeID == eUserTypes::Manager) {

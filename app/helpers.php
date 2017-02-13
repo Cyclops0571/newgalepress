@@ -1292,6 +1292,13 @@ class Common
         $langs = Config::get('app.langs');
         return $langs[App::getLocale()];
     }
+
+    public static function getClass($row) {
+        if(isset($row->IsMaster) && $row->IsMaster == 1) {
+            return ' class="masterContentRow"';
+        }
+        return '';
+    }
 }
 
 
@@ -1306,3 +1313,5 @@ function localDateFormat($format = 'dd.MM.yyyy') {
     }
 
 }
+
+

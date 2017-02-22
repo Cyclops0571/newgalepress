@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Library\ImageClass;
+namespace App\Library;
 
 
 use Exception;

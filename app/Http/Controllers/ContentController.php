@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\MyResponse;
 use App\Models\Application;
 use App\Models\Category;
 use App\Models\Content;
@@ -17,10 +18,13 @@ use eRequestType;
 use eStatus;
 use eUserTypes;
 use Exception;
+use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Redirect;
 use Response;
+use Uploader;
+use UploadHandler;
 use Validator;
 use View;
 
@@ -190,23 +194,21 @@ class ContentController extends Controller
         }
 
         $data['app'] = $app;
-        $data['categories'] = $app->getCategories();
+        $data['categories'] = $app->Categories();
         $data['groupCodes'] = GroupCode::getGroupCodes();
         return View::make('pages.' . Str::lower($this->table) . 'detail', $data)
             ->nest('filterbar', 'sections.filterbar', $data);
     }
 
-    public function show($id)
+    public function show(Content $content)
     {
         $currentUser = Auth::user();
         $showCropPage = Cookie::get(SHOW_IMAGE_CROP, 0);
         Cookie::make(SHOW_IMAGE_CROP, 0);
-        $content = Content::find($id);
-
         if (((int)$currentUser->UserTypeID == eUserTypes::Manager)) {
             $contentList = DB::table('Content')
                 // ->where('ApplicationID', '=', $row->ApplicationID)
-                ->where('ContentID', '<>', $id)
+                ->where('ContentID', '<>', $content->ContentID)
                 // ->where('StatusID', '=', eStatus::Active)
                 ->get(array('ContentID', 'Name', 'ApplicationID'));
         } else {
@@ -219,7 +221,7 @@ class ContentController extends Controller
             $contentList = array();
         }
         if ($content) {
-            if (Common::CheckContentOwnership($id)) {
+            if (Common::CheckContentOwnership($content->ContentID)) {
                 $this->route = __('route.' . $this->page) . '?applicationID=' . $content->ApplicationID;
 
 
@@ -230,7 +232,7 @@ class ContentController extends Controller
                     'detailcaption' => $this->detailcaption,
                     'content' => $content,
                     'app' => $content->Application,
-                    'categories' => $content->Application->getCategories(),
+                    'categories' => $content->Application->Categories(),
                     'groupCodes' => GroupCode::getGroupCodes(),
                     'showCropPage' => $showCropPage,
                     'contentList' => $contentList,
@@ -238,11 +240,10 @@ class ContentController extends Controller
 
                 if (((int)$currentUser->UserTypeID == eUserTypes::Customer)) {
                     if ($content->Application->ExpirationDate < date('Y-m-d')) {
-                        return View::make('pages.expiredpage', $data)->nest('filterbar', 'sections.filterbar', $data);
+                        return View::make('pages.expiredpage', $data);
                     }
                 }
-                return View::make('pages.' . Str::lower($this->table) . 'detail', $data)
-                    ->nest('filterbar', 'sections.filterbar', $data);
+                return View::make('pages.' . Str::lower($this->table) . 'detail', $data);
             } else {
                 return Redirect::to($this->route);
             }
@@ -251,11 +252,36 @@ class ContentController extends Controller
         }
     }
 
-    public function save(Request $request)
+    public function temp() {
+        $authInteractivity = (1 == (int)$app->Package()->Interactive);
+        $authMaxPDF = Common::AuthMaxPDF($app->ApplicationID);
+
+        $applications = Application::where('StatusID', '=', eStatus::Active)
+            ->orderBy('Name', 'ASC')
+            ->get();
+
+        $categories = Category::where('ApplicationID', '=', $app->ApplicationID)
+            ->where('StatusID', '=', eStatus::Active)
+            ->orderBy('Name', 'ASC')
+            ->get();
+        $groupCodes = DB::table('GroupCode AS gc')
+            ->join('GroupCodeLanguage AS gcl', function ($join) {
+                $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
+                $join->on('gcl.LanguageID', '=', Common::getLocaleId());
+            })
+            ->where('gc.GroupName', '=', 'Currencies')
+            ->where('gc.StatusID', '=', eStatus::Active)
+            ->orderBy('gc.DisplayOrder', 'ASC')
+            ->orderBy('gcl.DisplayName', 'ASC')
+            ->get();
+
+
+    }
+
+    public function save(Request $request, MyResponse $myResponse)
     {
         set_time_limit(3000);
         $currentUser = Auth::user();
-
         $id = (int)$request->get($this->pk, '0');
         $applicationID = (int)$request->get('ApplicationID', '0');
         $chk = Common::CheckApplicationOwnership($applicationID);
@@ -266,7 +292,8 @@ class ContentController extends Controller
         $v = Validator::make($request->all(), $rules);
         if ($v->passes() && $chk) {
             if (!Common::AuthMaxPDF($applicationID)) {
-                return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('error.auth_max_pdf'));
+                return  $myResponse->error(__('error.auth_max_pdf'));
+
             }
             try {
                 $content = Content::find($id);
@@ -314,16 +341,18 @@ class ContentController extends Controller
                 ContentFile::createPdfPages($contentFile);
                 $content->callIndexingService($contentFile);
             } catch (Exception $e) {
-                return "success=" . base64_encode("false") . "&errmsg=" . base64_encode($e->getMessage());
+                return  $myResponse->error($e->getMessage());
+
             }
-            $contentLink = $contentID > 0 ? "&contentID=" . base64_encode($contentID) : ("");
-            return "success=" . base64_encode("true") . $contentLink;
+            $contentLink = $contentID > 0 ? "&contentID=" . $contentID : ("");
+            return  $myResponse->success($contentLink);
         } else {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return  $myResponse->error(__('common.detailpage_validation'));
+
         }
     }
 
-    public function copy($id, $new)
+    public function copy(MyResponse $myResponse, $id, $new)
     {
         try {
             // return Redirect::to(__('route.home'));
@@ -396,7 +425,7 @@ class ContentController extends Controller
 
                 $destinationFolder = 'public/files/customer_' . $customerID . '/application_' . $c->ApplicationID . '/content_' . $c->ContentID;
 
-                File::makeDirectory($destinationFolder);
+                File::makeDirectory($destinationFolder, 777, true);
                 File::copy($targetFilePath, $destinationFolder . '/' . $contentFile->FileName);
                 // Log::info($targetFilePath."|||".$destinationFolder.'/'.$contentFile->FileName);
 
@@ -470,7 +499,7 @@ class ContentController extends Controller
             }
         } catch (Exception $e) {
             Log::info($e->getMessage());
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode($e->getMessage());
+            return  $myResponse->error($e->getMessage());
         }
     }
 
@@ -479,12 +508,14 @@ class ContentController extends Controller
      * @param $sourceContentID
      * @param $targetContentID
      * @param $targetContentFileID
-     * @return string|void
+     * @return string
      */
     public function copyContent($destinationFolder, $sourceContentID, $targetContentID, $targetContentFileID)
     {
         // /***** HEDEF CONTENTIN SAYFALARI OLUSUTURLMUS OLMALI YANI INTERAKTIF TASARLAYICISI ACILMIS OLMALI!!!*****/
         // TAŞINACAK CONTENT'IN FILE ID'SI
+        $myResponse = new MyResponse();
+
         try {
             $contentFile = DB::table('ContentFile')
                 ->where('ContentID', '=', $sourceContentID)
@@ -597,10 +628,10 @@ class ContentController extends Controller
                                     $p->Value = 1;
                                 } elseif ($fpcp->Name == "filename") {
                                     $targetPath = 'files/customer_' . $targetCustomerID->CustomerID . '/application_' . $targetApplicationID->ApplicationID . '/content_' . $targetContentID . '/file_' . $targetContentFileID . '/output/comp_' . $s->PageComponentID;
-                                    $targetPathFull = public_path() . $targetPath;
+                                    $targetPathFull = public_path($targetPath);
                                     $p->Value = $targetPath . '/' . basename($fpcp->Value);
                                     if (!File::exists($targetPathFull)) {
-                                        File::makeDirectory($targetPathFull);
+                                        File::makeDirectory($targetPathFull, 777, true);
                                     }
                                     $files = glob('public/' . dirname($fpcp->Value) . '/*.{jpg,JPG,png,PNG,tif,TIF,mp3,MP3,m4v,M4V,mp4,MP4,mov,MOV}', GLOB_BRACE);
                                     // Log::info('public/'.dirname($fpcp->Value));
@@ -629,20 +660,20 @@ class ContentController extends Controller
             }
 
             interactivityQueue::trigger();
+            return  $myResponse->success();
 
-            return "success=" . base64_encode("true");
         } catch (Exception $e) {
             Log::info($e->getMessage());
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode($e->getMessage());
+            return  $myResponse->error($e->getMessage());
         }
     }
 
-    public function delete()
+    public function delete(Request $request, MyResponse $myResponse)
     {
         $id = (int)$request->get($this->pk, '0');
         $chk = Common::CheckContentOwnership($id);
         if (!$chk) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return  $myResponse->error(__('common.detailpage_validation'));
         }
 
         try {
@@ -656,25 +687,25 @@ class ContentController extends Controller
                     $s->save();
                 }
             });
-            return "success=" . base64_encode("true");
+            return  $myResponse->success();
         } catch (Exception $e) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode($e->getMessage());
+            return  $myResponse->error($e->getMessage());
         }
     }
 
-    public function uploadfile()
+    public function uploadfile(Request $request)
     {
         ob_start();
         $element = $request->get('element');
         $options = array(
-            'upload_dir' => public_path() . 'files/temp/',
+            'upload_dir' => public_path('files/temp/'),
             'upload_url' => URL::base() . '/files/temp/',
             'param_name' => $element,
             'accept_file_types' => '/\.(pdf)$/i'
         );
         $upload_handler = new UploadHandler($options);
 
-        if (!Request::ajax()) {
+        if (!request()->ajax()) {
             return;
         }
 
@@ -691,21 +722,21 @@ class ContentController extends Controller
         return Response::json($ret);
     }
 
-    public function uploadcoverimage()
+    public function uploadcoverimage(Request $request)
     {
         ob_start();
 
         $element = $request->get('element');
 
         $options = array(
-            'upload_dir' => public_path() . 'files/temp/',
-            'upload_url' => URL::base() . '/files/temp/',
+            'upload_dir' => public_path('files/temp/'),
+            'upload_url' => url('/files/temp/'),
             'param_name' => $element,
             'accept_file_types' => '/\.(gif|jpe?g|png|tiff)$/i'
         );
         $upload_handler = new UploadHandler($options);
 
-        if (!Request::ajax()) {
+        if (!request()->ajax()) {
             return;
         }
 
@@ -724,11 +755,11 @@ class ContentController extends Controller
     }
 
 
-    public function order($applicationID)
+    public function order(Request $request, MyResponse $myResponse, $applicationID)
     {
         $chk = Common::CheckApplicationOwnership($applicationID);
         if (!$chk) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return  $myResponse->error(__('common.detailpage_validation'));
         }
         $maxID = DB::table("Content")->where("ApplicationID", "=", $applicationID)->max('OrderNo');
         $contentIDDescSet = $request->get("contentIDSet", array());
@@ -747,7 +778,7 @@ class ContentController extends Controller
         if ($application) {
             $application->incrementAppVersion();
         }
-        return "success=" . base64_encode("true");
+        return  $myResponse->success();
     }
 
     /**
@@ -755,11 +786,11 @@ class ContentController extends Controller
      * @param int $contentID
      * @return string
      */
-    public function remove_from_mobile($contentID)
+    public function remove_from_mobile(MyResponse $myResponse, $contentID)
     {
         $chk = Common::CheckContentOwnership($contentID);
         if (!$chk) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return  $myResponse->error(__('common.detailpage_validation'));
         }
 
         try {
@@ -771,27 +802,28 @@ class ContentController extends Controller
                     $s->save();
                 }
             });
-            return "success=" . base64_encode("true");
+            return  $myResponse->success();
         } catch (Exception $e) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode($e->getMessage());
+            return  $myResponse->error($e->getMessage());
         }
     }
 
-    public function refresh_identifier()
+    public function refresh_identifier(Request $request, MyResponse $myResponse)
     {
         $rules = array(
             "ContentID" => "required|numeric|min:1",
         );
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes()) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode($v->errors->first());
+            return  $myResponse->error($v->errors->first());
+
 //	    ajaxResponse::error($v->errors->first());
         }
 
         $content = Content::find($request->get("ContentID"));
         $subscriptionIdentifier = $content->getIdentifier(TRUE);
         $content->save();
-        return "success=" . base64_encode("true") . "&SubscriptionIdentifier=" . base64_encode($subscriptionIdentifier);
+        return  $myResponse->success("&SubscriptionIdentifier=" . $subscriptionIdentifier);
     }
 
     public function interactivity_status()

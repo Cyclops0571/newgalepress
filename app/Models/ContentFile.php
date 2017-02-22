@@ -87,7 +87,7 @@ class ContentFile extends Model
      * @param ContentFile $cf
      * @return string|void
      */
-    public static function createPdfPages(&$cf)
+    public static function createPdfPages(ContentFile &$cf)
     {
         if (!$cf) {
             return;
@@ -105,7 +105,7 @@ class ContentFile extends Model
 
         //create folder if does not exist
         if (!File::exists($cf->pdfFolderPathAbsolute())) {
-            File::makeDirectory($cf->pdfFolderPathAbsolute());
+            File::makeDirectory($cf->pdfFolderPathAbsolute(), 777, true);
         }
 
         try {
@@ -164,7 +164,7 @@ class ContentFile extends Model
     private function createOutputFolder()
     {
         if (!File::exists($this->pdfFolderPathAbsolute() . '/output')) {
-            File::makeDirectory($this->pdfFolderPathAbsolute() . '/output');
+            File::makeDirectory($this->pdfFolderPathAbsolute() . '/output', 777, true);
         }
     }
 
@@ -479,12 +479,12 @@ class ContentFile extends Model
                 if (count($oldContentFilePage->PageComponent) == 0) {
                     continue;
                 }
-                $oldPage = new imagick(public_path($oldContentFilePage->FilePath . '/' . $oldContentFilePage->FileName));
+                $oldPage = new Imagick(public_path($oldContentFilePage->FilePath . '/' . $oldContentFilePage->FileName));
                 for ($j = 0; $j < count($this->ContentFilePages); $j++) {
                     try {
                         $newContentFilePage = $this->ContentFilePages[$i];
                         $newPagePath = $this->pdfFolderPathAbsolute() . "/" . $newContentFilePage->FileName;
-                        $newPage = new imagick($newPagePath);
+                        $newPage = new Imagick($newPagePath);
                         $result = $newPage->compareImages($oldPage, Imagick::METRIC_MEANSQUAREERROR);
                         if (!isset($result)) {
                             continue;

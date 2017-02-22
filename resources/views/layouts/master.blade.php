@@ -103,7 +103,7 @@
       </div>
     </div>
   </div>
-  @if(isset(Request::route()->action['as']) && Request::route()->action['as'] == 'maps_list')
+  @if(\Route::getCurrentRoute()->getName() == 'maps_list')
     @include('sections.mapslist')
   @endif
   @include('sections.sessionmodal')

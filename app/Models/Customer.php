@@ -62,7 +62,7 @@ class Customer extends Model
 
     public static function CustomerFileSize()
     {
-        $command = 'du -ha ' . public_path() . 'files/ --max-depth=1| sort -hr';
+        $command = 'du -ha ' . public_path('files/') . ' --max-depth=1| sort -hr';
         $folderStructure = shell_exec($command);
         $folders = explode(PHP_EOL, $folderStructure);
         $folderSizes = array();
@@ -70,7 +70,7 @@ class Customer extends Model
             $list = explode("\t", $folder);
             if (count($list) == 2) {
                 if (strpos($list[1], "customer_")) {
-                    $customerID = str_replace(public_path() . 'files/customer_', '', $list[1]);
+                    $customerID = str_replace(public_path('files/customer_'), '', $list[1]);
                     $folderSizes[$list[0]] = Customer::query()->find($customerID);
                 }
             }

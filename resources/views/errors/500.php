@@ -16,7 +16,7 @@
     <meta name="description" content="404 - Page Template"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <!-- Libs CSS -->
-    <link type="text/css" media="all" href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link type="text/css" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Template CSS -->
     <link type="text/css" media="all" href="/css/error500.css" rel="stylesheet"/>
     <!-- Responsive CSS -->

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Library\ImageClass\ImageClass;
+use App\Library\ImageClass;
 use Auth;
 use Common;
 use Config;
@@ -94,6 +94,8 @@ use Illuminate\Http\Request;
  * @property-read \App\Models\Application $Application
  * @property-read \App\Models\Category $Category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentTopic[] $ContentTopics
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentCategory[] $ContentCategory
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentFile[] $ContentFile
  */
 class Content extends Model
 {
@@ -115,7 +117,6 @@ class Content extends Model
         $option = (int)$request->get('option', 0);
 
         $rowCount = Config::get('custom.rowcount');
-        $rowCount = 10;
         $sqlCat = '(IFNULL((SELECT GROUP_CONCAT(`Name` ORDER BY `Name` SEPARATOR \', \')'
             . ' FROM `Category` WHERE ApplicationID=a.ApplicationID AND CategoryID IN '
             . '(SELECT CategoryID FROM `ContentCategory` WHERE ContentID = o.ContentID) AND StatusID = 1), \'\'))';
@@ -214,9 +215,19 @@ class Content extends Model
         return $this->belongsTo(Application::class, 'ApplicationID');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function Category()
     {
         return $this->belongsTo(Category::class, 'CategoryID');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ContentCategory() {
+        return $this->hasMany(ContentCategory::class, 'CategoryID');
     }
 
     public function Currency($languageID)
@@ -354,8 +365,7 @@ class Content extends Model
     }
 
     /**
-     * @param int $customerID
-     * @return ContentFile|int|null
+     * @return ContentFile
      */
     public function processPdf()
     {
@@ -370,17 +380,17 @@ class Content extends Model
         $ContentFile = null;
         $sourceFileName = request('hdnFileName');
         $sourceFilePath = 'files/temp';
-        $sourceRealPath = public_path() . $sourceFilePath;
+        $sourceRealPath = public_path($sourceFilePath);
         $sourceFileNameFull = $sourceRealPath . '/' . $sourceFileName;
 
         $targetFileName = Auth::user()->UserID . '_' . date("YmdHis") . '_' . $sourceFileName;
         $targetFilePath = 'files/customer_' . $this->Application->CustomerID . '/application_' . $this->ApplicationID . '/content_' . $this->ContentID;
-        $destinationFolder = public_path() . $targetFilePath;
+        $destinationFolder = public_path($targetFilePath);
         $targetFileNameFull = $destinationFolder . '/' . $targetFileName;
 
         if (File::exists($sourceFileNameFull)) {
             if (!File::exists($destinationFolder)) {
-                File::makeDirectory($destinationFolder);
+                File::makeDirectory($destinationFolder, 777, true);
             }
 
             $this->PdfVersion += 1;
@@ -463,12 +473,12 @@ class Content extends Model
 
         $sourceFileName = $coverImageFileName;
         $sourceFilePath = 'files/temp';
-        $sourceRealPath = public_path() . $sourceFilePath;
+        $sourceRealPath = public_path($sourceFilePath);
         $sourceFileNameFull = $sourceRealPath . '/' . $sourceFileName;
 
         $targetFileName = Auth::user()->UserID . '_' . date("YmdHis") . '_' . $sourceFileName;
         $targetFilePath = 'files/customer_' . $this->Application->CustomerID . '/application_' . $this->ApplicationID . '/content_' . $this->ContentID;
-        $destinationFolder = public_path() . $targetFilePath;
+        $destinationFolder = public_path($targetFilePath);
         $targetFileNameFull = $destinationFolder . '/' . $targetFileName;
 
         $targetMainFileName = $targetFileName . '_main';
@@ -476,7 +486,7 @@ class Content extends Model
 
         if (File::exists($sourceFileNameFull) && is_file($sourceFileNameFull)) {
             if (!File::exists($destinationFolder)) {
-                File::makeDirectory($destinationFolder);
+                File::makeDirectory($destinationFolder, 777, true);
             }
 
 
@@ -618,9 +628,7 @@ class Content extends Model
 
     public function ContentFile()
     {
-        return $this->hasOne(ContentFile::class, 'ContentID')->getQuery()
-            ->where('StatusID', '=', eStatus::Active)
-            ->orderBy('ContentFileID', 'DESC')->take(1);
+        return $this->hasMany(ContentFile::class, 'ContentID');
     }
 
 
@@ -722,4 +730,8 @@ class Content extends Model
 
     }
 
+    public function hasContentCategory($categoryID) {
+        $categoryIds = $this->ContentCategory->pluck('CategoryID')->toArray();
+        return in_array($categoryID, $categoryIds);
+    }
 }

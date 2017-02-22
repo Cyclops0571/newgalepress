@@ -565,11 +565,11 @@ class Application extends Model
         if (File::exists($sourceFileNameFull)) {
 
             $targetFilePath = 'files/customer_' . $this->CustomerID . '/application_' . $this->ApplicationID;
-            $targetRealPath = public_path() . $targetFilePath;
+            $targetRealPath = public_path($targetFilePath);
             $targetFileNameFull = $targetRealPath . '/' . $this->CkPem;
 
             if (!File::exists($targetRealPath)) {
-                File::makeDirectory($targetRealPath);
+                File::makeDirectory($targetRealPath, 777, true);
             }
 
             File::move($sourceFileNameFull, $targetFileNameFull);

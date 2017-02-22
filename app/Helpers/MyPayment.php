@@ -178,7 +178,7 @@ class MyPayment
         $request->setConversationId($this->paymentTransaction->PaymentTransactionID);
         $request->setBuyerEmail($this->paymentAccount->email);
         $request->setBuyerId($this->paymentAccount->CustomerID);
-        $request->setBuyerIp(Request::ip());
+        $request->setBuyerIp(request()->ip());
         $request->setConnectorName("690-garanti");
         $request->setInstallment(1);
         $request->setPaidPrice($this->paymentAccount->Application->Price);

@@ -7,7 +7,7 @@ Route::get('test3', function(){ return View::make('test/test3'); });
 //}
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function (){
-    Route::get('test', 'TestController@index');
+    Route::get('test', array('as'=> 'mahmut', 'uses' => 'TestController@index'));
 
     // <editor-fold defaultstate="collapsed" desc="Contents">
     Route::post("contents/order/(:num)", array('as' => 'contents_order', 'uses' => 'ContentController@order'));
@@ -15,7 +15,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::get(__('route.contents'), array('as' => 'contents_list', 'uses' => 'ContentController@index'));
     Route::get(__('route.contents_request'), array('as' => 'contents_request', 'uses' => 'ContentController@request'));
     Route::get(__('route.contents_new'), array('as' => 'contents_new', 'uses' => 'ContentController@newly'));
-    Route::get(__('route.contents_show'), array('as' => 'contents_show','uses' => 'ContentController@show'));
+    Route::get(__('route.contents') . "/{content}", array('as' => 'contents_show','uses' => 'ContentController@show'));
     Route::post(__('route.contents_save'), array('as' => 'contents_save','uses' => 'ContentController@save'));
     Route::get('/copy/(:num)/(:all)', array('as' => 'copy','uses' => 'ContentController@copy'));
     Route::post(__('route.contents_delete'), array('as' => 'contents_delete','uses' => 'ContentController@delete'));

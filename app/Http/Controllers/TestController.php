@@ -2,25 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\MyResponse;
 use App\Models\Application;
 use App\Models\Statistic;
 use Auth;
 use Config;
 use Html;
 use Illuminate\Database\Query\Builder;
+use Request;
+use Route;
 use View;
 
 class TestController extends Controller
 {
 
-    public function test2() {
-       return View::make('Test/test2');
+    public function test2()
+    {
+        return View::make('Test/test2');
     }
 
-    public function index()
+    public function index(Request $request, Route $route, MyResponse $myResponse)
     {
+        var_dump($myResponse);
+        exit;
+        echo public_path('files/customer_'), PHP_EOL;
+        echo public_path(), PHP_EOL;
+        echo public_path('files/temp/'); exit;
+        return phpinfo();
+
+        $request->getRequestUri();
+        var_dump(Route::getCurrentRoute()->getName()); exit;
+        var_dump(request()->get);
+        var_dump(route()->getName());
+        $t = request()->ajax();
+        var_dump($t);
+         exit;
+        return url('/files/temp/');
+        return ['key' => 'Hello World'];
+
+        $A = [1,2,6,5,5,8,9];
+        if(count($A) < 2) {
+            return 0;
+        }
+        $aSorted = $A;
+        sort($aSorted);
+        for($i = 0; $i < count($A); $i++) {
+            if($aSorted[$i] != $A[$i]) {
+                for ($j = count($A) - 1; $j >= $i; $j--) {
+                    if($aSorted[$j] != $A[$j]) {
+                        return $j - $i + 1;
+                    }
+                }
+            }
+        }
+        return 0;
+
+
+
+
+
+
+
         echo Config::get('custom.rowcount');
-exit;
+        exit;
+
         echo Html::link(str_replace('(:num)', 15, __('route.applications_usersettings')), 'APPNAME', 'CLASSS');
 
 //        echo request('deneme');
@@ -30,7 +75,7 @@ exit;
         exit;
         var_dump(Config::get('app.langs'));
         exit;
-        echo Html::link(__('route.contents') . '?applicationID=' , 'nasdfasdf', 'zzzzzzzzz');
+        echo Html::link(__('route.contents') . '?applicationID=', 'nasdfasdf', 'zzzzzzzzz');
         exit;
         foreach (Auth::user()->expiringApps() as $expiringApp) {
             echo $expiringApp->ApplicationID;
@@ -55,10 +100,10 @@ exit;
             $statistics = Statistic::query()
                 ->where('Lat', '>', 0)
                 ->where('Long', '>', 0)
-                ->where(function(Builder $query) {
+                ->where(function (Builder $query) {
                     $query->whereNull('Country')
-                    ->orWhere('Country', '=', 'NULL')
-                    ->orWhere('Country', '=', 'NULL');
+                        ->orWhere('Country', '=', 'NULL')
+                        ->orWhere('Country', '=', 'NULL');
                 })
                 ->orderBy('StatisticID', 'DESC')
                 ->take(1)

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App;
+use Common;
 use DB;
 use eStatus;
 use Illuminate\Database\Eloquent\Model;
@@ -50,7 +51,7 @@ class GroupCode extends Model
         return DB::table('GroupCode AS gc')
             ->join('GroupCodeLanguage AS gcl', function (/** @var JoinClause $join */ $join) {
                 $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
-                $join->on('gcl.LanguageID', '=', DB::raw(App::getLocale()));
+                $join->on('gcl.LanguageID', '=', DB::raw(Common::getLocaleId()));
             })
             ->where('gc.GroupName', '=', 'Currencies')
             ->where('gc.StatusID', '=', eStatus::Active)

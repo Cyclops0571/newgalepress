@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken as BaseVerifier;
+use Route;
 
 class VerifyCsrfToken extends BaseVerifier
 {
@@ -14,4 +15,29 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
         //
     ];
+
+
+    protected function shouldPassThrough($request)
+    {
+        $myExcept = [
+            'contents_uploadfile',
+            'contents_uploadcoverimage',
+        ];
+
+        /** @var \Illuminate\Http\Request $request */
+        foreach ($this->except as $except) {
+            if ($except !== '/') {
+                $except = trim($except, '/');
+            }
+
+            if ($request->is($except)) {
+                return true;
+            }
+        }
+        if(in_array(Route::getCurrentRoute()->getName(), $myExcept)) {
+            return true;
+        }
+        return false;
+    }
+
 }

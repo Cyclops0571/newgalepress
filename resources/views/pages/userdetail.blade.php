@@ -30,7 +30,7 @@
     $groupcodes = DB::table('GroupCode AS gc')
             ->join('GroupCodeLanguage AS gcl', function ($join) {
                 $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
-                $join->on('gcl.LanguageID', '=', DB::raw((int)Session::get('language_id')));
+                $join->on('gcl.LanguageID', '=', Common::getLocaleId());
             })
             ->where('gc.GroupName', '=', 'UserTypes')
             ->where('gc.StatusID', '=', eStatus::Active)

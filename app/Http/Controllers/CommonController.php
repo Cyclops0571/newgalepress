@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ReportFilter;
+use App\Library\MyResponse;
 use App\Models\Application;
 use App\Models\Content;
 use App\Models\Customer;
@@ -37,7 +38,7 @@ class CommonController extends Controller
         }
     }
 
-    public function login(Request $request, LoginHistory $loginHistory)
+    public function login(Request $request, LoginHistory $loginHistory, MyResponse $myResponse)
     {
         $username = $request->get('Username', '');
         $password = $request->get('Password', '');
@@ -62,11 +63,11 @@ class CommonController extends Controller
             }
         }
         if (!$validUser) {
-            return  "success=false&errmsg="  . __('common.login_error');
+            return  $myResponse->error(__('common.login_error'));
         }
 
         if (!$activeApps) {
-            return  "success=false&errmsg="  . __('common.login_error_expiration');
+            return  $myResponse->error(__('common.login_error_expiration'));
         }
 
         //Kullanici aktif & Musteriyse (musteri aktif & aktif uygulamaya sahip)
@@ -78,13 +79,13 @@ class CommonController extends Controller
             $loginHistory->login($user);
             Cookie::forever('DSCATALOG_USERNAME', $user->Username);
             setcookie("loggedin", "true", time() + Config::get('session.lifetime') * 60, "/");
-            return  "success=true&msg="  . __('common.login_success_redirect');
+            return  $myResponse->success(__('common.login_success_redirect'));
         } else {
-            return  "success=false&errmsg="  . __('common.login_error');
+            return  $myResponse->error(__('common.login_error'));
         }
     }
 
-    public function forgotmypassword(Request $request)
+    public function forgotmypassword(Request $request, MyResponse $myResponse)
     {
         $email = $request->get('Email');
         $rules = array(
@@ -118,12 +119,12 @@ class CommonController extends Controller
                 );
 
                 Common::sendEmail($user->Email, $user->FirstName . ' ' . $user->LastName, $subject, $msg);
-                return  "success=true&msg="  . __('common.login_emailsent');
+                return  $myResponse->success(__('common.login_emailsent'));
             } else {
-                return  "success=false&errmsg="  . __('common.login_emailnotfound');
+                return  $myResponse->error(__('common.login_emailnotfound'));
             }
         } else {
-            return  "success=false&errmsg="  . __('common.detailpage_validation');
+            return  $myResponse->error(__('common.detailpage_validation'));
         }
     }
 
@@ -148,7 +149,7 @@ class CommonController extends Controller
         }
     }
 
-    public function resetmypassword(Request $request)
+    public function resetmypassword(Request $request, MyResponse $myResponse)
     {
         $email = $request->get('Email');
         $code = $request->get('Code');
@@ -163,7 +164,7 @@ class CommonController extends Controller
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes()) {
             $errMsg = $v->errors()->first();
-            return  "success=false&errmsg="  . $errMsg;
+            return  $myResponse->error($errMsg);
         }
 
 
@@ -182,11 +183,10 @@ class CommonController extends Controller
             $s->ProcessTypeID = eProcessTypes::Update;
             $s->save();
 
-            return  "success=true&msg="  . __('common.login_passwordhasbeenchanged');
+            return  $myResponse->success(__('common.login_passwordhasbeenchanged'));
 
         } else {
-            return  "success=false&errmsg="  . __('common.login_ticketnotfound');
-
+            return  $myResponse->error(__('common.login_passwordhasbeenchanged'));
         }
     }
 
@@ -225,7 +225,7 @@ class CommonController extends Controller
                 break;
             }
         } else if (!Common::CheckApplicationOwnership($applicationID)) {
-            return;
+            return view('errors.500');
         }
         $contentID = (int)$request->get('ddlContent', '0');
         $date = Common::dateWrite($request->get('date', date("d.m.Y")), false);
@@ -359,7 +359,7 @@ class CommonController extends Controller
             ->nest('filterbar', 'sections.filterbar', $data);
     }
 
-    public function mydetail()
+    public function mydetail(Request $request, MyResponse $myResponse)
     {
         $firstName = $request->get('FirstName');
         $lastName = $request->get('LastName');
@@ -388,14 +388,13 @@ class CommonController extends Controller
             $s->ProcessTypeID = eProcessTypes::Update;
             $s->save();
 
-            return "success=true";
+            return  $myResponse->success();
         } else {
-            return  "success=false&errmsg="  . __('common.detailpage_validation');
-
+            return  $myResponse->error(__('common.detailpage_validation'));
         }
     }
 
-    public function confirmEmailPage(Request $request)
+    public function confirmEmailPage(Request $request, MyResponse $myResponse)
     {
         $email = $request->get('email');
         $code = $request->get('code');
@@ -442,14 +441,14 @@ class CommonController extends Controller
                     ->with('confirm', __('common.login_accounthasbeenconfirmed'));
 
             } else {
-                return  "success=false&errmsg="  . __('common.login_accountticketnotfound');
+                return  $myResponse->error(__('common.login_accountticketnotfound'));
             }
         } else {
-            return  "success=false&errmsg="  . __('common.detailpage_validation');
+            return  $myResponse->error(__('common.detailpage_validation'));
         }
     }
 
-    public function facebookAttempt(Request $request)
+    public function facebookAttempt(Request $request, MyResponse $myResponse)
     {
         $facebookData = $request->get('formData', '');
         $faceUserObj = json_decode($facebookData);
@@ -554,7 +553,7 @@ class CommonController extends Controller
                 $user = Auth::user();
                 $s = new Sessionn;
                 $s->UserID = $user->UserID;
-                $s->IP = Request::ip(); //getenv("REMOTE_ADDR");
+                $s->IP = request()->ip(); //getenv("REMOTE_ADDR");
                 $s->LoginDate = new DateTime();
                 $s->StatusID = eStatus::Active;
                 $s->CreatorUserID = $user->UserID;
@@ -567,8 +566,7 @@ class CommonController extends Controller
                 Cookie::forever('DSCATALOG_USERNAME', $user->Username);
 
                 setcookie("loggedin", "true", time() + 3600, "/");
-
-                return "success=true&msg=" . __('common.login_success_redirect');
+                return  $myResponse->success(__('common.login_success_redirect'));
             }
         } else {
 
@@ -577,7 +575,7 @@ class CommonController extends Controller
                 $user = Auth::user();
                 $s = new Sessionn;
                 $s->UserID = $user->UserID;
-                $s->IP = Request::ip(); //getenv("REMOTE_ADDR");
+                $s->IP = request()->ip(); //getenv("REMOTE_ADDR");
                 $s->LoginDate = new DateTime();
                 $s->StatusID = eStatus::Active;
                 $s->CreatorUserID = $user->UserID;
@@ -590,9 +588,7 @@ class CommonController extends Controller
                 Cookie::forever('DSCATALOG_USERNAME', '');
 
                 setcookie("loggedin", "true", time() + 3600, "/");
-
-                return "success=true&msg=" . __('common.login_success_redirect');
-
+                return  $myResponse->success(__('common.login_success_redirect'));
             }
         }
     }

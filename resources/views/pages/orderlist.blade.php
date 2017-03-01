@@ -33,7 +33,7 @@
                             </tfoot>
                             <tbody>
                                 @forelse($rows->results as $row)
-                                <tr class="{{ Html::oddeven($page) }}">
+                                <tr class="{{ Common::htmlOddEven($page) }}">
                                     <?php /*<td>{{ Html::link($route.'/'.$row->OrderID, Common::dateRead($row->ExpirationDate, 'd.m.Y')) }}</td>*/ ?>
                                     <td>{{ Html::link($route.'/'.$row->OrderID, $row->OrderNo) }}</td>
                                     <td>{{ Html::link($route.'/'.$row->OrderID, $row->Name) }}</td>

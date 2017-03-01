@@ -20,7 +20,7 @@
   <tbody>
   <form id="contentOrderForm">
     @forelse($rows as $row)
-      <tr id="contentIDSet_{{$row->ContentID}}" class="{{ Html::oddeven($page) }}" {{Common::getClass($row)}} >
+      <tr id="contentIDSet_{{$row->ContentID}}" class="{{ Common::htmlOddEven($page) }}" {{Common::getClass($row)}} >
         @if((int)Auth::user()->UserTypeID == eUserTypes::Manager)
           <td><a href="{{$route.'/'.$row->ContentID}}">{{$row->CustomerName}}</a></td>
           <td><a href="{{$route.'/'.$row->ContentID}}">{{$row->ApplicationName}}</a></td>

@@ -1,6 +1,6 @@
 @if(count($rows) > 0)
 	@foreach($rows as $row)
-	    <tr id="contentpassword{{ $row->ContentPasswordID }}" class="{{ Html::oddeven('contentpassword') }}">
+	    <tr id="contentpassword{{ $row->ContentPasswordID }}" class="{{ Common::htmlOddEven('contentpassword') }}">
 	        <td>{{ $row->Name }}</td>
 	        <td>{{ $row->Qty }}</td>
 	        <td>

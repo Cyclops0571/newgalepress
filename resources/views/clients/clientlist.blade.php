@@ -77,7 +77,7 @@
                         <?php if (!empty($rows)): ?>
                         <?php foreach ($rows->results as $row): ?>
                         <?php /* @var $row Client */ ?>
-                        <tr class="{{ Html::oddeven($page) }}">
+                        <tr class="{{ Common::htmlOddEven($page) }}">
                             <td><?php echo Html::link($route . '/' . $row->ClientID, $row->Username); ?> </td>
                             <td><?php echo Html::link($route . '/' . $row->ClientID, $row->Name); ?> </td>
                             <td><?php echo Html::link($route . '/' . $row->ClientID, $row->Surname); ?> </td>

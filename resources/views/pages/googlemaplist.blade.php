@@ -88,7 +88,7 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                         <tbody>
                         @forelse($rows->results as $row)
                             @if((int)Auth::user()->UserTypeID == eUserTypes::Manager)
-                                <tr class="{{ Html::oddeven($page) }}"
+                                <tr class="{{ Common::htmlOddEven($page) }}"
                                     id="googleMapIDSet_<?php echo $row->GoogleMapID?>">
                                     <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->CustomerName) }}</td>
                                     <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->ApplicationName) }}</td>
@@ -103,7 +103,7 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                                     </td>
                                 </tr>
                             @elseif((int)Auth::user()->UserTypeID == eUserTypes::Customer)
-                                <tr class="{{ Html::oddeven($page) }}"
+                                <tr class="{{ Common::htmlOddEven($page) }}"
                                     id="googleMapIDSet_<?php echo $row->GoogleMapID?>">
                                     <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->Name) }}</td>
                                     <td>{{ Html::link($route.'/'.$row->GoogleMapID, $row->Address) }}</td>

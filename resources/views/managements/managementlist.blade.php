@@ -30,7 +30,7 @@
                             <tbody>
                             <form id="contentOrderForm">
                                 @foreach($rows as $size => $customer)
-                                    <tr class="{{ Html::oddeven() }}">
+                                    <tr class="{{ Common::htmlOddEven() }}">
                                         <td>{{$customer->CustomerID}}</td>
                                         <td>{{$customer->CustomerName}}</td>
                                         <td>{{$size}}</td>

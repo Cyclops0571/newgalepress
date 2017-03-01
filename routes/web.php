@@ -6,6 +6,10 @@ Route::get('test3', function(){ return View::make('test/test3'); });
 //
 //}
 
+Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
+
+    Route::get(__('route.home'), array('as' => 'home', 'uses' => 'CommonController@home'));
+});
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function (){
     Route::get('test', array('as'=> 'mahmut', 'uses' => 'TestController@index'));
 
@@ -24,7 +28,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     // </editor-fold>
 
 
-    Route::get(__('route.home'), array('as' => 'home', 'uses' => 'CommonController@home'));
     Route::get(__('route.forgotmypassword'), array('as' => 'common_forgotmypassword_get', function() {
         return View::make('pages.forgotmypassword');
     }));
@@ -69,7 +72,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::get(__('route.clients_resetpw'), array('as' => 'clients_reset_password', 'uses' => 'clients@resetpw'));
     Route::get(__('route.clients_pw_reseted'), array('as' => 'clients_password_renewed', 'uses' => 'clients@passwordreseted'));
 
-    // </editor-fold>
+    // </editor-fold
 
     // <editor-fold defaultstate="collapsed" desc="Applications">
     Route::get(__('route.applications'), array('as' => 'applications', 'uses' => 'applications@index'));

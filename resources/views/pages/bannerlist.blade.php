@@ -192,7 +192,7 @@
                     <tbody>
                     <?php foreach ($rows as $row): ?>
 
-                    <tr id="bannerIDSet_<?php echo $row->BannerID ?>" class="{{ Html::oddeven($page) }}">
+                    <tr id="bannerIDSet_<?php echo $row->BannerID ?>" class="{{ Common::htmlOddEven($page) }}">
                         <?php if ((int)Auth::user()->UserTypeID == eUserTypes::Manager): ?>
                         <td><?php echo $row->CustomerName; ?></td>
                         <td><?php echo $row->ApplicationName; ?></td>

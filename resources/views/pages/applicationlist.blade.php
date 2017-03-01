@@ -45,7 +45,7 @@
                             </tfoot>
                             <tbody>
                                 @forelse($rows->results as $row)
-                                <tr class="{{ Html::oddeven($page) }}">
+                                <tr class="{{ Common::htmlOddEven($page) }}">
                                     <td>{{ Html::link(__('route.contents').'?applicationID='.$row->ApplicationID, $row->ContentCount, array('class' => 'ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')) }}</td>
                                     <td>{{ Html::link($route.'/'.$row->ApplicationID, $row->CustomerName) }}</td>
                                     <td>{{ Html::link($route.'/'.$row->ApplicationID, $row->Name) }}</td>

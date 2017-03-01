@@ -249,6 +249,18 @@ function array_strip_slashes($array)
 class Common
 {
 
+    public static function htmlOddEven($name)
+    {
+        static $status = array();
+
+        if (!isset($status[$name])) {
+            $status[$name] = 0;
+        }
+
+        $status[$name] = 1 - $status[$name];
+        return ($status[$name] % 2 == 0) ? 'even' : 'odd';
+    }
+
     public static function dirsize($dir)
     {
         if (is_file($dir))

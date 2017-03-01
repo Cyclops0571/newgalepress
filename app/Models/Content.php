@@ -104,7 +104,7 @@ class Content extends Model
     protected $primaryKey = 'ContentID';
     public static $key = 'ContentID';
 
-    private const defaultSort = 'OrderNo';
+    const defaultSort = 'OrderNo';
     public static function getContents(Request $request)
     {
 

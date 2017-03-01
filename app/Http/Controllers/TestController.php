@@ -18,6 +18,7 @@ class TestController extends Controller
 
     public function test2()
     {
+        return ['zzzzzzzzzzzz'];
         return View::make('Test/test2');
     }
 

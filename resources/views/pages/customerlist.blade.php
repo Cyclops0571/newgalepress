@@ -36,7 +36,7 @@
                             </tfoot>
                             <tbody>
                                 @forelse($rows->results as $row)
-                                <tr class="{{ Html::oddeven($page) }}">
+                                    <tr class="{{ Common::htmlOddEven($page) }}">
                                     <td>{{ Html::link(__('route.applications').'?customerID='.$row->CustomerID, $row->ApplicationCount, array('class' => 'ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')) }}</td>
                                     <td>{{ Html::link(__('route.users').'?customerID='.$row->CustomerID, $row->UserCount, array('class' => 'ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only')) }}</td>
                                     <td>{{ Html::link($route.'/'.$row->CustomerID, $row->CustomerNo) }}</td>

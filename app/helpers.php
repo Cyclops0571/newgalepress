@@ -3,6 +3,8 @@
 use App\Models\Application;
 use App\Models\Content;
 use App\Models\ContentFile;
+use App\Models\Requestt;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Str;
 
 class localize
@@ -290,11 +292,11 @@ class Common
 
         if ((int)$currentUser->UserTypeID == eUserTypes::Customer) {
             $count = DB::table('Customer AS c')
-                ->join('Application AS a', function ($join) {
+                ->join('Application AS a', function (JoinClause $join) {
                     $join->on('a.CustomerID', '=', 'c.CustomerID');
                     $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
                 })
-                ->join('Category AS t', function ($join) use ($categoryID) {
+                ->join('Category AS t', function (JoinClause $join) use ($categoryID) {
                     $join->on('t.CategoryID', '=', DB::raw($categoryID));
                     $join->on('t.ApplicationID', '=', 'a.ApplicationID');
                     $join->on('t.StatusID', '=', DB::raw(eStatus::Active));
@@ -320,12 +322,12 @@ class Common
         if ($chk4Application) {
             if ((int)$currentUser->UserTypeID == eUserTypes::Customer) {
                 $count = DB::table('Customer AS c')
-                    ->join('Application AS a', function ($join) use ($applicationID) {
+                    ->join('Application AS a', function (JoinClause $join) use ($applicationID) {
                         $join->on('a.ApplicationID', '=', DB::raw($applicationID));
                         $join->on('a.CustomerID', '=', 'c.CustomerID');
                         $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
                     })
-                    ->join('Category AS t', function ($join) use ($categoryID) {
+                    ->join('Category AS t', function (JoinClause $join) use ($categoryID) {
                         $join->on('t.CategoryID', '=', DB::raw($categoryID));
                         $join->on('t.ApplicationID', '=', 'a.ApplicationID');
                         $join->on('t.StatusID', '=', DB::raw(eStatus::Active));
@@ -387,15 +389,15 @@ class Common
 
         if ((int)$currentUser->UserTypeID == eUserTypes::Customer) {
             $count = DB::table('Customer AS c')
-                ->join('Application AS a', function ($join) {
+                ->join('Application AS a', function (JoinClause $join) {
                     $join->on('a.CustomerID', '=', 'c.CustomerID');
                     $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
                 })
-                ->join('Content AS cn', function ($join) {
+                ->join('Content AS cn', function (JoinClause $join) {
                     $join->on('cn.ApplicationID', '=', 'a.ApplicationID');
                     $join->on('cn.StatusID', '=', DB::raw(eStatus::Active));
                 })
-                ->join('ContentPassword AS cp', function ($join) use ($contentPasswordID) {
+                ->join('ContentPassword AS cp', function (JoinClause $join) use ($contentPasswordID) {
                     $join->on('cp.ContentPasswordID', '=', DB::raw($contentPasswordID));
                     $join->on('cp.ContentID', '=', 'cn.ContentID');
                     $join->on('cp.StatusID', '=', DB::raw(eStatus::Active));
@@ -417,7 +419,7 @@ class Common
         if (Common::CheckApplicationOwnership($applicationID)) {
             $a = Application::find($applicationID);
             if ($a) {
-                return (1 == (int)$a->Package()->Interactive);
+                return (1 == (int)$a->Package->Interactive);
             }
         }
         return false;
@@ -431,7 +433,7 @@ class Common
 
             $a = Application::find($applicationID);
             if ($a) {
-                $maxPDF = (int)Application::find($applicationID)->Package()->MaxActivePDF;
+                $maxPDF = (int)Application::find($applicationID)->Package->MaxActivePDF;
                 if ($currentPDF < $maxPDF) {
                     return true;
                 }
@@ -450,11 +452,11 @@ class Common
         $oContentFileName = '';
 
         $c = DB::table('Customer AS c')
-            ->join('Application AS a', function ($join) {
+            ->join('Application AS a', function (JoinClause $join) {
                 $join->on('a.CustomerID', '=', 'c.CustomerID');
                 $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
             })
-            ->join('Content AS o', function ($join) use ($ContentID) {
+            ->join('Content AS o', function (JoinClause $join) use ($ContentID) {
                 $join->on('o.ContentID', '=', DB::raw($ContentID));
                 $join->on('o.ApplicationID', '=', 'a.ApplicationID');
                 $join->on('o.StatusID', '=', DB::raw(eStatus::Active));
@@ -625,11 +627,11 @@ class Common
     public static function downloadImage($ContentID, $RequestTypeID, $Width, $Height)
     {
         $content = DB::table('Customer AS c')
-            ->join('Application AS a', function ($join) {
+            ->join('Application AS a', function (JoinClause $join) {
                 $join->on('a.CustomerID', '=', 'c.CustomerID');
                 $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
             })
-            ->join('Content AS o', function ($join) use ($ContentID) {
+            ->join('Content AS o', function (JoinClause $join) use ($ContentID) {
                 $join->on('o.ContentID', '=', DB::raw($ContentID));
                 $join->on('o.ApplicationID', '=', 'a.ApplicationID');
                 $join->on('o.StatusID', '=', DB::raw(eStatus::Active));

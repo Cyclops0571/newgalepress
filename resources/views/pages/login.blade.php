@@ -60,7 +60,7 @@
                 <!-- border-bottom:1px solid #202020; height:35px; -->
                 <div class="col-md-12">
                   <div style="text-align:center"><u>
-                      <a href="{{route('common_forgotmypassword_get')}}">{{ __('common.login_forgotmypassword') }}</a></u>
+                      <a href="{{route('CommonController_forgotmypassword_get')}}">{{ __('common.login_forgotmypassword') }}</a></u>
                   </div>
                 </div>
               </div>

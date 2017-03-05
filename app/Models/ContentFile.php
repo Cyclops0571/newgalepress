@@ -71,6 +71,8 @@ use ZipArchive;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessTypeID($value)
  * @mixin \Eloquent
  * @property-read \App\Models\Content $Content
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentCoverImageFile[] $ContentCoverImageFile
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentFilePage[] $ContentFilePages
  */
 class ContentFile extends Model
 {
@@ -95,7 +97,7 @@ class ContentFile extends Model
 
         $expMessage = '';
         if (count($cf->ContentFilePages) > 0) {
-            //contentFile coktan interactif yapilmis bisey yapmadan donelim.
+            //contentFile is already interactive.
             return;
         }
 
@@ -558,12 +560,19 @@ class ContentFile extends Model
 
     public function ActiveCoverImageFile()
     {
-        return $this->hasMany(ContentCoverImageFile::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->first();
+        return $this->ContentCoverImageFile()->where('StatusID', '=', eStatus::Active)->first();
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function ContentCoverImageFile() {
+        return $this->hasMany(ContentCoverImageFile::class, self::$key);
     }
 
     public function ContentFilePages()
     {
-        return $this->hasMany(ContentFilePage::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active);
+        return $this->hasMany(ContentFilePage::class, self::$key);
     }
 
 

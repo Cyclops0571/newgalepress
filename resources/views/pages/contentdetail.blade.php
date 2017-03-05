@@ -48,28 +48,6 @@
         $Password = '';
     }
 
-    $authInteractivity = (1 == (int)$app->Package()->Interactive);
-    $authMaxPDF = Common::AuthMaxPDF($app->ApplicationID);
-
-    $applications = Application::where('StatusID', '=', eStatus::Active)
-        ->orderBy('Name', 'ASC')
-        ->get();
-
-    $categories = Category::where('ApplicationID', '=', $app->ApplicationID)
-        ->where('StatusID', '=', eStatus::Active)
-        ->orderBy('Name', 'ASC')
-        ->get();
-    $groupCodes = DB::table('GroupCode AS gc')
-        ->join('GroupCodeLanguage AS gcl', function ($join) {
-            $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
-        })
-        ->where('gcl.LanguageID', '=', Common::getLocaleId())
-        ->where('gc.GroupName', '=', 'Currencies')
-        ->where('gc.StatusID', '=', eStatus::Active)
-        ->orderBy('gc.DisplayOrder', 'ASC')
-        ->orderBy('gcl.DisplayName', 'ASC')
-        ->get();
-
     ?>
     <iframe id="interactivity" class="interactivity"></iframe>
     <form method="post" enctype="multipart/form-data" action="{{route('contents_save')}}">

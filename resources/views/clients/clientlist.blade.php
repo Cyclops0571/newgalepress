@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="col-md-4" style="float:right; max-width:300px;">
-                    {{ Form::open($route, 'GET') }}
+                    <form method="get" action="{{$route}}">
                     {{ Form::hidden('page', '1') }}
                     {{ Form::hidden('sort', request('sort', $pk)) }}
                     {{ Form::hidden('sort_dir', request('sort_dir', 'DESC')) }}
@@ -48,7 +48,7 @@
                         <input class="form-control" name="search" value="{{ request('search', '') }}" type="text">
                         <input type="submit" class="btn hidden" value="{{ __('common.commandbar_search') }}"/>
                     </div>
-                    {{ Form::close() }}
+                    </form>
                 </div>
             </div>
             <div class="form-row">

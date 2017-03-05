@@ -5,7 +5,7 @@
     /** @var $app Application */
     ?>
     <div class="col-md-8">
-    {{ Form::open(__('route.applications_save'), 'POST') }}
+        <form method="post" action="applications_save">
     {{ Form::token() }}
     <!-- APPLICATION INFO START -->
         <div class="block block-drop-shadow">
@@ -319,7 +319,7 @@
                 </div>
             </div>
         </div>
-        {{ Form::close() }}
+        </form>
     </div>
     <div class="modal modal-info" id="modal_default_10" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">

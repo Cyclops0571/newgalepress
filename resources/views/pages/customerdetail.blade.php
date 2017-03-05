@@ -39,7 +39,7 @@ if (isset($row)) {
 	    <h2>{{ __('common.detailpage_caption') }}</h2>
 	</div>
 	<div class="content controls">
-	    {{ Form::open(__('route.customers_save'), 'POST') }}
+		<form method="post" action="customers_save">
 	    {{ Form::token() }}
 	    <div class="form-row">
 		<input type="hidden" name="CustomerID" id="CustomerID" value="{{ $CustomerID }}" />
@@ -127,7 +127,7 @@ if (isset($row)) {
 		    <input type="button" class="btn my-btn-success" name="save" value="{{ __('common.detailpage_update') }}" onclick="cCustomer.save();" />
 		</div>
 	    </div>
-	    {{ Form::close() }}
+		</form>
 	</div>
     </div>
 </div>

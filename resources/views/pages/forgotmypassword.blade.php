@@ -1,7 +1,7 @@
 @extends('layouts.login')
 
 @section('content')
-{{ Form::open(__('route.forgotmypassword'), 'POST') }}
+<form method="post" action="{{route('CommonController_forgotmypassword_post')}}">
 {{ Form::token() }}
 <div class="container">        
     <div class="login-block">
@@ -35,5 +35,5 @@
 	</div>
     </div>
 </div>
-{{ Form::close() }}
+</form>
 @endsection

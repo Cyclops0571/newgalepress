@@ -12,7 +12,7 @@
             <div class="header">
                 <h2>{{ __('common.detailpage_caption') }}</h2>
             </div>
-            {{ Form::open(__('route.mydetail'), 'POST') }}
+            <form method="post" action="{{route('common_my_detail_post')}}">
                 {{ Form::token() }}
                 <div class="content controls">
                     <div class="form-row">
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                 </div>
-            {{ Form::close() }}
+            </form>
             <div class="footer tar">
                 <div style="float:right;">
                     <input class="btn my-btn-success" type="button" onclick="cUser.saveMyDetail();" value="{{ __('common.detailpage_update') }}">

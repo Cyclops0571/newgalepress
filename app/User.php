@@ -99,7 +99,7 @@ class User extends Authenticatable
      */
     public static function getByUsername($username)
     {
-        return self::getQuery()->where('Username', '=', $username)
+        return self::where('Username', '=', $username)
             ->where('StatusID', '=', eStatus::Active)
             ->first();
     }

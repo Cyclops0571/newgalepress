@@ -1,9 +1,9 @@
 <!--
 <ul class="breadcrumbFilter">
 	<li>{{ Html::link(__('route.home'), __('common.home')) }}</li>
-    @if(isset($detailcaption))
+    @if(isset($detailCaption))
         <li>{{ Html::link($route, $caption) }}</li>
-    <li class="active">{{ $detailcaption }}</li>
+    <li class="active">{{ $detailCaption }}</li>
     @else
     <li class="active">{{ $caption }}</li>
     @endif

@@ -18,7 +18,8 @@ class TestController extends Controller
 
     public function test2()
     {
-        return ['zzzzzzzzzzzz'];
+        echo phpinfo();
+        exit;
         return View::make('Test/test2');
     }
 

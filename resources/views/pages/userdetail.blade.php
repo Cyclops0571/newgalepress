@@ -2,7 +2,7 @@
 
 @section('content')
     <?php
-    $UserID = 0;
+    use Illuminate\Database\Query\JoinClause;$UserID = 0;
     $UserTypeID = 0;
     $CustomerID = 0;
     $Username = '';
@@ -28,7 +28,7 @@
     }
 
     $groupcodes = DB::table('GroupCode AS gc')
-            ->join('GroupCodeLanguage AS gcl', function ($join) {
+            ->join('GroupCodeLanguage AS gcl', function (JoinClause $join) {
                 $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
                 $join->on('gcl.LanguageID', '=', Common::getLocaleId());
             })
@@ -53,7 +53,7 @@
                 <h2>{{ __('common.detailpage_caption') }}</h2>
             </div>
             <div class="content controls">
-                {{ Form::open(__('route.users_save'), 'POST') }}
+                <form method="post" action="{{route("users_save")}}">
                 {{ Form::token() }}
                 <input type="hidden" name="UserID" id="UserID" value="{{ $UserID }}"/>
 
@@ -156,7 +156,7 @@
                                value="{{ __('common.detailpage_update') }}" onclick="cUser.save();"/>
                     </div>
                 </div>
-                {{ Form::close() }}
+                </form>
             </div>
         </div>
     </div>

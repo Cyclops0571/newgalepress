@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\ContentFilePageScope;
 use Auth;
 use Common;
 use DateTime;
@@ -69,6 +70,11 @@ class ContentFilePage extends Model
     public static $key = 'ContentFilePageID';
     protected $primaryKey = 'ContentFilePageID';
 
+    protected static function boot() {
+        parent::boot();
+        static::addGlobalScope(new ContentFilePageScope);
+    }
+
     /**
      * @param $contentFileID
      * @param $pageNo
@@ -82,6 +88,10 @@ class ContentFilePage extends Model
             ->first();
     }
 
+    /**
+     * @param array $options
+     * @return bool
+     */
     public function save(array $options = [])
     {
         if (!$this->isDirty()) {
@@ -115,7 +125,7 @@ class ContentFilePage extends Model
 
         $this->ProcessUserID = $userID;
         $this->ProcessDate = new DateTime();
-        parent::save($options);
+        return parent::save($options);
     }
 
     /**
@@ -123,7 +133,7 @@ class ContentFilePage extends Model
      */
     public function previousContentFilePage()
     {
-        return ContentFilePage::getQuery()->where('ContentFileID', '=', $this->ContentFileID)
+        return ContentFilePage::where('ContentFileID', '=', $this->ContentFileID)
             ->where('No', '=', ($this->No - 1))
             ->first();
     }
@@ -136,7 +146,7 @@ class ContentFilePage extends Model
 
     private function removePageComponent($pageComponentID)
     {
-        PageComponentProperty::getQuery()->where('PageComponentID', 'IN', DB::raw('(SELECT `PageComponentID` FROM `PageComponent` WHERE `PageComponentID`='
+        PageComponentProperty::where('PageComponentID', 'IN', DB::raw('(SELECT `PageComponentID` FROM `PageComponent` WHERE `PageComponentID`='
                 . $pageComponentID . ' AND `ContentFilePageID`=' . $this->ContentFilePageID . ' AND `StatusID`=1)'))
             ->where('StatusID', '=', eStatus::Active)
             ->update(
@@ -178,7 +188,7 @@ class ContentFilePage extends Model
 
     public function nextPage()
     {
-        return ContentFilePage::getQuery()->where('ContentFileID', '=', $this->ContentFileID)
+        return ContentFilePage::where('ContentFileID', '=', $this->ContentFileID)
             ->where('No', '=', $this->No + 1)
             ->where('StatusID', '=', eStatus::Active)
             ->first();
@@ -209,16 +219,16 @@ class ContentFilePage extends Model
 //            }
 //        }
 //
-//        $clientProcess = Input::get('comp-' . $componentPageOrder . '-process', '');
+//        $clientProcess = $request->get('comp-' . $componentPageOrder . '-process', '');
 //
 //        ///*********************************Eski Kod  **********************////
 //
 //
 //        foreach ($ids as $id) {
 //            //Log::info('logInfo -- ' . 'line:' . __LINE__ . ' time:' . microtime());
-//            $clientComponentID = (int)Input::get('comp-' . $id . '-id', '0');
-//            $componentID = (int)Input::get('comp-' . $id . '-pcid', '0');
-//            $clientProcess = Input::get('comp-' . $id . '-process', '');
+//            $clientComponentID = (int)$request->get('comp-' . $id . '-id', '0');
+//            $componentID = (int)$request->get('comp-' . $id . '-pcid', '0');
+//            $clientProcess = $request->get('comp-' . $id . '-process', '');
 //
 //            if ($clientProcess == 'new' || $clientProcess == 'loaded') {
 //                $tPageComponentExists = false;
@@ -288,7 +298,7 @@ class ContentFilePage extends Model
 //                                        ->where('Name', '=', $name)
 //                                        ->where('Value', 'LIKE', '%' . $v)
 //                                        ->where('StatusID', '=', eStatus::Deleted)
-//                                        ->order_by('PageComponentPropertyID', 'DESC')
+//                                        orderBy'PageComponentPropertyID', 'DESC')
 //                                        ->first(array('Value'));
 //                                    if ($oldValue) {
 //                                        $v = $oldValue->Value;
@@ -338,7 +348,7 @@ class ContentFilePage extends Model
 //                                    ->where('PageComponentID', '=', $pageComponent->PageComponentID)
 //                                    ->where('Name', '=', $name)
 //                                    ->where('StatusID', '=', eStatus::Deleted)
-//                                    ->order_by('PageComponentPropertyID', 'DESC')
+//                                    orderBy'PageComponentPropertyID', 'DESC')
 //                                    ->first(array('Value'));
 //
 //                                if ($oldValue) {

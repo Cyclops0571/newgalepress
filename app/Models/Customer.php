@@ -86,7 +86,7 @@ class Customer extends Model
      */
     public static function getCustomerByID($CustomerID, $Active)
     {
-        return self::getQuery()->where('CustomerID', '=', $CustomerID)
+        return self::where('CustomerID', '=', $CustomerID)
         ->where('StatusID', '=', $Active)
         ->first();
     }
@@ -102,7 +102,6 @@ class Customer extends Model
 
     /**
      *
-     * @param int $statusID
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function Application()

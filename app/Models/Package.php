@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\StatusScope;
 use Illuminate\Database\Eloquent\Model;
 
 /**

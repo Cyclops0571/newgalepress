@@ -23,7 +23,8 @@
     $Image2048x1536 = '';
     $Pdf = '';
 
-    if (isset($row)) {
+    if (isset($row))
+    {
         $OrderID = (int)$row->OrderID;
         $ApplicationID = (int)$row->ApplicationID;
         $OrderNo = $row->OrderNo;
@@ -45,105 +46,106 @@
     }
 
     $applications = DB::table('Application')
-            ->where('StatusID', '=', eStatus::Active)
-            ->orderBy('Name', 'ASC')
-            ->get();
+        ->where('StatusID', '=', eStatus::Active)
+        ->orderBy('Name', 'ASC')
+        ->get();
     ?>
     <div class="col-md-8">
-        <div class="block block-drop-shadow">
-            <div class="header">
-                <h2>{{ __('common.detailpage_caption') }}</h2>
-            </div>
-            <div class="content controls">
-                {{ Form::open(__('route.orders_save'), 'POST') }}
-                {{ Form::token() }}
-                <div class="form-row">
-                    <input type="hidden" name="OrderID" id="OrderID" value="{{ $OrderID }}"/>
+      <div class="block block-drop-shadow">
+        <div class="header">
+          <h2>{{ __('common.detailpage_caption') }}</h2>
+        </div>
+        <div class="content controls">
+          <form action="{{route('orders_save')}}">
+            {{ Form::token() }}
+            <div class="form-row">
+              <input type="hidden" name="OrderID" id="OrderID" value="{{ $OrderID }}"/>
 
-                    <div class="col-md-3">{{ __('common.orders_application') }}</div>
-                    <div class="col-md-9">
-                        <select class="form-control select2" style="width: 100%;" tabindex="-1" id="ApplicationID"
-                                name="ApplicationID">
-                            <option value=""{{ ($ApplicationID == 0 ? ' selected="selected"' : '') }}></option>
-                            @foreach ($applications as $application)
-                                <option value="{{ $application->ApplicationID }}"{{ ($ApplicationID == $application->ApplicationID ? ' selected="selected"' : '') }}>{{ $application->Name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3">{{ __('common.orders_list_column1') }}<span class="error">*</span></div>
-                    {{ $errors->first('OrderNo', '<p class="error">:message</p>') }}
-                    <div class="col-md-9">
-                        <input type="text" name="OrderNo" id="OrderNo" class="form-control textbox required"
-                               value="{{ $OrderNo }}"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3">{{ __('common.orders_name') }}<span class="error">*</span></div>
-                    {{ $errors->first('Name', '<p class="error">:message</p>') }}
-                    <div class="col-md-9">
-                        <input type="text" name="Name" id="Name" class="form-control textbox required"
-                               value="{{ $Name }}"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3">{{ __('common.orders_description') }}<span class="error">*</span></div>
-                    {{ $errors->first('Description', '<p class="error">:message</p>') }}
-                    <div class="col-md-9">
+              <div class="col-md-3">{{ __('common.orders_application') }}</div>
+              <div class="col-md-9">
+                <select class="form-control select2" style="width: 100%;" tabindex="-1" id="ApplicationID"
+                        name="ApplicationID">
+                  <option value=""{{ ($ApplicationID == 0 ? ' selected="selected"' : '') }}></option>
+                  @foreach ($applications as $application)
+                    <option
+                        value="{{ $application->ApplicationID }}"{{ ($ApplicationID == $application->ApplicationID ? ' selected="selected"' : '') }}>{{ $application->Name }}</option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_list_column1') }}<span class="error">*</span></div>
+              {{ $errors->first('OrderNo', '<p class="error">:message</p>') }}
+              <div class="col-md-9">
+                <input type="text" name="OrderNo" id="OrderNo" class="form-control textbox required"
+                       value="{{ $OrderNo }}"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_name') }}<span class="error">*</span></div>
+              {{ $errors->first('Name', '<p class="error">:message</p>') }}
+              <div class="col-md-9">
+                <input type="text" name="Name" id="Name" class="form-control textbox required"
+                       value="{{ $Name }}"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_description') }}<span class="error">*</span></div>
+              {{ $errors->first('Description', '<p class="error">:message</p>') }}
+              <div class="col-md-9">
                         <textarea name="Description" id="Description" class="form-control required" rows="2"
                                   cols="20">{{ $Description }}</textarea>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3">{{ __('common.orders_keywords') }}<span class="error">*</span></div>
-                    {{ $errors->first('Keywords', '<p class="error">:message</p>') }}
-                    <div class="col-md-9">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_keywords') }}<span class="error">*</span></div>
+              {{ $errors->first('Keywords', '<p class="error">:message</p>') }}
+              <div class="col-md-9">
                         <textarea name="Keywords" id="Keywords" class="form-control required" rows="2"
                                   cols="20">{{ $Keywords }}</textarea>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3">{{ __('common.orders_product') }}</div>
-                    <div class="col-md-9">
-                        <input type="text" name="Product" id="Product" class="form-control textbox"
-                               value="{{ $Product }}"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3">{{ __('common.orders_qty') }}</div>
-                    <div class="col-md-9">
-                        <input type="text" name="Qty" id="Qty" class="form-control textbox" value="{{ $Qty }}"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3">{{ __('common.orders_website') }}</div>
-                    <div class="col-md-9">
-                        <input type="text" name="Website" id="Website" class="form-control textbox"
-                               value="{{ $Website }}"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3">{{ __('common.orders_email') }}</div>
-                    <div class="col-md-9">
-                        <input type="text" name="Email" id="Email" class="form-control textbox" value="{{ $Email }}"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3">{{ __('common.orders_facebook') }}</div>
-                    <div class="col-md-9">
-                        <input type="text" name="Facebook" id="Facebook" class="form-control textbox"
-                               value="{{ $Facebook }}"/>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-3">{{ __('common.orders_twitter') }}</div>
-                    <div class="col-md-9">
-                        <input type="text" name="Twitter" id="Twitter" class="form-control textbox"
-                               value="{{ $Twitter }}"/>
-                    </div>
-                </div>
-                <?php /*
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_product') }}</div>
+              <div class="col-md-9">
+                <input type="text" name="Product" id="Product" class="form-control textbox"
+                       value="{{ $Product }}"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_qty') }}</div>
+              <div class="col-md-9">
+                <input type="text" name="Qty" id="Qty" class="form-control textbox" value="{{ $Qty }}"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_website') }}</div>
+              <div class="col-md-9">
+                <input type="text" name="Website" id="Website" class="form-control textbox"
+                       value="{{ $Website }}"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_email') }}</div>
+              <div class="col-md-9">
+                <input type="text" name="Email" id="Email" class="form-control textbox" value="{{ $Email }}"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_facebook') }}</div>
+              <div class="col-md-9">
+                <input type="text" name="Facebook" id="Facebook" class="form-control textbox"
+                       value="{{ $Facebook }}"/>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_twitter') }}</div>
+              <div class="col-md-9">
+                <input type="text" name="Twitter" id="Twitter" class="form-control textbox"
+                       value="{{ $Twitter }}"/>
+              </div>
+            </div>
+              <?php /*
 					<div class="form-row">
 						<div class="col-md-3">{{ __('common.orders_startdate') }}<span class="error">*</span></div>
             {{ $errors->first('StartDate', '<p class="error">:message</p>') }}
@@ -153,32 +155,32 @@
             </div>
         </div>
         */ ?>
-        <div class="form-row">
-            <div class="col-md-3">{{ __('common.orders_Pdf') }}<span class="error">*</span></div>
-            {{ $errors->first('Pdf', '<p class="error">:message</p>') }}
-            <div class="col-md-9">
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_Pdf') }}<span class="error">*</span></div>
+              {{ $errors->first('Pdf', '<p class="error">:message</p>') }}
+              <div class="col-md-9">
                 <div class="fileupload_container">
-                    @if(strlen($Pdf) > 0)
-                        <a href="/files/orders/order_{{ $OrderNo }}/{{ $Pdf }}" target="_blank"
-                           class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
-                    @endif
-                    <input type="file" name="Pdf" id="Pdf" class="hidden"/>
+                  @if(strlen($Pdf) > 0)
+                    <a href="/files/orders/order_{{ $OrderNo }}/{{ $Pdf }}" target="_blank"
+                       class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
+                  @endif
+                  <input type="file" name="Pdf" id="Pdf" class="hidden"/>
 
-                    <div id="PdfButton" class="uploadify hide" style="height: 30px; width: 120px; opacity: 1;">
-                        <div id="File-button" class="uploadify-button "
-                             style="height: 30px; line-height: 30px; width: 120px;">
-                            <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
-                        </div>
+                  <div id="PdfButton" class="uploadify hide" style="height: 30px; width: 120px; opacity: 1;">
+                    <div id="File-button" class="uploadify-button "
+                         style="height: 30px; line-height: 30px; width: 120px;">
+                      <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
                     </div>
+                  </div>
 
-                    <div for="Pdf" class="myProgress hide">
-                        <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
-                        <label for="scale"></label>
+                  <div for="Pdf" class="myProgress hide">
+                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <label for="scale"></label>
 
-                        <div class="scrollbox dot">
-                            <div class="scale" style="width: 0%"></div>
-                        </div>
+                    <div class="scrollbox dot">
+                      <div class="scale" style="width: 0%"></div>
                     </div>
+                  </div>
 
                 </div>
 
@@ -240,35 +242,35 @@
 
                     });
                 </script>
+              </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-3">{{ __('common.orders_Image1024x1024') }}<span class="error">*</span></div>
-            {{ $errors->first('Image1024x1024', '<p class="error">:message</p>') }}
-            <div class="col-md-9">
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_Image1024x1024') }}<span class="error">*</span></div>
+              {{ $errors->first('Image1024x1024', '<p class="error">:message</p>') }}
+              <div class="col-md-9">
                 <div class="fileupload_container">
-                    @if(strlen($Image1024x1024) > 0)
-                        <a href="/files/orders/order_{{ $OrderNo }}/{{ $Image1024x1024 }}" target="_blank"
-                           class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
-                    @endif
-                    <input type="file" name="Image1024x1024" id="Image1024x1024" class="hidden"/>
+                  @if(strlen($Image1024x1024) > 0)
+                    <a href="/files/orders/order_{{ $OrderNo }}/{{ $Image1024x1024 }}" target="_blank"
+                       class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
+                  @endif
+                  <input type="file" name="Image1024x1024" id="Image1024x1024" class="hidden"/>
 
-                    <div id="Image1024x1024Button" class="uploadify hide"
-                         style="height: 30px; width: 120px; opacity: 1;">
-                        <div id="File-button" class="uploadify-button "
-                             style="height: 30px; line-height: 30px; width: 120px;">
-                            <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
-                        </div>
+                  <div id="Image1024x1024Button" class="uploadify hide"
+                       style="height: 30px; width: 120px; opacity: 1;">
+                    <div id="File-button" class="uploadify-button "
+                         style="height: 30px; line-height: 30px; width: 120px;">
+                      <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
                     </div>
+                  </div>
 
-                    <div for="Image1024x1024" class="myProgress hide">
-                        <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
-                        <label for="scale"></label>
+                  <div for="Image1024x1024" class="myProgress hide">
+                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <label for="scale"></label>
 
-                        <div class="scrollbox dot">
-                            <div class="scale" style="width: 0%"></div>
-                        </div>
+                    <div class="scrollbox dot">
+                      <div class="scale" style="width: 0%"></div>
                     </div>
+                  </div>
 
                 </div>
 
@@ -331,33 +333,33 @@
 
                     });
                 </script>
+              </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-3">{{ __('common.orders_Image640x960') }}</div>
-            <div class="col-md-9">
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_Image640x960') }}</div>
+              <div class="col-md-9">
                 <div class="fileupload_container">
-                    @if(strlen($Image640x960) > 0)
-                        <a href="/files/orders/order_{{ $OrderNo }}/{{ $Image640x960 }}" target="_blank"
-                           class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
-                    @endif
-                    <input type="file" name="Image640x960" id="Image640x960" class="hidden"/>
+                  @if(strlen($Image640x960) > 0)
+                    <a href="/files/orders/order_{{ $OrderNo }}/{{ $Image640x960 }}" target="_blank"
+                       class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
+                  @endif
+                  <input type="file" name="Image640x960" id="Image640x960" class="hidden"/>
 
-                    <div id="Image640x960Button" class="uploadify hide" style="height: 30px; width: 120px; opacity: 1;">
-                        <div id="File-button" class="uploadify-button "
-                             style="height: 30px; line-height: 30px; width: 120px;">
-                            <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
-                        </div>
+                  <div id="Image640x960Button" class="uploadify hide" style="height: 30px; width: 120px; opacity: 1;">
+                    <div id="File-button" class="uploadify-button "
+                         style="height: 30px; line-height: 30px; width: 120px;">
+                      <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
                     </div>
+                  </div>
 
-                    <div for="Image640x960" class="myProgress hide">
-                        <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
-                        <label for="scale"></label>
+                  <div for="Image640x960" class="myProgress hide">
+                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <label for="scale"></label>
 
-                        <div class="scrollbox dot">
-                            <div class="scale" style="width: 0%"></div>
-                        </div>
+                    <div class="scrollbox dot">
+                      <div class="scale" style="width: 0%"></div>
                     </div>
+                  </div>
 
                 </div>
 
@@ -419,34 +421,34 @@
 
                     });
                 </script>
+              </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-3">{{ __('common.orders_Image640x1136') }}</div>
-            <div class="col-md-9">
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_Image640x1136') }}</div>
+              <div class="col-md-9">
                 <div class="fileupload_container">
-                    @if(strlen($Image640x1136) > 0)
-                        <a href="/files/orders/order_{{ $OrderNo }}/{{ $Image640x1136 }}" target="_blank"
-                           class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
-                    @endif
-                    <input type="file" name="Image640x1136" id="Image640x1136" class="hidden"/>
+                  @if(strlen($Image640x1136) > 0)
+                    <a href="/files/orders/order_{{ $OrderNo }}/{{ $Image640x1136 }}" target="_blank"
+                       class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
+                  @endif
+                  <input type="file" name="Image640x1136" id="Image640x1136" class="hidden"/>
 
-                    <div id="Image640x1136Button" class="uploadify hide"
-                         style="height: 30px; width: 120px; opacity: 1;">
-                        <div id="File-button" class="uploadify-button "
-                             style="height: 30px; line-height: 30px; width: 120px;">
-                            <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
-                        </div>
+                  <div id="Image640x1136Button" class="uploadify hide"
+                       style="height: 30px; width: 120px; opacity: 1;">
+                    <div id="File-button" class="uploadify-button "
+                         style="height: 30px; line-height: 30px; width: 120px;">
+                      <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
                     </div>
+                  </div>
 
-                    <div for="Image640x1136" class="myProgress hide">
-                        <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
-                        <label for="scale"></label>
+                  <div for="Image640x1136" class="myProgress hide">
+                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <label for="scale"></label>
 
-                        <div class="scrollbox dot">
-                            <div class="scale" style="width: 0%"></div>
-                        </div>
+                    <div class="scrollbox dot">
+                      <div class="scale" style="width: 0%"></div>
                     </div>
+                  </div>
 
                 </div>
 
@@ -509,34 +511,34 @@
 
                     });
                 </script>
+              </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-3">{{ __('common.orders_Image1536x2048') }}</div>
-            <div class="col-md-9">
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_Image1536x2048') }}</div>
+              <div class="col-md-9">
                 <div class="fileupload_container">
-                    @if(strlen($Image1536x2048) > 0)
-                        <a href="/files/orders/order_{{ $OrderNo }}/{{ $Image1536x2048 }}" target="_blank"
-                           class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
-                    @endif
-                    <input type="file" name="Image1536x2048" id="Image1536x2048" class="hidden"/>
+                  @if(strlen($Image1536x2048) > 0)
+                    <a href="/files/orders/order_{{ $OrderNo }}/{{ $Image1536x2048 }}" target="_blank"
+                       class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
+                  @endif
+                  <input type="file" name="Image1536x2048" id="Image1536x2048" class="hidden"/>
 
-                    <div id="Image1536x2048Button" class="uploadify hide"
-                         style="height: 30px; width: 120px; opacity: 1;">
-                        <div id="File-button" class="uploadify-button "
-                             style="height: 30px; line-height: 30px; width: 120px;">
-                            <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
-                        </div>
+                  <div id="Image1536x2048Button" class="uploadify hide"
+                       style="height: 30px; width: 120px; opacity: 1;">
+                    <div id="File-button" class="uploadify-button "
+                         style="height: 30px; line-height: 30px; width: 120px;">
+                      <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
                     </div>
+                  </div>
 
-                    <div for="Image1536x2048" class="myProgress hide">
-                        <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
-                        <label for="scale"></label>
+                  <div for="Image1536x2048" class="myProgress hide">
+                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <label for="scale"></label>
 
-                        <div class="scrollbox dot">
-                            <div class="scale" style="width: 0%"></div>
-                        </div>
+                    <div class="scrollbox dot">
+                      <div class="scale" style="width: 0%"></div>
                     </div>
+                  </div>
 
                 </div>
 
@@ -599,34 +601,34 @@
 
                     });
                 </script>
+              </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-3">{{ __('common.orders_Image2048x1536') }}</div>
-            <div class="col-md-9">
+            <div class="form-row">
+              <div class="col-md-3">{{ __('common.orders_Image2048x1536') }}</div>
+              <div class="col-md-9">
                 <div class="fileupload_container">
-                    @if(strlen($Image2048x1536) > 0)
-                        <a href="/files/orders/order_{{ $OrderNo }}/{{ $Image2048x1536 }}" target="_blank"
-                           class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
-                    @endif
-                    <input type="file" name="Image2048x1536" id="Image2048x1536" class="hidden"/>
+                  @if(strlen($Image2048x1536) > 0)
+                    <a href="/files/orders/order_{{ $OrderNo }}/{{ $Image2048x1536 }}" target="_blank"
+                       class="uploadedfile">{{ __('common.contents_filelink') }}</a><br/>
+                  @endif
+                  <input type="file" name="Image2048x1536" id="Image2048x1536" class="hidden"/>
 
-                    <div id="Image2048x1536Button" class="uploadify hide"
-                         style="height: 30px; width: 120px; opacity: 1;">
-                        <div id="File-button" class="uploadify-button "
-                             style="height: 30px; line-height: 30px; width: 120px;">
-                            <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
-                        </div>
+                  <div id="Image2048x1536Button" class="uploadify hide"
+                       style="height: 30px; width: 120px; opacity: 1;">
+                    <div id="File-button" class="uploadify-button "
+                         style="height: 30px; line-height: 30px; width: 120px;">
+                      <span class="uploadify-button-text">{{ __('common.orders_file_select') }}</span>
                     </div>
+                  </div>
 
-                    <div for="Image2048x1536" class="myProgress hide">
-                        <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
-                        <label for="scale"></label>
+                  <div for="Image2048x1536" class="myProgress hide">
+                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <label for="scale"></label>
 
-                        <div class="scrollbox dot">
-                            <div class="scale" style="width: 0%"></div>
-                        </div>
+                    <div class="scrollbox dot">
+                      <div class="scale" style="width: 0%"></div>
                     </div>
+                  </div>
 
                 </div>
 
@@ -692,49 +694,49 @@
 
                     });
                 </script>
+              </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-8"></div>
-            @if($OrderID == 0)
+            <div class="form-row">
+              <div class="col-md-8"></div>
+              @if($OrderID == 0)
                 <div class="col-md-2"></div>
                 <div class="col-md-2">
-                    <input type="button" class="btn my-btn-success" name="save"
-                           value="{{ __('common.detailpage_save') }}" onclick="cOrder.save();"/>
+                  <input type="button" class="btn my-btn-success" name="save"
+                         value="{{ __('common.detailpage_save') }}" onclick="cOrder.save();"/>
                 </div>
-            @else
+              @else
                 <div class="col-md-2">
-                    <a href="#modal_default_10" data-toggle="modal"><input type="button"
-                                                                           value="{{ __('common.detailpage_delete') }}"
-                                                                           name="delete"
-                                                                           class="btn delete expand remove"/></a>
+                  <a href="#modal_default_10" data-toggle="modal"><input type="button"
+                                                                         value="{{ __('common.detailpage_delete') }}"
+                                                                         name="delete"
+                                                                         class="btn delete expand remove"/></a>
                 </div>
                 <div class="col-md-2">
-                    <input type="button" class="btn my-btn-success" name="save"
-                           value="{{ __('common.detailpage_update') }}" onclick="cOrder.save();"/>
+                  <input type="button" class="btn my-btn-success" name="save"
+                         value="{{ __('common.detailpage_update') }}" onclick="cOrder.save();"/>
                 </div>
-            @endif
+              @endif
+            </div>
+          </form>
         </div>
-        {{ Form::close() }}
-    </div>
-    </div>
+      </div>
     </div>
     <div class="modal modal-info" id="modal_default_10" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Silmek istediğinize emin misiniz?</h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-clean" data-dismiss="modal"
-                            onclick="cOrder.erase();"
-                            style="background:#9d0000;">{{ __('common.detailpage_delete') }}</button>
-                    <button type="button" class="btn btn-default btn-clean"
-                            data-dismiss="modal">{{ __('common.contents_category_button_giveup') }}</button>
-                </div>
-            </div>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">Silmek istediğinize emin misiniz?</h4>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-clean" data-dismiss="modal"
+                    onclick="cOrder.erase();"
+                    style="background:#9d0000;">{{ __('common.detailpage_delete') }}</button>
+            <button type="button" class="btn btn-default btn-clean"
+                    data-dismiss="modal">{{ __('common.contents_category_button_giveup') }}</button>
+          </div>
         </div>
+      </div>
     </div>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App;
+use App\Scopes\ApplicationScope;
 use Auth;
 use Common;
 use Config;
@@ -139,6 +140,8 @@ use Subscription;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationUser[] $Users
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationTag[] $Tags
+ * @property-read \App\Models\Package $Package
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $Categories
  */
 class Application extends Model
 {
@@ -159,6 +162,12 @@ class Application extends Model
             $this->CustomerID = Auth::user()->CustomerID;
             $this->Installment = Application::InstallmentCount;
         }
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::addGlobalScope(new ApplicationScope);
     }
 
     /**
@@ -199,17 +208,15 @@ class Application extends Model
 
     public function Package()
     {
-        return $this->belongsTo(Package::class, 'PackageID')->getQuery()->first();
+        return $this->belongsTo(Package::class, 'PackageID');
     }
 
-
     /**
-     * @param int $statusID
-     * @return Category|\Illuminate\Database\Eloquent\Collection|static[]
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function Categories($statusID = eStatus::Active)
+    public function Categories()
     {
-        return $this->hasMany(Category::class, self::$key)->getQuery()->where('StatusID', '=', $statusID)->get();
+        return $this->hasMany(Category::class, self::$key);
     }
 
 

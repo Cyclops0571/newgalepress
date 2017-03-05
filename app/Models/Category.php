@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\CategoryScope;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -32,4 +33,10 @@ class Category extends Model
     public $timestamps = false;
     protected $table = 'Category';
     protected $primaryKey = 'CategoryID';
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::addGlobalScope(new CategoryScope);
+    }
 }

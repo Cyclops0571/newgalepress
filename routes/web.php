@@ -1,4 +1,5 @@
 <?php
+
 Route::get('test2', 'TestController@test2');
 Route::get('test3', function(){ return View::make('test/test3'); });
 
@@ -12,6 +13,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 });
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function (){
     Route::get('test', array('as'=> 'mahmut', 'uses' => 'TestController@index'));
+
+    // <editor-fold defaultstate="collapsed" desc="Crop">
+    Route::get(__('route.crop_image'), array('as' => 'crop_image', 'before' => 'auth', 'uses' => 'CropController@image'));
+    Route::post(__('route.crop_image'), array('as' => 'crop_image', 'before' => 'auth', 'uses' => 'CropController@image'));
+// </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Contents">
     Route::post("contents/order/(:num)", array('as' => 'contents_order', 'uses' => 'ContentController@order'));
@@ -28,10 +34,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     // </editor-fold>
 
 
-    Route::get(__('route.forgotmypassword'), array('as' => 'common_forgotmypassword_get', function() {
+    Route::get(__('route.forgotmypassword'), array('as' => 'CommonController_forgotmypassword_get', function() {
         return View::make('pages.forgotmypassword');
     }));
-    Route::post(__('route.forgotmypassword'), array('as' => 'CommonController_forgotmypassword', 'uses' => 'CommonController@forgotmypassword'));
+    Route::post(__('route.forgotmypassword'), array('as' => 'CommonController_forgotmypassword_post', 'uses' => 'CommonController@forgotmypassword'));
 
     Route::get(__('route.resetmypassword'), array('as' => 'common_resetmypassword_get', 'uses' => 'CommonController@resetPasswordPage'));
     Route::post(__('route.resetmypassword'), array('as' => 'common_resetmypassword_post', 'uses' => 'CommonController@resetmypassword'));
@@ -39,7 +45,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::get(__('route.logout'), array('as' => 'common_logout', 'uses' => 'CommonController@logout'));
 
     Route::get(__('route.mydetail'), array('as' => 'common_mydetail_get', 'uses' => 'CommonController@myDetailPage'));
-    Route::post(__('route.mydetail'), array('as' => 'common_mydetail_post', 'uses' => 'CommonController@mydetail'));
+    Route::post(__('route.mydetail'), array('as' => 'common_my_detail_post', 'uses' => 'CommonController@mydetail'));
 
     // <editor-fold defaultstate="collapsed" desc="Banners">
     Route::get(__('route.banners'), array('as' => 'banners_list', 'uses' => 'banners@index'));
@@ -250,7 +256,6 @@ Route::get(__('route.application_form_create'), array('as' => 'application_form_
 Route::get(__('route.orders'), array('as' => 'orders', 'before' => 'auth', 'uses' => 'orders@index'));
 Route::get(__('route.orders_new'), array('as' => 'orders_new', 'before' => 'auth', 'uses' => 'orders@newly'));
 Route::get(__('route.orders_show'), array('as' => 'orders_show', 'before' => 'auth', 'uses' => 'orders@show'));
-//Route::post(__('route.orders_save'), array('as' => 'orders_save', 'before' => 'auth|csrf', 'uses' => 'orders@save'));
 Route::post(__('route.orders_save'), array('as' => 'orders_save', 'uses' => 'orders@save'));
 Route::post(__('route.orders_delete'), array('as' => 'orders_delete', 'before' => 'auth|csrf', 'uses' => 'orders@delete'));
 Route::post(__('route.orders_uploadfile'), array('as' => 'orders_uploadfile', 'uses' => 'orders@uploadfile'));
@@ -283,10 +288,7 @@ Route::post(__('route.interactivity_upload'), array('as' => 'interactivity_uploa
 Route::post(__('route.interactivity_loadpage'), array('as' => 'interactivity_loadpage', 'before' => 'auth', 'uses' => 'interactivity@loadpage'));
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Crop">
-Route::get(__('route.crop_image'), array('as' => 'crop_image', 'before' => 'auth', 'uses' => 'crop@image'));
-Route::post(__('route.crop_image'), array('as' => 'crop_image', 'before' => 'auth', 'uses' => 'crop@image'));
-// </editor-fold>
+
 
 
 

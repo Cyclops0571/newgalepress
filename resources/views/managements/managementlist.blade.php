@@ -8,7 +8,7 @@
                 <h2>Server Yönetimi</h2>
             </div>
             <div class="content controls">
-                <?php echo Form::open(__('route.managements_save'), 'POST'); ?>
+                <form method="post" action="{{route('managements_save')}}">
                 <?php echo Form::token(); ?>
                 <div class="form-row">
                     <div class="col-md-4">
@@ -16,7 +16,7 @@
                         <input type="button" class="btn-success" value="{{__('common.export_languages')}}" onclick="cManagement.exportLanguagesFromDB();"/>
                     </div>
                 </div>
-                <?php echo Form::close(); ?>
+                </form>
                 <div class="form-row">
                     <div class="col-md-12">
                         <table id="DataTables_Table_1" cellpadding="0" cellspacing="0" width="100%" class="table table-bordered table-striped table-hover">

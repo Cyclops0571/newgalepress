@@ -56,7 +56,7 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
 
                 <div class="col-md-4 commandbar-search">
 
-                    {{ Form::open($route, 'GET') }}
+                    <form method="get" action="{{$route}}">
                     {{ Form::hidden('page', '1') }}
                     {{ Form::hidden('sort', request('sort', $pk)) }}
                     {{ Form::hidden('sort_dir', request('sort_dir', 'DESC')) }}
@@ -66,10 +66,10 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                         <input class="form-control" name="search" value="{{ request('search', '') }}" type="text">
                         <input type="submit" class="btn hidden" value="{{ __('common.commandbar_search') }}"/>
                     </div>
-                    {{ Form::close() }}
-
+                    </form>
                 </div>
             </div>
+
             <!-- Commandbar End-->
             <div class="form-row">
                 <div class="col-md-12">

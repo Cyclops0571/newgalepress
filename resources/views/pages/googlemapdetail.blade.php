@@ -170,7 +170,7 @@
             <div class="header text-center">
                 <span class="icon-map-marker" style="font-size:18px;"></span>
             </div>
-            {{ Form::open(__('route.maps_detail'), 'POST') }}
+            <form method="post" action="{{route('map_detail')}}">
             {{ Form::token() }}
             <input type="hidden" name="GoogleMapID" id="GoogleMapID" value="{{ $GoogleMapID }}"/>
             @if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
@@ -237,7 +237,7 @@
                     </a>
                 </div>
             </div>
-            {{ Form::close() }}
+            </form>
         </div>
 
     </div>

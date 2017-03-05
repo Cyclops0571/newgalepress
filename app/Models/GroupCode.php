@@ -47,13 +47,13 @@ class GroupCode extends Model
         return '';
     }
 
-    public static function getGroupCodes() {
+    public static function getGroupCodesWithName($name) {
         return DB::table('GroupCode AS gc')
-            ->join('GroupCodeLanguage AS gcl', function (/** @var JoinClause $join */ $join) {
+            ->join('GroupCodeLanguage AS gcl', function (JoinClause $join) {
                 $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
                 $join->on('gcl.LanguageID', '=', DB::raw(Common::getLocaleId()));
             })
-            ->where('gc.GroupName', '=', 'Currencies')
+            ->where('gc.GroupName', '=', $name)
             ->where('gc.StatusID', '=', eStatus::Active)
             ->orderBy('gc.DisplayOrder', 'ASC')
             ->orderBy('gcl.DisplayName', 'ASC')

@@ -287,7 +287,7 @@ class Content extends Model
             //Unset IsProtected & password field due to https://github.com/galepress/gp/issues/7
             $this->IsProtected = 0;
             $this->Password = '';
-            $contents = Content::getQuery()->where('ApplicationID', '=', $this->ApplicationID)->get();
+            $contents = Content::where('ApplicationID', '=', $this->ApplicationID)->get();
             foreach ($contents as $content) {
                 //INFO:Added due to https://github.com/galepress/gp/issues/18
                 if ((int)$this->ContentID !== (int)$content->ContentID) {
@@ -687,7 +687,7 @@ class Content extends Model
         if (empty($contentIds)) {
             return array();
         }
-        return Content::getQuery()->whereIn('ContentID', $contentIds)
+        return Content::whereIn('ContentID', $contentIds)
             ->where('StatusID', '=', eStatus::Active)
             ->where('PublishDate', '<=', DB::raw('now()'))
             ->where(function ($query) {
@@ -708,7 +708,7 @@ class Content extends Model
         if (empty($contentIds)) {
             return array();
         }
-        return Content::getQuery()->whereIn('Content.ContentID', $contentIds)
+        return Content::whereIn('Content.ContentID', $contentIds)
             ->where('StatusID', '=', eStatus::Active)
             ->where('PublishDate', '<=', DB::raw('now()'))
             ->where(function ($query) {

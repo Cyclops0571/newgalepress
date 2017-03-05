@@ -18,7 +18,7 @@
     <!--BANNER SLIDER-->
 
     <div class="col-md-6">
-        {{ Form::open(__('route.applications_save'), 'POST') }}
+        <form method="post" action="{{route('applications_save')}}">
         {{ Form::token() }}
         <div class="block block-drop-shadow">
             <div class="header">
@@ -363,7 +363,7 @@
                 </div>
             </div>
         </div>
-        {{ Form::close() }}
+        </form>
     </div>
     <div class="col-md-6">
         <div class="col-md-12" id="ipadView"></div>

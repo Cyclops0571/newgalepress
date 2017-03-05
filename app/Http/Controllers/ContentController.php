@@ -19,6 +19,7 @@ use eStatus;
 use eUserTypes;
 use Exception;
 use File;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Redirect;
@@ -36,7 +37,7 @@ class ContentController extends Controller
     public $table = '';
     public $pk = '';
     public $caption = '';
-    public $detailcaption = '';
+    public $detailCaption = '';
     public $fields;
     private $defaultSort = "OrderNo";
 
@@ -47,7 +48,7 @@ class ContentController extends Controller
         $this->table = 'Content';
         $this->pk = 'ContentID';
         $this->caption = __('common.contents_caption');
-        $this->detailcaption = __('common.contents_caption_detail');
+        $this->detailCaption = __('common.contents_caption_detail');
 
 
     }
@@ -178,12 +179,11 @@ class ContentController extends Controller
             'page' => $this->page,
             'route' => $this->route,
             'caption' => $this->caption,
-            'detailcaption' => $this->detailcaption,
+            'detailCaption' => $this->detailCaption,
             'content' => new Content(),
             'showCropPage' => 0,
         );
         $applicationID = $request->get('applicationID', '0');
-        /** @var Application $app */
         $app = Application::find($applicationID);
         if (!$app) {
             return Redirect::to(__('route.home'));
@@ -195,7 +195,11 @@ class ContentController extends Controller
 
         $data['app'] = $app;
         $data['categories'] = $app->Categories();
-        $data['groupCodes'] = GroupCode::getGroupCodes();
+        $data['groupCodes'] = GroupCode::getGroupCodesWithName('Currencies');
+        $data['authMaxPDF'] = Common::AuthMaxPDF($app->ApplicationID);
+        $data['authInteractivity'] = (1 == (int)$app->Package->Interactive);
+
+
         return View::make('pages.' . Str::lower($this->table) . 'detail', $data)
             ->nest('filterbar', 'sections.filterbar', $data);
     }
@@ -229,14 +233,18 @@ class ContentController extends Controller
                     'page' => $this->page,
                     'route' => $this->route,
                     'caption' => $this->caption,
-                    'detailcaption' => $this->detailcaption,
+                    'detailCaption' => $this->detailCaption,
                     'content' => $content,
                     'app' => $content->Application,
                     'categories' => $content->Application->Categories(),
-                    'groupCodes' => GroupCode::getGroupCodes(),
+                    'groupCodes' => GroupCode::getGroupCodesWithName('Currencies'),
                     'showCropPage' => $showCropPage,
                     'contentList' => $contentList,
                 );
+
+                $app = Application::find($content->ApplicationID);
+                $data['authMaxPDF'] = Common::AuthMaxPDF($app->ApplicationID);
+                $data['authInteractivity'] = (1 == (int)$app->Package->Interactive);
 
                 if (((int)$currentUser->UserTypeID == eUserTypes::Customer)) {
                     if ($content->Application->ExpirationDate < date('Y-m-d')) {
@@ -250,32 +258,6 @@ class ContentController extends Controller
         } else {
             return Redirect::to($this->route);
         }
-    }
-
-    public function temp() {
-        $authInteractivity = (1 == (int)$app->Package()->Interactive);
-        $authMaxPDF = Common::AuthMaxPDF($app->ApplicationID);
-
-        $applications = Application::where('StatusID', '=', eStatus::Active)
-            ->orderBy('Name', 'ASC')
-            ->get();
-
-        $categories = Category::where('ApplicationID', '=', $app->ApplicationID)
-            ->where('StatusID', '=', eStatus::Active)
-            ->orderBy('Name', 'ASC')
-            ->get();
-        $groupCodes = DB::table('GroupCode AS gc')
-            ->join('GroupCodeLanguage AS gcl', function ($join) {
-                $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
-                $join->on('gcl.LanguageID', '=', Common::getLocaleId());
-            })
-            ->where('gc.GroupName', '=', 'Currencies')
-            ->where('gc.StatusID', '=', eStatus::Active)
-            ->orderBy('gc.DisplayOrder', 'ASC')
-            ->orderBy('gcl.DisplayName', 'ASC')
-            ->get();
-
-
     }
 
     public function save(Request $request, MyResponse $myResponse)
@@ -295,55 +277,51 @@ class ContentController extends Controller
                 return  $myResponse->error(__('error.auth_max_pdf'));
 
             }
-            try {
-                $content = Content::find($id);
-                $selectedCategories = $request->get('chkCategoryID', array());
 
-                if (!$content) {
-                    $maxID = DB::table("Content")->where("ApplicationID", "=", $applicationID)->max('OrderNo');
-                    $content = new Content();
-                    $content->OrderNo = $maxID + 1;
-                } else if (!Common::CheckContentOwnership($id)) {
-                    throw new Exception("Unauthorized user attempt");
-                }
-                $content->ApplicationID = $applicationID;
-                $content->Name = $request->get('Name');
-                $content->Detail = $request->get('Detail');
-                $content->MonthlyName = $request->get('MonthlyName');
-                $content->PublishDate = date('Y-m-d', strtotime($request->get('PublishDate', date('Y-m-d'))));
-                $content->IsUnpublishActive = (int)$request->get('IsUnpublishActive');
-                $content->UnpublishDate = date('Y-m-d', strtotime($request->get('UnpublishDate', date('Y-m-d'))));
-                $content->IsProtected = (int)$request->get('IsProtected');
-                $content->IsBuyable = (int)$request->get('IsBuyable');
-                $content->CurrencyID = (int)$request->get('CurrencyID');
-                $content->Orientation = (int)$request->get('Orientation');
-                $content->setPassword($request->get('Password'));
-                $content->setMaster((int)$request->get('IsMaster'));
-                $content->AutoDownload = (int)$request->get('AutoDownload');
-                $content->TopicStatus = $request->get('topicStatus', 0) === "on";
-                $content->Status = (int)$request->get('Status');
-                if ($content->Status == eStatus::Active) {
-                    $content->RemoveFromMobile = eRemoveFromMobile::Passive;
-                }
+            $content = Content::find($id);
+            $selectedCategories = $request->get('chkCategoryID', array());
 
-                if ((int)$currentUser->UserTypeID == eUserTypes::Manager) {
-                    $content->Approval = (int)$request->get('Approval');
-                    $content->Blocked = (int)$request->get('Blocked');
-                }
-                $content->ifModifiedDoNecessarySettings($selectedCategories);
-                $content->save();
-                $content->setCategory($selectedCategories);
-                $content->setTopics($request->get('topicIds', array()));
-
-                $contentID = $content->ContentID;
-                $contentFile = $content->processPdf();
-                $content->processImage($contentFile, (int)$request->get('hdnCoverImageFileSelected', 0), $request->get('hdnCoverImageFileName'));
-                ContentFile::createPdfPages($contentFile);
-                $content->callIndexingService($contentFile);
-            } catch (Exception $e) {
-                return  $myResponse->error($e->getMessage());
-
+            if (!$content) {
+                $maxID = Content::where('ApplicationID', '=', $applicationID)->max('OrderNo');
+                $content = new Content();
+                $content->OrderNo = $maxID + 1;
+            } else if (!Common::CheckContentOwnership($id)) {
+                return $myResponse->error("Unauthorized user attempt");
             }
+            $content->ApplicationID = $applicationID;
+            $content->Name = $request->get('Name');
+            $content->Detail = $request->get('Detail');
+            $content->MonthlyName = $request->get('MonthlyName');
+            $content->PublishDate = date('Y-m-d', strtotime($request->get('PublishDate', date('Y-m-d'))));
+            $content->IsUnpublishActive = (int)$request->get('IsUnpublishActive');
+            $content->UnpublishDate = date('Y-m-d', strtotime($request->get('UnpublishDate', date('Y-m-d'))));
+            $content->IsProtected = (int)$request->get('IsProtected');
+            $content->IsBuyable = (int)$request->get('IsBuyable');
+            $content->CurrencyID = (int)$request->get('CurrencyID');
+            $content->Orientation = (int)$request->get('Orientation');
+            $content->setPassword($request->get('Password'));
+            $content->setMaster((int)$request->get('IsMaster'));
+            $content->AutoDownload = (int)$request->get('AutoDownload');
+            $content->TopicStatus = $request->get('topicStatus', 0) === "on";
+            $content->Status = (int)$request->get('Status');
+            if ($content->Status == eStatus::Active) {
+                $content->RemoveFromMobile = eRemoveFromMobile::Passive;
+            }
+
+            if ((int)$currentUser->UserTypeID == eUserTypes::Manager) {
+                $content->Approval = (int)$request->get('Approval');
+                $content->Blocked = (int)$request->get('Blocked');
+            }
+            $content->ifModifiedDoNecessarySettings($selectedCategories);
+            $content->save();
+            $content->setCategory($selectedCategories);
+            $content->setTopics($request->get('topicIds', array()));
+
+            $contentID = $content->ContentID;
+            $contentFile = $content->processPdf();
+            $content->processImage($contentFile, (int)$request->get('hdnCoverImageFileSelected', 0), $request->get('hdnCoverImageFileName'));
+            ContentFile::createPdfPages($contentFile);
+            $content->callIndexingService($contentFile);
             $contentLink = $contentID > 0 ? "&contentID=" . $contentID : ("");
             return  $myResponse->success($contentLink);
         } else {

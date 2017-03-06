@@ -48,7 +48,7 @@ class MyPayment
 
     public static function getLang()
     {
-        switch (\Config::get('application.language')) {
+        switch (app()->getLocale()) {
             case 'tr':
                 return Locale::TR;
                 break;

@@ -1230,7 +1230,7 @@ class Common
 
     public static function metaContentLanguage()
     {
-        switch (Config::get('application.language')) {
+        switch (app()->getLocale()) {
             case 'tr':
                 return 'tr';
             case 'en':

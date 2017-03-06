@@ -92,7 +92,7 @@ class MyPayment
         $this->setPaymentAccount($user);
         $this->setPaymentTransaction($this->paymentAccount);
 
-        $request = $this->getRequest(\Config::get("custom.galepress_https_url") . '/' . \Config::get('application.language') . '/3d-secure-response');
+        $request = $this->getRequest(config("custom.galepress_https_url") . '/' . app()->getLocale() . '/3d-secure-response');
         $pc->setRegisterCard(1);
         $request->setPaymentCard($pc);
         $basicThreedsInitialize = BasicThreedsInitialize::create($request, $this->options);

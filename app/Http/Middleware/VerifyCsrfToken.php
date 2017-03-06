@@ -22,6 +22,8 @@ class VerifyCsrfToken extends BaseVerifier
         $myExcept = [
             'contents_uploadfile',
             'contents_uploadcoverimage',
+            'crop_image_post',
+            'contents_order',
         ];
 
         /** @var \Illuminate\Http\Request $request */

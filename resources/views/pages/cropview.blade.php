@@ -119,7 +119,7 @@
                         window.location.reload();
                 }
 
-                function dissmiss_iframe(form) {
+                function postImageCordinates(form) {
 
                     $('body', window.parent.document).removeClass('modal-open').addClass('noTouch');
                     $('#dialog-cover-image', window.parent.document).addClass('hide');
@@ -128,6 +128,7 @@
                     // parent.location.reload();
                 }
                 $(document).ready(function () {
+                    $result = getParameterByName('success');
                     $.urlParam = function (name) {
                         var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
                         if (results == null) {
@@ -137,7 +138,7 @@
                             return results[1] || 0;
                         }
                     }
-                    if (window.location.hash === "#saved") {
+                    if ($result == 'cropsaved') {
                         parent.location = '/' + currentLanguage + '/' + route["contents"] + '/' + $.urlParam('contentID');
                     }
                 });
@@ -153,7 +154,7 @@
                                     onclick="reload_page()">{{ __('common.undo') }}</button>
                             <!-- <button type="button" class="btn my-btn-info" onclick="dissmiss_iframe()">Kapat</button> -->
                             <button type="button" class="btn my-btn-success noTouch" id="saveBtn" type="submit"
-                                    onclick="dissmiss_iframe(this.form)">{{ __('common.detailpage_save') }}</button>
+                                    onclick="postImageCordinates(this.form)">{{ __('common.detailpage_save') }}</button>
                         </div>
                     </div>
 

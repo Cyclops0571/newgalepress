@@ -54,7 +54,7 @@
                   <label>
                     <div class="radio">
 					    <span
-                  id="radio_<?php echo $lang; ?>" <?php echo Config::get('application.language') === $lang ? 'class="checked"' : ''; ?> >
+                  id="radio_<?php echo $lang; ?>" <?php echo app()->getLocale() === $lang ? 'class="checked"' : ''; ?> >
 						<input type="radio" class="hidden" onclick='LanguageActive(<?php echo json_encode($lang); ?>);'>
 					    </span>
                     </div>

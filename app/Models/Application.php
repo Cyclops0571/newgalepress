@@ -142,9 +142,9 @@ use Subscription;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationTag[] $Tags
  * @property-read \App\Models\Package $Package
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $Categories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Content[] $Contents
  */
-class Application extends Model
-{
+class Application extends Model {
 
     const InstallmentCount = 24;
     const DefaultApplicationForegroundColor = '#0082CA';
@@ -155,10 +155,11 @@ class Application extends Model
     public static $key = 'ApplicationID';
     protected $primaryKey = 'ApplicationID';
 
-    public function __construct($attributes = array())
+    public function __construct($attributes = [])
     {
         parent::__construct($attributes);
-        if (!$this->ApplicationID && Auth::user()) {
+        if (!$this->ApplicationID && Auth::user())
+        {
             $this->CustomerID = Auth::user()->CustomerID;
             $this->Installment = Application::InstallmentCount;
         }
@@ -176,7 +177,7 @@ class Application extends Model
      * @param array $columns
      * @return Application|\Illuminate\Database\Eloquent\Builder
      */
-    public static function find($applicationID, $columns = array('*'))
+    public static function find($applicationID, $columns = ['*'])
     {
         return Application::query()->where(self::$key, "=", $applicationID)->first($columns);
     }
@@ -192,16 +193,20 @@ class Application extends Model
 
     public function ApplicationStatus($languageID = null)
     {
-        if($languageID === null) {
+        if ($languageID === null)
+        {
             $languageID = Common::getLocaleId();
         }
         $applicationStatusName = '';
-        if ((int)$this->ApplicationStatusID > 0) {
+        if ((int)$this->ApplicationStatusID > 0)
+        {
             $gc = GroupCode::find($this->ApplicationStatusID)->first();
-            if ($gc) {
+            if ($gc)
+            {
                 $applicationStatusName = $gc->getDisplayName($languageID);
             }
         }
+
         return (strlen(trim($applicationStatusName)) == 0 ? __('common.header_upload') : $applicationStatusName);
     }
 
@@ -219,21 +224,15 @@ class Application extends Model
         return $this->hasMany(Category::class, self::$key);
     }
 
-
-
     /**
-     *
-     * @param int $statusID
-     * @return Content|\Illuminate\Database\Eloquent\Collection|static[]
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function Contents($statusID = eStatus::All)
+    public function Contents()
     {
-        $rs = $this->hasMany(Content::class, self::$key)->getQuery();
-        if ($statusID != eStatus::All) {
-            $rs->where('StatusID', '=', $statusID);
-        }
-        return $rs->get();
+        return $this->hasMany(Content::class, self::$key);
     }
+
+
 
     public function Users()
     {
@@ -260,20 +259,26 @@ class Application extends Model
     public function CheckOwnership()
     {
         $currentUser = Auth::user();
-        if ((int)$currentUser->UserTypeID == eUserTypes::Manager) {
+        if ((int)$currentUser->UserTypeID == eUserTypes::Manager)
+        {
             return true;
         }
 
-        if ((int)$currentUser->UserTypeID == eUserTypes::Customer) {
-            if ((int)$this->StatusID == eStatus::Active) {
+        if ((int)$currentUser->UserTypeID == eUserTypes::Customer)
+        {
+            if ((int)$this->StatusID == eStatus::Active)
+            {
                 $c = $this->Customer;
-                if ((int)$c->StatusID == eStatus::Active) {
-                    if ((int)$currentUser->CustomerID == (int)$c->CustomerID) {
+                if ((int)$c->StatusID == eStatus::Active)
+                {
+                    if ((int)$currentUser->CustomerID == (int)$c->CustomerID)
+                    {
                         return true;
                     }
                 }
             }
         }
+
         return false;
     }
 
@@ -294,31 +299,37 @@ class Application extends Model
 
     public function BannerPage()
     {
-        if ($this->BannerCustomerActive) {
+        if ($this->BannerCustomerActive)
+        {
             return $this->BannerCustomerUrl;
         }
+
         return Config::get('custom.url') . "/banners/service_view/" . $this->ApplicationID . "?ver=" . $this->Version;
     }
 
     public function TabsForService()
     {
-        $tabsForService = array();
-        if (!$this->TabActive) {
+        $tabsForService = [];
+        if (!$this->TabActive)
+        {
             return $tabsForService;
         }
         $tabs = $this->Tabs();
-        foreach ($tabs as $tab) {
-            if ($tab->Status == eStatus::Active) {
-                $tabsForService[] = array(
-                    "tabTitle" => $tab->TabTitle,
-                    "tabLogoUrl" => Config::get('custom.url') . $tab->IconUrl,
+        foreach ($tabs as $tab)
+        {
+            if ($tab->Status == eStatus::Active)
+            {
+                $tabsForService[] = [
+                    "tabTitle"      => $tab->TabTitle,
+                    "tabLogoUrl"    => Config::get('custom.url') . $tab->IconUrl,
                     "tabLogoUrl_1x" => Config::get('custom.url') . str_replace("app-icons", "app-icons/1x", $tab->IconUrl),
                     "tabLogoUrl_2x" => Config::get('custom.url') . str_replace("app-icons", "app-icons/2x", $tab->IconUrl),
                     "tabLogoUrl_3x" => Config::get('custom.url') . str_replace("app-icons", "app-icons/3x", $tab->IconUrl),
-                    "tabUrl" => $tab->urlForService()
-                );
+                    "tabUrl"        => $tab->urlForService(),
+                ];
             }
         }
+
         return $tabsForService;
     }
 
@@ -350,7 +361,8 @@ class Application extends Model
      */
     public function SubscriptionIdentifier($type = 1, $refreshIdentifier = false)
     {
-        switch ($type) {
+        switch ($type)
+        {
             case Subscription::mounth:
                 $fieldName = "MonthIdentifier";
                 break;
@@ -362,46 +374,58 @@ class Application extends Model
                 break;
         }
 
-        if (empty($this->$fieldName) || $refreshIdentifier) {
-            if (empty($this->BundleText)) {
+        if (empty($this->$fieldName) || $refreshIdentifier)
+        {
+            if (empty($this->BundleText))
+            {
                 $identifier = "www.galepress.com.appid." . $this->ApplicationID . "type" . $type . "t" . time();
-            } else {
+            } else
+            {
                 $identifier = strtolower($this->BundleText) . ".appid." . $this->ApplicationID . ".type" . $type . "t" . time();
             }
-            if (empty($this->$fieldName)) {
+            if (empty($this->$fieldName))
+            {
                 $this->$fieldName = $identifier;
                 $this->save();
-            } else {
+            } else
+            {
                 $this->$fieldName = $identifier;
             }
         }
+
         return $this->$fieldName;
     }
 
     public function save(array $options = [])
     {
-        if ($this->isClean()) {
+        if ($this->isClean())
+        {
             return true;
         }
 
         $userID = -1;
-        if (Auth::user()) {
+        if (Auth::user())
+        {
             $userID = Auth::user()->UserID;
         }
 
-        if ((int)$this->ApplicationID == 0) {
+        if ((int)$this->ApplicationID == 0)
+        {
             $this->DateCreated = new DateTime();
             $this->ProcessTypeID = eProcessTypes::Insert;
             $this->CreatorUserID = $userID;
             $this->StatusID = eStatus::Active;
-        } else {
+        } else
+        {
             $this->ProcessTypeID = eProcessTypes::Update;
         }
         $this->ProcessUserID = $userID;
         $this->ProcessDate = new DateTime();
-        if ($options['incrementVersion']) {
+        if ($options['incrementVersion'])
+        {
             $this->Version = (int)$this->Version + 1;
         }
+
         return parent::save($options);
     }
 
@@ -414,66 +438,77 @@ class Application extends Model
     public function subscriptionStatus($key, $value = -1)
     {
         $result = "";
-        switch ($key) {
+        switch ($key)
+        {
             case Subscription::week:
-                if ($value != -1) {
+                if ($value != -1)
+                {
                     $this->SubscriptionWeekActive = (int)((bool)$value);
                 }
                 $result = $this->SubscriptionWeekActive;
                 break;
             case Subscription::mounth:
-                if ($value != -1) {
+                if ($value != -1)
+                {
                     $this->SubscriptionMonthActive = (int)((bool)$value);
                 }
                 $result = $this->SubscriptionMonthActive;
                 break;
             case Subscription::year:
-                if ($value != -1) {
+                if ($value != -1)
+                {
                     $this->SubscriptionYearActive = (int)((bool)$value);
                 }
                 $result = $this->SubscriptionYearActive;
                 break;
         }
+
         return $result;
     }
 
     public function sidebarClass($returnAsString = false)
     {
-        if ($returnAsString) {
+        if ($returnAsString)
+        {
             return $this->ExpirationDate < date("Y-m-d") ? 'class="expired-app"' : '';
-        } else {
-            return $this->ExpirationDate < date("Y-m-d") ? array("class" => 'expired-app') : array();
+        } else
+        {
+            return $this->ExpirationDate < date("Y-m-d") ? ["class" => 'expired-app'] : [];
         }
     }
 
     public function getServiceCategories()
     {
-        $categories = array();
-        array_push($categories, array(
-            'CategoryID' => 0,
-            'CategoryName' => trans('common.contents_category_list_general')
-        ));
+        $categories = [];
+        array_push($categories, [
+            'CategoryID'   => 0,
+            'CategoryName' => trans('common.contents_category_list_general'),
+        ]);
 
         $rs = Category::query()->where('ApplicationID', '=', $this->ApplicationID)->where('StatusID', '=', eStatus::Active)->orderBy('Name', 'ASC')->get();
-        foreach ($rs as $r) {
-            array_push($categories, array(
-                'CategoryID' => (int)$r->CategoryID,
-                'CategoryName' => $r->Name
-            ));
+        foreach ($rs as $r)
+        {
+            array_push($categories, [
+                'CategoryID'   => (int)$r->CategoryID,
+                'CategoryName' => $r->Name,
+            ]);
         }
+
         return $categories;
     }
 
     public function getExpireTimeMessage()
     {
-//        {{ $expApp->Name }} {{$diff->days}}
+        //        {{ $expApp->Name }} {{$diff->days}}
         $date1 = new DateTime($this->ExpirationDate);
         $date2 = new DateTime(date('Y-m-d'));
         $diff = $date1->diff($date2);
-        if ($diff->days == 0) {
-            return __('applicationlang.expiretime0days', array('ApplicationName' => $this->Name));
-        } else {
-            return __('applicationlang.expiretime15days', array('ApplicationName' => $this->Name, 'RemainingDays' => $diff->days));
+        if ($diff->days == 0)
+        {
+            return __('applicationlang.expiretime0days', ['ApplicationName' => $this->Name]);
+        } else
+        {
+            return __('applicationlang.expiretime15days', ['ApplicationName' => $this->Name, 'RemainingDays' => $diff->days]);
         }
     }
 
@@ -484,17 +519,21 @@ class Application extends Model
 
     public function getBannerColor()
     {
-        if ($this->BannerColor) {
+        if ($this->BannerColor)
+        {
             return $this->BannerColor;
         }
+
         return $this->getThemeForegroundColor();
     }
 
     public function getThemeForegroundColor()
     {
-        if ($this->ThemeForegroundColor) {
+        if ($this->ThemeForegroundColor)
+        {
             return $this->ThemeForegroundColor;
-        } else {
+        } else
+        {
             return self::DefaultApplicationForegroundColor;
         }
     }
@@ -502,12 +541,14 @@ class Application extends Model
     public function initialLocation()
     {
         $currentLang = $this->ApplicationLanguage;
-        if (Auth::user()) {
+        if (Auth::user())
+        {
             $currentLang = App::getLocale();
         }
 
-        $location = array();
-        switch ($currentLang) {
+        $location = [];
+        switch ($currentLang)
+        {
             case 'tr':
                 $location['x'] = '41.010455';
                 $location['y'] = '28.985400';
@@ -522,6 +563,7 @@ class Application extends Model
                 $location['x'] = '38.907147';
                 $location['y'] = '-77.036545';
         }
+
         return $location;
     }
 
@@ -535,29 +577,38 @@ class Application extends Model
 
     public function setTopics($newTopicIds)
     {
-        if ($this->TopicStatus != eStatus::Active) {
+        if ($this->TopicStatus != eStatus::Active)
+        {
             return;
         }
-        if (empty($newTopicIds)) {
-            foreach ($this->ApplicationTopics as $applicationTopic) {
+        if (empty($newTopicIds))
+        {
+            foreach ($this->ApplicationTopics as $applicationTopic)
+            {
                 $applicationTopic->delete();
             }
+
             return;
         }
 
-        $applicationTopicIds = array();
-        foreach ($this->ApplicationTopics as $topic) {
+        $applicationTopicIds = [];
+        foreach ($this->ApplicationTopics as $topic)
+        {
             $applicationTopicIds[] = $topic->TopicID;
         }
 
 
-        foreach ($newTopicIds as $newTopicId) {
-            foreach ($this->ApplicationTopics as $applicationTopic) {
-                if (!in_array($applicationTopic->TopicID, $newTopicIds)) {
+        foreach ($newTopicIds as $newTopicId)
+        {
+            foreach ($this->ApplicationTopics as $applicationTopic)
+            {
+                if (!in_array($applicationTopic->TopicID, $newTopicIds))
+                {
                     $applicationTopic->delete();
                 }
             }
-            if (!in_array($newTopicId, $applicationTopicIds)) {
+            if (!in_array($newTopicId, $applicationTopicIds))
+            {
                 $applicationTopic = new ApplicationTopic();
                 $applicationTopic->ApplicationID = $this->ApplicationID;
                 $applicationTopic->TopicID = $newTopicId;
@@ -569,18 +620,42 @@ class Application extends Model
 
     public function handleCkPem($sourceFileNameFull)
     {
-        if (File::exists($sourceFileNameFull)) {
+        if (File::exists($sourceFileNameFull))
+        {
 
             $targetFilePath = 'files/customer_' . $this->CustomerID . '/application_' . $this->ApplicationID;
             $targetRealPath = public_path($targetFilePath);
             $targetFileNameFull = $targetRealPath . '/' . $this->CkPem;
 
-            if (!File::exists($targetRealPath)) {
+            if (!File::exists($targetRealPath))
+            {
                 File::makeDirectory($targetRealPath, 777, true);
             }
 
             File::move($sourceFileNameFull, $targetFileNameFull);
         }
     }
+
+    public function checkUserAccess()
+    {
+        $currentUser = Auth::user();
+        if ($currentUser == null || $this->StatusID != eStatus::Active)
+        {
+            return false;
+        }
+
+        if ((int)$currentUser->UserTypeID == eUserTypes::Manager)
+        {
+            return true;
+        }
+
+        if ($currentUser->CustomerID == $this->CustomerID)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 
 }

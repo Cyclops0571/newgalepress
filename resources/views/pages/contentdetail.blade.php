@@ -886,7 +886,7 @@
               </div>
               <div id="coverImageModalBody" class="modal-body">
                 <iframe id="coverImageIframe"
-                        src="<?php echo '/' . Config::get('application.language') . '/crop/image?contentID=' . $ContentID ?>"
+                        src="<?php echo '/' . app()->getLocale() . '/crop/image?contentID=' . $ContentID ?>"
                         scrolling="no" frameborder="0"></iframe>
               </div>
             </div>

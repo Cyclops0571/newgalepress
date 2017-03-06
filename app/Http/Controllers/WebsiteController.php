@@ -227,7 +227,7 @@ class WebsiteController extends Controller
             $mailData = array(
                 'name' => $user->FirstName,
                 'surname' => $user->LastName,
-                'url' => Config::get("custom.url") . '/' . Config::get('application.language') . '/' . __('route.confirmemail') . '?email=' . $user->Email . '&code=' . $confirmCode,
+                'url' => Config::get("custom.url") . '/' . app()->getLocale() . '/' . __('route.confirmemail') . '?email=' . $user->Email . '&code=' . $confirmCode,
             );
             $msg = View::make('mail-templates.aktivasyon.index')->with($mailData)->render();
             // Common::sendHtmlEmail("serdar.saygili@detaysoft.com", $s->FirstName.' '.$s->LastName, $subject, $msg)
@@ -407,7 +407,7 @@ class WebsiteController extends Controller
             $mailData = array(
                 'name' => $s->FirstName,
                 'surname' => $s->LastName,
-                'url' => Config::get("custom.url") . '/' . Config::get('application.language') . '/' . __('route.confirmemail') . '?email=' . $s->Email . '&code=' . $confirmCode,
+                'url' => Config::get("custom.url") . '/' . app()->getLocale() . '/' . __('route.confirmemail') . '?email=' . $s->Email . '&code=' . $confirmCode,
             );
             $msg = View::make('mail-templates.aktivasyon.index')->with($mailData)->render();
             $mailStatus = Common::sendHtmlEmail($s->Email, $s->FirstName . ' ' . $s->LastName, $subject, $msg);

@@ -6,11 +6,14 @@
 	$unusedInteractivity = __('interactivity.ok')->get();
 	$unusedValidation = __('notification.validation')->get();
 	$unusedJavascriptLang = __('javascriptlang.select')->get();
-	?>
-	var currentLanguage = <?php echo json_encode(Config::get('application.language')); ?>;
-	var route = <?php echo json_encode(Lang::$lines["application"][Config::get('application.language')]["route"]); ?>;
-	var notification = <?php echo json_encode(Lang::$lines["application"][Config::get('application.language')]["notification"]); ?>;
-	var javascriptLang = <?php echo json_encode(Lang::$lines["application"][Config::get('application.language')]["javascriptlang"]); ?>;
-	var interactivity = <?php echo json_encode(Lang::$lines["application"][Config::get('application.language')]["interactivity"]); ?>;
+    echo app()->getLocale();
+    exit;
+
+    ?>
+	var currentLanguage = <?php echo json_encode(app()->getLocale(); ?>;
+	var route = <?php echo json_encode(Lang::$lines["application"][app()->getLocale()]["route"]); ?>;
+	var notification = <?php echo json_encode(Lang::$lines["application"][app()->getLocale()]["notification"]); ?>;
+	var javascriptLang = <?php echo json_encode(Lang::$lines["application"][app()->getLocale()]["javascriptlang"]); ?>;
+	var interactivity = <?php echo json_encode(Lang::$lines["application"][app()->getLocale()]["interactivity"]); ?>;
 	// -->
 </script>

@@ -10,9 +10,9 @@ a.theme-black{background: rgba(0,0,0,0.6);}
         .theme-black .navbar-nav > li > a:hover > span{ opacity: 1; filter: alpha(opacity=100);}
 
     .theme-black .bg-default{background: rgba(0,0,0,0.6) !important;}        
-    .theme-black .bg-light{background-image: url('../img/background/wlight.png');}
-    .theme-black .bg-light-ltr{background-image: url('../img/background/wlight_ltr.png');}
-        .theme-black .bg-light-rtl{background-image: url('../img/background/wlight_rtl.png');}
+    .theme-black .bg-light{background-image: url('/img/background/wlight.png');}
+    .theme-black .bg-light-ltr{background-image: url('/img/background/wlight_ltr.png');}
+        .theme-black .bg-light-rtl{background-image: url('/img/background/wlight_rtl.png');}
 
         
 a.theme-white{background: rgba(255,255,255,0.3);}
@@ -24,12 +24,12 @@ a.theme-white{background: rgba(255,255,255,0.3);}
     .theme-white .nav .open > a, .theme-white .nav .open > a:hover, .theme-white .nav .open > a:focus{border-right:1px solid transparent;border-left-color:transparent;}
     .theme-white .navbar-nav > li:last-child > a{border-right-color:transparent;}
     .theme-white .navbar-nav > li > a > span{color: #FFF; opacity: 0.5; filter: alpha(opacity=50);}
-        .theme-white .navbar-nav > li > a:hover > span{ opacity: 1; filter: alpha(opacity=100);}
+    .theme-white .navbar-nav > li > a:hover > span{ opacity: 1; filter: alpha(opacity=100);}
 
     .theme-white .bg-default{background: rgba(255,255,255,0.3) !important;}        
-    .theme-white .bg-light{background-image: url('../img/background/wlight.png');}
-    .theme-white .bg-light-ltr{background-image: url('../img/background/wlight_ltr.png');}
-        .theme-white .bg-light-rtl{background-image: url('../img/background/wlight_rtl.png');}
+    .theme-white .bg-light{background-image: url('/img/background/wlight.png');}
+    .theme-white .bg-light-ltr{background-image: url('/img/background/wlight_ltr.png');}
+        .theme-white .bg-light-rtl{background-image: url('/img/background/wlight_rtl.png');}
 
         
 a.theme-dark{background: #131517;}
@@ -44,9 +44,9 @@ a.theme-dark{background: #131517;}
         .theme-dark .navbar-nav > li > a:hover > span{ opacity: 1; filter: alpha(opacity=100);}
 
     .theme-dark .bg-default{background-color: #131517 !important;}        
-    .theme-dark .bg-light{background-image: url('../img/background/wlight.png');}
-    .theme-dark .bg-light-ltr{background-image: url('../img/background/wlight_ltr.png');}
-        .theme-dark .bg-light-rtl{background-image: url('../img/background/wlight_rtl.png');}
+    .theme-dark .bg-light{background-image: url('/img/background/wlight.png');}
+    .theme-dark .bg-light-ltr{background-image: url('/img/background/wlight_ltr.png');}
+        .theme-dark .bg-light-rtl{background-image: url('/img/background/wlight_rtl.png');}
         
         
 a.theme-green{background: #304843;}
@@ -61,9 +61,9 @@ a.theme-green{background: #304843;}
         .theme-green .navbar-nav > li > a:hover > span{ opacity: 1; filter: alpha(opacity=100);}
 
     .theme-green .bg-default{background-color: #304843 !important;}        
-    .theme-green .bg-light{background-image: url('../img/background/wlight.png');}
-    .theme-green .bg-light-ltr{background-image: url('../img/background/wlight_ltr.png');}
-        .theme-green .bg-light-rtl{background-image: url('../img/background/wlight_rtl.png');}
+    .theme-green .bg-light{background-image: url('/img/background/wlight.png');}
+    .theme-green .bg-light-ltr{background-image: url('/img/background/wlight_ltr.png');}
+        .theme-green .bg-light-rtl{background-image: url('/img/background/wlight_rtl.png');}
 
 a.template-white{background: #FFF;}
     .template-white{background: #FFF;}

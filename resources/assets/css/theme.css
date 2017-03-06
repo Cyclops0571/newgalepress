@@ -255,7 +255,7 @@ body.sticky-menu-active div.main {
 
 /* Map */
 div.map-section {
-	background: transparent url(../img/map-top.png) center 0 no-repeat;
+	background: transparent url(/img/map-top.png) center 0 no-repeat;
 	padding-top: 220px;
 	margin-top: 40px;
 	
@@ -274,7 +274,7 @@ section.featured.footer {
 }
 
 section.featured.map {
-	background-image: url(../img/map-bottom.png);
+	background-image: url(/img/map-bottom.png);
 	background-position: center 0;
 	background-repeat: no-repeat;
 	margin-top: 0;
@@ -486,7 +486,7 @@ div.home-intro-compact div.get-started {
 
 /* Home Concept */
 div.home-concept {
-	background: transparent url(../img/home-concept.png) no-repeat center 0;
+	background: transparent url(/img/home-concept.png) no-repeat center 0;
 	width: 100%;
 	overflow: hidden;
 }
@@ -500,7 +500,7 @@ div.home-concept div.process-image {
 	-o-transition: all 0.3s ease-out 0.3s;
 	-webkit-transition: all 0.3s ease-out 0.3s;
 	transition: all 0.3s ease-out 0.3s;
-	background: transparent url(../img/home-concept-item.png) no-repeat 0 0;
+	background: transparent url(/img/home-concept-item.png) no-repeat 0 0;
 	width: 160px;
 	height: 175px;
 	margin: 135px 0 0 0;
@@ -530,7 +530,7 @@ div.home-concept strong.our-work {
 }
 
 div.home-concept div.project-image {
-	background: transparent url(../img/home-concept-item.png) no-repeat 100% 0;
+	background: transparent url(/img/home-concept-item.png) no-repeat 100% 0;
 	width: 350px;
 	height: 376px;
 	margin: 15px 0 0 -30px;
@@ -540,7 +540,7 @@ div.home-concept div.project-image {
 }
 
 div.home-concept span.sun {
-	background: transparent url(../img/home-concept-icons.png) no-repeat 0 0;
+	background: transparent url(/img/home-concept-icons.png) no-repeat 0 0;
 	width: 60px;
 	height: 56px;
 	display: block;
@@ -550,7 +550,7 @@ div.home-concept span.sun {
 }
 
 div.home-concept span.cloud {
-	background: transparent url(../img/home-concept-icons.png) no-repeat 100% 0;
+	background: transparent url(/img/home-concept-icons.png) no-repeat 100% 0;
 	width: 116px;
 	height: 56px;
 	display: block;
@@ -876,12 +876,12 @@ a.scroll-to-top.visible {
 
 .buttonTR{
 border:none;
-background:url(../img/tr_icon.png) no-repeat;
+background:url(/img/tr_icon.png) no-repeat;
 padding:0;
 }
 .buttonEng{
 border:none;
-background:url(../img/eng_icon.png) no-repeat;
+background:url(/img/eng_icon.png) no-repeat;
 padding:0;
 }
 

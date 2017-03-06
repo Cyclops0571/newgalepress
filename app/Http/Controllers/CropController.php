@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\ImageClass;
 use App\Models\Content;
 use App\Models\ContentCoverImageFile;
 use App\Models\ContentFile;
 use App\Models\Crop;
 use eStatus;
+use File;
 use Illuminate\Http\Request;
+use App\Library\imageInfoEx;
+use Imagick;
 use Redirect;
 
 class CropController extends Controller
@@ -15,7 +19,7 @@ class CropController extends Controller
     public $restful = true;
     private $errorPage = '';
 
-    public function get_image(Request $request) {
+    public function image(Request $request) {
         $cropSet = Crop::get();
         $contentID=$request->get("contentID");
         $contentFile = ContentFile::where('ContentID', '=', $contentID)
@@ -44,10 +48,11 @@ class CropController extends Controller
         $data = array();
         $data['cropSet'] = $cropSet;
         $data['imageInfo'] = $imageInfo;
+        $data['displayedWidth'] = ImageClass::CropPageWidth;
         return view('pages.cropview', $data);
     }
 
-    public function post_image() {
+    public function save(Request $request) {
 
         $xCoordinateSet = $request->get("xCoordinateSet");
         $yCoordinateSet = $request->get("yCoordinateSet");
@@ -77,16 +82,16 @@ class CropController extends Controller
         //bu contentin imageini bulalim....
         //calculate the absolute path of the source image
         $sourceImagePath = $contentFile->FilePath . "/" . IMAGE_ORIGINAL . IMAGE_EXTENSION;
-        if (!File::exists(path("public") . $sourceImagePath)) {
+        if (!File::exists(public_path($sourceImagePath))) {
             //old pdf files dont have an original.jpg
             $sourceImagePath = $contentFile->FilePath . "/" . $ccif->SourceFileName;
         }
         $imageInfo = new imageInfoEx($sourceImagePath);
-        $fileSet = scandir(path("public") . $contentFile->FilePath . "/");
+        $fileSet = scandir(public_path($contentFile->FilePath . "/"));
         $length = strlen(IMAGE_CROPPED_NAME);
         foreach ($fileSet as $fileName) {
             if (substr($fileName, 0, $length) === IMAGE_CROPPED_NAME) {
-                unlink(path("public") . $contentFile->FilePath . "/" . $fileName);
+                unlink(public_path($contentFile->FilePath . "/" . $fileName));
             }
         }
 
@@ -101,13 +106,8 @@ class CropController extends Controller
             $im = new Imagick($imageInfo->absolutePath);
             $im->cropimage($widthSet[$i] * $RespectRatio, $heightSet[$i] * $RespectRatio, $xCoordinateSet[$i] * $RespectRatio, $yCoordinateSet[$i] * $RespectRatio);
             $im->resizeImage($crop->Width, $crop->Height, Imagick::FILTER_LANCZOS, 1, TRUE);
-            $im->writeImage(path('public') . $contentFile->FilePath . "/" . IMAGE_CROPPED_NAME . "_" . $crop->Width . "x" . $crop->Height . ".jpg");
+            $im->writeImage(public_path($contentFile->FilePath . "/" . IMAGE_CROPPED_NAME . "_" . $crop->Width . "x" . $crop->Height . ".jpg"));
             $im->destroy();
-//            var_dump($imageInfo); exit;
-//            echo $widthSet[$i] . " -- " . $heightSet[$i] . " -- " . $xCoordinateSet[$i] . " -- " . $yCoordinateSet[$i], PHP_EOL;
-//            echo "Resize:" . $crop->Width . " -- " . $crop->Height, PHP_EOL;
-//            echo "imagePath:" . path('public') . $contentFile->FilePath . "/" . IMAGE_CROPPED_NAME . "_" . $crop->Width . "x" . $crop->Height . ".jpg", PHP_EOL;
-//            exit;
         }
 
         $content = Content::find($contentID);

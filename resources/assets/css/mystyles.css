@@ -38,7 +38,7 @@ tbody td {
 }
 
 .myBreadCrumb {
-    background: url('../img/background/bt_cubs.png') left top repeat;
+    background: url('/img/background/bt_cubs.png') left top repeat;
     background-color: rgba(29, 29, 29, 1);
     width: 345px;
     margin: 0px auto;
@@ -179,7 +179,7 @@ ul.statistics {
 }
 
 #header-background {
-    background: url('../img/headerBlue.png') repeat-x;
+    background: url('/img/headerBlue.png') repeat-x;
     height: 72px;
     width: 100%;
     position: absolute;
@@ -209,7 +209,7 @@ ul.statistics {
 .userBlock {
     margin-bottom: 5px;
     margin-top: 5px;
-    background: url('../img/background/bt_cubs.png') left top repeat;
+    background: url('/img/background/bt_cubs.png') left top repeat;
 }
 
 .usrBlckIcnDrpbx {
@@ -625,7 +625,7 @@ table a.sort_up {
     }
 
     .navbar-nav .open .dropdown-menu > li > a:hover {
-        background: url('../img/background/bt_cubs_a.png') left top repeat transparent;
+        background: url('/img/background/bt_cubs_a.png') left top repeat transparent;
     }
 
     .dropdown-menu > li > a .icon-angle-right {

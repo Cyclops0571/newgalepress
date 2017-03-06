@@ -88,8 +88,3 @@ if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
         </ul>
     </div>
 </nav>
-@if(isset($caption))
-    <div class="myBreadCrumb">
-      @include('sections.filterbar')
-    </div>
-@endif

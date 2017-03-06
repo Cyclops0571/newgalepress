@@ -164,7 +164,7 @@ $defaultSliderImage = '/img/bannerSlider/defaultPreview.jpg';
 				    $detail = "";
 				    if (isset($templateResults[$i])) {
 					$imageSrcTmp = $templateResults[$i]->FilePath . '/' . $templateResults[$i]->FileName;
-					if (is_file(path("public") . $imageSrcTmp)) {
+					if (is_file(public_path($imageSrcTmp))) {
 					    $imageSrc = "/" . $imageSrcTmp;
 					}
 					$name = $templateResults[$i]->Name;

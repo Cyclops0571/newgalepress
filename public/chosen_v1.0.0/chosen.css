@@ -21,7 +21,7 @@
   width: 100%;
   border: 1px solid rgba(0,0,0,0.2);
   border-top: 0;
-  background: url('../../img/background/bt_cubs.png') left top repeat #222;
+  background: url('/img/background/bt_cubs.png') left top repeat #222;
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
 }
 .chosen-container.chosen-with-drop .chosen-drop {
@@ -240,7 +240,7 @@ line-height: 15px;
 cursor: default;
 -webkit-box-shadow: 0px 0px 5px rgba(228, 244, 255, 0.2);
 box-shadow: 0px 0px 5px rgba(228, 244, 255, 0.2);
-background: url('../../img/background/bt_cubs.png') left top repeat #222;
+background: url('/img/background/bt_cubs.png') left top repeat #222;
 }
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close {
   position: absolute;

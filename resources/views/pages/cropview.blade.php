@@ -5,7 +5,6 @@
 @endsection
 
 @section('body')
-    <?php $displayedWidth = ImageClass::CropPageWidth; ?>
     <style type="text/css">
         body {
             border-left: 7px solid #2D2D2D;
@@ -37,7 +36,7 @@
             border: 1px #1681bf solid !important;
         }
 
-        img[width="<?php echo $displayedWidth; ?>"] {
+        img[width="<?php use App\Library\imageInfoEx;use App\Models\Crop;echo $displayedWidth; ?>"] {
             -webkit-box-shadow: 0px 0px 50 0px rgba(2, 81, 130, 1);
             -moz-box-shadow: 0px 0px 50 0px rgba(2, 81, 130, 1);
             box-shadow: 0px 0px 50px 0px rgba(2, 81, 130, 1);

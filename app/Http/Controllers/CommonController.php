@@ -355,8 +355,7 @@ class CommonController extends Controller
             'page' => __('route.mydetail'),
             'caption' => __('common.mydetail')
         );
-        return View::make('pages.mydetail')
-            ->nest('filterbar', 'sections.filterbar', $data);
+        return View::make('pages.mydetail');
     }
 
     public function mydetail(Request $request, MyResponse $myResponse)

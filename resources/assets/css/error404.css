@@ -117,7 +117,7 @@ img {
     left: -20px;
     width: 435px;
     height: 210px;
-    background-image: url("../img/wall-1.png");
+    background-image: url("/img/wall-1.png");
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center;
@@ -137,7 +137,7 @@ img {
     width: 230px;
     height: 292px;
     display: inline-block;
-    background-image: url("../img/four.png");
+    background-image: url("/img/four.png");
     background-repeat: no-repeat;
     background-size: 100%;
     z-index: 19;
@@ -148,7 +148,7 @@ img {
     width: 230px;
     height: 292px;
     display: inline-block;
-    background-image: url("../img/zero.png");
+    background-image: url("/img/zero.png");
     background-repeat: no-repeat;
     background-size: 100%;
     background-position: 0px 20px;
@@ -177,7 +177,7 @@ img {
     height: 50px;
     top: 6px;
     left: 115px;
-    background-image: url("../img/nail.png");
+    background-image: url("/img/nail.png");
     background-repeat: no-repeat;
     background-size: 100%;
     position: absolute;
@@ -281,7 +281,7 @@ img {
     width: 300px;
     height: 371px;
     background-size: 100%;
-    background-image: url("../img/worker.png");
+    background-image: url("/img/worker.png");
     background-repeat: no-repeat;
     background-position: center;
     z-index: 10;
@@ -294,7 +294,7 @@ img {
     width: 730px;
     height: 199px;
     background-size: 100%;
-    background-image: url("../img/tools.png");
+    background-image: url("/img/tools.png");
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -319,7 +319,7 @@ img {
     margin: -100px 0 0 -100px;
     width: 200px;
     height: 200px;
-    background-image: url("../img/ajax-loader.gif");
+    background-image: url("/img/ajax-loader.gif");
     background-position: center;
     background-repeat: no-repeat;
 }

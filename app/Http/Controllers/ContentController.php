@@ -19,7 +19,6 @@ use eStatus;
 use eUserTypes;
 use Exception;
 use File;
-use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Redirect;
@@ -124,15 +123,11 @@ class ContentController extends Controller
                 }
 
                 $data = array_merge($data, array('appName' => $app->Name));
-                return View::make('pages.expiredpage', $data)
-                    ->nest('filterbar', 'sections.filterbar', $data)
-                    ->nest('commandbar', 'sections.commandbar', $data);
+                return View::make('pages.expiredpage', $data);
             }
         }
 
-        return $html = View::make('pages.' . Str::lower($this->table) . 'list', $data)
-            ->nest('filterbar', 'sections.filterbar', $data)
-            ->nest('commandbar', 'sections.commandbar', $data);
+        return $html = View::make('pages.' . Str::lower($this->table) . 'list', $data);
     }
 
     public function request(Request $request)
@@ -156,18 +151,13 @@ class ContentController extends Controller
                 $oContentFilePath = '';
                 $oContentFileName = '';
                 Common::getContentDetail($ContentID, $Password, $oCustomerID, $oApplicationID, $oContentID, $oContentFileID, $oContentFilePath, $oContentFileName);
-                Common::download($RequestTypeID, $oCustomerID, $oApplicationID, $oContentID, $oContentFileID, 0, $oContentFilePath, $oContentFileName);
+                Common::download($RequestTypeID, $oCustomerID, $oApplicationID, $oContentID, $oContentFileID, 0, $oContentFilePath, $oContentFileName);//todo: break this function to small pieces
             } else {
                 //get image
-                Common::downloadImage($ContentID, $RequestTypeID, $Width, $Height);
+                Common::downloadImage($ContentID, $RequestTypeID, $Width, $Height);//todo: break this function to small pieces
             }
         } catch (Exception $e) {
-            $r = '';
-            $r .= '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
-            $r .= "<Response>\n";
-            $r .= "<Error code=\"" . $e->getCode() . "\">" . Common::xmlEscape($e->getMessage()) . "</Error>\n";
-            $r .= "</Response>\n";
-            return Response::make($r, 200, array('content-type' => 'text/xml'));
+            return Response::make($this->xmlResponse($e), 200, array('content-type' => 'text/xml'));
         }
     }
 
@@ -189,8 +179,7 @@ class ContentController extends Controller
             return Redirect::to(__('route.home'));
         } else if ($app->ExpirationDate < date('Y-m-d')) {
             $data['appName'] = $app->Name;
-            return View::make('pages.expiredpage', $data)
-                ->nest('filterbar', 'sections.filterbar', $data);
+            return View::make('pages.expiredpage', $data);
         }
 
         $data['app'] = $app;
@@ -200,8 +189,7 @@ class ContentController extends Controller
         $data['authInteractivity'] = (1 == (int)$app->Package->Interactive);
 
 
-        return View::make('pages.' . Str::lower($this->table) . 'detail', $data)
-            ->nest('filterbar', 'sections.filterbar', $data);
+        return View::make('pages.' . Str::lower($this->table) . 'detail', $data);
     }
 
     public function show(Content $content)
@@ -823,5 +811,20 @@ class ContentController extends Controller
             sleep(1);
         }
         return ajaxResponse::error();
+    }
+
+    /**
+     * @param $e
+     * @return string
+     */
+    protected function xmlResponse($e)
+    {
+        $r = '';
+        $r .= '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
+        $r .= "<Response>\n";
+        $r .= "<Error code=\"" . $e->getCode() . "\">" . Common::xmlEscape($e->getMessage()) . "</Error>\n";
+        $r .= "</Response>\n";
+
+        return $r;
     }
 }

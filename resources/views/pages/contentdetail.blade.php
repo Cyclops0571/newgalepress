@@ -3,8 +3,6 @@
 @section('content')
 
     <?php
-    use App\Models\Application;
-    use App\Models\Category;
 
     /** @var App\Models\Application $app */
     /** @var App\Models\Content $content */

@@ -38,35 +38,35 @@
 }
 
 .userIcon{
-    background: #333333 url(../img/signupimg/kullanici.png) no-repeat 10px 0;
+    background: #333333 url(/img/signupimg/kullanici.png) no-repeat 10px 0;
     background-position: right;
 }
 
 .mailIcon{
-    background: #333333 url(../img/signupimg/mail.png) no-repeat;
+    background: #333333 url(/img/signupimg/mail.png) no-repeat;
     background-position: right;
 }
 
 .keyIcon{
-    background: #333333 url(../img/signupimg/sifre.png) no-repeat;
+    background: #333333 url(/img/signupimg/sifre.png) no-repeat;
     background-position: right;
 }
 
 .userIcon:focus{
     border: 10px solid #e9e9e9;
-    background: #e9e9e9 url(../img/signupimg/kullanici2.png) no-repeat 10px 0;
+    background: #e9e9e9 url(/img/signupimg/kullanici2.png) no-repeat 10px 0;
     background-position: right;
 }
 
 .mailIcon:focus{
     border: 10px solid #e9e9e9;
-    background: #e9e9e9 url(../img/signupimg/mail2.png) no-repeat;
+    background: #e9e9e9 url(/img/signupimg/mail2.png) no-repeat;
     background-position: right;
 }
 
 .keyIcon:focus{
     border: 10px solid #e9e9e9;
-    background: #e9e9e9 url(../img/signupimg/sifre2.png) no-repeat;
+    background: #e9e9e9 url(/img/signupimg/sifre2.png) no-repeat;
     background-position: right;
 }
 
@@ -82,7 +82,7 @@
 }
 
 .face{
-    background: #2c467b url(../img/signupimg/facebook.png) no-repeat;
+    background: #2c467b url(/img/signupimg/facebook.png) no-repeat;
     background-position: right;
     border: 10px solid #2c467b;
     border-radius: 70px;

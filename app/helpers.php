@@ -705,6 +705,7 @@ class Common
         $r->RequestDate = new DateTime();
         $r->IP = request()->ip();
         $r->DeviceType = $_SERVER['HTTP_USER_AGENT']; //Holmes::get_device();
+        $r->DeviceOS = Requestt::LINUX;
         $r->FileSize = $fileSize;
         $r->DataTransferred = 0;
         $r->Percentage = 0;

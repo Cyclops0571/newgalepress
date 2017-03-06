@@ -25,7 +25,7 @@
 </head>
 <body>
 <script>
-    var currentLanguage = <?php echo json_encode(Config::get('application.language')); ?>;
+    var currentLanguage = <?php echo json_encode(app()->getLocale()); ?>;
 </script>
 <style>
     /* statusbar */

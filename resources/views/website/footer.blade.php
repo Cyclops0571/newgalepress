@@ -20,7 +20,7 @@ $socialMediaLinks['fa-instagram'] = __('common.fa-instagram');
                             <li><a href="<?php echo $url ?>" class="fa <?php echo $faIcon ?> fa-lg" target="_blank"></a></li>
                             <?php endforeach; ?>
                         </ul>
-                        <?php if( Config::get("application.language") != 'usa'): ?>
+                        <?php if( app()->getLocale() != 'usa'): ?>
                         <ul class="social-icon sep-top-xs">
                             <li>
                                 <small class="sep-top-xs sep-bottom-md">{{__('website.get_in_touch_desc')}}<br/>
@@ -49,7 +49,7 @@ $socialMediaLinks['fa-instagram'] = __('common.fa-instagram');
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <?php if( Config::get("application.language") == 'tr'): ?>
+                    <?php if( app()->getLocale() == 'tr'): ?>
                     <div class="col-md-9 col-md-offset-3 sep-top-md">
                         <h6 class="upper widget-title">{{__('website.contact')}}</h6>
                     </div>

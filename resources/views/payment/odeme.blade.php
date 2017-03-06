@@ -6,7 +6,7 @@ $data =  'api_id=im0322080005c70f195bca1434712720' . //size özel iyzico api
 '&external_id=' . $user->CustomerID . //sipariş numarası olarka kullanabileceğimizalan
 '&mode=' . Config::get("custom.payment_environment") . // live olmalı, gerçek ödeme alabilmek için
 '&type=RG.DB' . // iyzico form yükleme tipi. Kart saklayan form yüklemesi.
-        '&return_url=' . Config::get("custom.galepress_https_url") . '/' . Config::get('application.language') . '/3d-secure-response' . //bu ödemenin sonucunu ben hangi sayfaya dönmeliyim. Sitenizde bu ödemeye ait sonuç nereye dönsün. Başarılımı başarısız mı orada anlayacağız.
+        '&return_url=' . Config::get("custom.galepress_https_url") . '/' . app()->getLocale() . '/3d-secure-response' . //bu ödemenin sonucunu ben hangi sayfaya dönmeliyim. Sitenizde bu ödemeye ait sonuç nereye dönsün. Başarılımı başarısız mı orada anlayacağız.
 '&amount=10000' . // 100 ile çarpılmış bağış bedeli. 10,99 TL bağış için 1099 olmalı.  100 lira bağış için 10000 olmalı
 '&currency=TRY' . //  para birimi. Bu sabit olarak TRY olmalı
 '&customer_contact_ip='. Request::ip() . // ödemeyi yapan kişinin ip adresi

@@ -1,6 +1,6 @@
 <?php
 
-Route::get('test2', 'TestController@test2');
+Route::get('test2', ['as' => 'mytest2', 'uses' => 'TestController@test2']);
 Route::get('test3', function(){ return View::make('test/test3'); });
 
 //Route::group(['middleware' => 'web']) {
@@ -16,11 +16,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
 
     // <editor-fold defaultstate="collapsed" desc="Crop">
     Route::get(__('route.crop_image'), array('as' => 'crop_image', 'before' => 'auth', 'uses' => 'CropController@image'));
-    Route::post(__('route.crop_image'), array('as' => 'crop_image', 'before' => 'auth', 'uses' => 'CropController@image'));
+    Route::post(__('route.crop_image'), array('as' => 'crop_image_post', 'before' => 'auth', 'uses' => 'CropController@save'));
 // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Contents">
-    Route::post("contents/order/(:num)", array('as' => 'contents_order', 'uses' => 'ContentController@order'));
     Route::get("contents/remove_from_mobile/(:num)", array("as" => "content_remove_from_mobile", 'uses' => 'ContentController@remove_from_mobile'));
     Route::get(__('route.contents'), array('as' => 'contents_list', 'uses' => 'ContentController@index'));
     Route::get(__('route.contents_request'), array('as' => 'contents_request', 'uses' => 'ContentController@request'));
@@ -159,7 +158,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 // </editor-fold>
 });
 
-
+Route::group(['middleware' => 'auth'], function (){
+    Route::post("contents/order/{myApplication}", array('as' => 'contents_order', 'uses' => 'ContentController@order'));
+    Route::post('iyzicoqr', 'IyzicoController@save');
+    Route::get('open_iyzico_iframe/{qrCode}', 'IyzicoController@openIyzicoIframe');
+    Route::any('checkout_result_form', array('as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm'));
+});
 
 /** Website Post */
 Route::post(__('route.website_tryit'), array('as' => 'website_tryit_post', 'uses' => 'WebsiteController@tryit')); //571571 Test It
@@ -179,11 +183,9 @@ Route::get('test/interactive', 'test@interactive');
 // </editor-fold>
 //<editor-fold defaultstate="collapesd" desc="Qr Code">
 Route::get('iyzicoqr/{user}', 'IyzicoController@index');
-Route::group(['middleware' => 'auth'], function() {
-    Route::post('iyzicoqr', 'IyzicoController@save');
-    Route::get('open_iyzico_iframe/{qrCode}', 'IyzicoController@openIyzicoIframe');
-    Route::any('checkout_result_form', array('as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm'));
-});
+Route::post('iyzicoqr', 'IyzicoController@save');
+Route::get('open_iyzico_iframe/{qrCode}', 'IyzicoController@openIyzicoIframe');
+Route::any('checkout_result_form', array('as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm'));
 //</editor-fold>
 
 

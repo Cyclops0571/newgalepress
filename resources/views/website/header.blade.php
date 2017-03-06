@@ -33,16 +33,16 @@
                 </li>
                 <?php if(count(Config::get('application.languages')) > 1): ?>
                 <li class="dropdown languageChange">
-                    <a href="/<?php echo Config::get('application.language') ?>" data-toggle="dropdown"
+                    <a href="/<?php echo app()->getLocale() ?>" data-toggle="dropdown"
                        data-hover="dropdown" id="menu_item_Portfolio"
                        data-ref="#" class="dropdown-toggle">
-                        <img src="/images/website/flags/<?php echo Config::get('application.language'); ?>Flag.png"/><span
+                        <img src="/images/website/flags/<?php echo app()->getLocale(); ?>Flag.png"/><span
                                 class="caret"></span>
                     </a>
                     <ul aria-labelledby="menu_item_Portfolio" class="dropdown-menu"
                         style="min-width:52px !important;width:52px !important;">
                         <?php foreach (Config::get('application.languages') as $lang): ?>
-                        <?php if (Config::get('application.language') != $lang): ?>
+                        <?php if (app()->getLocale() != $lang): ?>
                         <li>
                             <a href="/<?php echo $lang ?>" data-ref="#">
                                 <img src="/images/website/flags/<?php echo $lang ?>Flag.png" class="noTouch"/>
@@ -71,7 +71,7 @@
                 <li><a href="/{{ Session::get('language') }}/{{__('route.website_contact')}}"
                        title="{{__('website.contact')}}" id="menu_item_Contactus"
                        data-ref="#">{{__('website.contact')}}</a></li>
-                <?php if (Config::get('application.language') == 'tr'): ?>
+                <?php if (app()->getLocale() == 'tr'): ?>
                 <li><a href="/{{__('route.website_blog')}}" title="Blog" id="menu_item_Blog"
                        data-ref="#">{{__('website.block')}}</a></li>
                 <?php endif; ?>

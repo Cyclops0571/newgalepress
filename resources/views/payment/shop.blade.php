@@ -334,7 +334,7 @@ $tabIndex = 1;
     </div>
 
     <footer id="footer">
-        <?php if(Config::get('application.language') == 'tr'):?>
+        <?php if(app()->getLocale() == 'tr'):?>
         <div class="container">
             <div class="row">
 

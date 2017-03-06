@@ -114,7 +114,7 @@ class CommonController extends Controller
                         'firstname' => $user->FirstName,
                         'lastname' => $user->LastName,
                         'username' => $user->Username,
-                        'url' => Config::get('custom.url') . "/" . Config::get('application.language') . '/' . __('route.resetmypassword') . '?email=' . $user->Email . '&code=' . $pass
+                        'url' => Config::get('custom.url') . "/" . app()->getLocale() . '/' . __('route.resetmypassword') . '?email=' . $user->Email . '&code=' . $pass
                     )
                 );
 
@@ -355,7 +355,7 @@ class CommonController extends Controller
             'page' => __('route.mydetail'),
             'caption' => __('common.mydetail')
         );
-        return View::make('pages.mydetail');
+        return View::make('pages.mydetail', $data);
     }
 
     public function mydetail(Request $request, MyResponse $myResponse)
@@ -420,7 +420,7 @@ class CommonController extends Controller
                 $mailData = array(
                     'name' => $s->FirstName,
                     'surname' => $s->LastName,
-                    'url' => Config::get("custom.url") . '/' . Config::get('application.language') . __('route.login'),
+                    'url' => Config::get("custom.url") . '/' . app()->getLocale() . __('route.login'),
                 );
                 $msg = View::make('mail-templates.hosgeldiniz.index')->with($mailData)->render();
                 $mailStatus = Common::sendHtmlEmail($s->Email, $s->FirstName . ' ' . $s->LastName, $subject, $msg);
@@ -487,7 +487,7 @@ class CommonController extends Controller
             $lastCustomerNo = DB::table('Customer')
                 ->orderBy('CustomerID', 'DESC')
                 ->take(1)
-                ->only('CustomerNo');
+                ->get('CustomerNo');
 
             preg_match('!\d+!', $lastCustomerNo, $matches);
             $matches = intval($matches[0]);
@@ -512,7 +512,7 @@ class CommonController extends Controller
             $lastCustomerID = DB::table('Customer')
                 ->orderBy('CustomerID', 'DESC')
                 ->take(1)
-                ->only('CustomerID');
+                ->get('CustomerID');
 
 
             $app = new Application();
@@ -549,47 +549,18 @@ class CommonController extends Controller
 
             if (Auth::facebookAttempt(array('username' => $user->Username, 'fbemail' => $user->FbEmail, 'StatusID' => eStatus::Active))) {
 
-                $user = Auth::user();
-                $s = new Sessionn;
-                $s->UserID = $user->UserID;
-                $s->IP = request()->ip(); //getenv("REMOTE_ADDR");
-                $s->LoginDate = new DateTime();
-                $s->StatusID = eStatus::Active;
-                $s->CreatorUserID = $user->UserID;
-                $s->DateCreated = new DateTime();
-                $s->ProcessUserID = $user->UserID;
-                $s->ProcessDate = new DateTime();
-                $s->ProcessTypeID = eProcessTypes::Insert;
-                $s->save();
-
+                Auth::loginUsingId($user->UserID);
                 Cookie::forever('DSCATALOG_USERNAME', $user->Username);
-
                 setcookie("loggedin", "true", time() + 3600, "/");
                 return  $myResponse->success(__('common.login_success_redirect'));
             }
-        } else {
+        } else if (Auth::facebookAttempt(array('username' => $user->Username, 'fbemail' => $user->FbEmail, 'StatusID' => eStatus::Active))) {
 
-            if (Auth::facebookAttempt(array('username' => $user->Username, 'fbemail' => $user->FbEmail, 'StatusID' => eStatus::Active))) {
-
-                $user = Auth::user();
-                $s = new Sessionn;
-                $s->UserID = $user->UserID;
-                $s->IP = request()->ip(); //getenv("REMOTE_ADDR");
-                $s->LoginDate = new DateTime();
-                $s->StatusID = eStatus::Active;
-                $s->CreatorUserID = $user->UserID;
-                $s->DateCreated = new DateTime();
-                $s->ProcessUserID = $user->UserID;
-                $s->ProcessDate = new DateTime();
-                $s->ProcessTypeID = eProcessTypes::Insert;
-                $s->save();
-
+                Auth::loginUsingId($user->UserID);
                 Cookie::forever('DSCATALOG_USERNAME', '');
-
                 setcookie("loggedin", "true", time() + 3600, "/");
                 return  $myResponse->success(__('common.login_success_redirect'));
             }
-        }
     }
 
     /**

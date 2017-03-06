@@ -1318,7 +1318,7 @@ class Common
 
 
 function localDateFormat($format = 'dd.MM.yyyy') {
-    $currentLang = Config::get('application.language');
+    $currentLang = app()->getLocale();
     if($currentLang != 'usa') {
         return $format;
     } else {

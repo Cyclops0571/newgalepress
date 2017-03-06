@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Library\imageInfoEx;
 use Imagick;
 use Redirect;
+use Route;
 
 class CropController extends Controller
 {
@@ -113,7 +114,7 @@ class CropController extends Controller
         $content = Content::find($contentID);
         $content->CoverImageVersion++;
         $content->save();
-        return Redirect::to($this->route . '#saved');
+        return Redirect::route('crop_image', ['contentID' => $contentID, 'success' => 'cropsaved']);
     }
 
 }

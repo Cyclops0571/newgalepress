@@ -23,13 +23,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Redirect;
 use Response;
+use sts\error;
 use Uploader;
 use UploadHandler;
 use Validator;
 use View;
 
-class ContentController extends Controller
-{
+class ContentController extends Controller {
+
     public $restful = true;
     public $page = '';
     public $route = '';
@@ -55,25 +56,27 @@ class ContentController extends Controller
 
     private function setFields(User $user)
     {
-        $this->fields = array();
-        if ($user->UserTypeID == eUserTypes::Customer) {
-            $this->fields[] = array(__('common.contents_list_content_name'), 'Name');
-            $this->fields[] = array(__('common.contents_list_contents_detail'), 'Detail');
-            $this->fields[] = array(__('common.contents_list_contents_monthlyName'), 'Order');
-            $this->fields[] = array(__('common.contents_list_content_category'), 'CategoryName');
-            $this->fields[] = array(__('common.contents_list_content_publishdate'), 'PublishDate');
-            $this->fields[] = array(__('common.contents_list_content_unpublishdate'), 'UnpublishDate');
-            $this->fields[] = array(__('common.contents_list_content_bloke'), 'Blocked');
-            $this->fields[] = array(__('common.contents_list_status'), 'Status');
-            $this->fields[] = array(__('common.contents_list_content_id'), 'ContentID');
-        } else if ($user->UserTypeID == eUserTypes::Manager) {
-            $this->fields = array();
-            $this->fields[] = array(__('common.contents_list_customer'), 'CustomerName');
-            $this->fields[] = array(__('common.contents_list_application'), 'ApplicationName');
-            $this->fields[] = array(__('common.contents_list_content_name'), 'Name');
-            $this->fields[] = array(__('common.contents_list_content_bloke'), 'Blocked');
-            $this->fields[] = array(__('common.contents_list_status'), 'Status');
-            $this->fields[] = array(__('common.contents_list_content_id'), 'ContentID');
+        $this->fields = [];
+        if ($user->UserTypeID == eUserTypes::Customer)
+        {
+            $this->fields[] = [__('common.contents_list_content_name'), 'Name'];
+            $this->fields[] = [__('common.contents_list_contents_detail'), 'Detail'];
+            $this->fields[] = [__('common.contents_list_contents_monthlyName'), 'Order'];
+            $this->fields[] = [__('common.contents_list_content_category'), 'CategoryName'];
+            $this->fields[] = [__('common.contents_list_content_publishdate'), 'PublishDate'];
+            $this->fields[] = [__('common.contents_list_content_unpublishdate'), 'UnpublishDate'];
+            $this->fields[] = [__('common.contents_list_content_bloke'), 'Blocked'];
+            $this->fields[] = [__('common.contents_list_status'), 'Status'];
+            $this->fields[] = [__('common.contents_list_content_id'), 'ContentID'];
+        } else if ($user->UserTypeID == eUserTypes::Manager)
+        {
+            $this->fields = [];
+            $this->fields[] = [__('common.contents_list_customer'), 'CustomerName'];
+            $this->fields[] = [__('common.contents_list_application'), 'ApplicationName'];
+            $this->fields[] = [__('common.contents_list_content_name'), 'Name'];
+            $this->fields[] = [__('common.contents_list_content_bloke'), 'Blocked'];
+            $this->fields[] = [__('common.contents_list_status'), 'Status'];
+            $this->fields[] = [__('common.contents_list_content_id'), 'ContentID'];
         }
 
     }
@@ -87,42 +90,47 @@ class ContentController extends Controller
         $sort = $request->get('sort', $this->defaultSort);
         $sort_dir = $request->get('sort_dir', 'DESC');
 
-        if (!Common::CheckApplicationOwnership($applicationID)) {
+        if (!Common::CheckApplicationOwnership($applicationID))
+        {
             return Redirect::to(route('home'));
         }
 
         $rows = Content::getContents($request);
         $categorySet = Category::where('ApplicationID', '=', $applicationID)->where("statusID", "=", eStatus::Active)->get();
         $application = Application::find($applicationID);
-        $data = array(
-            'page' => $this->page,
-            'route' => $this->route,
-            'caption' => $this->caption,
-            'pk' => $this->pk,
-            'fields' => $this->fields,
-            'search' => $search,
-            'sort' => $sort,
-            'sort_dir' => $sort_dir,
-            'rows' => $rows,
+        $data = [
+            'page'        => $this->page,
+            'route'       => $this->route,
+            'caption'     => $this->caption,
+            'pk'          => $this->pk,
+            'fields'      => $this->fields,
+            'search'      => $search,
+            'sort'        => $sort,
+            'sort_dir'    => $sort_dir,
+            'rows'        => $rows,
             'categorySet' => $categorySet,
-            'application' => $application
-        );
+            'application' => $application,
+        ];
 
-        if (((int)$user->UserTypeID == eUserTypes::Customer)) {
+        if (((int)$user->UserTypeID == eUserTypes::Customer))
+        {
             $appCount = DB::table('Application')
                 ->where('CustomerID', '=', Auth::user()->CustomerID)
                 ->where('ApplicationID', '=', $applicationID)
                 ->where('ExpirationDate', '>=', DB::raw('CURDATE()'))
                 ->count();
 
-            if ($appCount == 0) {
+            if ($appCount == 0)
+            {
 
                 $app = Application::find($applicationID);
-                if (!$app) {
+                if (!$app)
+                {
                     return Redirect::to(__('route.home'));
                 }
 
-                $data = array_merge($data, array('appName' => $app->Name));
+                $data = array_merge($data, ['appName' => $app->Name]);
+
                 return View::make('pages.expiredpage', $data);
             }
         }
@@ -141,8 +149,10 @@ class ContentController extends Controller
 
 
         //http://localhost/tr/icerikler/talep?RequestTypeID=203&ApplicationID=1&ContentID=1187&Password=
-        try {
-            if ($RequestTypeID == eRequestType::PDF_FILE) {
+        try
+        {
+            if ($RequestTypeID == eRequestType::PDF_FILE)
+            {
                 //get file
                 $oCustomerID = 0;
                 $oApplicationID = 0;
@@ -152,33 +162,39 @@ class ContentController extends Controller
                 $oContentFileName = '';
                 Common::getContentDetail($ContentID, $Password, $oCustomerID, $oApplicationID, $oContentID, $oContentFileID, $oContentFilePath, $oContentFileName);
                 Common::download($RequestTypeID, $oCustomerID, $oApplicationID, $oContentID, $oContentFileID, 0, $oContentFilePath, $oContentFileName);//todo: break this function to small pieces
-            } else {
+            } else
+            {
                 //get image
                 Common::downloadImage($ContentID, $RequestTypeID, $Width, $Height);//todo: break this function to small pieces
             }
-        } catch (Exception $e) {
-            return Response::make($this->xmlResponse($e), 200, array('content-type' => 'text/xml'));
+        } catch (Exception $e)
+        {
+            return Response::make($this->xmlResponse($e), 200, ['content-type' => 'text/xml']);
         }
+        return abort(404);
     }
 
     public function newly(Request $request)
     {
         $this->route = __('route.' . $this->page) . '?applicationID=' . $request->get('applicationID', '0');
 
-        $data = array(
-            'page' => $this->page,
-            'route' => $this->route,
-            'caption' => $this->caption,
+        $data = [
+            'page'          => $this->page,
+            'route'         => $this->route,
+            'caption'       => $this->caption,
             'detailCaption' => $this->detailCaption,
-            'content' => new Content(),
-            'showCropPage' => 0,
-        );
+            'content'       => new Content(),
+            'showCropPage'  => 0,
+        ];
         $applicationID = $request->get('applicationID', '0');
         $app = Application::find($applicationID);
-        if (!$app) {
+        if (!$app)
+        {
             return Redirect::to(__('route.home'));
-        } else if ($app->ExpirationDate < date('Y-m-d')) {
+        } else if ($app->ExpirationDate < date('Y-m-d'))
+        {
             $data['appName'] = $app->Name;
+
             return View::make('pages.expiredpage', $data);
         }
 
@@ -197,53 +213,62 @@ class ContentController extends Controller
         $currentUser = Auth::user();
         $showCropPage = Cookie::get(SHOW_IMAGE_CROP, 0);
         Cookie::make(SHOW_IMAGE_CROP, 0);
-        if (((int)$currentUser->UserTypeID == eUserTypes::Manager)) {
+        if (((int)$currentUser->UserTypeID == eUserTypes::Manager))
+        {
             $contentList = DB::table('Content')
                 // ->where('ApplicationID', '=', $row->ApplicationID)
                 ->where('ContentID', '<>', $content->ContentID)
                 // ->where('StatusID', '=', eStatus::Active)
-                ->get(array('ContentID', 'Name', 'ApplicationID'));
-        } else {
+                ->get(['ContentID', 'Name', 'ApplicationID']);
+        } else
+        {
             //musteriler icin interactive oge kopyalamayi kapatiyorum.
-//            $contentList = DB::table('Content')
-//                ->where('ApplicationID', '=', $row->ApplicationID)
-//                ->where('ContentID', '<>', $id)
-//                ->where('StatusID', '=', eStatus::Active)
-//                ->get(array('ContentID', 'Name', 'ApplicationID'));
-            $contentList = array();
+            //            $contentList = DB::table('Content')
+            //                ->where('ApplicationID', '=', $row->ApplicationID)
+            //                ->where('ContentID', '<>', $id)
+            //                ->where('StatusID', '=', eStatus::Active)
+            //                ->get(array('ContentID', 'Name', 'ApplicationID'));
+            $contentList = [];
         }
-        if ($content) {
-            if (Common::CheckContentOwnership($content->ContentID)) {
+        if ($content)
+        {
+            if (Common::CheckContentOwnership($content->ContentID))
+            {
                 $this->route = __('route.' . $this->page) . '?applicationID=' . $content->ApplicationID;
 
 
-                $data = array(
-                    'page' => $this->page,
-                    'route' => $this->route,
-                    'caption' => $this->caption,
+                $data = [
+                    'page'          => $this->page,
+                    'route'         => $this->route,
+                    'caption'       => $this->caption,
                     'detailCaption' => $this->detailCaption,
-                    'content' => $content,
-                    'app' => $content->Application,
-                    'categories' => $content->Application->Categories(),
-                    'groupCodes' => GroupCode::getGroupCodesWithName('Currencies'),
-                    'showCropPage' => $showCropPage,
-                    'contentList' => $contentList,
-                );
+                    'content'       => $content,
+                    'app'           => $content->Application,
+                    'categories'    => $content->Application->Categories(),
+                    'groupCodes'    => GroupCode::getGroupCodesWithName('Currencies'),
+                    'showCropPage'  => $showCropPage,
+                    'contentList'   => $contentList,
+                ];
 
                 $app = Application::find($content->ApplicationID);
                 $data['authMaxPDF'] = Common::AuthMaxPDF($app->ApplicationID);
                 $data['authInteractivity'] = (1 == (int)$app->Package->Interactive);
 
-                if (((int)$currentUser->UserTypeID == eUserTypes::Customer)) {
-                    if ($content->Application->ExpirationDate < date('Y-m-d')) {
+                if (((int)$currentUser->UserTypeID == eUserTypes::Customer))
+                {
+                    if ($content->Application->ExpirationDate < date('Y-m-d'))
+                    {
                         return View::make('pages.expiredpage', $data);
                     }
                 }
+
                 return View::make('pages.' . Str::lower($this->table) . 'detail', $data);
-            } else {
+            } else
+            {
                 return Redirect::to($this->route);
             }
-        } else {
+        } else
+        {
             return Redirect::to($this->route);
         }
     }
@@ -255,25 +280,29 @@ class ContentController extends Controller
         $id = (int)$request->get($this->pk, '0');
         $applicationID = (int)$request->get('ApplicationID', '0');
         $chk = Common::CheckApplicationOwnership($applicationID);
-        $rules = array(
+        $rules = [
             'ApplicationID' => 'required|integer|min:1',
-            'Name' => 'required'
-        );
+            'Name'          => 'required',
+        ];
         $v = Validator::make($request->all(), $rules);
-        if ($v->passes() && $chk) {
-            if (!Common::AuthMaxPDF($applicationID)) {
-                return  $myResponse->error(__('error.auth_max_pdf'));
+        if ($v->passes() && $chk)
+        {
+            if (!Common::AuthMaxPDF($applicationID))
+            {
+                return $myResponse->error(__('error.auth_max_pdf'));
 
             }
 
             $content = Content::find($id);
-            $selectedCategories = $request->get('chkCategoryID', array());
+            $selectedCategories = $request->get('chkCategoryID', []);
 
-            if (!$content) {
+            if (!$content)
+            {
                 $maxID = Content::where('ApplicationID', '=', $applicationID)->max('OrderNo');
                 $content = new Content();
                 $content->OrderNo = $maxID + 1;
-            } else if (!Common::CheckContentOwnership($id)) {
+            } else if (!Common::CheckContentOwnership($id))
+            {
                 return $myResponse->error("Unauthorized user attempt");
             }
             $content->ApplicationID = $applicationID;
@@ -292,18 +321,20 @@ class ContentController extends Controller
             $content->AutoDownload = (int)$request->get('AutoDownload');
             $content->TopicStatus = $request->get('topicStatus', 0) === "on";
             $content->Status = (int)$request->get('Status');
-            if ($content->Status == eStatus::Active) {
+            if ($content->Status == eStatus::Active)
+            {
                 $content->RemoveFromMobile = eRemoveFromMobile::Passive;
             }
 
-            if ((int)$currentUser->UserTypeID == eUserTypes::Manager) {
+            if ((int)$currentUser->UserTypeID == eUserTypes::Manager)
+            {
                 $content->Approval = (int)$request->get('Approval');
                 $content->Blocked = (int)$request->get('Blocked');
             }
             $content->ifModifiedDoNecessarySettings($selectedCategories);
             $content->save();
             $content->setCategory($selectedCategories);
-            $content->setTopics($request->get('topicIds', array()));
+            $content->setTopics($request->get('topicIds', []));
 
             $contentID = $content->ContentID;
             $contentFile = $content->processPdf();
@@ -311,16 +342,19 @@ class ContentController extends Controller
             ContentFile::createPdfPages($contentFile);
             $content->callIndexingService($contentFile);
             $contentLink = $contentID > 0 ? "&contentID=" . $contentID : ("");
-            return  $myResponse->success($contentLink);
-        } else {
-            return  $myResponse->error(__('common.detailpage_validation'));
+
+            return $myResponse->success($contentLink);
+        } else
+        {
+            return $myResponse->error(__('common.detailpage_validation'));
 
         }
     }
 
     public function copy(MyResponse $myResponse, $id, $new)
     {
-        try {
+        try
+        {
             // return Redirect::to(__('route.home'));
             $sourceContentID = $id;
             $contentFileControl = null;
@@ -330,7 +364,8 @@ class ContentController extends Controller
                 ->where('ContentID', '=', $sourceContentID)
                 ->first();
 
-            if ($new == "new") {
+            if ($new == "new")
+            {
 
                 $c = new Content();
                 $c->ApplicationID = $content->ApplicationID;
@@ -369,7 +404,8 @@ class ContentController extends Controller
                     ->where('ContentID', '=', $sourceContentID)
                     ->get();
 
-                foreach ($contentCategory as $cCategory) {
+                foreach ($contentCategory as $cCategory)
+                {
                     $cc = new ContentCategory();
                     $cc->ContentID = $newContentID;
                     $cc->CategoryID = $cCategory->CategoryID;
@@ -439,7 +475,8 @@ class ContentController extends Controller
 
 
                 $files = glob('public/' . $contentFile->FilePath . '/*.{jpg}', GLOB_BRACE);
-                foreach ($files as $file) {
+                foreach ($files as $file)
+                {
                     // echo nl2br($targetFilePath."\n");
                     File::copy('public/' . $contentFile->FilePath . '/' . basename($file), $destinationFolder . '/' . basename($file));
                 }
@@ -456,16 +493,20 @@ class ContentController extends Controller
                 ->where('ContentFileID', '=', $contentFileControl->ContentFileID)
                 ->get();
 
-            if (sizeof($contentFilePageControl) == 0) {/* sayfalari olusmamis */
-                Controller::call('interactivity@show', array($contentFileControl->ContentFileID));
+            if (sizeof($contentFilePageControl) == 0)
+            {/* sayfalari olusmamis */
+                Controller::call('interactivity@show', [$contentFileControl->ContentFileID]);
                 $this->get_copyContent("null", $sourceContentID, $newContentID, $contentFileControl->ContentFileID);
-            } elseif ($new != "new") {/* sayfalari olusmus */
+            } elseif ($new != "new")
+            {/* sayfalari olusmus */
                 // Controller::call('interactivity@show', array($contentFileControl->ContentFileID));
                 $this->get_copyContent("null", $sourceContentID, $newContentID, $contentFileControl->ContentFileID);
             }
-        } catch (Exception $e) {
+        } catch (Exception $e)
+        {
             Log::info($e->getMessage());
-            return  $myResponse->error($e->getMessage());
+
+            return $myResponse->error($e->getMessage());
         }
     }
 
@@ -482,7 +523,8 @@ class ContentController extends Controller
         // TAŞINACAK CONTENT'IN FILE ID'SI
         $myResponse = new MyResponse();
 
-        try {
+        try
+        {
             $contentFile = DB::table('ContentFile')
                 ->where('ContentID', '=', $sourceContentID)
                 ->orderBy('ContentFileID', 'DESC')
@@ -492,9 +534,11 @@ class ContentController extends Controller
                 ->where('ContentFileID', '=', $contentFile->ContentFileID)
                 ->get();
 
-            if (sizeof($contentFilePage) == 0) {
+            if (sizeof($contentFilePage) == 0)
+            {
                 return;
-            } else {
+            } else
+            {
 
                 $contentFilePageNewCount = DB::table('ContentFilePage')
                     ->where('ContentFileID', '=', $targetContentFileID)//****************
@@ -508,8 +552,10 @@ class ContentController extends Controller
                     ->where('ApplicationID', '=', $targetApplicationID->ApplicationID)//****************
                     ->first();
 
-                if ($destinationFolder != "null") { /* kopyalanacak icerigin sayfalari yok ise olusturur */
-                    foreach ($contentFilePage as $ocfp) {
+                if ($destinationFolder != "null")
+                { /* kopyalanacak icerigin sayfalari yok ise olusturur */
+                    foreach ($contentFilePage as $ocfp)
+                    {
                         $ncfp = new ContentFilePage();
                         $ncfp->ContentFileID = (int)$targetContentFileID;
                         $ncfp->No = (int)$ocfp->No;
@@ -527,24 +573,28 @@ class ContentController extends Controller
                         $ncfp->ProcessTypeID = (int)eProcessTypes::Insert;
                         $ncfp->save();
                     }
-                    if (!File::exists($destinationFolder . '/file_' . $targetContentFileID)) {
+                    if (!File::exists($destinationFolder . '/file_' . $targetContentFileID))
+                    {
                         File::makeDirectory($destinationFolder . '/file_' . $targetContentFileID);
                     }
 
                     $files = glob('public/' . $contentFile->FilePath . '/file_' . $contentFile->ContentFileID . '/*.{jpg,pdf}', GLOB_BRACE);
-                    foreach ($files as $file) {
+                    foreach ($files as $file)
+                    {
                         File::copy('public/' . $contentFile->FilePath . '/file_' . $contentFile->ContentFileID . '/' . basename($file), $destinationFolder . '/file_' . $targetContentFileID . '/' . basename($file));
                     }
                 }
 
-                foreach ($contentFilePage as $cfp) {
+                foreach ($contentFilePage as $cfp)
+                {
 
 
                     $filePageComponent = DB::table('PageComponent')
                         ->where('ContentFilePageID', '=', $cfp->ContentFilePageID)
                         ->get();
 
-                    if (sizeof($filePageComponent) == 0) {
+                    if (sizeof($filePageComponent) == 0)
+                    {
                         continue;
                     }
 
@@ -555,23 +605,28 @@ class ContentController extends Controller
                         ->first();
 
                     // var_dump(isset($contentFilePageNew));
-                    if (isset($contentFilePageNew)) {
+                    if (isset($contentFilePageNew))
+                    {
                         // Log::info("girdiiii");
-                        foreach ($filePageComponent as $fpc) {
+                        foreach ($filePageComponent as $fpc)
+                        {
                             $s = new PageComponent();
                             $s->ContentFilePageID = $contentFilePageNew->ContentFilePageID;
                             $s->ComponentID = $fpc->ComponentID;
-                            if ($destinationFolder == "null") {
+                            if ($destinationFolder == "null")
+                            {
                                 $lastComponentNo = DB::table('PageComponent')
                                     ->where('ContentFilePageID', '=', $contentFilePageNew->ContentFilePageID)
                                     ->orderBy('No', 'DESC')
                                     ->take(1)
                                     ->only('No');
-                                if ($lastComponentNo == null) {
+                                if ($lastComponentNo == null)
+                                {
                                     $lastComponentNo = 0;
                                 }
                                 $s->No = $lastComponentNo + 1;
-                            } else {
+                            } else
+                            {
                                 $s->No = $fpc->No;
                             }
                             // Log::info(serialize($ids));
@@ -586,25 +641,31 @@ class ContentController extends Controller
                                 ->where('StatusID', '=', eStatus::Active)
                                 ->get();
 
-                            foreach ($filePageComponentProperty as $fpcp) {
+                            foreach ($filePageComponentProperty as $fpcp)
+                            {
                                 $p = new PageComponentProperty();
                                 $p->PageComponentID = $s->PageComponentID;
                                 $p->Name = $fpcp->Name;
-                                if ($fpcp->Value > $contentFilePageNewCount && $fpcp->Name == "page") {
+                                if ($fpcp->Value > $contentFilePageNewCount && $fpcp->Name == "page")
+                                {
                                     $p->Value = 1;
-                                } elseif ($fpcp->Name == "filename") {
+                                } elseif ($fpcp->Name == "filename")
+                                {
                                     $targetPath = 'files/customer_' . $targetCustomerID->CustomerID . '/application_' . $targetApplicationID->ApplicationID . '/content_' . $targetContentID . '/file_' . $targetContentFileID . '/output/comp_' . $s->PageComponentID;
                                     $targetPathFull = public_path($targetPath);
                                     $p->Value = $targetPath . '/' . basename($fpcp->Value);
-                                    if (!File::exists($targetPathFull)) {
+                                    if (!File::exists($targetPathFull))
+                                    {
                                         File::makeDirectory($targetPathFull, 777, true);
                                     }
                                     $files = glob('public/' . dirname($fpcp->Value) . '/*.{jpg,JPG,png,PNG,tif,TIF,mp3,MP3,m4v,M4V,mp4,MP4,mov,MOV}', GLOB_BRACE);
                                     // Log::info('public/'.dirname($fpcp->Value));
-                                    foreach ($files as $file) {
+                                    foreach ($files as $file)
+                                    {
                                         File::copy($file, $targetPathFull . '/' . basename($file));
                                     }
-                                } else {
+                                } else
+                                {
                                     $p->Value = $fpcp->Value;
                                 }
                                 $p->StatusID = eStatus::Active;
@@ -619,18 +680,22 @@ class ContentController extends Controller
             }
 
             $targetHasCreated = ContentFile::find($targetContentFileID);
-            if ($targetHasCreated) {
+            if ($targetHasCreated)
+            {
                 $targetHasCreated->Interactivity = Interactivity::ProcessQueued;
                 $targetHasCreated->HasCreated = 0;
                 $targetHasCreated->save();
             }
 
             interactivityQueue::trigger();
-            return  $myResponse->success();
 
-        } catch (Exception $e) {
+            return $myResponse->success();
+
+        } catch (Exception $e)
+        {
             Log::info($e->getMessage());
-            return  $myResponse->error($e->getMessage());
+
+            return $myResponse->error($e->getMessage());
         }
     }
 
@@ -638,14 +703,18 @@ class ContentController extends Controller
     {
         $id = (int)$request->get($this->pk, '0');
         $chk = Common::CheckContentOwnership($id);
-        if (!$chk) {
-            return  $myResponse->error(__('common.detailpage_validation'));
+        if (!$chk)
+        {
+            return $myResponse->error(__('common.detailpage_validation'));
         }
 
-        try {
-            DB::transaction(function () use ($id) {
+        try
+        {
+            DB::transaction(function () use ($id)
+            {
                 $s = Content::find($id);
-                if ($s) {
+                if ($s)
+                {
                     $s->StatusID = eStatus::Deleted;
                     $s->ProcessUserID = Auth::user()->UserID;
                     $s->ProcessDate = new DateTime();
@@ -653,9 +722,11 @@ class ContentController extends Controller
                     $s->save();
                 }
             });
-            return  $myResponse->success();
-        } catch (Exception $e) {
-            return  $myResponse->error($e->getMessage());
+
+            return $myResponse->success();
+        } catch (Exception $e)
+        {
+            return $myResponse->error($e->getMessage());
         }
     }
 
@@ -663,15 +734,16 @@ class ContentController extends Controller
     {
         ob_start();
         $element = $request->get('element');
-        $options = array(
-            'upload_dir' => public_path('files/temp/'),
-            'upload_url' => URL::base() . '/files/temp/',
-            'param_name' => $element,
-            'accept_file_types' => '/\.(pdf)$/i'
-        );
+        $options = [
+            'upload_dir'        => public_path('files/temp/'),
+            'upload_url'        => URL::base() . '/files/temp/',
+            'param_name'        => $element,
+            'accept_file_types' => '/\.(pdf)$/i',
+        ];
         $upload_handler = new UploadHandler($options);
 
-        if (!request()->ajax()) {
+        if (!request()->ajax())
+        {
             return;
         }
 
@@ -685,6 +757,7 @@ class ContentController extends Controller
         $obj = $arr[0];
         $tempFile = $obj->name;
         $ret = Uploader::ContentsUploadFile($tempFile);
+
         return Response::json($ret);
     }
 
@@ -694,15 +767,16 @@ class ContentController extends Controller
 
         $element = $request->get('element');
 
-        $options = array(
-            'upload_dir' => public_path('files/temp/'),
-            'upload_url' => url('/files/temp/'),
-            'param_name' => $element,
-            'accept_file_types' => '/\.(gif|jpe?g|png|tiff)$/i'
-        );
+        $options = [
+            'upload_dir'        => public_path('files/temp/'),
+            'upload_url'        => url('/files/temp/'),
+            'param_name'        => $element,
+            'accept_file_types' => '/\.(gif|jpe?g|png|tiff)$/i',
+        ];
         $upload_handler = new UploadHandler($options);
 
-        if (!request()->ajax()) {
+        if (!request()->ajax())
+        {
             return;
         }
 
@@ -717,34 +791,33 @@ class ContentController extends Controller
         $tempFile = $obj->name;
         //var_dump($obj->name);
         Uploader::CmykControl($tempFile);
-        return Response::json(array("fileName" => $tempFile));
+
+        return Response::json(["fileName" => $tempFile]);
     }
 
 
-    public function order(Request $request, MyResponse $myResponse, $applicationID)
+    public function order(Request $request, MyResponse $myResponse, Application $myApplication)
     {
-        $chk = Common::CheckApplicationOwnership($applicationID);
-        if (!$chk) {
-            return  $myResponse->error(__('common.detailpage_validation'));
+        $chk = $myApplication->checkUserAccess();
+        if (!$chk)
+        {
+            return $myResponse->error(__('common.detailpage_validation'));
         }
-        $maxID = DB::table("Content")->where("ApplicationID", "=", $applicationID)->max('OrderNo');
-        $contentIDDescSet = $request->get("contentIDSet", array());
+        $maxID = $myApplication->Contents()->max('OrderNo');
+        $contentIDDescSet = $request->get("contentIDSet", []);
         $i = $maxID + 1;
         $contentIDSet = array_reverse($contentIDDescSet);
-        foreach ($contentIDSet as $contentID) {
-            $content = Content::where("ApplicationID", "=", $applicationID)->find($contentID);
-            if ($content) {
+        foreach ($contentIDSet as $contentID)
+        {
+            if ($content = $myApplication->Contents->keyBy('ContentID')->find($contentID))
+            {
                 $content->OrderNo = $i++;
-                $content->save(FALSE);
-                //appversionu altte tek bir kere artiracagim icin burada artirmiyorum.
+                $content->save(['updateAppVersion' => false]);
             }
         }
 
-        $application = Application::find($applicationID);
-        if ($application) {
-            $application->incrementAppVersion();
-        }
-        return  $myResponse->success();
+        $myApplication->incrementAppVersion();
+        return $myResponse->success();
     }
 
     /**
@@ -755,61 +828,73 @@ class ContentController extends Controller
     public function remove_from_mobile(MyResponse $myResponse, $contentID)
     {
         $chk = Common::CheckContentOwnership($contentID);
-        if (!$chk) {
-            return  $myResponse->error(__('common.detailpage_validation'));
+        if (!$chk)
+        {
+            return $myResponse->error(__('common.detailpage_validation'));
         }
 
-        try {
-            DB::transaction(function () use ($contentID) {
+        try
+        {
+            DB::transaction(function () use ($contentID)
+            {
                 $s = Content::find($contentID);
-                if ($s) {
+                if ($s)
+                {
                     $s->Status = eStatus::Passive;
                     $s->RemoveFromMobile = eRemoveFromMobile::Active;
                     $s->save();
                 }
             });
-            return  $myResponse->success();
-        } catch (Exception $e) {
-            return  $myResponse->error($e->getMessage());
+
+            return $myResponse->success();
+        } catch (Exception $e)
+        {
+            return $myResponse->error($e->getMessage());
         }
     }
 
     public function refresh_identifier(Request $request, MyResponse $myResponse)
     {
-        $rules = array(
+        $rules = [
             "ContentID" => "required|numeric|min:1",
-        );
+        ];
         $v = Validator::make($request->all(), $rules);
-        if (!$v->passes()) {
-            return  $myResponse->error($v->errors->first());
+        if (!$v->passes())
+        {
+            return $myResponse->error($v->errors->first());
 
-//	    ajaxResponse::error($v->errors->first());
+            //	    ajaxResponse::error($v->errors->first());
         }
 
         $content = Content::find($request->get("ContentID"));
-        $subscriptionIdentifier = $content->getIdentifier(TRUE);
+        $subscriptionIdentifier = $content->getIdentifier(true);
         $content->save();
-        return  $myResponse->success("&SubscriptionIdentifier=" . $subscriptionIdentifier);
+
+        return $myResponse->success("&SubscriptionIdentifier=" . $subscriptionIdentifier);
     }
 
-    public function interactivity_status()
+    public function interactivity_status(Request $request)
     {
         set_time_limit(0);
-        $rules = array(
+        $rules = [
             "contentFileID" => "required|numeric|min:1",
-        );
+        ];
         $v = Validator::make($request->all(), $rules);
-        if (!$v->passes()) {
+        if (!$v->passes())
+        {
             return ajaxResponse::error($v->errors->first());
         }
         $contentFileID = $request->get("contentFileID");
-        for ($i = 0; $i < 240; $i++) {
+        for ($i = 0; $i < 240; $i++)
+        {
             $contentFile = ContentFile::find($contentFileID);
-            if ($contentFile && $contentFile->HasCreated) {
+            if ($contentFile && $contentFile->HasCreated)
+            {
                 return ajaxResponse::success();
             }
             sleep(1);
         }
+
         return ajaxResponse::error();
     }
 

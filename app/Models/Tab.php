@@ -35,4 +35,25 @@ class Tab extends Model
     protected $primaryKey = 'TabID';
     protected static $key = 'TabID';
 
+
+    public static function getGalepresTabs() {
+        return array(
+            "StoreLocator" => __('common.map_title')
+        );
+    }
+
+    public function urlForService() {
+        if (!empty($this->Url) && $this->Url != "http://") {
+            $url = $this->Url;
+        } else {
+            switch ($this->InhouseUrl) {
+                case "StoreLocator":
+                    $url = \URL::to("/maps/webview/" . $this->ApplicationID);
+                    break;
+                default :
+                    $url = \URL::to('/');
+            }
+        }
+        return $url;
+    }
 }

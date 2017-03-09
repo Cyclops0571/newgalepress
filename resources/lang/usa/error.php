@@ -6,6 +6,7 @@ return array(
 	'auth_interactivity' => "Warning ! You don't have interactive pdf usage right.",
 	'auth_max_pdf' => "Warning! You've run out of max pdf number.",
     'interactivity_conflict' => 'Interactive file is being created, please try again later!',
+    'interactivity_error' => 'There has been an error when creating the interactive pdf.',
     'something_went_wrong' => 'Sorry, something went wrong :(',
     'will_notify_team' => 'Looks like our team takes a nap. <br />Dont worry, I will poke them to death.',
     'your_page_not_found' => 'We couldn\'t find the page you were looking for',

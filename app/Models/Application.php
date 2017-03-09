@@ -421,10 +421,7 @@ class Application extends Model {
         }
         $this->ProcessUserID = $userID;
         $this->ProcessDate = new DateTime();
-        if ($options['incrementVersion'])
-        {
-            $this->Version = (int)$this->Version + 1;
-        }
+        $this->Version = (int)$this->Version + 1;
 
         return parent::save($options);
     }

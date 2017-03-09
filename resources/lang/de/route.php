@@ -51,7 +51,7 @@ return array(
     'applications_save' => 'apps/speichern',
     'applications_delete' => 'apps/loeschen',
     'applications_uploadfile' => 'apps/dateihochladen',
-    'applications_usersettings' => 'apps/{id}/einstellungen',
+    'applications_usersettings' => 'apps/{application}/einstellungen',
     'application_usersettings_save' => 'apps/einstellungenspeichern',
 
     'contents' => 'inhalte',
@@ -116,7 +116,6 @@ return array(
     'website_sectors_medicine' => 'branchenloesungenpharma',
     'website_sectors_digitalpublishing' => 'branchenloesungendigital-publishing',
     'website_tryit' => 'jetztanmelden',
-    'website_landing_page_realty' => 'immobilien',
     'website_captcha' => 'sicherheitscode',
     'website_why_galepress' => 'funktionsweise',
     'website_payment_result' => 'bezahlungs-status/(:all)',

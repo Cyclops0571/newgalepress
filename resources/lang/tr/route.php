@@ -51,7 +51,7 @@ return array(
     'applications_save' => 'uygulamalar/kaydet',
     'applications_delete' => 'uygulamalar/sil',
     'applications_uploadfile' => 'uygulamalar/dosya-yukle',
-    'applications_usersettings' => 'uygulamalar/{id}/ayarlar',
+    'applications_usersettings' => 'uygulamalar/{application}/ayarlar',
     'application_usersettings_save' => 'applications/applicationSetting',
 
     'contents' => 'icerikler',
@@ -116,7 +116,6 @@ return array(
     'website_sectors_medicine' => 'cozumler-ilac',
     'website_sectors_digitalpublishing' => 'cozumler-dijital-yayincilik',
     'website_tryit' => 'deneyin',
-    'website_landing_page_realty' => 'emlak',
     'website_captcha' => 'mecaptcha',
     'website_why_galepress' => 'nasil-calisir',
     'website_payment_result' => 'odeme-sonuc/(:all)',

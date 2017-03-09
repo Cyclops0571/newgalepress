@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\AjaxResponse;
+use App\Library\ContentHelper;
 use App\Library\MyResponse;
 use App\Models\Application;
 use App\Models\Category;
 use App\Models\Content;
+use App\Models\ContentCategory;
+use App\Models\ContentCoverImageFile;
 use App\Models\ContentFile;
 use App\Models\GroupCode;
 use App\User;
 use Auth;
 use Common;
 use Cookie;
+use DateTime;
 use DB;
+use eProcessTypes;
 use eRemoveFromMobile;
 use eRequestType;
 use eStatus;
@@ -21,11 +27,13 @@ use Exception;
 use File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Interactivity;
+use Log;
 use Redirect;
 use Response;
-use sts\error;
 use Uploader;
 use UploadHandler;
+use URL;
 use Validator;
 use View;
 
@@ -171,6 +179,7 @@ class ContentController extends Controller {
         {
             return Response::make($this->xmlResponse($e), 200, ['content-type' => 'text/xml']);
         }
+
         return abort(404);
     }
 
@@ -414,9 +423,7 @@ class ContentController extends Controller {
 
 
                 /* yeni icerigin kopyalanmasi(new) */
-                $c = DB::table('Content')
-                    ->where('ContentID', '=', $newContentID)
-                    ->first();
+                $c = Content::find($newContentID);
                 $customerID = Application::find($c->ApplicationID)->CustomerID;
                 $contentFile = DB::table('ContentFile')
                     ->where('ContentID', '=', $sourceContentID)
@@ -481,7 +488,7 @@ class ContentController extends Controller {
                     File::copy('public/' . $contentFile->FilePath . '/' . basename($file), $destinationFolder . '/' . basename($file));
                 }
 
-                $this->get_copyContent($destinationFolder, $sourceContentID, $c->ContentID, $cf->ContentFileID);
+                ContentHelper::copyContent($destinationFolder, $sourceContentID, $c->ContentID, $cf->ContentFileID);
             }
 
             $contentFileControl = DB::table('ContentFile')
@@ -494,13 +501,16 @@ class ContentController extends Controller {
                 ->get();
 
             if (sizeof($contentFilePageControl) == 0)
-            {/* sayfalari olusmamis */
-                Controller::call('interactivity@show', [$contentFileControl->ContentFileID]);
-                $this->get_copyContent("null", $sourceContentID, $newContentID, $contentFileControl->ContentFileID);
+            {
+                //Page are not created yet
+
+                //todo:571571 Controller::call ???
+                //Controller::call('interactivity@show', [$contentFileControl->ContentFileID]);
+                ContentHelper::copyContent("null", $sourceContentID, $newContentID, $contentFileControl->ContentFileID);
             } elseif ($new != "new")
-            {/* sayfalari olusmus */
-                // Controller::call('interactivity@show', array($contentFileControl->ContentFileID));
-                $this->get_copyContent("null", $sourceContentID, $newContentID, $contentFileControl->ContentFileID);
+            {
+                //Pages has already created
+                ContentHelper::copyContent("null", $sourceContentID, $newContentID, $contentFileControl->ContentFileID);
             }
         } catch (Exception $e)
         {
@@ -508,196 +518,9 @@ class ContentController extends Controller {
 
             return $myResponse->error($e->getMessage());
         }
+        return $myResponse->success();
     }
 
-    /**
-     * @param $destinationFolder
-     * @param $sourceContentID
-     * @param $targetContentID
-     * @param $targetContentFileID
-     * @return string
-     */
-    public function copyContent($destinationFolder, $sourceContentID, $targetContentID, $targetContentFileID)
-    {
-        // /***** HEDEF CONTENTIN SAYFALARI OLUSUTURLMUS OLMALI YANI INTERAKTIF TASARLAYICISI ACILMIS OLMALI!!!*****/
-        // TAŞINACAK CONTENT'IN FILE ID'SI
-        $myResponse = new MyResponse();
-
-        try
-        {
-            $contentFile = DB::table('ContentFile')
-                ->where('ContentID', '=', $sourceContentID)
-                ->orderBy('ContentFileID', 'DESC')
-                ->first();
-
-            $contentFilePage = DB::table('ContentFilePage')
-                ->where('ContentFileID', '=', $contentFile->ContentFileID)
-                ->get();
-
-            if (sizeof($contentFilePage) == 0)
-            {
-                return;
-            } else
-            {
-
-                $contentFilePageNewCount = DB::table('ContentFilePage')
-                    ->where('ContentFileID', '=', $targetContentFileID)//****************
-                    ->count();
-
-                $targetApplicationID = DB::table('Content')
-                    ->where('ContentID', '=', $targetContentID)//****************
-                    ->first();
-
-                $targetCustomerID = DB::table('Application')
-                    ->where('ApplicationID', '=', $targetApplicationID->ApplicationID)//****************
-                    ->first();
-
-                if ($destinationFolder != "null")
-                { /* kopyalanacak icerigin sayfalari yok ise olusturur */
-                    foreach ($contentFilePage as $ocfp)
-                    {
-                        $ncfp = new ContentFilePage();
-                        $ncfp->ContentFileID = (int)$targetContentFileID;
-                        $ncfp->No = (int)$ocfp->No;
-                        $ncfp->Width = (int)$ocfp->Width;
-                        $ncfp->Height = (int)$ocfp->Height;
-                        $ncfp->FilePath = (string)'files/customer_' . $targetCustomerID->CustomerID . '/application_' . $targetApplicationID->ApplicationID . '/content_' . $targetContentID . '/file_' . $targetContentFileID;
-                        $ncfp->FileName = (string)$ocfp->FileName;
-                        $ncfp->FileName2 = (string)$ocfp->FileName2;
-                        $ncfp->FileSize = (int)$ocfp->FileSize;
-                        $ncfp->StatusID = (int)$ocfp->StatusID;
-                        $ncfp->CreatorUserID = (int)$ocfp->CreatorUserID;
-                        $ncfp->DateCreated = new DateTime();
-                        $ncfp->ProcessUserID = $ocfp->CreatorUserID;
-                        $ncfp->ProcessDate = new DateTime();
-                        $ncfp->ProcessTypeID = (int)eProcessTypes::Insert;
-                        $ncfp->save();
-                    }
-                    if (!File::exists($destinationFolder . '/file_' . $targetContentFileID))
-                    {
-                        File::makeDirectory($destinationFolder . '/file_' . $targetContentFileID);
-                    }
-
-                    $files = glob('public/' . $contentFile->FilePath . '/file_' . $contentFile->ContentFileID . '/*.{jpg,pdf}', GLOB_BRACE);
-                    foreach ($files as $file)
-                    {
-                        File::copy('public/' . $contentFile->FilePath . '/file_' . $contentFile->ContentFileID . '/' . basename($file), $destinationFolder . '/file_' . $targetContentFileID . '/' . basename($file));
-                    }
-                }
-
-                foreach ($contentFilePage as $cfp)
-                {
-
-
-                    $filePageComponent = DB::table('PageComponent')
-                        ->where('ContentFilePageID', '=', $cfp->ContentFilePageID)
-                        ->get();
-
-                    if (sizeof($filePageComponent) == 0)
-                    {
-                        continue;
-                    }
-
-                    //HANGI CONTENT'E TASINACAKSA O CONTENT'IN FILE ID'SI
-                    $contentFilePageNew = DB::table('ContentFilePage')
-                        ->where('ContentFileID', '=', $targetContentFileID)//****************
-                        ->where('No', '=', $cfp->No)
-                        ->first();
-
-                    // var_dump(isset($contentFilePageNew));
-                    if (isset($contentFilePageNew))
-                    {
-                        // Log::info("girdiiii");
-                        foreach ($filePageComponent as $fpc)
-                        {
-                            $s = new PageComponent();
-                            $s->ContentFilePageID = $contentFilePageNew->ContentFilePageID;
-                            $s->ComponentID = $fpc->ComponentID;
-                            if ($destinationFolder == "null")
-                            {
-                                $lastComponentNo = DB::table('PageComponent')
-                                    ->where('ContentFilePageID', '=', $contentFilePageNew->ContentFilePageID)
-                                    ->orderBy('No', 'DESC')
-                                    ->take(1)
-                                    ->only('No');
-                                if ($lastComponentNo == null)
-                                {
-                                    $lastComponentNo = 0;
-                                }
-                                $s->No = $lastComponentNo + 1;
-                            } else
-                            {
-                                $s->No = $fpc->No;
-                            }
-                            // Log::info(serialize($ids));
-                            $s->StatusID = eStatus::Active;
-                            $s->DateCreated = new DateTime();
-                            $s->ProcessDate = new DateTime();
-                            $s->ProcessTypeID = eProcessTypes::Insert;
-                            $s->save();
-
-                            $filePageComponentProperty = DB::table('PageComponentProperty')
-                                ->where('PageComponentID', '=', $fpc->PageComponentID)
-                                ->where('StatusID', '=', eStatus::Active)
-                                ->get();
-
-                            foreach ($filePageComponentProperty as $fpcp)
-                            {
-                                $p = new PageComponentProperty();
-                                $p->PageComponentID = $s->PageComponentID;
-                                $p->Name = $fpcp->Name;
-                                if ($fpcp->Value > $contentFilePageNewCount && $fpcp->Name == "page")
-                                {
-                                    $p->Value = 1;
-                                } elseif ($fpcp->Name == "filename")
-                                {
-                                    $targetPath = 'files/customer_' . $targetCustomerID->CustomerID . '/application_' . $targetApplicationID->ApplicationID . '/content_' . $targetContentID . '/file_' . $targetContentFileID . '/output/comp_' . $s->PageComponentID;
-                                    $targetPathFull = public_path($targetPath);
-                                    $p->Value = $targetPath . '/' . basename($fpcp->Value);
-                                    if (!File::exists($targetPathFull))
-                                    {
-                                        File::makeDirectory($targetPathFull, 777, true);
-                                    }
-                                    $files = glob('public/' . dirname($fpcp->Value) . '/*.{jpg,JPG,png,PNG,tif,TIF,mp3,MP3,m4v,M4V,mp4,MP4,mov,MOV}', GLOB_BRACE);
-                                    // Log::info('public/'.dirname($fpcp->Value));
-                                    foreach ($files as $file)
-                                    {
-                                        File::copy($file, $targetPathFull . '/' . basename($file));
-                                    }
-                                } else
-                                {
-                                    $p->Value = $fpcp->Value;
-                                }
-                                $p->StatusID = eStatus::Active;
-                                $p->DateCreated = new DateTime();
-                                $p->ProcessDate = new DateTime();
-                                $p->ProcessTypeID = eProcessTypes::Insert;
-                                $p->save();
-                            }
-                        }
-                    }
-                }
-            }
-
-            $targetHasCreated = ContentFile::find($targetContentFileID);
-            if ($targetHasCreated)
-            {
-                $targetHasCreated->Interactivity = Interactivity::ProcessQueued;
-                $targetHasCreated->HasCreated = 0;
-                $targetHasCreated->save();
-            }
-
-            interactivityQueue::trigger();
-
-            return $myResponse->success();
-
-        } catch (Exception $e)
-        {
-            Log::info($e->getMessage());
-
-            return $myResponse->error($e->getMessage());
-        }
-    }
 
     public function delete(Request $request, MyResponse $myResponse)
     {
@@ -732,21 +555,16 @@ class ContentController extends Controller {
 
     public function uploadfile(Request $request)
     {
+
         ob_start();
         $element = $request->get('element');
         $options = [
             'upload_dir'        => public_path('files/temp/'),
-            'upload_url'        => URL::base() . '/files/temp/',
+            'upload_url'        => URL::to('/') . '/files/temp/',
             'param_name'        => $element,
             'accept_file_types' => '/\.(pdf)$/i',
         ];
         $upload_handler = new UploadHandler($options);
-
-        if (!request()->ajax())
-        {
-            return;
-        }
-
         $upload_handler->post(false);
 
         $ob = ob_get_contents();
@@ -761,7 +579,7 @@ class ContentController extends Controller {
         return Response::json($ret);
     }
 
-    public function uploadcoverimage(Request $request)
+    public function uploadCoverImage(Request $request)
     {
         ob_start();
 
@@ -774,12 +592,6 @@ class ContentController extends Controller {
             'accept_file_types' => '/\.(gif|jpe?g|png|tiff)$/i',
         ];
         $upload_handler = new UploadHandler($options);
-
-        if (!request()->ajax())
-        {
-            return;
-        }
-
         $upload_handler->post(false);
 
         $ob = ob_get_contents();
@@ -803,12 +615,13 @@ class ContentController extends Controller {
         {
             return $myResponse->error(__('common.detailpage_validation'));
         }
-        $maxID = $myApplication->Contents()->max('OrderNo');
+        $maxID = $myApplication->Contents->max('OrderNo');
         $contentIDDescSet = $request->get("contentIDSet", []);
         $i = $maxID + 1;
         $contentIDSet = array_reverse($contentIDDescSet);
         foreach ($contentIDSet as $contentID)
         {
+            /** @var Content $content */
             if ($content = $myApplication->Contents->keyBy('ContentID')->find($contentID))
             {
                 $content->OrderNo = $i++;
@@ -817,11 +630,13 @@ class ContentController extends Controller {
         }
 
         $myApplication->incrementAppVersion();
+
         return $myResponse->success();
     }
 
     /**
      * Contenti yayindan kaldirip mobilden de kaldirilma flagini 1 yapar
+     * @param MyResponse $myResponse
      * @param int $contentID
      * @return string
      */
@@ -863,7 +678,7 @@ class ContentController extends Controller {
         {
             return $myResponse->error($v->errors->first());
 
-            //	    ajaxResponse::error($v->errors->first());
+            //	    AjaxResponse::error($v->errors->first());
         }
 
         $content = Content::find($request->get("ContentID"));
@@ -873,7 +688,7 @@ class ContentController extends Controller {
         return $myResponse->success("&SubscriptionIdentifier=" . $subscriptionIdentifier);
     }
 
-    public function interactivity_status(Request $request)
+    public function interactivityStatus(Request $request)
     {
         set_time_limit(0);
         $rules = [
@@ -882,7 +697,7 @@ class ContentController extends Controller {
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes())
         {
-            return ajaxResponse::error($v->errors->first());
+            return AjaxResponse::error($v->errors->first());
         }
         $contentFileID = $request->get("contentFileID");
         for ($i = 0; $i < 240; $i++)
@@ -890,19 +705,19 @@ class ContentController extends Controller {
             $contentFile = ContentFile::find($contentFileID);
             if ($contentFile && $contentFile->HasCreated)
             {
-                return ajaxResponse::success();
+                return AjaxResponse::success();
             }
             sleep(1);
         }
 
-        return ajaxResponse::error();
+        return AjaxResponse::error(trans('error.interactivity_error'));
     }
 
     /**
      * @param $e
      * @return string
      */
-    protected function xmlResponse($e)
+    protected function xmlResponse(Exception $e)
     {
         $r = '';
         $r .= '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";

@@ -8,6 +8,7 @@ use App\Models\Application;
 use App\Models\Content;
 use App\Models\Customer;
 use App\Models\LoginHistory;
+use App\Models\MailLog;
 use App\User;
 use Auth;
 use Common;
@@ -27,16 +28,6 @@ use View;
 
 class CommonController extends Controller
 {
-
-    //login
-    public function showMyLoginForm()
-    {
-        if (Auth::check()) {
-            return Redirect::to(__('route.home'));
-        } else {
-            return view('pages.login');
-        }
-    }
 
     public function login(Request $request, LoginHistory $loginHistory, MyResponse $myResponse)
     {
@@ -206,7 +197,7 @@ class CommonController extends Controller
 
     public function home(Request $request)
     {
-        if ((int)Auth::user()->UserTypeID == eUserTypes::Manager) {
+        if (Auth::user()->UserTypeID == eUserTypes::Manager) {
             return View::make('pages.homeadmin');
         }
 
@@ -546,7 +537,7 @@ class CommonController extends Controller
             $user->ProcessTypeID = eProcessTypes::Insert;
             //$user->ConfirmCode = $confirmCode;
             $user->save();
-
+            //todo:571571 make it run
             if (Auth::facebookAttempt(array('username' => $user->Username, 'fbemail' => $user->FbEmail, 'StatusID' => eStatus::Active))) {
 
                 Auth::loginUsingId($user->UserID);
@@ -569,6 +560,7 @@ class CommonController extends Controller
      */
     public function ticketPage()
     {
+        //todo:571571 make it run
         include(public_path("ticket/bootstrap.php"));
         //find out if user exists
         $users = sts\singleton::get('sts\users');

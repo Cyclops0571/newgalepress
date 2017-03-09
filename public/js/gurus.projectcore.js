@@ -647,7 +647,7 @@ var cApplication = new function () {
             cCommon.save('application_usersettings',
                 function () {
                     cNotification.success();
-                    window.location = '/' + currentLanguage + '/' + route["applications_usersettings"].replace('(:num)', $('input[name=ApplicationID]').val());
+                    window.location = '/' + currentLanguage + '/' + route["applications_usersettings"].replace('{application}', $('input[name=ApplicationID]').val());
                 }
             );
         }

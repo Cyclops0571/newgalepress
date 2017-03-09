@@ -10,10 +10,9 @@ use App\Models\Crop;
 use eStatus;
 use File;
 use Illuminate\Http\Request;
-use App\Library\imageInfoEx;
+use App\Library\ImageInfoEx;
 use Imagick;
 use Redirect;
-use Route;
 
 class CropController extends Controller
 {
@@ -41,10 +40,10 @@ class CropController extends Controller
         //bu contentin imageini bulalim....
         //calculate the absolute path of the source image
         $imagePath = $contentFile->FilePath . "/" . IMAGE_ORIGINAL . IMAGE_EXTENSION;
-        $imageInfo = new imageInfoEx($imagePath);
+        $imageInfo = new ImageInfoEx($imagePath);
         if (!$imageInfo->isValid()) {
             $imagePath = $contentFile->FilePath . "/" . $ccif->SourceFileName;
-            $imageInfo = new imageInfoEx($imagePath);
+            $imageInfo = new ImageInfoEx($imagePath);
         }
         $data = array();
         $data['cropSet'] = $cropSet;
@@ -87,7 +86,7 @@ class CropController extends Controller
             //old pdf files dont have an original.jpg
             $sourceImagePath = $contentFile->FilePath . "/" . $ccif->SourceFileName;
         }
-        $imageInfo = new imageInfoEx($sourceImagePath);
+        $imageInfo = new ImageInfoEx($sourceImagePath);
         $fileSet = scandir(public_path($contentFile->FilePath . "/"));
         $length = strlen(IMAGE_CROPPED_NAME);
         foreach ($fileSet as $fileName) {

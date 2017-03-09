@@ -251,6 +251,7 @@ return [
         'LaravelLocalization'   => Mcamara\LaravelLocalization\Facades\LaravelLocalization::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'RedirectIfAuthenticated' => App\Http\Middleware\RedirectIfAuthenticated::class,
     ],
 
 ];

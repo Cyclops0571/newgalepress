@@ -51,7 +51,7 @@ return array(
     'applications_save' => 'applications/save',
     'applications_delete' => 'applications/delete',
     'applications_uploadfile' => 'applications/load-file',
-    'applications_usersettings' => 'applications/{id}/settings',
+    'applications_usersettings' => 'applications/{application}/settings',
     'application_usersettings_save' => 'applications/applicationSetting',
 
     'contents' => 'contents',
@@ -116,7 +116,6 @@ return array(
     'website_sectors_medicine' => 'solutions-pharmaceutical',
     'website_sectors_digitalpublishing' => 'solutions-digital-publishing',
     'website_tryit' => 'tryit',
-    'website_landing_page_realty' => 'realty',
     'website_captcha' => 'mecaptcha',
     'website_why_galepress' => 'how-it-works',
     'website_payment_result' => 'payment-result/(:all)',

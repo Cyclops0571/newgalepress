@@ -116,7 +116,7 @@ class Content extends Model
         $p = $request->get('page', 1);
         $option = (int)$request->get('option', 0);
 
-        $rowCount = Config::get('custom.rowcount');
+        $rowCount = config('custom.rowcount');
         $sqlCat = '(IFNULL((SELECT GROUP_CONCAT(`Name` ORDER BY `Name` SEPARATOR \', \')'
             . ' FROM `Category` WHERE ApplicationID=a.ApplicationID AND CategoryID IN '
             . '(SELECT CategoryID FROM `ContentCategory` WHERE ContentID = o.ContentID) AND StatusID = 1), \'\'))';
@@ -200,12 +200,8 @@ class Content extends Model
             return view('pages.contentoptionlist', $data);
         }
 
-        $count = $rs->count();
-        //$results = $rs->forPage($p, $rowCount)->get();
         $rows = $rs->forPage($p, $rowCount)->paginate($rowCount);
-//        dd($rows);
         return $rows;
-        //Paginator::make($results, $count, $rowCount);
 
     }
 
@@ -626,6 +622,9 @@ class Content extends Model
         }
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function ContentFile()
     {
         return $this->hasMany(ContentFile::class, 'ContentID');

@@ -36,7 +36,7 @@
             border: 1px #1681bf solid !important;
         }
 
-        img[width="<?php use App\Library\imageInfoEx;use App\Models\Crop;echo $displayedWidth; ?>"] {
+        img[width="<?php use App\Library\ImageInfoEx;use App\Models\Crop;echo $displayedWidth; ?>"] {
             -webkit-box-shadow: 0px 0px 50 0px rgba(2, 81, 130, 1);
             -moz-box-shadow: 0px 0px 50 0px rgba(2, 81, 130, 1);
             box-shadow: 0px 0px 50px 0px rgba(2, 81, 130, 1);
@@ -47,7 +47,7 @@
         <div class="row">
             <?php
 
-            /** @var imageInfoEx $imageInfo */
+            /** @var ImageInfoEx $imageInfo */
             if (!$imageInfo->isValid() || count($cropSet) == 0) {
                 //TODO: think for more respectfull way
                 echo '{{ __("common.crop_coverimage_error") }}';

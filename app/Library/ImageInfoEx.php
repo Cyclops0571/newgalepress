@@ -2,7 +2,7 @@
 
 namespace App\Library;
 
-class imageInfoEx {
+class ImageInfoEx {
     const CropPageWidth = 250;
     public $width = 0;
     public $height = 0;

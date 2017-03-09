@@ -3,7 +3,6 @@ namespace App\Http\Controllers;
 use App\Helpers\MyPayment;
 use App\Models\City;
 use App\Models\Qrcode;
-use App\User;
 use Illuminate\Http\Request;
 use Iyzipay\Model\CheckoutForm;
 use Iyzipay\Model\Locale;
@@ -15,9 +14,13 @@ use Validator;
 class IyzicoController extends Controller
 {
 
-    public function index(Request $request, User $user)
+    public function index(Request $request)
     {
         $qrCodeId = $request->get('qrCodeId', 0);
+        $cb = $request->get('cb', '');
+        $price = $request->get('price', '');
+        $id = $request->get('id', '');
+        $pm = $request->get('pm', '');
         $qrCode = new Qrcode();
         $errors = null;
         //iyzicoqr?qrCodeId=5
@@ -34,10 +37,6 @@ class IyzicoController extends Controller
                 $errors = $v->errors();
             }
 
-            $cb = $request->get('cb');
-            $price = $request->get('price');
-            $id = $request->get('id');
-            $pm = $request->get('pm');
             if (strpos($cb, 'https://') === false || strpos($cb, 'http://') === false) {
                 $cb = 'http://' . $cb;
             }
@@ -110,13 +109,10 @@ class IyzicoController extends Controller
 
     public function openIyzicoIframe(Qrcode $qrCode)
     {
-        var_dump($qrCode);
-        exit;
         $checkoutFormInitialize = $qrCode->makeIyzicoIframeRequest();
         $errorMessage = $checkoutFormInitialize->getErrorMessage();
         if (!empty($errorMessage)) {
             return \Redirect::to(\URL::to('iyzicoqr', ['qrCodeId' => $qrCode->QrcodeID]));
-            // 571571
         }
 
         $data = array();
@@ -134,16 +130,16 @@ class IyzicoController extends Controller
 
         /** @var Qrcode $qrCode */
         $qrCode = Qrcode::find($request->get("qrCodeId"));
-        $request = new RetrieveCheckoutFormRequest();
-        $request->setLocale(Locale::TR);
-        $request->setConversationId($request->get("qrCodeId"));
-        $request->setToken($request->get('token'));
+        $iyzicoFormRequest = new RetrieveCheckoutFormRequest();
+        $iyzicoFormRequest->setLocale(Locale::TR);
+        $iyzicoFormRequest->setConversationId($request->get("qrCodeId"));
+        $iyzicoFormRequest->setToken($request->get('token'));
         # make request
         $options = new Options();
         $options->setApiKey(MyPayment::iyzicoApiKey);
         $options->setSecretKey(MyPayment::iyzicoSecretKey);
         $options->setBaseUrl(MyPayment::iyzicoBaseUrl);
-        $checkoutForm = CheckoutForm::retrieve($request, $options);
+        $checkoutForm = CheckoutForm::retrieve($iyzicoFormRequest, $options);
 //        var_dump($checkoutForm); exit;
         /** @var PaymentItem[] $items */
         $items = $checkoutForm->getPaymentItems();

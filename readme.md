@@ -1,40 +1,23 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img width="150"src="https://laravel.com/laravel.png"></a></p>
+<p align="center"><a href="https://galepress.com" target="_blank"><img width="150"src="http://www.galepress.com/website/img/logo-dark.png"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## About Galepress
 
-## About Laravel
+Galepress is a digital publishing platform with interactive components. 
+We believe publishing your contents must be an enjoyable, creative experience to be truly fulfilling. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+One Mobile App Platform to Rule Them All
+The solution your organization needs may be increasing customer loyalty/brand development, increasing sales, engaging/retaining employees or decreasing overhead on print material. With Gale Press you can bridge the digital gap and offer an engaging mobile App experience. Thanks to our software leasing model (MAaaS), you won't need a custom app or an internal mobile solutions team. Contact us today and use Gale Press to bring the mobile app world to your fingertips.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
+- [Digital Publishing](http://www.galepress.com/en/solutions-digital-publishing).
+- [Contant Education with mobile](http://www.galepress.com/en/solutions-education).
 - [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- [Retail](http://www.galepress.com/en/solutions-retail).
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb combination of simplicity, elegance, and innovation give you tools you need to build any application with which you are tasked.
 
-## Learning Laravel
+Publish your printed materials frequently and update easily through the Gale Press homepage.
 
-Laravel has the most extensive and thorough documentation and video tutorial library of any modern web application framework. The [Laravel documentation](https://laravel.com/docs) is thorough, complete, and makes it a breeze to get started learning the framework.
+By presenting your catalog and products in great detail, you provide an easy mobile purchasing platform for your customers and a new sales channel for your organization.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 900 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+Leverage the Gale Press platform by creating a new revenue stream for your advertisers with exciting and interactive features
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Save money and help the environment by eliminating expensive printing costs.

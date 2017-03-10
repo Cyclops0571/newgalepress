@@ -46,13 +46,13 @@ return array(
 
     'applications' => 'applications',
     'applications_new' => 'applications/new',
-    'applications_show' => 'applications/(:num)',
+    'applications_show' => 'applications/({application}',
     'applications_pushnotification' => 'applications/(:num)/push-notification',
     'applications_save' => 'applications/save',
     'applications_delete' => 'applications/delete',
     'applications_uploadfile' => 'applications/load-file',
-    'applications_usersettings' => 'applications/{application}/settings',
-    'application_usersettings_save' => 'applications/applicationSetting',
+    'applications_settings' => 'applications/{application}/settings',
+    'application_settings_save' => 'applications/applicationSetting',
 
     'contents' => 'contents',
     'contents_request' => 'contents/request',

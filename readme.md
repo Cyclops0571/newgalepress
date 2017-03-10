@@ -10,7 +10,6 @@ The solution your organization needs may be increasing customer loyalty/brand de
 
 - [Digital Publishing](http://www.galepress.com/en/solutions-digital-publishing).
 - [Contant Education with mobile](http://www.galepress.com/en/solutions-education).
-- [Robust background job processing](https://laravel.com/docs/queues).
 - [Retail](http://www.galepress.com/en/solutions-retail).
 
 

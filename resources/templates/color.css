@@ -1,0 +1,44 @@
+.templateScreen .header{
+    color: ##TemplateColor# !important;
+}
+.templateScreen > .container .content-bar{
+    color: ##TemplateColor# !important;
+}
+.templateScreen .app-name{
+    color:##TemplateColor# !important;
+}
+.templateScreen .app-buttons{
+    color:##TemplateColor# !important;
+}
+.templateScreen .header .header-categories{
+    background: url(/img/template-generated/menu#TemplateColor#.png?v=#APP_VER#) center left;
+}
+.templateScreen .footer .footer-home{
+    background: url(/img/template-generated/home_selected#TemplateColor#.png?v=#APP_VER#) center center;
+}
+.templateScreen .footer .footer-library{
+    background: url(/img/template-generated/library_selected#TemplateColor#.png?v=#APP_VER#) center center;
+}
+.templateScreen .footer .footer-download{
+    background: url(/img/template-generated/download_selected#TemplateColor#.png?v=#APP_VER#) center center;
+}
+.templateScreen .footer .footer-info{
+    background: url(/img/template-generated/info_selected#TemplateColor#.png?v=#APP_VER#) center center;
+}
+/*************************************************/
+.templateExtrasScreen{
+    background: ##TemplateColor# !important;
+}
+.templateExtrasScreen .container .form-row.extrasBar{
+    color:##TemplateColor# !important;
+}
+.templateExtrasScreen .container .form-row.extrasBar.categories .extra-bar-icon{
+    background: url(/img/template-generated/left_menu_category_icon#TemplateColor#.png?v=#APP_VER#) left center;
+}
+.templateExtrasScreen .container .form-row.extrasBar .title-drop{
+    background: url(/img/template-generated/left_menu_down#TemplateColor#.png?v=#APP_VER#) right center;
+}
+.templateExtrasScreen .container .form-row.extrasBar.barLinks .extra-bar-icon{
+    background: url(/img/template-generated/left_menu_link#TemplateColor#.png?v=#APP_VER#) left center;
+}
+/*************************************************/

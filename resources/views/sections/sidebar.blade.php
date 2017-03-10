@@ -65,7 +65,7 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
       </li>
       <li>
         @if(count($applicationSet) == 1)
-          <a href="{{route('applications_usersettings', $applicationSet[0]->ApplicationID)}}">
+          <a href="{{route('application_setting', $applicationSet[0]->ApplicationID)}}">
             <span class="icon-cogs"></span>{{__('common.application_settings_caption_detail')}}
           </a>
         @else
@@ -73,7 +73,7 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
           <ul id="allSettings">
               <?php foreach ($applicationSet as $app): ?>
             <li style="width:100%;">
-                <?php echo Html::link(str_replace('(:num)', $app->ApplicationID, __('route.applications_usersettings')), $app->Name, $app->sidebarClass()); ?>
+                <?php echo Html::link(route('application_setting', $app->ApplicationID)); ?>
             </li>
               <?php endforeach; ?>
           </ul>
@@ -143,7 +143,7 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
 <script type="text/javascript">
     var reportLinks = <?php echo json_encode($reportLinks); ?>;
     var contentsUrl = '<?php echo __('route.contents'); ?>';
-    var applicationSettingRoute = "<?php echo __("route.applications_usersettings"); ?>";
+    var applicationSettingRoute = '{{route('application_setting', '::num::')}}';
     var bannersController = "<?php echo __("route.banners"); ?>";
     var mapsController = "<?php echo __("route.maps"); ?>";
 
@@ -160,7 +160,7 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
                 $(".page-navigation ul#allReports").prev().trigger('click');
             }
         }
-        var applicationSettingRouteExp = applicationSettingRoute.replace("(:num)", "\\d+");
+        var applicationSettingRouteExp = applicationSettingRoute.replace("::num::", "\\d+");
         var appID = parseInt($("input[name$='pplicationID']").val());
         if (!(appID > 0)) {
             return;

@@ -79,7 +79,7 @@
                     </div>
                     <div class="col-xs-2" style="padding: 0">
                         <a class="banner-setting-link"
-                           href="{{route('banners_list', ['applicationID' => 10])}}"
+                           href="{{route('banners_list', ['applicationID' => $application->ApplicationID])}}"
                            title="Banner">
                             <span class="icon-arrow-right"></span>
                         </a>

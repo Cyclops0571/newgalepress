@@ -49,7 +49,6 @@ class ApplicationSettingController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param MyResponse $myResponse
-     * @param  int $id
      * @return \Illuminate\Http\Response|string
      */
     public function update(Request $request, MyResponse $myResponse)

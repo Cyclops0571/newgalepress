@@ -48,11 +48,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::post(__('route.mydetail'), array('as' => 'common_my_detail_post', 'uses' => 'CommonController@mydetail'));
 
     // <editor-fold defaultstate="collapsed" desc="Banners">
-    Route::get(__('route.banners'), array('as' => 'banners_list', 'uses' => 'banners@index'));
-    Route::get(__('route.banners_show'), array('as' => 'banners_show', 'uses' => 'banners@show'));
-    Route::get(__('route.banners_new'), array('as' => 'banners_new', 'uses' => 'banners@newly'));
-    Route::post(__('route.banners_save'), array('as' => 'banners_save', 'uses' => 'banners@save'));
-    Route::post(__('route.banners_setting_save'), array('as' => 'banners_setting_save', 'uses' => 'banners@save_banner_setting'));
+    Route::get(__('route.banners'), array('as' => 'banners_list', 'uses' => 'BannerController@index'));
+    Route::get(__('route.banners_show'), array('as' => 'banners_show', 'uses' => 'BannerController@show'));
+    Route::get(__('route.banners_new'), array('as' => 'banners_new', 'uses' => 'BannerController@newly'));
+    Route::post(__('route.banners_save'), array('as' => 'banners_save', 'uses' => 'BannerController@save'));
+    Route::post(__('route.banners_setting_save'), array('as' => 'banners_setting_save', 'uses' => 'BannerController@save_banner_setting'));
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="maps">
@@ -82,20 +82,23 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
 
     // <editor-fold defaultstate="collapsed" desc="Applications">
     Route::get(__('route.applications'), array('as' => 'applications', 'uses' => 'ApplicationController@index'));
-    Route::get(__('route.applications_new'), array('as' => 'applications_new', 'uses' => 'ApplicationController@newly'));
+    Route::get(__('route.applications_new'), array('as' => 'applications_new', 'uses' => 'ApplicationController@create'));
     Route::get(__('route.applications_show'), array('as' => 'applications_show', 'uses' => 'ApplicationController@show'));
     Route::post(__('route.applications_pushnotification'), array('as' => 'applications_push', 'uses' => 'ApplicationController@push'));
     Route::post(__('route.applications_save'), array('as' => 'applications_save', 'uses' => 'ApplicationController@save'));
     Route::post(__('route.applications_delete'), array('as' => 'applications_delete', 'uses' => 'ApplicationController@delete'));
-    Route::post(__('route.applications_uploadfile'), array('as' => 'applications_uploadfile', 'uses' => 'ApplicationController@uploadfile'));
-    Route::get(__('route.applications_usersettings'), array('as' => 'applications_usersettings', 'uses' => 'ApplicationSettingController@show'));
+    Route::post(__('route.applications_uploadfile'), array('as' => 'applications_uploadfile', 'uses' => 'ApplicationController@uploadFile'));
+    Route::get(__('route.applications_settings'), array('as' => 'application_setting', 'uses' => 'ApplicationSettingController@show'));
     // </editor-fold>
 
-
-    Route::post('applications/applicationSetting', array('as' => 'save_applications_usersettings', 'before' => 'auth', 'uses' => 'ApplicationSettingController@update'));
-
-
+    Route::post('applications/applicationSetting', array('as' => 'application_setting_save', 'uses' => 'ApplicationSettingController@update'));
 });
+
+
+Route::post('banners/imageupload', array('as' => 'banners_imageupload', 'uses' => 'BannerController@imageupload'));
+Route::get("banners/delete", array('as' => 'banners_delete', 'before' => 'auth', 'uses' => 'BannerController@delete'));
+Route::post("banners/order/{applicationId}", array('as' => 'banners_order', 'before' => 'auth', 'uses' => 'BannerController@order'));
+Route::get("banners/service_view/{applicationId}", array('as' => 'banners_service_view', 'uses' => 'BannerController@service_view'));
 
 
 
@@ -314,18 +317,14 @@ Route::post('managements/export', array('as' => 'managements_exportlanguages', '
 // </editor-fold>
 
 
-Route::post('/banners/imageupload', array('as' => 'banners_imageupload', 'uses' => 'banners@imageupload'));
 Route::post('clients/clientregister', array('as' => 'clientsregistersave', 'uses' => 'clients@clientregister'));
 Route::post('clients/forgotpassword', array('as' => 'clientsregistered', 'uses' => 'clients@forgotpassword'));
 Route::post("clients/resetpw", array('as' => 'clientsresetpw', 'uses' => 'clients@resetpw'));
 Route::post("applications/refresh_identifier", array('as' => 'applicationrefreshidentifier', 'uses' => 'ApplicationController@refresh_identifier'));
 Route::post("contents/refresh_identifier", array('as' => 'contentrefreshidentifier', 'uses' => 'ContentController@refresh_identifier'));
 
-Route::get("/csstemplates/(:any)", array('as' => 'template_index', 'uses' => 'ApplicationController@theme'));
-Route::get("/template/(:num)", array('as' => 'template_index', 'before' => 'auth', 'uses' => 'template@index'));
-Route::get("banners/delete", array('as' => 'banners_delete', 'before' => 'auth', 'uses' => 'banners@delete'));
-Route::post("banners/order/(:num)", array('as' => 'banners_order', 'before' => 'auth', 'uses' => 'banners@order'));
-Route::get("banners/service_view/(:num)", array('as' => 'banners_service_view', 'uses' => 'banners@service_view'));
+Route::get("/csstemplates/{filename}", array('as' => 'template_index', 'uses' => 'ApplicationTemplateController@theme'));
+Route::get("/template/{application}", array('as' => 'template_index', 'before' => 'auth', 'uses' => 'ApplicationTemplateController@show'));
 Route::get('maps/webview/(:num)', array('as' => 'map_view', 'uses' => 'maps@webview'));
 Route::get('payment/paymentAccountByApplicationID/(:num)', array('as' => 'app_payment_data', 'uses' => 'payment@paymentAccountByApplicationID'));
 

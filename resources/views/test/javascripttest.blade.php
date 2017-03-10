@@ -37,7 +37,7 @@
         {{ Html::style('css/fonts/open-sans-condensed/css/open-sans-condensed.css?v=' . APP_VER, array('media' => 'screen')) }}
         {{ Html::style('css/myApp.css?v=' . APP_VER, array('media' => 'screen')) }}
         {{ Html::style('uploadify/uploadify.css?v=' . APP_VER, array('media' => 'screen')) }}
-        {{ Html::style('js/chosen_v1.0.0/chosen.css?v=' . APP_VER,array('media' => 'screen'))}}
+        {{ Html::style('chosen_v1.0.0/chosen.css?v=' . APP_VER,array('media' => 'screen'))}}
         {{ Html::style('css/btn_interactive.css?v=' . APP_VER,array('media' => 'screen'))}}
 
         <link rel="stylesheet" href="/css/template-chooser/master.css?v=<?php echo APP_VER; ?>">
@@ -62,7 +62,7 @@
         {{ Html::script('bundles/jupload/js/jquery.iframe-transport.js') }}
         {{ Html::script('bundles/jupload/js/jquery.fileupload.js') }}
 
-        {{ Html::script('js/chosen_v1.0.0/chosen.jquery.min.js') }}
+        {{ Html::script('chosen_v1.0.0/chosen.jquery.min.js') }}
         {{ Html::script('js/jquery.base64.decode.js') }}
         {{ Html::script('js/jquery.qtip.js') }}
         {{ Html::script('js/jquery.cookie.js?v=' . APP_VER) }}

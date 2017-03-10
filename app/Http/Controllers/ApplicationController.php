@@ -8,7 +8,6 @@ use App\Models\Customer;
 use App\Models\Package;
 use App\Models\PushNotification;
 use App\Models\PushNotificationDevice;
-use App\Models\Tab;
 use App\Models\Token;
 use App\Models\Topic;
 use Auth;
@@ -17,7 +16,6 @@ use DateTime;
 use DB;
 use eProcessTypes;
 use eStatus;
-use eTemplateColor;
 use eUserTypes;
 use Exception;
 use File;
@@ -161,7 +159,7 @@ class ApplicationController extends Controller
         return redirect()->route('home');
     }
 
-    public function get_new()
+    public function create()
     {
         if (Auth::user()->UserTypeID != eUserTypes::Manager) {
             return redirect()->route('home');
@@ -199,16 +197,11 @@ class ApplicationController extends Controller
         return view('pages.' . Str::lower($this->table) . 'detail', $data);
     }
 
-    public function get_show($id)
+    public function show(Application $application)
     {
 
         if (Auth::user()->UserTypeID != eUserTypes::Manager) {
             return redirect()->route('home');
-        }
-
-        $app = Application::find($id);
-        if (!$app) {
-            return redirect()->to($this->route);
         }
 
         $customers = Customer::where('StatusID', '=', eStatus::Active)
@@ -228,7 +221,7 @@ class ApplicationController extends Controller
 
         $packages = Package::orderBy('PackageID', 'ASC')->get();
         $data = array(
-            'app' => $app,
+            'app' => $application,
             'customers' => $customers,
             'groupcodes' => $groupcodes,
             'packages' => $packages,
@@ -242,7 +235,7 @@ class ApplicationController extends Controller
 
     }
 
-    public function post_push(Request $request, $id)
+    public function push(Request $request, $id)
     {
         try {
             $rules = array(
@@ -326,7 +319,7 @@ class ApplicationController extends Controller
         return "success=" . base64_encode("true");
     }
 
-    public function post_save(Request $request, MyResponse $myResponse)
+    public function save(Request $request, MyResponse $myResponse)
     {
         $currentUser = Auth::user();
         if ((int)$currentUser->UserTypeID == eUserTypes::Manager) {
@@ -396,7 +389,7 @@ class ApplicationController extends Controller
         return $myResponse->error(__('common.detailpage_validation'));
     }
 
-    public function post_delete(Request $request)
+    public function delete(Request $request)
     {
         $currentUser = Auth::user();
         $id = (int)$request->get($this->pk, '0');
@@ -411,7 +404,7 @@ class ApplicationController extends Controller
         return "success=" . base64_encode("true");
     }
 
-    public function post_uploadfile(Request $request)
+    public function uploadFile(Request $request)
     {
         $element = $request->get('element');
 
@@ -430,7 +423,7 @@ class ApplicationController extends Controller
     }
 
 
-    public function post_refresh_identifier(Request $request, MyResponse $myResponse)
+    public function refresh_identifier(Request $request, MyResponse $myResponse)
     {
         $max = 1;
         foreach (Subscription::types() as $key => $value) {
@@ -452,10 +445,5 @@ class ApplicationController extends Controller
         $subscriptionIdentifier = $application->SubscriptionIdentifier($request->get("SubscrioptionType"), TRUE);
         $application->save();
         return $myResponse->success(['SubscriptionIdentifier' => $subscriptionIdentifier]);
-    }
-
-    public function get_theme($fileName)
-    {
-        return response()->make(eTemplateColor::templateCss($fileName), 200, array('content-type' => 'text/css'));
     }
 }

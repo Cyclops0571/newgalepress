@@ -46,13 +46,13 @@ return array(
 
     'applications' => 'uygulamalar',
     'applications_new' => 'uygulamalar/yeni',
-    'applications_show' => 'uygulamalar/(:num)',
+    'applications_show' => 'uygulamalar/{application}',
     'applications_pushnotification' => 'uygulamalar/(:num)/bildirim-gonder',
     'applications_save' => 'uygulamalar/kaydet',
     'applications_delete' => 'uygulamalar/sil',
     'applications_uploadfile' => 'uygulamalar/dosya-yukle',
-    'applications_usersettings' => 'uygulamalar/{application}/ayarlar',
-    'application_usersettings_save' => 'applications/applicationSetting',
+    'applications_settings' => 'uygulamalar/{application}/ayarlar',
+    'application_settings_save' => 'applications/applicationSetting',
 
     'contents' => 'icerikler',
     'contents_request' => 'icerikler/talep',

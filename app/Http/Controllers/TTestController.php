@@ -26,6 +26,8 @@ class TTestController extends Controller {
     public function test2(Request $request, Route $route)
     {
 
+        echo route('application_setting');
+        exit;
         DB::enableQueryLog();
         //$rows = Content::forPage(3, 10);
         $row2 = Content::forPage(2, 10)->get();

@@ -7,18 +7,6 @@ use App\Models\Requestt;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Str;
 
-class localize
-{
-    public function get()
-    {
-        return 'test';
-    }
-
-    function __toString()
-    {
-        return 'test';
-    }
-}
 
 abstract class Interactivity
 {
@@ -177,7 +165,7 @@ class eTemplateColor
             }
         }
 
-        $fileContent = File::get(app_path("/csstemplates/color.css"));
+        $fileContent = File::get(resource_path("templates/color.css"));
         $fileContent = str_replace("#TemplateColor#", $templateColorCode, $fileContent);
         $fileContent = str_replace("#APP_VER#", APP_VER, $fileContent);
         return $fileContent;

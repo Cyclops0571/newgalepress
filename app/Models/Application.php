@@ -233,7 +233,6 @@ class Application extends Model {
     }
 
 
-
     public function Users()
     {
         return $this->hasMany(ApplicationUser::class, $this->primaryKey);
@@ -264,14 +263,14 @@ class Application extends Model {
             return true;
         }
 
-        if ((int)$currentUser->UserTypeID == eUserTypes::Customer)
+        if ($currentUser->UserTypeID == eUserTypes::Customer)
         {
-            if ((int)$this->StatusID == eStatus::Active)
+            if ($this->StatusID == eStatus::Active)
             {
                 $c = $this->Customer;
                 if ((int)$c->StatusID == eStatus::Active)
                 {
-                    if ((int)$currentUser->CustomerID == (int)$c->CustomerID)
+                    if ($currentUser->CustomerID == $c->CustomerID)
                     {
                         return true;
                     }

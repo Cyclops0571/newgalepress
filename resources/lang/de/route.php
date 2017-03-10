@@ -46,13 +46,13 @@ return array(
 
     'applications' => 'apps',
     'applications_new' => 'apps/neu',
-    'applications_show' => 'apps/(:num)',
+    'applications_show' => 'apps/{application}',
     'applications_pushnotification' => 'apps/(:num)/push-nachrichten',
     'applications_save' => 'apps/speichern',
     'applications_delete' => 'apps/loeschen',
     'applications_uploadfile' => 'apps/dateihochladen',
-    'applications_usersettings' => 'apps/{application}/einstellungen',
-    'application_usersettings_save' => 'apps/einstellungenspeichern',
+    'applications_settings' => 'apps/{application}/einstellungen',
+    'application_settings_save' => 'apps/einstellungenspeichern',
 
     'contents' => 'inhalte',
     'contents_request' => 'inhalte/anfordern',

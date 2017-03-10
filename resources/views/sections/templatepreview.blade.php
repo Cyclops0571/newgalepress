@@ -273,7 +273,7 @@ $defaultSliderImage = '/img/bannerSlider/defaultPreview.jpg';
     </div>
 </div>
 
-{{ Html::script('js/chosen_v1.0.0/chosen.jquery.min.js') }}
+{{ Html::script('/chosen_v1.0.0/chosen.jquery.min.js') }}
 <script type="text/javascript">
     $(document).ready(function () {
 	cTemplate.initialize();

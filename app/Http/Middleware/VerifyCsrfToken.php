@@ -24,6 +24,7 @@ class VerifyCsrfToken extends BaseVerifier
             'contents_uploadcoverimage',
             'crop_image_post',
             'contents_order',
+            'banners_imageupload'
         ];
 
         /** @var \Illuminate\Http\Request $request */

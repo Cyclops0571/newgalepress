@@ -113,10 +113,8 @@ class Content extends Model
         $search = $request->get('search', '');
         $sort = $request->get('sort', self::defaultSort);
         $sort_dir = $request->get('sort_dir', 'DESC');
-        $p = $request->get('page', 1);
-        $option = (int)$request->get('option', 0);
+        $option = $request->get('option', 0);
 
-        $rowCount = config('custom.rowcount');
         $sqlCat = '(IFNULL((SELECT GROUP_CONCAT(`Name` ORDER BY `Name` SEPARATOR \', \')'
             . ' FROM `Category` WHERE ApplicationID=a.ApplicationID AND CategoryID IN '
             . '(SELECT CategoryID FROM `ContentCategory` WHERE ContentID = o.ContentID) AND StatusID = 1), \'\'))';
@@ -200,7 +198,8 @@ class Content extends Model
             return view('pages.contentoptionlist', $data);
         }
 
-        $rows = $rs->forPage($p, $rowCount)->paginate($rowCount);
+        $rows = $rs->paginate(config('custom.rowcount'));
+//        $rows = $rs->paginate(10);
         return $rows;
 
     }
@@ -343,7 +342,7 @@ class Content extends Model
                 $contentApp->incrementAppVersion();
             }
         }
-        parent::save();
+        return parent::save();
     }
 
     public function setCategory($selectedCategories)
@@ -450,11 +449,9 @@ class Content extends Model
     }
 
     /**
-     * @param int $customerID
      * @param ContentFile $contentFile
      * @param int $coverImageFileSelected
      * @param string $coverImageFileName
-     * @throws Exception
      */
     public function processImage($contentFile, $coverImageFileSelected, $coverImageFileName)
     {
@@ -710,7 +707,7 @@ class Content extends Model
         return Content::whereIn('Content.ContentID', $contentIds)
             ->where('StatusID', '=', eStatus::Active)
             ->where('PublishDate', '<=', DB::raw('now()'))
-            ->where(function ($query) {
+            ->where(function (Builder $query) {
                 $query->where('IsUnpublishActive', '=', 0);
                 $query->orWhere('UnpublishDate', '>', DB::raw('now()'));
             })

@@ -122,12 +122,6 @@ class ApplicationController extends Controller
                     return view('pages.applicationoptionlist', $data);
                 }
 
-//                $count = $rs->count();
-//                $results = $rs->paginate($rowcount);
-//                forPage($p, $rowcount)->paginate($rowcount);
-//                $rows = Paginator::make($results, $count, $rowcount);
-
-
                 $rows = $rs->paginate(config('custom.rowcount'));
 
                 $data = array(
@@ -235,7 +229,7 @@ class ApplicationController extends Controller
 
     }
 
-    public function push(Request $request, $id)
+    public function push(Request $request, MyResponse $myResponse, $id)
     {
         try {
             $rules = array(
@@ -314,9 +308,9 @@ class ApplicationController extends Controller
             $channel->close();
             $connection->close();
         } catch (Exception $e) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode($e->getMessage());
+            return $myResponse->error($e->getMessage());
         }
-        return "success=" . base64_encode("true");
+        return $myResponse->success();
     }
 
     public function save(Request $request, MyResponse $myResponse)
@@ -389,19 +383,19 @@ class ApplicationController extends Controller
         return $myResponse->error(__('common.detailpage_validation'));
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, MyResponse $myResponse)
     {
         $currentUser = Auth::user();
         $id = (int)$request->get($this->pk, '0');
         $s = Application::find($id);
 
         if ((int)$currentUser->UserTypeID != eUserTypes::Manager || !$s) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return $myResponse->error(__('common.detailpage_validation'));
         }
 
         $s->StatusID = eStatus::Deleted;
         $s->save();
-        return "success=" . base64_encode("true");
+        return $myResponse->success();
     }
 
     public function uploadFile(Request $request)

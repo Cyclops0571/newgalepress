@@ -15,7 +15,7 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
             <div class="form-row ">
                 <div class="col-md-5" style="padding-top:5px; float:left;">
                     <div class="input-group commands">
-                        <a href="{{route($page.'_new', ['applicationID' => request('applicationID', 0) ] )}}"
+                        <a href="{{route('maps_new', ['applicationID' => request('applicationID', 0) ] )}}"
                            title="{{__('common.commandbar_add')}}" class="widget-icon widget-icon-circle">
                             <span class="icon-map-marker location-icon-map-stacked">
                                 <i class="icon-plus location-icon-plus-stacked"></i>
@@ -28,7 +28,7 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                             <span class="icon-map-marker location-icon-triplet-second"></span>
                             <span class="icon-map-marker location-icon-triplet-third"></span>
                         </a>
-                        <a href='<?php echo GoogleMap::getSampleXmlUrl(); ?>' download='SampleMapExcel.xls'
+                        <a href='{{$sampleXmlUrl}}' download='SampleMapExcel.xls'
                            title="{{__('common.commandbar_excel_download')}}" class="widget-icon widget-icon-circle">
                             <span class="icon-download" style="font-size: 15px;"></span>
                         </a>
@@ -86,7 +86,7 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                         </tr>
                         </thead>
                         <tbody>
-                        @forelse($rows->results as $row)
+                        @forelse($rows as $row)
                             @if((int)Auth::user()->UserTypeID == eUserTypes::Manager)
                                 <tr class="{{ Common::htmlOddEven($page) }}"
                                     id="googleMapIDSet_<?php echo $row->GoogleMapID?>">
@@ -127,6 +127,13 @@ $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
                         </tbody>
                     </table>
                 </div>
+            </div>
+            <div class="select">
+                @if($applicationID > 0)
+                    {{ $rows->appends(array('applicationID' => $applicationID, 'search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
+                @else
+                    {{ $rows->appends(array('search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
+                @endif
             </div>
         </div>
         <!-- end tabular_content-->

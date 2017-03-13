@@ -595,7 +595,7 @@ return array(
     'banners_image' => 'Image Preview:',
     'banners_tooltip_coverimage' => 'Opt for the best view in 740x320 resolution.',
     'banners_active' => 'Banner Active',
-    'banner_use_costomer_banner' => 'Use Web Source',
+    'banner_use_customer_banner' => 'Use Web Source',
     'banners_autoplay' => 'Autoplay',
     'banners_random' => 'Random',
     'banners_info_random' => 'Banner images will be shown in random order.',

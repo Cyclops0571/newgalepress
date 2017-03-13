@@ -155,6 +155,7 @@ class Application extends Model {
     public static $key = 'ApplicationID';
     protected $primaryKey = 'ApplicationID';
 
+
     public function __construct($attributes = [])
     {
         parent::__construct($attributes);

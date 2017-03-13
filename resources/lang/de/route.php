@@ -127,7 +127,7 @@ return array(
     'facebook_attempt' => 'mitFacebookanmelden',
 
     'maps' => 'karte',
-    'maps_show' => 'karte/(:num)',
+    'maps_show' => 'karte/{googleMap}',
     'maps_new' => 'karte/neu',
     'maps_save' => 'karte/speichern',
     'maps_location' => 'karte/position/',

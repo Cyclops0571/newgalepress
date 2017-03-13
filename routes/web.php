@@ -56,11 +56,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="maps">
-    Route::get(__('route.maps'), array('as' => 'maps_list', 'uses' => 'maps@index'));
-    Route::get(__('route.maps_show'), array('as' => 'maps_show', 'uses' => 'maps@show'));
-    Route::get(__('route.maps_new'), array('as' => 'map_new', 'uses' => 'maps@newly'));
-    Route::post(__('route.maps_save'), array('as' => 'maps_save', 'uses' => 'maps@save'));
-    Route::get(__('route.maps_location') . "{id}", array('as' => 'maps_location', 'uses' => 'maps@location'));
+    Route::get(__('route.maps'), array('as' => 'maps_list', 'uses' => 'MapController@index'));
+    Route::get(__('route.maps_show'), array('as' => 'maps_show', 'uses' => 'MapController@show'));
+    Route::get(__('route.maps_new'), array('as' => 'maps_new', 'uses' => 'MapController@create'));
+    Route::post(__('route.maps_save'), array('as' => 'maps_save', 'uses' => 'MapController@save'));
+    Route::get(__('route.maps_location') . "{id}", array('as' => 'maps_location', 'uses' => 'MapController@location'));
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Clients">
@@ -199,8 +199,8 @@ Route::any('checkout_result_form', array('as' => 'get_checkout_result_form', 'us
 
 
 Route::post("clients/excelupload", array('before' => 'auth', 'uses' => "clients@excelupload"));
-Route::post("maps/excelupload/(:num)", array('before' => 'auth', 'uses' => "maps@excelupload"));
-Route::get("maps/delete", array('before' => 'auth', 'uses' => "maps@delete"));
+Route::post("maps/excelupload/(:num)", array('before' => 'auth', 'uses' => "MapController@excelupload"));
+Route::get("maps/delete", array('before' => 'auth', 'uses' => "MapController@delete"));
 Route::post((string)__('route.contents_interactivity_status'), array('uses' => "ContentController@interactivityStatus"));
 
 Route::post('/contactmail', array('as' => 'contactmail', 'uses' => 'WebsiteController@contactForm'));
@@ -325,7 +325,7 @@ Route::post("contents/refresh_identifier", array('as' => 'contentrefreshidentifi
 
 Route::get("/csstemplates/{filename}", array('as' => 'template_index', 'uses' => 'ApplicationTemplateController@theme'));
 Route::get("/template/{application}", array('as' => 'template_index', 'before' => 'auth', 'uses' => 'ApplicationTemplateController@show'));
-Route::get('maps/webview/(:num)', array('as' => 'map_view', 'uses' => 'maps@webview'));
+Route::get('maps/webview/(:num)', array('as' => 'map_view', 'uses' => 'MapController@webview'));
 Route::get('payment/paymentAccountByApplicationID/(:num)', array('as' => 'app_payment_data', 'uses' => 'payment@paymentAccountByApplicationID'));
 
 Route::get('3d-secure-response', array('as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'payment@secure_3d_response'));

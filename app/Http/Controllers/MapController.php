@@ -299,7 +299,7 @@ class MapController extends Controller
         $obj->responseMsg = (string)$responseMsg;
         $obj->status = $status;
 
-        return Response::json($obj);
+        return response()->json($obj);
     }
 
     public function delete(Request $request)

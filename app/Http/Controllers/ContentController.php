@@ -120,7 +120,7 @@ class ContentController extends Controller {
             'application' => $application,
         ];
 
-        if (((int)$user->UserTypeID == eUserTypes::Customer))
+        if ($user->UserTypeID == eUserTypes::Customer)
         {
             $appCount = DB::table('Application')
                 ->where('CustomerID', '=', Auth::user()->CustomerID)
@@ -143,7 +143,7 @@ class ContentController extends Controller {
             }
         }
 
-        return $html = View::make('pages.' . Str::lower($this->table) . 'list', $data);
+        return $html = View::make('pages.contentlist', $data);
     }
 
     public function request(Request $request)

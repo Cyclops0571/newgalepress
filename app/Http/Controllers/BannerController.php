@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Library\AjaxResponse;
+use App\Library\MyResponse;
 use App\Models\Application;
 use App\Models\Banner;
 use Auth;
@@ -65,6 +66,7 @@ class BannerController extends Controller {
         if (!$application || !$application->CheckOwnership())
         {
             dd($application->CheckOwnership());
+
             return redirect()->route('home');
         }
 
@@ -83,39 +85,36 @@ class BannerController extends Controller {
         return $html = view('pages.bannerlist', $data);
     }
 
-    /**
-     * @param Request $request
-     * @return string
-     */
-    public function delete(Request $request)
+    public function delete(Request $request, MyResponse $myResponse)
     {
         $this->init();
 
         $banner = Banner::find((int)$request->get('id'));
         if (!$banner)
         {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return $myResponse->error(__('common.detailpage_validation'));
         }
         $application = Application::find($banner->ApplicationID);
         if (!$application || !$application->CheckOwnership())
         {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return $myResponse->error(__('common.detailpage_validation'));
         }
 
         $banner->StatusID = eStatus::Deleted;
         $banner->save();
 
-        return "success=" . base64_encode("true");
+        return $myResponse->success();
     }
 
-    public function order(Request $request, $applicationID)
+    public function order(Request $request, MyResponse $myResponse, $applicationID)
     {
         $this->init();
 
         $application = Application::find($applicationID);
         if (!$application || !$application->CheckOwnership())
         {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return $myResponse->error(__('common.detailpage_validation'));
+
         }
         $bannerIDSet = $request->get("bannerIDSet");
         $bannerCount = count($bannerIDSet);
@@ -126,17 +125,17 @@ class BannerController extends Controller {
             $banner->save();
         }
 
-        return "success=" . base64_encode("true");
+        return $myResponse->success();
     }
 
-    public function save(Request $request)
+    public function save(Request $request, MyResponse $myResponse)
     {
         $this->init();
 
         $application = Application::find($request->get("applicationID"));
         if (!$application || !$application->CheckOwnership())
         {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return $myResponse->error(__('common.detailpage_validation'));
         }
 
         if ($request->has("newBanner"))
@@ -160,7 +159,7 @@ class BannerController extends Controller {
             $banner = Banner::find((int)$request->get("pk"));
             if (!$banner)
             {
-                return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+                return $myResponse->error(__('common.detailpage_validation'));
             }
             if ($request->has("TargetContent"))
             {
@@ -210,21 +209,22 @@ class BannerController extends Controller {
             $banner->save();
         }
 
-        return "success=" . base64_encode("true")
-            . "&BannerID=" . base64_encode($banner->BannerID)
-            . "&BannerImagePath=" . base64_encode($banner->getImagePath())
-            . "&ActiveText=" . base64_encode((string)__('common.active'))
-            . "&PassiveText=" . base64_encode((string)__('common.passive'));
+        $responseData = ['BannerID'        => $banner->BannerID,
+                         'BannerImagePath' => $banner->getImagePath(),
+                         'ActiveText'      => __('common.active'),
+                         'PassiveText'     => __('common.passive')];
+
+        return $myResponse->success($responseData);
     }
 
-    public function save_banner_setting(Request $request)
+    public function save_banner_setting(Request $request, MyResponse $myResponse)
     {
         $this->init();
 
         $application = Application::find($request->get("applicationID"));
         if (!$application || !$application->CheckOwnership())
         {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return $myResponse->error(__('common.detailpage_validation'));
         }
 
         $rules = [
@@ -233,7 +233,7 @@ class BannerController extends Controller {
             "BannerCustomerActive" => 'in:1',
             "BannerIntervalTime"   => 'integer|min:1',
             "BannerTransitionRate" => 'integer|min:1',
-            "BannerColor"          => 'match:/^#[A-Fa-f0-9]{6}$/',
+            "BannerColor"          => 'regex:/^#[A-Fa-f0-9]{6}$/',
         ];
         if ((int)$request->get("BannerCustomerActive"))
         {
@@ -243,10 +243,10 @@ class BannerController extends Controller {
         $ruleNames = [
             "BannerActive"         => __('common.contents_status'),
             "BannerAutoplay"       => __('common.banners_autoplay'),
-            "BannerCustomerActive" => __("common.banner_use_costomer_banner"),
+            "BannerCustomerActive" => __("common.banner_use_customer_banner"),
             "BannerIntervalTime"   => __('common.banners_autoplay_interval'),
             "BannerTransitionRate" => __('common.banners_autoplay_speed'),
-            "BannerCustomerUrl"    => __("common.banner_use_costomer_banner"),
+            "BannerCustomerUrl"    => __("common.banner_use_customer_banner"),
             "BannerColor"          => __("common.banners_pager_color"),
         ];
 
@@ -259,9 +259,7 @@ class BannerController extends Controller {
             {
                 $errMsg = str_replace($inputName, $ruleName, $errMsg);
             }
-
-            //	    return "success=" . base64_encode("false") . "&errmsg=" . $errMsg;
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode($errMsg);
+            $myResponse->error($errMsg);
         }
 
         if ($request->get("BannerCustomerUrl") == '' || $request->get("BannerCustomerUrl") == 'http://')
@@ -285,10 +283,10 @@ class BannerController extends Controller {
         $application->BannerSlideAnimation = $request->get('BannerSlideAnimation');
         $application->save();
 
-        return "success=" . base64_encode("true");
+        return $myResponse->success();
     }
 
-    public function imageupload(Request $request)
+    public function imageupload(Request $request, MyResponse $myResponse)
     {
         $this->init();
 
@@ -310,7 +308,7 @@ class BannerController extends Controller {
         $banner = Banner::find($request->get('bannerID'));
         if (!$banner)
         {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return $myResponse->error(__('common.detailpage_validation'));
         }
 
         $options = [

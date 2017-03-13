@@ -69,7 +69,7 @@
             color: #fff !important;
         }
     </style>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key={{config('custom.google_map_api_key')}}&sensor=false"></script>
     <script type="text/javascript">
         var markerLat = Number({{$Latitude}});
         var markerLog = Number({{$Longitude}});
@@ -78,7 +78,7 @@
         if (markerLat != 0 || markerLog != 0) {
             initialLocation = new google.maps.LatLng(markerLat, markerLog);
         }
-        var browserSupportFlag = new Boolean();
+        var browserSupportFlag = Boolean();
 
         $(window).resize(function () {
             $('#map_canvas').css('height', $(this).height() - 110);
@@ -140,7 +140,7 @@
 
             function populateInputs(pos) {
                 document.getElementById("latitude").value = pos.lat();
-                document.getElementById("langitude").value = pos.lng();
+                document.getElementById("longitude").value = pos.lng();
             }
         }
 
@@ -170,8 +170,8 @@
             <div class="header text-center">
                 <span class="icon-map-marker" style="font-size:18px;"></span>
             </div>
-            <form method="post" action="{{route('map_detail')}}">
-            {{ Form::token() }}
+            <form method="post" action="{{route('maps_save')}}">
+            {{ csrf_field() }}
             <input type="hidden" name="GoogleMapID" id="GoogleMapID" value="{{ $GoogleMapID }}"/>
             @if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
                 <input type="hidden" name="applicationID" id="ApplicationID" value="{{ $ApplicationID }}"/>
@@ -219,7 +219,7 @@
                             <span class="list-text-name">{{__('common.map_form_longitude')}}:</span>
 
                             <div class="list-text-info">
-                                <input type="text" id="langitude" name='langitude' value="{{$Longitude}}"/>
+                                <input type="text" id="longitude" name='longitude' value="{{$Longitude}}"/>
                             </div>
                         </div>
                     </a>

@@ -127,7 +127,7 @@ return array(
     'facebook_attempt' => 'login-facebook',
 
     'maps' => 'maps',
-    'maps_show' => 'maps/(:num)',
+    'maps_show' => 'maps/{googleMap}',
     'maps_new' => 'maps/new',
     'maps_save' => 'maps/save',
     'maps_location' => 'maps/location/',

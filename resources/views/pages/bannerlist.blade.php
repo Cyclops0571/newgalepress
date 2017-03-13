@@ -2,14 +2,15 @@
 
 @section('content')
 <?php
-/** @var Banner[] $rows */
-/** @var Application $application */
+/** @var App\Models\Banner[] $rows */;
+/** @var App\Models\Application $application */
 /** @var array $fields */
 ?>
 
         <!--<form id="list">-->
 <div class="col-md-11">
     <form id="bannerForm">
+        {{csrf_field()}}
         <input type="hidden" name="applicationID" value="<?php echo $application->ApplicationID; ?>"/>
 
         <div class="block block-drop-shadow">
@@ -295,7 +296,7 @@
         datatable.find('tbody a').editable({
             emptytext: '. . . . .',
             url: route['banners_save'],
-            params: {'applicationID': appID},
+            params: {'applicationID': appID, '_token': '{{csrf_token()}}'},
             ajaxOptions: {
                 beforeSend: function () {
                     cNotification.loader();
@@ -313,11 +314,12 @@
             delay: 150,
             axis: 'y',
             update: function () {
-                var data = $(this).sortable('serialize');
+                var data = $(this).sortable('serialize') + '&_token={!! csrf_token() !!}';
+                console.log(data);
                 $.ajax({
                     data: data,
                     type: 'POST',
-                    url: '/banners/order/' + appID,
+                    url: '{!! route('banners_order', $application->ApplicationID) !!}',
                     success: function () {
                         cNotification.success();
                         setTimeout(function () {
@@ -331,9 +333,10 @@
         });
 
         $('#ImageFile').fileupload({
-            url: '/' + currentLanguage + '/banners/imageupload',
+            url: '{!! route('banners_imageupload') !!}',
             dataType: 'json',
             add: function (e, data) {
+                console.log(data);
                 if (/\.(gif|jpg|jpeg|tiff|png)$/i.test(data.files[0].name)) {
 
                     $("#uploadProgress_" + currentBannerID).removeClass("hide").click(function (e) {

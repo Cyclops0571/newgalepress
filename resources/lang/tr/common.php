@@ -595,7 +595,7 @@ return array(
     'banners_image' => 'Resim Önizleme:',
     'banners_tooltip_coverimage' => 'En iyi görünüm için 740x320 çözünürlük tercih ediniz.',
     'banners_active' => 'Banner Aktif',
-    'banner_use_costomer_banner' => 'Dış Kaynak Kullan',
+    'banner_use_customer_banner' => 'Dış Kaynak Kullan',
     'banners_autoplay' => 'Otomatik Oynat',
     'banners_random' => 'Rastgele',
     'banners_info_random' => 'Banner resimleri karışık sırada gösterilmesini sağlar.',

@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\MyResponse;
 use App\Mail\CustomerWelcome;
 use App\Models\Application;
 use App\Models\Content;
 use App\Models\Customer;
+use App\Models\GoogleMap;
 use App\User;
 use DB;
+use eStatus;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Mail\MailableMailer;
 use Illuminate\Mail\Message;
+use Maatwebsite\Excel\Collections\RowCollection;
+use Maatwebsite\Excel\Readers\LaravelExcelReader;
 use Mail;
 use Route;
 
@@ -23,9 +28,74 @@ class TTestController extends Controller {
         return [];
     }
 
-    public function test2(Request $request, Route $route)
-    {
+    private function kickCallback($callback, &$param) {
+        return call_user_func($callback, $param);
+    }
 
+    public function test2(Request $request, Route $route, MyResponse $myResponse)
+    {
+        $a = 0;
+        $b = 10;
+        $result = $this->kickCallback(function(MyResponse $param){
+            $param->success("asdfasdf");
+
+        }, $myResponse);
+
+        $file = public_path('files/sampleFiles/SampleMapExcel_tr.xls');
+//        $Name = $data->val($row, $colNo++);
+//        $Latitude = $data->val($row, $colNo++);
+//        $Longitude = $data->val($row, $colNo++);
+//        $googleMap->Address = $data->val($row, $colNo++);
+//        $googleMap->Description = $data->val($row, $colNo++);
+        $excelColumnNames = ['name', 'latitude', 'longitude', 'address', 'description'];
+        \Excel::load($file, function(LaravelExcelReader $reader) use ($excelColumnNames) {
+            $excelRows = $reader->setSelectedSheetIndices([0])->all();
+            if($excelRows->count() == 0) {
+                //error not info exists...
+            }
+            $rowNo = -1;
+            foreach ($excelRows as $excelRow) {
+                ++$rowNo;
+                if($excelRow->count() != 5) {
+                    //error column count does not match.
+                }
+
+                $tmp = [];
+                $i = 0;
+                foreach ($excelRow as $cellName => $cellValue) {
+                    $columnName = $excelColumnNames[$i++];
+                    $tmp[$columnName] =  $cellValue;
+
+                }
+
+                if(!$tmp['name'] || !$tmp['latitude'] || !$tmp['longitude']) {
+                    //error invalid value.. at row $rowNo.
+                }
+
+                $googleMap = GoogleMap::where('ApplicationID', '=', $applicationID)
+                    ->where('Latitude', '=', $tmp['latitude'])
+                    ->where("Longitude", "=", $tmp['longitude'])
+                    ->first();
+                if (!$googleMap) {
+                    $googleMap = new GoogleMap();
+                    $addedCount++;
+                } else {
+                    $updatedCount++;
+                }
+
+                $googleMap->Name = $tmp['name'];
+                $googleMap->ApplicationID = $applicationID;
+                $googleMap->Latitude = $tmp['latitude'];
+                $googleMap->Longitude = $tmp['longitude'];
+                $googleMap->Address = $tmp['address'];
+                $googleMap->Description = $tmp['description'];
+                $googleMap->StatusID = eStatus::Active;
+                $googleMap->save();
+
+                var_dump($tmp);
+            }
+        });
+        exit;
         echo route('application_setting');
         exit;
         DB::enableQueryLog();

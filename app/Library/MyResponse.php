@@ -6,7 +6,6 @@ namespace App\Library;
 
 class MyResponse
 {
-
     /**
      * @param string|array $msg
      * @return string
@@ -38,4 +37,6 @@ class MyResponse
         }
         return "success=false&errmsg=" . $msg;
     }
+
+
 }

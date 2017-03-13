@@ -12,6 +12,7 @@ return array(
     'your_page_not_found' => 'We couldn\'t find the page you were looking for',
     'cannot_make_two_payment_in_the_same_day' => 'You cannot make more than one payment in the same day.',
     "invalid_excel_file" => "Invalid Excel-Datei",
+    "invalid_excel_row" => "Invalid data at rows: :rows",
     "invalid_excel_file_two_rows" => "Ungültige Excel-Datei (die Liste muß mindestens 2 Zeilen enthalten).",
     'unknown_component_type' => "Unknown component type",
     'compoenent_not_found' => "Component could not be found",

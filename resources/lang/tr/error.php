@@ -12,6 +12,7 @@ return array(
     'your_page_not_found' => 'Aradığınız sayfa taşınmış, değişmiş veya kaldırılmış olabilir.',
     'cannot_make_two_payment_in_the_same_day' => 'Aynı gün içerisinde iki ödeme yapamazsınız.',
     "invalid_excel_file" => "Yüklenilen excel dosyası geçersiz.",
+    "invalid_excel_row" => "Excel verisinde bozuk satırlar: :rows",
     "invalid_excel_file_two_rows" => "Yüklediğiniz excel dosyası geçersiz. (Dosya en az iki satır olmalı.)",
     'unknown_component_type' => "Bilinmeyen interactif öğe tipi",
     'compoenent_not_found' => "Eklenilen interactif öğe bulunamadı",

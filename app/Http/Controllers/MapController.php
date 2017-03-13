@@ -14,6 +14,7 @@ use Exception;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Readers\LaravelExcelReader;
 use UploadHandler;
 use URL;
 use Validator;
@@ -156,10 +157,10 @@ class MapController extends Controller
         );
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes()) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_incorrect_input'));
+            return $myResponse->error(__('common.detailpage_incorrect_input'));
         }
         if (!$chk) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return $myResponse->error(__('common.detailpage_validation'));
         }
 
         if ($GoogleMapID == 0) {
@@ -218,8 +219,6 @@ class MapController extends Controller
     {
 
         $selectableContentIDSet = NULL;
-        $responseMsg = "";
-        $status = "Failed";
         $user = Auth::user();
         $applications = $user->Application();
         $appIDSet = array();
@@ -241,76 +240,87 @@ class MapController extends Controller
         $ob = ob_get_contents();
         ob_end_clean();
         $object = json_decode($ob);
-        $filePath = public_path('files/temp/' . $object->File[0]->name);
-
-        include_once base_path("application/libraries/excel_reader2.php");
-        error_reporting(E_ALL ^ E_NOTICE);
-        $data = new Spreadsheet_Excel_Reader($filePath);
-        $rowCount = $data->rowcount();
-        $columnCount = $data->colcount();
-
-        if ($rowCount < 2) {
-            $responseMsg = __("error.invalid_excel_file");
-        } else if ($columnCount != 5) {
-            $responseMsg = __("error.invalid_excel_file");
-        } else {
-            $addedCount = 0;
-            $updatedCount = 0;
-            if (!Common::CheckApplicationOwnership($applicationID)) {
-                throw new Exception(__('error.unauthorized_user_attempt'));
-            }
-
-
-            for ($row = 2; $row <= $rowCount; $row++) {
-                $colNo = 1;
-                $Name = $data->val($row, $colNo++);
-                $Latitude = $data->val($row, $colNo++);
-                $Longitude = $data->val($row, $colNo++);
-                if (!$Name || !$Latitude || !$Longitude) {
-                    continue;
-                }
-                $googleMap = GoogleMap::where('ApplicationID', '=', $applicationID)->where('Latitude', '=', $Latitude)->where("Longitude", "=", $Longitude)->first();
-                if (!$googleMap) {
-                    $googleMap = new GoogleMap();
-                    $addedCount++;
-                } else {
-                    $updatedCount++;
-                }
-
-                $googleMap->Name = $Name;
-                $googleMap->ApplicationID = $applicationID;
-                $googleMap->Latitude = $Latitude;
-                $googleMap->Longitude = $Longitude;
-                $googleMap->Address = $data->val($row, $colNo++);
-                $googleMap->Description = $data->val($row, $colNo++);
-                $googleMap->StatusID = eStatus::Active;
-                $googleMap->save();
-
-
-            }
-
-            $responseMsg .= __('maplang.inserted_location_count') . $addedCount . " " . __('maplang.updated_location_count') . $updatedCount;
-            $status = 'success';
-        }
-
         $json = get_object_vars($object);
         $arr = $json[$element];
         $obj = $arr[0];
-        $obj->responseMsg = (string)$responseMsg;
-        $obj->status = $status;
+        $obj->status = 'Failed';
+        $filePath = public_path('files/temp/' . $object->File[0]->name);
+        $excelColumnNames = ['name', 'latitude', 'longitude', 'address', 'description'];
+        \Excel::load($filePath, function(LaravelExcelReader $reader) use ($obj, $excelColumnNames, $applicationID)
+        {
+            $invalidExcelRows = [];
+            $addedCount = 0;
+            $updatedCount = 0;
+            $excelRows = $reader->setSelectedSheetIndices([0])->all();
+            if ($excelRows->count() == 0)
+            {
+                $obj->responseMsg = __("error.invalid_excel_file");
+            }
+            $rowNo = -1;
+            foreach ($excelRows as $excelRow)
+            {
+                ++$rowNo;
+                if ($excelRow->count() != 5)
+                {
+                    $obj->responseMsg = __("error.invalid_excel_file");
+                }
 
+                $tmp = [];
+                $i = 0;
+                foreach ($excelRow as $cellName => $cellValue)
+                {
+                    $columnName = $excelColumnNames[$i++];
+                    $tmp[$columnName] = $cellValue;
+
+                }
+
+                if (!$tmp['name'] || !$tmp['latitude'] || !$tmp['longitude'])
+                {
+                    $invalidExcelRows[] = $rowNo;
+                }
+
+                $googleMap = GoogleMap::where('ApplicationID', '=', $applicationID)
+                    ->where('Latitude', '=', $tmp['latitude'])
+                    ->where("Longitude", "=", $tmp['longitude'])
+                    ->first();
+                if (!$googleMap)
+                {
+                    $googleMap = new GoogleMap();
+                    $addedCount++;
+                } else
+                {
+                    $updatedCount++;
+                }
+
+                $googleMap->Name = $tmp['name'];
+                $googleMap->ApplicationID = $applicationID;
+                $googleMap->Latitude = $tmp['latitude'];
+                $googleMap->Longitude = $tmp['longitude'];
+                $googleMap->Address = $tmp['address'];
+                $googleMap->Description = $tmp['description'];
+                $googleMap->StatusID = eStatus::Active;
+                $googleMap->save();
+            }
+
+            $responseMsg = __('maplang.inserted_location_count') . $addedCount . " " . __('maplang.updated_location_count') . $updatedCount;
+            if(!empty($invalidExcelRows)) {
+                $responseMsg .= " " . trans('error.invalid_excel_row', ['rows' => implode(', ', $invalidExcelRows)]);
+            }
+            $obj->status = 'success';
+            $obj->responseMsg = $responseMsg;
+        });
         return response()->json($obj);
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, MyResponse $myResponse)
     {
         $googleMap = GoogleMap::find((int)$request->get('id'));
         if (!$googleMap) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return $myResponse->error(__('common.detailpage_validation'));
         }
         $application = Application::find($googleMap->ApplicationID);
         if (!$application || !$application->CheckOwnership()) {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode(__('common.detailpage_validation'));
+            return $myResponse->error(__('common.detailpage_validation'));
         }
 
         $googleMap->StatusID = eStatus::Deleted;

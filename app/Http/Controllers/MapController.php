@@ -22,6 +22,7 @@ use Validator;
 class MapController extends Controller
 {
 
+
     public $restful = true;
     public $table = 'GoogleMap';
     public $pk = 'GoogleMapID';
@@ -215,15 +216,10 @@ class MapController extends Controller
         return view("pages.googlemapwebview", $data);
     }
 
-    public function excelupload(Request $request, $applicationID)
+    public function excelupload(Request $request, Application $application)
     {
-
-        $selectableContentIDSet = NULL;
-        $user = Auth::user();
-        $applications = $user->Application();
-        $appIDSet = array();
-        foreach ($applications as $application) {
-            $appIDSet[] = $application->ApplicationID;
+        if(!$application->checkUserAccess()) {
+            throw new Exception(__('error.unauthorized_user_attempt'));
         }
         ob_start();
         $element = $request->get('element');
@@ -246,7 +242,7 @@ class MapController extends Controller
         $obj->status = 'Failed';
         $filePath = public_path('files/temp/' . $object->File[0]->name);
         $excelColumnNames = ['name', 'latitude', 'longitude', 'address', 'description'];
-        \Excel::load($filePath, function(LaravelExcelReader $reader) use ($obj, $excelColumnNames, $applicationID)
+        \Excel::load($filePath, function(LaravelExcelReader $reader) use ($obj, $excelColumnNames, $application)
         {
             $invalidExcelRows = [];
             $addedCount = 0;
@@ -279,7 +275,7 @@ class MapController extends Controller
                     $invalidExcelRows[] = $rowNo;
                 }
 
-                $googleMap = GoogleMap::where('ApplicationID', '=', $applicationID)
+                $googleMap = GoogleMap::where('ApplicationID', '=', $application->ApplicationID)
                     ->where('Latitude', '=', $tmp['latitude'])
                     ->where("Longitude", "=", $tmp['longitude'])
                     ->first();
@@ -293,7 +289,7 @@ class MapController extends Controller
                 }
 
                 $googleMap->Name = $tmp['name'];
-                $googleMap->ApplicationID = $applicationID;
+                $googleMap->ApplicationID = $application->ApplicationID;
                 $googleMap->Latitude = $tmp['latitude'];
                 $googleMap->Longitude = $tmp['longitude'];
                 $googleMap->Address = $tmp['address'];

@@ -294,7 +294,7 @@ class ContentController extends Controller {
             'Name'          => 'required',
         ];
         $v = Validator::make($request->all(), $rules);
-        if (!$v->passes() || $chk)
+        if (!$v->passes() || !$chk)
         {
             return $myResponse->error(__('common.detailpage_validation'));
         }

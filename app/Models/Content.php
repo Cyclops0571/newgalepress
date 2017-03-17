@@ -479,7 +479,7 @@ class Content extends Model
 
         if (File::exists($sourceFileNameFull) && is_file($sourceFileNameFull)) {
             if (!File::exists($destinationFolder)) {
-                File::makeDirectory($destinationFolder, 777, true);
+                File::makeDirectory($destinationFolder, 0777, true);
             }
 
 

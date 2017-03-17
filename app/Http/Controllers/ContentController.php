@@ -294,70 +294,71 @@ class ContentController extends Controller {
             'Name'          => 'required',
         ];
         $v = Validator::make($request->all(), $rules);
-        if ($v->passes() && $chk)
-        {
-            if (!Common::AuthMaxPDF($applicationID))
-            {
-                return $myResponse->error(__('error.auth_max_pdf'));
-
-            }
-
-            $content = Content::find($id);
-            $selectedCategories = $request->get('chkCategoryID', []);
-
-            if (!$content)
-            {
-                $maxID = Content::where('ApplicationID', '=', $applicationID)->max('OrderNo');
-                $content = new Content();
-                $content->OrderNo = $maxID + 1;
-            } else if (!Common::CheckContentOwnership($id))
-            {
-                return $myResponse->error("Unauthorized user attempt");
-            }
-            $content->ApplicationID = $applicationID;
-            $content->Name = $request->get('Name');
-            $content->Detail = $request->get('Detail');
-            $content->MonthlyName = $request->get('MonthlyName');
-            $content->PublishDate = date('Y-m-d', strtotime($request->get('PublishDate', date('Y-m-d'))));
-            $content->IsUnpublishActive = (int)$request->get('IsUnpublishActive');
-            $content->UnpublishDate = date('Y-m-d', strtotime($request->get('UnpublishDate', date('Y-m-d'))));
-            $content->IsProtected = (int)$request->get('IsProtected');
-            $content->IsBuyable = (int)$request->get('IsBuyable');
-            $content->CurrencyID = (int)$request->get('CurrencyID');
-            $content->Orientation = (int)$request->get('Orientation');
-            $content->setPassword($request->get('Password'));
-            $content->setMaster((int)$request->get('IsMaster'));
-            $content->AutoDownload = (int)$request->get('AutoDownload');
-            $content->TopicStatus = $request->get('topicStatus', 0) === "on";
-            $content->Status = (int)$request->get('Status');
-            if ($content->Status == eStatus::Active)
-            {
-                $content->RemoveFromMobile = eRemoveFromMobile::Passive;
-            }
-
-            if ((int)$currentUser->UserTypeID == eUserTypes::Manager)
-            {
-                $content->Approval = (int)$request->get('Approval');
-                $content->Blocked = (int)$request->get('Blocked');
-            }
-            $content->ifModifiedDoNecessarySettings($selectedCategories);
-            $content->save();
-            $content->setCategory($selectedCategories);
-            $content->setTopics($request->get('topicIds', []));
-
-            $contentID = $content->ContentID;
-            $contentFile = $content->processPdf();
-            $content->processImage($contentFile, (int)$request->get('hdnCoverImageFileSelected', 0), $request->get('hdnCoverImageFileName'));
-            ContentFile::createPdfPages($contentFile);
-            $content->callIndexingService($contentFile);
-            $contentLink = $contentID > 0 ? "&contentID=" . $contentID : ("");
-
-            return $myResponse->success($contentLink);
-        } else
+        if (!$v->passes() || $chk)
         {
             return $myResponse->error(__('common.detailpage_validation'));
+        }
+
+        if (!Common::AuthMaxPDF($applicationID))
+        {
+            return $myResponse->error(__('error.auth_max_pdf'));
 
         }
+
+        $content = Content::find($id);
+        $selectedCategories = $request->get('chkCategoryID', []);
+
+        if (!$content)
+        {
+            $maxID = Content::where('ApplicationID', '=', $applicationID)->max('OrderNo');
+            $content = new Content();
+            $content->OrderNo = $maxID + 1;
+        } else if (!Common::CheckContentOwnership($id))
+        {
+            return $myResponse->error("Unauthorized user attempt");
+        }
+
+
+        $content->ApplicationID = $applicationID;
+        $content->Name = $request->get('Name');
+        $content->Detail = $request->get('Detail');
+        $content->MonthlyName = $request->get('MonthlyName');
+        $content->PublishDate = date('Y-m-d', strtotime($request->get('PublishDate', date('Y-m-d'))));
+        $content->IsUnpublishActive = (int)$request->get('IsUnpublishActive');
+        $content->UnpublishDate = date('Y-m-d', strtotime($request->get('UnpublishDate', date('Y-m-d'))));
+        $content->IsProtected = (int)$request->get('IsProtected');
+        $content->IsBuyable = (int)$request->get('IsBuyable');
+        $content->CurrencyID = (int)$request->get('CurrencyID');
+        $content->Orientation = (int)$request->get('Orientation');
+        $content->setPassword($request->get('Password'));
+        $content->setMaster((int)$request->get('IsMaster'));
+        $content->AutoDownload = (int)$request->get('AutoDownload');
+        $content->TopicStatus = $request->get('topicStatus', 0) === "on";
+        $content->Status = (int)$request->get('Status');
+        if ($content->Status == eStatus::Active)
+        {
+            $content->RemoveFromMobile = eRemoveFromMobile::Passive;
+        }
+
+        if ((int)$currentUser->UserTypeID == eUserTypes::Manager)
+        {
+            $content->Approval = (int)$request->get('Approval');
+            $content->Blocked = (int)$request->get('Blocked');
+        }
+
+        $content->ifModifiedDoNecessarySettings($selectedCategories);
+        $content->save();
+        $content->setCategory($selectedCategories);
+        $content->setTopics($request->get('topicIds', []));
+
+        $contentID = $content->ContentID;
+        $contentFile = $content->processPdf();
+        $content->processImage($contentFile, (int)$request->get('hdnCoverImageFileSelected', 0), $request->get('hdnCoverImageFileName'));
+        ContentFile::createPdfPages($contentFile);
+        $content->callIndexingService($contentFile);
+        $contentLink = $contentID > 0 ? "&contentID=" . $contentID : ("");
+
+        return $myResponse->success($contentLink);
     }
 
     public function copy(MyResponse $myResponse, $id, $new)
@@ -518,6 +519,7 @@ class ContentController extends Controller {
 
             return $myResponse->error($e->getMessage());
         }
+
         return $myResponse->success();
     }
 

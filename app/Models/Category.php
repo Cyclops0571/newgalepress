@@ -33,6 +33,8 @@ class Category extends Model
     public $timestamps = false;
     protected $table = 'Category';
     protected $primaryKey = 'CategoryID';
+    public static $key = 'CategoryID';
+
 
     protected static function boot()
     {

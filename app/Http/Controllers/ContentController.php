@@ -217,10 +217,10 @@ class ContentController extends Controller {
         return View::make('pages.' . Str::lower($this->table) . 'detail', $data);
     }
 
-    public function show(Content $content)
+    public function show(Request $request, Content $content)
     {
         $currentUser = Auth::user();
-        $showCropPage = Cookie::get(SHOW_IMAGE_CROP, 0);
+        $showCropPage = $request->cookie(SHOW_IMAGE_CROP, 0);
         Cookie::make(SHOW_IMAGE_CROP, 0);
         if (((int)$currentUser->UserTypeID == eUserTypes::Manager))
         {
@@ -346,19 +346,16 @@ class ContentController extends Controller {
             $content->Blocked = (int)$request->get('Blocked');
         }
 
-        $content->ifModifiedDoNecessarySettings($selectedCategories);
         $content->save();
-        $content->setCategory($selectedCategories);
+        $content->Category()->sync($selectedCategories);
         $content->setTopics($request->get('topicIds', []));
 
-        $contentID = $content->ContentID;
         $contentFile = $content->processPdf();
         $content->processImage($contentFile, (int)$request->get('hdnCoverImageFileSelected', 0), $request->get('hdnCoverImageFileName'));
         ContentFile::createPdfPages($contentFile);
         $content->callIndexingService($contentFile);
-        $contentLink = $contentID > 0 ? "&contentID=" . $contentID : ("");
 
-        return $myResponse->success($contentLink);
+        return $myResponse->success(['contentID' => $content->ContentID]);
     }
 
     public function copy(MyResponse $myResponse, $id, $new)
@@ -370,9 +367,7 @@ class ContentController extends Controller {
             $contentFileControl = null;
             $newContentID = $new;
 
-            $content = DB::table('Content')
-                ->where('ContentID', '=', $sourceContentID)
-                ->first();
+            $content = Content::find($sourceContentID);
 
             if ($new == "new")
             {
@@ -385,7 +380,6 @@ class ContentController extends Controller {
                 $c->PublishDate = $content->PublishDate;
                 $c->IsUnpublishActive = $content->IsUnpublishActive;
                 $c->UnpublishDate = $content->UnpublishDate;
-                $c->CategoryID = $content->CategoryID;
                 $c->IsProtected = $content->IsProtected;
                 $c->Password = $content->Password;
                 $c->IsBuyable = $content->IsBuyable;
@@ -410,17 +404,7 @@ class ContentController extends Controller {
                 $c->save();
                 $newContentID = $c->ContentID;
 
-                $contentCategory = DB::table('ContentCategory')
-                    ->where('ContentID', '=', $sourceContentID)
-                    ->get();
-
-                foreach ($contentCategory as $cCategory)
-                {
-                    $cc = new ContentCategory();
-                    $cc->ContentID = $newContentID;
-                    $cc->CategoryID = $cCategory->CategoryID;
-                    $cc->save();
-                }
+                $c->Category()->sync($content->Category->pluck(Content::$key));
 
 
                 /* yeni icerigin kopyalanmasi(new) */

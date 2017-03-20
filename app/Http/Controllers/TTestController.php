@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Library\MyResponse;
 use App\Mail\CustomerWelcome;
 use App\Models\Application;
+use App\Models\Category;
 use App\Models\Content;
+use App\Models\ContentCategory;
 use App\Models\Customer;
 use App\Models\GoogleMap;
 use App\User;
@@ -25,7 +27,13 @@ class TTestController extends Controller {
     public function index(Request $request)
     {
 
-        return [];
+
+        $c = Content::find(6101);
+        dd($c->Category->pluck('CategoryID'));
+        dd($c->Category->sortBy('Name')->toArray());
+        dd($c->WebserviceCategories(103));
+        dd($c->Category);
+
     }
 
     private function kickCallback($callback, &$param) {

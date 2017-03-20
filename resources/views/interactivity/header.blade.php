@@ -3,14 +3,14 @@
         <div id="logo"><img src="/img/logo.png" alt="Gale Press"></div>
         <div id="user-settings">
             <ul>
-                <!--<li><a href="javascript:void(0);"><i class="icon-question-sign"></i>{{ __('interactivity.help') }}</a></li>-->
+                <!--<li><a href="#"><i class="icon-question-sign"></i>{{ __('interactivity.help') }}</a></li>-->
                 <li>
-                    <a href="javascript:void(0);" onclick="cInteractivity.openSettings();">
+                    <a href="#" onclick="cInteractivity.openSettings();">
                         <i class="icon-download-alt"></i>{{ __('interactivity.import') }}
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0);" onclick="cInteractivity.exitWithoutSave();">
+                    <a href="#" onclick="cInteractivity.exitWithoutSave();">
                         <i class="icon-backward"></i>{{ __('interactivity.back_to_panel') }}
                     </a>
                 </li>
@@ -18,7 +18,7 @@
         </div>
     </div>
     <div id="pdf-controls">
-        <div id="full-screen"><a href="javascript:void(0);" onclick="toogleFullscreen();"><i class="icon-fullscreen"></i></a></div>
+        <div id="full-screen"><a href="#" onclick="toogleFullscreen();"><i class="icon-fullscreen"></i></a></div>
         <div id="thumbs">
             <div class="text dark">
                 <input type="text" name="pdf-page" value="1/{{ count($pages) }}" id="pdf-page">
@@ -30,7 +30,7 @@
                     <ul class="slideshow-slides js-slideshow-slides">
                     	@foreach($pages as $page)
                         	<li class="each-slide js-slideshow-slide">
-                            	<a href="javascript:void(0);" class="img-tooltip" pageno="{{ $page->No }}"><img src="/{{ $page->FilePath }}/{{ $page->FileName }}" alt="{{ $page->No }}" title="{{ $page->No }}"><span>{{ $page->No }}</span></a>
+                            	<a href="#" class="img-tooltip" pageno="{{ $page->No }}"><img src="/{{ $page->FilePath }}/{{ $page->FileName }}" alt="{{ $page->No }}" title="{{ $page->No }}"><span>{{ $page->No }}</span></a>
 							</li>
                         @endforeach
                     </ul>

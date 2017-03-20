@@ -308,7 +308,7 @@
                     //add page
                     var s = '';
                     s = s + '<li data-collapse="" class="page" pageno="' + pageNo + '">';
-                    s = s + '<a href="javascript:void(0);"><i class="icon-"></i> ' + interactivity['page'] + " " + pageNo + '</a>';
+                    s = s + '<a href="#"><i class="icon-"></i> ' + interactivity['page'] + " " + pageNo + '</a>';
                     s = s + '<ul class="close"></ul>';
                     s = s + '<i class="icon-exchange transfer" onclick="cInteractivity.openTransferModal($(this));"></i>';
                     s = s + '</li>';
@@ -321,7 +321,7 @@
                     //add component
                     var s = '';
                     s = s + '<li data-collapse="" class="component" componentname="' + componentName + '">';
-                    s = s + '<a href="javascript:void(0);" id="tree-' + componentName + '"><i class="icon-"></i> ' + interactivity[componentName + '_name'] + '</a>';
+                    s = s + '<a href="#" id="tree-' + componentName + '"><i class="icon-"></i> ' + interactivity[componentName + '_name'] + '</a>';
                     s = s + '<ul class="close"></ul>';
                     s = s + '</li>';
                     $("ul:first", liPage).append(s);
@@ -329,7 +329,7 @@
                 }
 
                 //add page component
-                $("ul:first", liComponent).append('<li componentid="' + id + '" style="position:relative;"><a href="javascript:void(0);" class="selectcomponent" componentid="' + id + '">' + interactivity[componentName + '_componentid'] + id + '</a><i class="icon-exchange transfer" onclick="cInteractivity.openTransferModal($(this));"></i></li>');
+                $("ul:first", liComponent).append('<li componentid="' + id + '" style="position:relative;"><a href="#" class="selectcomponent" componentid="' + id + '">' + interactivity[componentName + '_componentid'] + id + '</a><i class="icon-exchange transfer" onclick="cInteractivity.openTransferModal($(this));"></i></li>');
 
                 //Collapse init
                 $('div.tree').collapse(false, true);
@@ -1342,7 +1342,7 @@
 
                             $.each(data.result['comp-' + id + '-file'], function (index, file) {
                                 var size = $("#prop-" + id + " ul.file-rack li").size() + 1;
-                                var li = '<li>' + (size > 9 ? "" + size : "0" + size) + ' - ' + file.name + '<input type="hidden" name="comp-' + id + '-filename[]" class="required" value="' + file.name + '" /><a href="javascript:void(0);" class="delete"><i class="icon-remove"></i></a></li>';
+                                var li = '<li>' + (size > 9 ? "" + size : "0" + size) + ' - ' + file.name + '<input type="hidden" name="comp-' + id + '-filename[]" class="required" value="' + file.name + '" /><a href="#" class="delete"><i class="icon-remove"></i></a></li>';
                                 $("#prop-" + id + " ul.file-rack").append(li);
                             });
                         }

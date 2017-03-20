@@ -139,7 +139,7 @@
                             </div>
 
                             <div for="CkPem" class="myProgress hide">
-                                <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i
+                                <a href="#">{{ __('interactivity.cancel') }} <i
                                             class="icon-remove"></i></a>
                                 <label for="scale"></label>
 

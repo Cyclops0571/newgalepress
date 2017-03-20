@@ -9,7 +9,7 @@ use App\Models\Application;
       <span class="icon-plus"></span>
     </a>
       <?php elseif ((int)request('applicationID', 0) > 0): ?>
-    <a href="{{route($page.'_new', ['applicationID', request('applicationID', 0)])}}"
+    <a href="{{route($page.'_new', ['applicationID' => request('applicationID', 0)])}}"
        title="{{__('common.commandbar_add')}}" class="widget-icon widget-icon-circle">
       <span class="icon-plus"></span>
     </a>

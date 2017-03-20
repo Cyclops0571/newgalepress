@@ -41,7 +41,7 @@ if(isset($Properties))
     <input type="hidden" name="comp-{id}-process" value="{{ $Process }}" />
     <div class="component-header">
         <h3><span></span>{{ __('interactivity.audio_name') }}<small> - {{ __('interactivity.audio_componentid') }}{id}</small></h3>
-        <a href="javascript:void(0);" class="delete remove" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
+        <a href="#" class="delete remove" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
     </div>
     
     <div class="upload">
@@ -66,14 +66,14 @@ if(isset($Properties))
                 <input type="text" name="comp-{id}-url" id="comp-{id}-url" placeholder="http://www.galepress.com/test.mp3" class="prefix" value="{{ $url }}">
             </div>
             <div class="inline-secondary">
-                <a href="javascript:void(0);" class="btn btn-primary postfix"><i class="icon-upload-alt"></i></a>
+                <a href="#" class="btn btn-primary postfix"><i class="icon-upload-alt"></i></a>
             </div>
             <span class="success hide"><i class="icon-ok-sign"></i>{{ __('interactivity.audio_url_success') }}</span>
             <span class="error hide"><i class="icon-exclamation-sign"></i>{{ __('interactivity.audio_url_fail') }}</span>
         </div> -->
         
         <div class="progress hide">
-        	<a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+        	<a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
             <label for="scale"></label>
             <div class="scrollbox dot">
                 <div class="scale" style="width: 0%"></div>
@@ -92,7 +92,7 @@ if(isset($Properties))
             <div class="file-header">
                 <h4>{{ Str::limit($filename, 26) }}</h4>
                 <span>{{ $fileSize }}</span>
-                <a href="javascript:void(0);" class="delete" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
+                <a href="#" class="delete" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
             </div>
             <select class="select js-select" name="comp-{id}-videoinit" id="comp-{id}-videoinit">
                 <option value="onstart"{{ ($videoinit == 'onstart' ? ' selected="selected"' : '') }}>{{ __('interactivity.audio_select1') }}</option>
@@ -107,6 +107,6 @@ if(isset($Properties))
         @include('interactivity.components.coordinates_trigger')
     </div>
     <!-- end settings -->
-    <a href="javascript:void(0);" class="btn delete expand remove">{{ __('interactivity.remove') }} <i class="icon-trash"></i></a>
+    <a href="#" class="btn delete expand remove">{{ __('interactivity.remove') }} <i class="icon-trash"></i></a>
 </div>
 <!-- end video --> 

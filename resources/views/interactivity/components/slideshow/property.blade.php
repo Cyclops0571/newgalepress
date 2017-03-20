@@ -27,7 +27,7 @@ if(isset($Properties))
                     $fileSelected = 1;
                     $files .= '<li>' . ($index > 9 ? "" . $index : "0" . $index) . ' - ' . Str::limit_exact($filename, 20) .
                             '<input type="hidden" name="comp-{id}-filename[]" class="required" value="' . $filename . '" />' .
-                            '<a href="javascript:void(0);" class="delete">' .
+                            '<a href="#" class="delete">' .
                             '<i class="icon-remove"></i>' .
                             '</a>' .
                             '</li>';
@@ -53,7 +53,7 @@ if(isset($Properties))
     <input type="hidden" name="comp-{id}-process" value="{{ $Process }}" />
     <div class="component-header">
         <h3><span></span>{{ __('interactivity.slideshow_name') }}<small> - {{ __('interactivity.slideshow_componentid') }}{id}</small></h3>
-        <a href="javascript:void(0);" class="delete remove" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
+        <a href="#" class="delete remove" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
     </div>
     <!-- end component-header -->
     <div class="settings">
@@ -73,7 +73,7 @@ if(isset($Properties))
             </div>
             <h5 title="{{ __('interactivity.slideshow_type_tooltip') }}" class="tooltip">{{ __('interactivity.slideshow_type') }} <i class="icon-info-sign"></i></h5>
             <div class="drop-area">
-                <p>{{ __('interactivity.slideshow_note') }} <a href="javascript:void(0);">{{ __('interactivity.slideshow_click') }}</a></p>
+                <p>{{ __('interactivity.slideshow_note') }} <a href="#">{{ __('interactivity.slideshow_click') }}</a></p>
             </div>
             <!-- end drop-area -->
             
@@ -82,7 +82,7 @@ if(isset($Properties))
                 <input type="hidden" name="comp-{id}-fileselected" id="comp-{id}-fileselected" value="{{ $fileSelected }}" />    
 
                 <div class="progress hide">
-                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
                     <label for="scale"></label>
                     <div class="scrollbox dot">
                         <div class="scale" style="width: 0%"></div>
@@ -99,7 +99,7 @@ if(isset($Properties))
         @include('interactivity.components.coordinates')
     </div>
     <!-- end settings --> 
-    <a href="javascript:void(0);" class="btn delete expand remove">{{ __('interactivity.remove') }} <i class="icon-trash"></i></a>
+    <a href="#" class="btn delete expand remove">{{ __('interactivity.remove') }} <i class="icon-trash"></i></a>
 </div>
 <!-- end slideshow -->
 

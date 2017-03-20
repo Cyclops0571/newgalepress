@@ -31,7 +31,6 @@ use Illuminate\Http\Request;
  * @property string $PublishDate
  * @property int $IsUnpublishActive
  * @property string $UnpublishDate
- * @property int $CategoryID
  * @property int $IsProtected
  * @property string $Password
  * @property int $IsBuyable
@@ -56,55 +55,55 @@ use Illuminate\Http\Request;
  * @property int $ProcessUserID
  * @property string $ProcessDate
  * @property int $ProcessTypeID
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereContentID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereApplicationID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereOrderNo($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereDetail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereMonthlyName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content wherePublishDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereIsUnpublishActive($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereUnpublishDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereCategoryID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereIsProtected($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereIsBuyable($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content wherePrice($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereCurrencyID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereIsMaster($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereOrientation($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereIdentifier($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereAutoDownload($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereApproval($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereBlocked($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereRemoveFromMobile($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereVersion($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content wherePdfVersion($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereCoverImageVersion($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereTotalFileSize($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereTopicStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereStatusID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereCreatorUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereDateCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereProcessUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereProcessDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereProcessTypeID($value)
- * @mixin \Eloquent
  * @property-read \App\Models\Application $Application
- * @property-read \App\Models\Category $Category
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentTopic[] $ContentTopics
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $Category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentCategory[] $ContentCategory
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentFile[] $ContentFile
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentTopic[] $ContentTopics
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereApplicationID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereApproval($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereAutoDownload($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereBlocked($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereContentID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereCoverImageVersion($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereCreatorUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereCurrencyID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereDateCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereDetail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereIdentifier($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereIsBuyable($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereIsMaster($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereIsProtected($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereIsUnpublishActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereMonthlyName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereOrderNo($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereOrientation($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content wherePassword($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content wherePdfVersion($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereProcessDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereProcessTypeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content wherePublishDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereRemoveFromMobile($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereTopicStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereTotalFileSize($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereUnpublishDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereVersion($value)
+ * @mixin \Eloquent
  */
-class Content extends Model
-{
+class Content extends Model {
+
     public $timestamps = false;
     protected $table = 'Content';
     protected $primaryKey = 'ContentID';
     public static $key = 'ContentID';
 
     const defaultSort = 'OrderNo';
+
     public static function getContents(Request $request)
     {
 
@@ -151,14 +150,19 @@ class Content extends Model
             'INNER JOIN `Content` AS o ON o.ApplicationID=a.ApplicationID AND o.StatusID=1 ' .
             'WHERE c.StatusID=1';
         $rs = DB::table(DB::raw('(' . $sql . ') t'))
-            ->where(function (Builder $query) use ($applicationID, $search) {
-                if ((int)Auth::user()->UserTypeID == eUserTypes::Manager) {
-                    if ($applicationID > 0) {
+            ->where(function (Builder $query) use ($applicationID, $search)
+            {
+                if ((int)Auth::user()->UserTypeID == eUserTypes::Manager)
+                {
+                    if ($applicationID > 0)
+                    {
                         $query->where('ApplicationID', '=', $applicationID);
                     }
 
-                    if (strlen(trim($search)) > 0) {
-                        $query->where(function (Builder $q) use ($search) {
+                    if (strlen(trim($search)) > 0)
+                    {
+                        $query->where(function (Builder $q) use ($search)
+                        {
                             $q->where('CustomerName', 'LIKE', '%' . $search . '%');
                             $q->orWhere('ApplicationName', 'LIKE', '%' . $search . '%');
                             $q->orWhere('Blocked', 'LIKE', '%' . $search . '%');
@@ -166,11 +170,15 @@ class Content extends Model
                             $q->orWhere('ContentID', 'LIKE', '%' . $search . '%');
                         });
                     }
-                } elseif (Auth::user()->UserTypeID == eUserTypes::Customer) {
-                    if (Common::CheckApplicationOwnership($applicationID)) {
-                        if (strlen(trim($search)) > 0) {
+                } elseif (Auth::user()->UserTypeID == eUserTypes::Customer)
+                {
+                    if (Common::CheckApplicationOwnership($applicationID))
+                    {
+                        if (strlen(trim($search)) > 0)
+                        {
                             $query->where('ApplicationID', '=', $applicationID);
-                            $query->where(function (Builder $q) use ($search) {
+                            $query->where(function (Builder $q) use ($search)
+                            {
                                 $q->where('Name', 'LIKE', '%' . $search . '%');
                                 $q->orWhere('CategoryName', 'LIKE', '%' . $search . '%');
                                 $q->orWhere('PublishDate', 'LIKE', '%' . $search . '%');
@@ -178,28 +186,34 @@ class Content extends Model
                                 $q->orWhere('Status', 'LIKE', '%' . $search . '%');
                                 $q->orWhere('ContentID', 'LIKE', '%' . $search . '%');
                             });
-                        } else {
+                        } else
+                        {
                             $query->where('ApplicationID', '=', $applicationID);
                         }
-                    } else {
+                    } else
+                    {
                         $query->where('ApplicationID', '=', -1);
                     }
                 }
             })
             ->orderBy($sort, $sort_dir);
-        if ($sort != self::defaultSort) {
+        if ($sort != self::defaultSort)
+        {
             $rs->orderBy(self::defaultSort, 'DESC');
         }
 
-        if ($option == 1) {
-            $data = array(
-                'rows' => $rs->get()
-            );
+        if ($option == 1)
+        {
+            $data = [
+                'rows' => $rs->get(),
+            ];
+
             return view('pages.contentoptionlist', $data);
         }
 
         $rows = $rs->paginate(config('custom.rowcount'));
-//        $rows = $rs->paginate(10);
+
+        //        $rows = $rs->paginate(10);
         return $rows;
 
     }
@@ -211,26 +225,29 @@ class Content extends Model
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function Category()
     {
-        return $this->belongsTo(Category::class, 'CategoryID');
+        return $this->belongsToMany(Category::class, 'ContentCategory', self::$key, Category::$key);
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function ContentCategory() {
+    public function ContentCategory()
+    {
         return $this->hasMany(ContentCategory::class, 'CategoryID');
     }
 
     public function Currency($languageID)
     {
         $gc = GroupCode::where('GroupCodeID', '=', $this->CurrencyID)->first();
-        if ($gc) {
+        if ($gc)
+        {
             return $gc->getDisplayName($languageID);
         }
+
         return '';
     }
 
@@ -244,33 +261,10 @@ class Content extends Model
         return $this->hasMany(ContentFile::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->first();
     }
 
-
-    public function ifModifiedDoNecessarySettings($selectedCategories)
-    {
-        $currentCategories = array();
-        $rows = $this->getCategoryIDSet();
-        foreach ($rows as $row) {
-            $categoryIDArray = array($row->CategoryID != CATEGORY_GENEL_ID ? $row->CategoryID : "");
-            $currentCategories = array_merge($currentCategories, $categoryIDArray);
-        }
-
-        $pdfUploaded = (int)request('hdnFileSelected', 0);
-        $imageUploaded = (int)request('hdnCoverImageFileSelected', 0);
-        if ($this->isDirty() || $pdfUploaded || $imageUploaded || $currentCategories != $selectedCategories) {
-            $this->Version = (int)$this->Version + 1;
-        }
-    }
-
-    public function getCategoryIDSet()
-    {
-        return ContentCategory::getQuery()
-        ->where('ContentID', '=', $this->ContentID)
-        ->get();
-    }
-
     public function setPassword($password)
     {
-        if (strlen(trim($password)) > 0) {
+        if (strlen(trim($password)) > 0)
+        {
             $this->Password = Hash::make(request('Password'));
         }
     }
@@ -278,14 +272,17 @@ class Content extends Model
     public function setMaster($isMaster)
     {
         $this->IsMaster = $isMaster;
-        if ($isMaster) {
+        if ($isMaster)
+        {
             //Unset IsProtected & password field due to https://github.com/galepress/gp/issues/7
             $this->IsProtected = 0;
             $this->Password = '';
             $contents = Content::where('ApplicationID', '=', $this->ApplicationID)->get();
-            foreach ($contents as $content) {
+            foreach ($contents as $content)
+            {
                 //INFO:Added due to https://github.com/galepress/gp/issues/18
-                if ((int)$this->ContentID !== (int)$content->ContentID) {
+                if ((int)$this->ContentID !== (int)$content->ContentID)
+                {
                     $a = Content::find($content->ContentID);
                     $a->IsMaster = 0;
                     $a->Version = (int)$a->Version + 1;
@@ -304,59 +301,50 @@ class Content extends Model
      * @param array $columns
      * @return Content
      */
-    public static function find($contentID, $columns = array('*'))
+    public static function find($contentID, $columns = ['*'])
     {
         return Content::where(self::$key, "=", $contentID)->first($columns);
     }
 
     public function save(array $options = [])
     {
-        if (!isset($options['updateAppVersion'])) {
+        if (!isset($options['updateAppVersion']))
+        {
             $options['updateAppVersion'] = true;
         }
-        if (!$this->isDirty()) {
-            return true;
-        }
+
         $userID = -1;
-        if (Auth::user()) {
+        if (Auth::user())
+        {
             $userID = Auth::user()->UserID;
         }
 
-        if ((int)$this->ContentID == 0) {
+        if ((int)$this->ContentID == 0)
+        {
             $this->DateCreated = new DateTime();
             $this->ProcessTypeID = eProcessTypes::Insert;
             $this->CreatorUserID = $userID;
             $this->StatusID = eStatus::Active;
             $this->PdfVersion = 1;
             $this->CoverImageVersion = 1;
-        } else {
+        } else
+        {
             $this->ProcessTypeID = eProcessTypes::Update;
         }
 
         $this->ProcessUserID = $userID;
         $this->Version = (int)$this->Version + 1;
         $this->ProcessDate = new DateTime();
-        if ($options['updateAppVersion']) {
+        if ($options['updateAppVersion'])
+        {
             $contentApp = Application::find($this->ApplicationID);
-            if ($contentApp) {
+            if ($contentApp)
+            {
                 $contentApp->incrementAppVersion();
             }
         }
-        return parent::save();
-    }
 
-    public function setCategory($selectedCategories)
-    {
-        //content categories
-//        571571
-//        DB::table('ContentCategory')->where('ContentID', '=', $this->ContentID)->delete();
-//        foreach ($selectedCategories as $value) {
-//            //add category
-//            $cat = new ContentCategory();
-//            $cat->ContentID = $this->ContentID;
-//            $cat->CategoryID = (int)$value;
-//            $cat->save();
-//        }
+        return parent::save();
     }
 
     /**
@@ -364,7 +352,8 @@ class Content extends Model
      */
     public function processPdf()
     {
-        if ((int)request('hdnFileSelected', 0) != 1) {
+        if ((int)request('hdnFileSelected', 0) != 1)
+        {
             return ContentFile::where('ContentID', '=', $this->ContentID)
                 ->where('StatusID', '=', eStatus::Active)
                 ->orderBy('ContentFileID', 'DESC')
@@ -383,8 +372,10 @@ class Content extends Model
         $destinationFolder = public_path($targetFilePath);
         $targetFileNameFull = $destinationFolder . '/' . $targetFileName;
 
-        if (File::exists($sourceFileNameFull)) {
-            if (!File::exists($destinationFolder)) {
+        if (File::exists($sourceFileNameFull))
+        {
+            if (!File::exists($destinationFolder))
+            {
                 File::makeDirectory($destinationFolder, 777, true);
             }
 
@@ -393,7 +384,8 @@ class Content extends Model
 
             $originalImageFileName = pathinfo($sourceFileNameFull, PATHINFO_FILENAME) . IMAGE_ORJ_EXTENSION;
             File::move($sourceFileNameFull, $targetFileNameFull);
-            if (File::exists($sourceRealPath . "/" . $originalImageFileName)) {
+            if (File::exists($sourceRealPath . "/" . $originalImageFileName))
+            {
                 File::move($sourceRealPath . "/" . $originalImageFileName, $destinationFolder . "/" . IMAGE_ORIGINAL . IMAGE_EXTENSION);
             }
 
@@ -432,14 +424,17 @@ class Content extends Model
         curl_setopt($ch, CURLOPT_TIMEOUT, 3);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $result = curl_exec($ch);
-        if (!empty($result)) {
+        if (!empty($result))
+        {
             $resultJson = json_decode($result, true);
-            if (isset($resultJson['status']) && $resultJson['status'] == 1) {
+            if (isset($resultJson['status']) && $resultJson['status'] == 1)
+            {
                 $contentFile->Indexed = 1;
             }
         }
 
-        if ($contentFile->Indexed == 0) {
+        if ($contentFile->Indexed == 0)
+        {
             $error = new ServerErrorLog();
             $error->ErrorMessage = "Indexing error - ContentFileID: " . $contentFile->ContentFileID . " -  response: " . json_encode($result);
             $error->Parameters = $requestUrl;
@@ -456,11 +451,13 @@ class Content extends Model
     public function processImage($contentFile, $coverImageFileSelected, $coverImageFileName)
     {
 
-        if (!$contentFile) {
+        if (!$contentFile)
+        {
             return;
         }
 
-        if ($coverImageFileSelected != 1) {
+        if ($coverImageFileSelected != 1)
+        {
             return;
         }
 
@@ -477,35 +474,42 @@ class Content extends Model
         $targetMainFileName = $targetFileName . '_main';
         $targetThumbFileName = $targetFileName . '_thumb';
 
-        if (File::exists($sourceFileNameFull) && is_file($sourceFileNameFull)) {
-            if (!File::exists($destinationFolder)) {
+        if (File::exists($sourceFileNameFull) && is_file($sourceFileNameFull))
+        {
+            if (!File::exists($destinationFolder))
+            {
                 File::makeDirectory($destinationFolder, 0777, true);
             }
 
 
             //<editor-fold desc="Delete Old Images">
-            foreach (scandir($destinationFolder . "/") as $fileName) {
-                if (substr($fileName, 0, strlen(IMAGE_CROPPED_NAME)) === IMAGE_CROPPED_NAME) {
+            foreach (scandir($destinationFolder . "/") as $fileName)
+            {
+                if (substr($fileName, 0, strlen(IMAGE_CROPPED_NAME)) === IMAGE_CROPPED_NAME)
+                {
                     unlink($destinationFolder . "/" . $fileName);
                 }
             }
             //</editor-fold>
 
             File::move($sourceFileNameFull, $targetFileNameFull);
-            if ((int)request('hdnFileSelected', 0) == 0) {
+            if ((int)request('hdnFileSelected', 0) == 0)
+            {
                 sleep(1);
                 File::copy($targetFileNameFull, $destinationFolder . '/' . IMAGE_ORIGINAL . IMAGE_EXTENSION);
             }
-            $pictureInfoSet = array();
-            $pictureInfoSet[] = array("width" => 110, "height" => 157, "imageName" => $targetMainFileName);
-            $pictureInfoSet[] = array("width" => 468, "height" => 667, "imageName" => $targetThumbFileName);
-            foreach ($pictureInfoSet as $pInfo) {
-                ImageClass::cropImage($targetFileNameFull, $destinationFolder, $pInfo["width"], $pInfo["height"], $pInfo["imageName"], FALSE);
+            $pictureInfoSet = [];
+            $pictureInfoSet[] = ["width" => 110, "height" => 157, "imageName" => $targetMainFileName];
+            $pictureInfoSet[] = ["width" => 468, "height" => 667, "imageName" => $targetThumbFileName];
+            foreach ($pictureInfoSet as $pInfo)
+            {
+                ImageClass::cropImage($targetFileNameFull, $destinationFolder, $pInfo["width"], $pInfo["height"], $pInfo["imageName"], false);
             }
 
             $cropSet = Crop::get();
             $sourceFile = $destinationFolder . "/" . IMAGE_ORIGINAL . IMAGE_EXTENSION;
-            foreach ($cropSet as $crop) {
+            foreach ($cropSet as $crop)
+            {
                 //create neccessary image versions
                 ImageClass::cropImage($sourceFile, $destinationFolder, $crop->Width, $crop->Height);
             }
@@ -534,48 +538,32 @@ class Content extends Model
 
     public function getIdentifier($refreshIdentifier = false)
     {
-        if (!$this->ContentID) {
+        if (!$this->ContentID)
+        {
             return $this->Identifier;
         }
-        if (empty($this->Identifier) || $refreshIdentifier) {
-            if (empty($this->Application->BundleText)) {
+        if (empty($this->Identifier) || $refreshIdentifier)
+        {
+            if (empty($this->Application->BundleText))
+            {
                 $identifier = "www.galepress.com." . $this->ContentID . "t" . time();
-            } else {
+            } else
+            {
                 $identifier = strtolower($this->Application->BundleText) . "." . $this->ContentID . "t" . time();
             }
-            if (empty($this->Identifier)) {
+            if (empty($this->Identifier))
+            {
                 $this->Identifier = $identifier;
                 $this->save();
-            } else {
+            } else
+            {
                 $this->Identifier = $identifier;
             }
         }
+
         return $this->Identifier;
     }
 
-    /**
-     * @desc Returns content categories for webservice
-     * @param int $ServiceVersion
-     * @return array
-     */
-    public function WebserviceCategories($ServiceVersion)
-    {
-        $categories = array();
-        $sql = '' .
-            'SELECT ct.CategoryID, ct.Name ' .
-            'FROM `ContentCategory` cc ' .
-            'LEFT OUTER JOIN `Category` ct ON cc.`CategoryID` = ct.`CategoryID` AND ct.`StatusID` = 1 ' .
-            'WHERE cc.`ContentID`=' . (int)$this->ContentID . ' ' .
-            'ORDER BY ct.`Name` ASC';
-        $rs = DB::query($sql);
-        foreach ($rs as $r) {
-            array_push($categories, array(
-                'CategoryID' => (int)$r->CategoryID,
-                'CategoryName' => ((int)$r->CategoryID === 0 ? trans('common.contents_category_list_general', [], 'messages', $this->Application->ApplicationLanguage) : $r->Name)
-            ));
-        }
-        return $categories;
-    }
 
     public function ContentTopics()
     {
@@ -588,29 +576,38 @@ class Content extends Model
      */
     public function setTopics($topicIds)
     {
-        if ($this->TopicStatus != eStatus::Active) {
+        if ($this->TopicStatus != eStatus::Active)
+        {
             return;
         }
 
-        if (empty($topicIds)) {
-            foreach ($this->ContentTopics as $contentTopic) {
+        if (empty($topicIds))
+        {
+            foreach ($this->ContentTopics as $contentTopic)
+            {
                 $contentTopic->delete();
             }
+
             return;
         }
-        $myTopicIds = array();
-        foreach ($this->ContentTopics as $contentTopic) {
+        $myTopicIds = [];
+        foreach ($this->ContentTopics as $contentTopic)
+        {
             $myTopicIds[] = $contentTopic->TopicID;
         }
 
 
-        foreach ($topicIds as $topicId) {
-            foreach ($this->ContentTopics as $contentTopic) {
-                if (!in_array($contentTopic->TopicID, $topicIds)) {
+        foreach ($topicIds as $topicId)
+        {
+            foreach ($this->ContentTopics as $contentTopic)
+            {
+                if (!in_array($contentTopic->TopicID, $topicIds))
+                {
                     $contentTopic->delete();
                 }
             }
-            if (!in_array($topicId, $myTopicIds)) {
+            if (!in_array($topicId, $myTopicIds))
+            {
                 $contentTopic = new ContentTopic();
                 $contentTopic->ContentID = $this->ContentID;
                 $contentTopic->TopicID = $topicId;
@@ -633,45 +630,54 @@ class Content extends Model
         $serveContent = $this->PublishDate <= date("Y-m-d H:i:s");
         $serveContent = $serveContent && ($this->IsUnpublishActive == 0 || $this->UnpublishDate > date("Y-m-d"));
         $serveContent = $serveContent || ($this->RemoveFromMobile == eRemoveFromMobile::Active);
+
         return $serveContent;
     }
 
     public function getServiceData($addStatusCode = true)
     {
-        $result = array(
-            'ContentID' => (int)$this->ContentID,
-            'ApplicationID' => (int)$this->ApplicationID,
-            'ContentOrderNo' => (int)$this->OrderNo,
-            'ContentName' => $this->Name,
-            'ContentDetail' => $this->Detail,
-            'ContentMonthlyName' => $this->MonthlyName,
-            'ContentIsProtected' => ((int)$this->IsProtected == 1 ? true : false),
-            'ContentIsBuyable' => ((int)$this->IsBuyable == 1 ? true : false),
-            'ContentPrice' => '',
-            'ContentCurrency' => $this->Currency(1),
-            'ContentIdentifier' => $this->getIdentifier(),
-            'ContentIsMaster' => ((int)$this->IsMaster == 1 ? true : false),
-            'ContentOrientation' => (int)$this->Orientation,
-            'ContentAutoDownload' => ((int)$this->AutoDownload == 1 ? true : false),
-            'ContentBlocked' => (bool)$this->Blocked,
-            'ContentStatus' => (bool)$this->Status,
-            'ContentVersion' => (int)$this->Version,
-            'ContentPdfVersion' => (int)$this->PdfVersion,
+        $result = [
+            'ContentID'                => (int)$this->ContentID,
+            'ApplicationID'            => (int)$this->ApplicationID,
+            'ContentOrderNo'           => (int)$this->OrderNo,
+            'ContentName'              => $this->Name,
+            'ContentDetail'            => $this->Detail,
+            'ContentMonthlyName'       => $this->MonthlyName,
+            'ContentIsProtected'       => ((int)$this->IsProtected == 1 ? true : false),
+            'ContentIsBuyable'         => ((int)$this->IsBuyable == 1 ? true : false),
+            'ContentPrice'             => '',
+            'ContentCurrency'          => $this->Currency(1),
+            'ContentIdentifier'        => $this->getIdentifier(),
+            'ContentIsMaster'          => ((int)$this->IsMaster == 1 ? true : false),
+            'ContentOrientation'       => (int)$this->Orientation,
+            'ContentAutoDownload'      => ((int)$this->AutoDownload == 1 ? true : false),
+            'ContentBlocked'           => (bool)$this->Blocked,
+            'ContentStatus'            => (bool)$this->Status,
+            'ContentVersion'           => (int)$this->Version,
+            'ContentPdfVersion'        => (int)$this->PdfVersion,
             'ContentCoverImageVersion' => (int)$this->CoverImageVersion,
-            'RemoveFromMobile' => (bool)$this->RemoveFromMobile
-        );
-        if ($addStatusCode) {
-            $status = array();
+            'RemoveFromMobile'         => (bool)$this->RemoveFromMobile,
+        ];
+        if ($addStatusCode)
+        {
+            $status = [];
             $status["status"] = 0;
             $status["error"] = "";
             $result = array_merge($result, $status);
         }
+
         return $result;
     }
 
-    public function getServiceDataDetailed($serviceVersion)
+    public function getServiceDataDetailed()
     {
-        return array_merge($this->getServiceData(), array('ContentCategories' => $this->WebserviceCategories($serviceVersion)));
+
+        $mappedCategories = $this->Category->map(function (Category $category)
+        {
+            return ['CategoryID' => $category->CategoryID, 'CategoryName' => $category->Name];
+        })->toArray();
+
+        return array_merge($this->getServiceData(), ['ContentCategories' => $mappedCategories]);
     }
 
     /**
@@ -680,13 +686,16 @@ class Content extends Model
      */
     public static function getAccessibleContents($contentIds)
     {
-        if (empty($contentIds)) {
-            return array();
+        if (empty($contentIds))
+        {
+            return [];
         }
+
         return Content::whereIn('ContentID', $contentIds)
             ->where('StatusID', '=', eStatus::Active)
             ->where('PublishDate', '<=', DB::raw('now()'))
-            ->where(function ($query) {
+            ->where(function (Builder $query)
+            {
                 $query->where('IsUnpublishActive', '=', 0);
                 $query->orWhere('UnpublishDate', '>', DB::raw('now()'));
             })
@@ -701,13 +710,16 @@ class Content extends Model
      */
     public static function getAccessibleTopicContents($contentIds)
     {
-        if (empty($contentIds)) {
-            return array();
+        if (empty($contentIds))
+        {
+            return [];
         }
+
         return Content::whereIn('Content.ContentID', $contentIds)
             ->where('StatusID', '=', eStatus::Active)
             ->where('PublishDate', '<=', DB::raw('now()'))
-            ->where(function (Builder $query) {
+            ->where(function (Builder $query)
+            {
                 $query->where('IsUnpublishActive', '=', 0);
                 $query->orWhere('UnpublishDate', '>', DB::raw('now()'));
             })
@@ -719,15 +731,19 @@ class Content extends Model
 
     public function getMonthlyName()
     {
-        if ($this->ContentID) {
+        if ($this->ContentID)
+        {
             return $this->MonthlyName;
         }
+
         return Common::monthName((int)date('m')) . ' ' . date('Y');
 
     }
 
-    public function hasContentCategory($categoryID) {
-        $categoryIds = $this->ContentCategory->pluck('CategoryID')->toArray();
+    public function hasContentCategory($categoryID)
+    {
+        $categoryIds = $this->Category->pluck('CategoryID')->toArray();
+
         return in_array($categoryID, $categoryIds);
     }
 }

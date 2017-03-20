@@ -9,7 +9,10 @@ div {
 .error {
     color: #9d0000;
 }
-
+.error > .label-grey {
+    color: #9d0000 !important;
+    font-size: large;
+}
 .loginBlock {
     padding: 25px;
 }

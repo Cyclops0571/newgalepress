@@ -159,7 +159,7 @@
         <input type="file" name="ImageFile" id="ImageFile" class="hidden"/>
 
         <div for="ImageFile" class="myProgress hide">
-            <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+            <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
             <label for="scale"></label>
 
             <div class="scrollbox dot">
@@ -206,7 +206,7 @@
                                  width="60px" height="30px" style="cursor: pointer" onclick="fileUpload(this)"/>
 
                             <div id="uploadProgress_<?php echo $row->BannerID; ?>" class="myProgress hide">
-                                <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i
+                                <a href="#">{{ __('interactivity.cancel') }} <i
                                             class="icon-remove"></i></a>
                                 <label for="scale"></label>
 

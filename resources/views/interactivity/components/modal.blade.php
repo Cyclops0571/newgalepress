@@ -34,7 +34,7 @@ if(isset($Properties))
 </div>
 <div class="upload-modalicon{{ ($modal == 1 && $modalIconSelected == 0 ? ' hide' : '') }}">
     <div class="progress hide">
-        <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+        <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
         <label for="scale"></label>
         <div class="scrollbox dot">
             <div class="scale" style="width: 0%"></div>

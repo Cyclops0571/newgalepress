@@ -5,7 +5,7 @@
     
     <input type="hidden" id="content-id" value="{{ $ContentID }}" />
     
-    <a href="javascript:void(0);" class="fullTrigger hidden">fullscreen</a>
+    <a href="#" class="fullTrigger hidden">fullscreen</a>
     
     <div id="wrapper">
         
@@ -20,17 +20,17 @@
         @include('sections.sessionmodal')
         
         <div class="compression-settings hide">
-            <a title="{{ __('interactivity.settings_close') }}" class="close" href="javascript:void(0);" onclick="cInteractivity.closeSettings();"><i class="icon-remove"></i></a>
+            <a title="{{ __('interactivity.settings_close') }}" class="close" href="#" onclick="cInteractivity.closeSettings();"><i class="icon-remove"></i></a>
             <div class="checkbox js-checkbox tooltip{{ $included == 1 ? " checked" : ""}}" title="{{ __('interactivity.settings_description') }}">
                 {{ __('interactivity.settings_label') }}
             </div>
             <div class="command">
-                <a class="btn expand" href="javascript:void(0);" onclick="cInteractivity.saveSettings();"><i class="icon-ok"></i>{{ __('interactivity.save') }}</a>
+                <a class="btn expand" href="#" onclick="cInteractivity.saveSettings();"><i class="icon-ok"></i>{{ __('interactivity.save') }}</a>
             </div>
         </div>
 
         <div class="transfer-modal hide">
-            <a title="{{ __('interactivity.settings_close') }}" class="close" href="javascript:void(0);" onclick="cInteractivity.closeTransferModal();"><i class="icon-remove"></i></a>
+            <a title="{{ __('interactivity.settings_close') }}" class="close" href="#" onclick="cInteractivity.closeTransferModal();"><i class="icon-remove"></i></a>
             
             <input type="hidden" id="transferComponentID" name="transferComponentID" value="">
             <input type="hidden" id="transferFrom" name="transferFrom" value="">
@@ -50,7 +50,7 @@
             </div>
 
             <div class="command">
-                <a class="btn expand" href="javascript:void(0);" onclick="cInteractivity.transfer();"><i class="icon-ok"></i>{{ __('interactivity.save') }}</a>
+                <a class="btn expand" href="#" onclick="cInteractivity.transfer();"><i class="icon-ok"></i>{{ __('interactivity.save') }}</a>
             </div>
         </div>
         

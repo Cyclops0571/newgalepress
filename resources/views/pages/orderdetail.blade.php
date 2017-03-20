@@ -174,7 +174,7 @@
                   </div>
 
                   <div for="Pdf" class="myProgress hide">
-                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
                     <label for="scale"></label>
 
                     <div class="scrollbox dot">
@@ -264,7 +264,7 @@
                   </div>
 
                   <div for="Image1024x1024" class="myProgress hide">
-                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
                     <label for="scale"></label>
 
                     <div class="scrollbox dot">
@@ -353,7 +353,7 @@
                   </div>
 
                   <div for="Image640x960" class="myProgress hide">
-                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
                     <label for="scale"></label>
 
                     <div class="scrollbox dot">
@@ -442,7 +442,7 @@
                   </div>
 
                   <div for="Image640x1136" class="myProgress hide">
-                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
                     <label for="scale"></label>
 
                     <div class="scrollbox dot">
@@ -532,7 +532,7 @@
                   </div>
 
                   <div for="Image1536x2048" class="myProgress hide">
-                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
                     <label for="scale"></label>
 
                     <div class="scrollbox dot">
@@ -622,7 +622,7 @@
                   </div>
 
                   <div for="Image2048x1536" class="myProgress hide">
-                    <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                    <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
                     <label for="scale"></label>
 
                     <div class="scrollbox dot">

@@ -23,7 +23,6 @@ class CreateContentTable extends Migration {
 			$table->date('PublishDate')->nullable();
 			$table->smallInteger('IsUnpublishActive')->unsigned()->default(0);
 			$table->date('UnpublishDate')->default('2011-11-11');
-			$table->integer('CategoryID')->unsigned()->nullable();
 			$table->integer('IsProtected')->unsigned()->nullable();
 			$table->string('Password')->nullable();
 			$table->integer('IsBuyable')->unsigned()->nullable();

@@ -2138,7 +2138,7 @@ var cBanner = new function () {
                     + '<td style="cursor:pointer;"><span class="icon-resize-vertical list-draggable-icon"></span></td><td>'
                     + '<img id="bannerImage_' + BannerID + '" src="' + BannerImagePath + '" width="60px" height="30px" style="cursor: pointer" onclick="fileUpload(this)">'
                     + '<div id="uploadProgress_' + BannerID + '" class="myProgress hide">'
-                    + '<a href="javascript:void(0);" class="editable editable-click">İptal <i class="icon-remove"></i></a>'
+                    + '<a href="#" class="editable editable-click">İptal <i class="icon-remove"></i></a>'
                     + '<label for="scale"></label>'
                     + '<div class="scrollbox dot">'
                     + '<div class="scale" style="width: 0"></div>'

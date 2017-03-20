@@ -15,7 +15,7 @@ if(isset($Properties))
 }
 ?>
 <div class="coordinates">
-    <a href="javascript:void(0);" class="expand">{{ __('interactivity.coordinates') }} <i class="icon-"></i></a>
+    <a href="#" class="expand">{{ __('interactivity.coordinates') }} <i class="icon-"></i></a>
     <div class="component-panel">
         <div class="text dark">
             <label for="comp-{id}-x">{{ __('interactivity.coordinates_x') }}</label>

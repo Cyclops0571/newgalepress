@@ -17,7 +17,7 @@ $components = DB::table('Component')
                 <ul class="components">
                     @foreach($components as $component)
                         <li componentid="0" componentname="{{ $component->Class }}">
-                            <a href="javascript:void(0);"
+                            <a href="#"
                                id="comp-{{ $component->Class }}"><span>{{ __('interactivity.'.$component->Class . '_name') }}</span></a>
                         </li>
                     @endforeach

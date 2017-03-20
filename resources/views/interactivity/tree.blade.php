@@ -11,7 +11,7 @@
 		?>
         @foreach($pagess as $page)
         <li data-collapse="" class="page" pageno="{{ $page->No }}">
-            <a href="javascript:void(0);"><i class="icon-"></i>{{ __('interactivity.page') }} {{ $page->No }}</a>
+            <a href="#"><i class="icon-"></i>{{ __('interactivity.page') }} {{ $page->No }}</a>
             <ul class="close">
 				<?php
 				$comps = DB::table('Component')
@@ -22,7 +22,7 @@
 				?>
                 @foreach($comps as $comp)
                 <li data-collapse="" class="component" componentname="{{ $comp->Class }}">
-                    <a href="javascript:void(0);" id="tree-{{ $comp->Class }}"><i class="icon-"></i>{{ __('interactivity.'.$comp->Class.'_name') }}</a>
+                    <a href="#" id="tree-{{ $comp->Class }}"><i class="icon-"></i>{{ __('interactivity.'.$comp->Class.'_name') }}</a>
                     <ul class="close">
                     	<?php
 						$pcs = DB::table('PageComponent')
@@ -34,7 +34,7 @@
 						?>
                     	@foreach($pcs as $pc)
                     		<li componentid="{{ $pc->No }}" style="position:relative;">
-                                <a href="javascript:void(0);" class="selectcomponent" componentid="{{ $pc->No }}">{{ __('interactivity.'.$comp->Class.'_componentid').$pc->No }}</a>
+                                <a href="#" class="selectcomponent" componentid="{{ $pc->No }}">{{ __('interactivity.'.$comp->Class.'_componentid').$pc->No }}</a>
                                 <i class="icon-exchange transfer" onclick="cInteractivity.openTransferModal($(this));"></i>
                             </li>
                         @endforeach
@@ -46,6 +46,6 @@
         </li>
         @endforeach
     </ul>
-    <a href="javascript:void(0);" class="delete-all-components" onclick="cInteractivity.deleteComponentOnCurrentPage();">{{ __('interactivity.sidebar_delete_all') }}</a>
+    <a href="#" class="delete-all-components" onclick="cInteractivity.deleteComponentOnCurrentPage();">{{ __('interactivity.sidebar_delete_all') }}</a>
 </div>
 <!-- end tree -->

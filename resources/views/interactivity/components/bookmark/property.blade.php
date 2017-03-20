@@ -16,7 +16,7 @@ if(isset($Properties))
     <input type="hidden" name="comp-{id}-process" value="{{ $Process }}" />
     <div class="component-header">
         <h3><span></span>{{ __('interactivity.bookmark_name') }}<small> - {{ __('interactivity.bookmark_componentid') }}{id}</small></h3>
-        <a href="javascript:void(0);" class="delete remove" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
+        <a href="#" class="delete remove" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
     </div>
     <!-- end component-header -->
     <div class="settings">
@@ -31,6 +31,6 @@ if(isset($Properties))
         @include('interactivity.components.coordinates_trigger')
     </div>
     <!--  end settings -->
-    <a href="javascript:void(0);" class="btn delete expand remove">{{ __('interactivity.remove') }} <i class="icon-trash"></i></a>
+    <a href="#" class="btn delete expand remove">{{ __('interactivity.remove') }} <i class="icon-trash"></i></a>
 </div>
 <!-- end bookmark --> 

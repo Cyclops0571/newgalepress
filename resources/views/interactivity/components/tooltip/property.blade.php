@@ -75,7 +75,7 @@ if(isset($Properties))
     <input type="hidden" name="comp-{id}-process" value="{{ $Process }}" />
     <div class="component-header">
         <h3><span></span>{{ __('interactivity.tooltip_name') }}<small> - {{ __('interactivity.tooltip_componentid') }}{id}</small></h3>
-        <a href="javascript:void(0);" class="delete remove" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
+        <a href="#" class="delete remove" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
     </div>
     <!-- end component-header -->
 
@@ -96,7 +96,7 @@ if(isset($Properties))
 
         <div class="upload-icon1{{ ($fileSelected == 0 || $option == 1 ? ' hide' : '') }}">
             <div class="progress hide">
-                <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
                 <label for="scale"></label>
                 <div class="scrollbox dot">
                     <div class="scale" style="width: 0%"></div>
@@ -118,7 +118,7 @@ if(isset($Properties))
 
         <div class="upload-icon2{{ ($fileSelected2 == 0 || $option == 1 ? ' hide' : '') }}">
             <div class="progress hide">
-                <a href="javascript:void(0);">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
+                <a href="#">{{ __('interactivity.cancel') }} <i class="icon-remove"></i></a>
                 <label for="scale"></label>
                 <div class="scrollbox dot">
                     <div class="scale" style="width: 0%"></div>
@@ -131,7 +131,7 @@ if(isset($Properties))
             <span class="error hide"><i class="icon-exclamation-sign"></i>{{ __('interactivity.video_poster_error') }}</span>
 
             <div class="coordinates">
-                <a href="javascript:void(0);" class="expand">{{ __('interactivity.tooltip_icon_name') }}<i class="icon-"></i></a>
+                <a href="#" class="expand">{{ __('interactivity.tooltip_icon_name') }}<i class="icon-"></i></a>
                 <div class="component-panel">
                     <div class="text dark">
                         <label for="comp-{id}-iconwidth">{{ __('interactivity.coordinates_w') }}</label>
@@ -176,12 +176,12 @@ if(isset($Properties))
             </div>
             <!-- end inline -->
             <textarea id="comp-{id}-content" name="comp-{id}-content" class="hide">{{ $content }}</textarea>
-            <a href="javascript:void(0);" class="btn expand edit">{{ __('interactivity.tooltip_modify') }} <i class="icon-edit"></i></a>
+            <a href="#" class="btn expand edit">{{ __('interactivity.tooltip_modify') }} <i class="icon-edit"></i></a>
         </div>
         <!-- end component-panel -->
         @include('interactivity.components.coordinates')
     </div>
     <!--  end settings -->
-    <a href="javascript:void(0);" class="btn delete expand remove">{{ __('interactivity.remove') }} <i class="icon-trash"></i></a>
+    <a href="#" class="btn delete expand remove">{{ __('interactivity.remove') }} <i class="icon-trash"></i></a>
 </div>
 <!-- end tooltip --> 

@@ -22,7 +22,7 @@ if(isset($Properties))
     <input type="hidden" name="comp-{id}-process" value="{{ $Process }}" />
     <div class="component-header">
         <h3><span></span>{{ __('interactivity.link_name') }}<small> - {{ __('interactivity.link_componentid') }}{id}</small></h3>
-        <a href="javascript:void(0);" class="delete remove" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
+        <a href="#" class="delete remove" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
     </div>
     <!-- end component-header -->
     <div class="settings">
@@ -49,7 +49,7 @@ if(isset($Properties))
                 <div class="text dark inline-primary">
                     <input type="text" name="comp-{id}-url" id="comp-{id}-url" placeholder="http://www.google.com" class="prefix" value="{{ $url }}">
                 </div>
-                <div class="inline-secondary"><a href="javascript:void(0);" class="to-url btn btn-primary postfix"><i
+                <div class="inline-secondary"><a href="#" class="to-url btn btn-primary postfix"><i
                                 class="icon-ok"></i></a></div>
                 <span class="to-url success hide"><i
                             class="icon-ok-sign"></i>{{ __('interactivity.link_success') }}</span>
@@ -61,7 +61,7 @@ if(isset($Properties))
                     <input type="text" name="comp-{id}-mail" id="comp-{id}-mail" placeholder="email@example.com"
                            class="prefix" value="{{ $mail }}">
                 </div>
-                <div class="inline-secondary"><a href="javascript:void(0);" class="to-mail btn btn-primary postfix"><i
+                <div class="inline-secondary"><a href="#" class="to-mail btn btn-primary postfix"><i
                                 class="icon-ok"></i></a></div>
                 <span class="to-mail success hide"><i
                             class="icon-ok-sign"></i>{{ __('interactivity.link_success') }}</span>
@@ -73,6 +73,6 @@ if(isset($Properties))
         @include('interactivity.components.coordinates')
     </div>
     <!-- end settings --> 
-    <a href="javascript:void(0);" class="btn delete expand remove">{{ __('interactivity.remove') }} <i class="icon-trash"></i></a>
+    <a href="#" class="btn delete expand remove">{{ __('interactivity.remove') }} <i class="icon-trash"></i></a>
 </div>
 <!-- end link -->

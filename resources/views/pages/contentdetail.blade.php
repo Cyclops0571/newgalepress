@@ -290,7 +290,7 @@
                     </div>
                   </div>
                   <script type="text/javascript">
-                      cContent.checkInteractivityStatus(<?php echo $ContentFile->ContentFileID; ?>, '#interactivityStatus', <?php echo json_encode((string)__('common.contents_interactive_file_has_been_created'));?>);
+                      cContent.checkInteractivityStatus('{{$ContentFile->ContentFileID}}' , '#interactivityStatus', '{{__('common.contents_interactive_file_has_been_created')}}');
                   </script>
                     <?php endif; ?>
                 </div>
@@ -299,7 +299,6 @@
                     <span class="icon-info-sign"></span>
                   </a>
                 </div>
-
               </div>
                   <?php endif; ?>
               @if(sizeof($contentList)>0)

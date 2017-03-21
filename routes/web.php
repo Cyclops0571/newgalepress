@@ -85,6 +85,14 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::get(trans('route.applications_settings'), array('as' => 'application_setting', 'uses' => 'ApplicationSettingController@show'));
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Reports">
+    Route::get(trans('route.reports'), array('as' => 'reports', 'before' => 'auth', 'uses' => 'ReportController@index'));
+    Route::get(trans('route.reports') . "/{id}" , array('as' => 'reports_show', 'before' => 'auth', 'uses' => 'ReportController@show'));
+    Route::get(trans('route.reports_location_country'), array('as' => 'reports_location_country', 'before' => 'auth', 'uses' => 'ReportController@country'));
+    Route::get(trans('route.reports_location_city'), array('as' => 'reports_location_city', 'before' => 'auth', 'uses' => 'ReportController@city'));
+    Route::get(trans('route.reports_location_district'), array('as' => 'reports_location_district', 'before' => 'auth', 'uses' => 'ReportController@district'));
+    // </editor-fold>
+
     Route::post('applications/applicationSetting', array('as' => 'application_setting_save', 'uses' => 'ApplicationSettingController@update'));
 });
 
@@ -272,13 +280,6 @@ Route::post(trans('route.categories_save'), array('as' => 'categories_save', 'be
 Route::post(trans('route.categories_delete'), array('as' => 'categories_delete', 'before' => 'auth', 'uses' => 'categories@delete'));
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Reports">
-Route::get(trans('route.reports'), array('as' => 'reports', 'before' => 'auth', 'uses' => 'reports@index'));
-Route::get(trans('route.reports_show'), array('as' => 'reports_show', 'before' => 'auth', 'uses' => 'reports@show'));
-Route::get(trans('route.reports_location_country'), array('as' => 'reports_location_country', 'before' => 'auth', 'uses' => 'reports@country'));
-Route::get(trans('route.reports_location_city'), array('as' => 'reports_location_city', 'before' => 'auth', 'uses' => 'reports@city'));
-Route::get(trans('route.reports_location_district'), array('as' => 'reports_location_district', 'before' => 'auth', 'uses' => 'reports@district'));
-// </editor-fold>
 
 
 // <editor-fold defaultstate="collapsed" desc="Interactivity">
@@ -319,70 +320,15 @@ Route::post("contents/refresh_identifier", array('as' => 'contentrefreshidentifi
 
 Route::get("/csstemplates/{filename}", array('as' => 'template_index', 'uses' => 'ApplicationTemplateController@theme'));
 Route::get("/template/{application}", array('as' => 'template_index', 'before' => 'auth', 'uses' => 'ApplicationTemplateController@show'));
-Route::get('maps/webview/(:num)', array('as' => 'map_view', 'uses' => 'MapController@webview'));
+Route::get('maps/webview/{application}', array('as' => 'map_view', 'uses' => 'MapController@webView'));
 Route::get('payment/paymentAccountByApplicationID/(:num)', array('as' => 'app_payment_data', 'uses' => 'payment@paymentAccountByApplicationID'));
 
 Route::get('3d-secure-response', array('as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'payment@secure_3d_response'));
 Route::post('3d-secure-response', array('as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'payment@secure_3d_response'));
 
-// WS
-Route::get('ws/latest-version', array('uses' => 'ws.index@latestVersion'));
-
-// <editor-fold defaultstate="collapsed" desc="WS v1.0.0">
-// WS v1.0.0 -----------------------------------------------------------------------------------------------
-// WS-Applications
-Route::get('ws/v100/applications/(:num)/version', array('uses' => 'ws.v100.applications@version'));
-Route::get('ws/v100/applications/(:num)/detail', array('uses' => 'ws.v100.applications@detail'));
-Route::get('ws/v100/applications/(:num)/categories', array('uses' => 'ws.v100.applications@categories'));
-Route::get('ws/v100/applications/(:num)/categories/(:num)/detail', array('uses' => 'ws.v100.applications@categoryDetail'));
-Route::get('ws/v100/applications/(:num)/contents', array('uses' => 'ws.v100.applications@contents'));
-// WS-Contents
-Route::get('ws/v100/contents/(:num)/version', array('uses' => 'ws.v100.contents@version'));
-Route::get('ws/v100/contents/(:num)/detail', array('uses' => 'ws.v100.contents@detail'));
-Route::get('ws/v100/contents/(:num)/cover-image', array('uses' => 'ws.v100.contents@coverImage'));
-Route::get('ws/v100/contents/(:num)/file', array('uses' => 'ws.v100.contents@file'));
-// WS-Statistics
-Route::post('ws/v100/statistics', array('uses' => 'ws.v100.statistics@create'));
-// </editor-fold>
-
-// <editor-fold defaultstate="collapsed" desc="WS v1.0.1">
-// WS v1.0.1 -----------------------------------------------------------------------------------------------
-// WS-Applications
-Route::get('ws/v101/applications/(:num)/version', array('uses' => 'ws.v101.applications@version'));
-Route::get('ws/v101/applications/(:num)/detail', array('uses' => 'ws.v101.applications@detail'));
-Route::get('ws/v101/applications/(:num)/categories', array('uses' => 'ws.v101.applications@categories'));
-Route::get('ws/v101/applications/(:num)/categories/(:num)/detail', array('uses' => 'ws.v101.applications@categoryDetail'));
-Route::get('ws/v101/applications/(:num)/contents', array('uses' => 'ws.v101.applications@contents'));
-// WS-Contents
-Route::get('ws/v101/contents/(:num)/version', array('uses' => 'ws.v101.contents@version'));
-Route::get('ws/v101/contents/(:num)/detail', array('uses' => 'ws.v101.contents@detail'));
-Route::get('ws/v101/contents/(:num)/cover-image', array('uses' => 'ws.v101.contents@coverImage'));
-Route::get('ws/v101/contents/(:num)/file', array('uses' => 'ws.v101.contents@file'));
-// WS-Statistics
-Route::post('ws/v101/statistics', array('uses' => 'ws.v101.statistics@create'));
-// </editor-fold>
-
-// <editor-fold defaultstate="collapsed" desc="WS v1.0.2">
-// WS v1.0.2 -----------------------------------------------------------------------------------------------
-// WS-Applications
-Route::get('ws/v102/applications/(:num)/version', array('uses' => 'ws.v102.applications@version'));
-Route::get('ws/v102/applications/(:num)/detail', array('uses' => 'ws.v102.applications@detail'));
-Route::get('ws/v102/applications/(:num)/categories', array('uses' => 'ws.v102.applications@categories'));
-Route::get('ws/v102/applications/(:num)/categories/(:num)/detail', array('uses' => 'ws.v102.applications@categoryDetail'));
-Route::get('ws/v102/applications/(:num)/contents', array('uses' => 'ws.v102.applications@contents'));
-Route::get('ws/v102/applications/authorized_application_list', array('uses' => 'ws.v102.applications@authorized_application_list'));
-Route::post('ws/v102/applications/authorized_application_list', array('uses' => 'ws.v102.applications@authorized_application_list'));
-// WS-Contents
-Route::get('ws/v102/contents/(:num)/version', array('uses' => 'ws.v102.contents@version'));
-Route::get('ws/v102/contents/(:num)/detail', array('uses' => 'ws.v102.contents@detail'));
-Route::get('ws/v102/contents/(:num)/cover-image', array('uses' => 'ws.v102.contents@coverImage'));
-Route::get('ws/v102/contents/(:num)/file', array('uses' => 'ws.v102.contents@file'));
-// WS-Statistics
-Route::post('ws/v102/statistics', array('uses' => 'ws.v102.statistics@create'));
-// </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="New Webservice Routes">
-Route::get('webservice/(:num)/applications/(:num)/version', array('uses' => 'webservice.applications@version'));
+Route::get('webservice/{ws}/applications/{applicationID}/version', array('uses' => 'webservice.applications@version'));
 Route::post('webservice/(:num)/applications/(:num)/version', array('uses' => 'webservice.applications@version'));
 Route::get('webservice/(:num)/applications/(:num)/detail', array('uses' => 'webservice.applications@detail'));
 Route::post('webservice/(:num)/applications/(:num)/detail', array('uses' => 'webservice.applications@detail'));
@@ -412,64 +358,3 @@ Route::any('webservice/(:num)/application-topic', array('uses' => 'webservice.to
 
 
 // </editor-fold>
-
-/*
-|--------------------------------------------------------------------------
-| Application 404 & 500 Error Handlers
-|--------------------------------------------------------------------------
-|
-| To centralize and simplify 404 handling, Laravel uses an awesome event
-| system to retrieve the response. Feel free to modify this function to
-| your tastes and the needs of your application.
-|
-| Similarly, we use an event to handle the display of 500 level errors
-| within the application. These errors are fired when there is an
-| uncaught exception thrown in the application.
-|
-*/
-
-/*
-|--------------------------------------------------------------------------
-| Route Filters
-|--------------------------------------------------------------------------
-|
-| Filters provide a convenient method for attaching functionality to your
-| routes. The built-in before and after filters are called before and
-| after every request to your application, and you may even create
-| other filters that can be attached to individual routes.
-|
-| Let's walk through an example...
-|
-| First, define a filter:
-|
-|		Route::filter('filter', function()
-|		{
-|			return 'Filtered!';
-|		});
-|
-| Next, attach the filter to a route:
-|
-|		Route::get('/', array('before' => 'filter', function()
-|		{
-|			return 'Hello World!';
-|		}));
-|
-*/
-
-/*Route::filter('before', function () {
-    // Do stuff before every request to your application...
-});
-
-Route::filter('after', function ($response) {
-    // Do stuff after every request to your application...
-});
-
-Route::filter('csrf', function () {
-    if (Request::forged()) return Response::error('500');
-    return null;
-});
-
-Route::filter('auth', function () {
-    if (Auth::guest()) return Redirect::to(trans('route.login'));
-    return null;
-});*/

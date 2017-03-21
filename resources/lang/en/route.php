@@ -82,7 +82,6 @@ return array(
     'categories_delete' => 'categories/delete',
 
     'reports' => 'reports',
-    'reports_show' => 'reports/(:num)',
     'reports_location_country' => 'reports/location/country',
     'reports_location_city' => 'reports/location/city',
     'reports_location_district' => 'reports/location/district',

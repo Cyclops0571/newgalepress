@@ -304,7 +304,7 @@ class Application extends Model {
             return $this->BannerCustomerUrl;
         }
 
-        return Config::get('custom.url') . "/banners/service_view/" . $this->ApplicationID . "?ver=" . $this->Version;
+        return env('APP_URL') . "/banners/service_view/" . $this->ApplicationID . "?ver=" . $this->Version;
     }
 
     public function TabsForService()
@@ -321,10 +321,10 @@ class Application extends Model {
             {
                 $tabsForService[] = [
                     "tabTitle"      => $tab->TabTitle,
-                    "tabLogoUrl"    => Config::get('custom.url') . $tab->IconUrl,
-                    "tabLogoUrl_1x" => Config::get('custom.url') . str_replace("app-icons", "app-icons/1x", $tab->IconUrl),
-                    "tabLogoUrl_2x" => Config::get('custom.url') . str_replace("app-icons", "app-icons/2x", $tab->IconUrl),
-                    "tabLogoUrl_3x" => Config::get('custom.url') . str_replace("app-icons", "app-icons/3x", $tab->IconUrl),
+                    "tabLogoUrl"    => env('APP_URL') . $tab->IconUrl,
+                    "tabLogoUrl_1x" => env('APP_URL') . str_replace("app-icons", "app-icons/1x", $tab->IconUrl),
+                    "tabLogoUrl_2x" => env('APP_URL') . str_replace("app-icons", "app-icons/2x", $tab->IconUrl),
+                    "tabLogoUrl_3x" => env('APP_URL') . str_replace("app-icons", "app-icons/3x", $tab->IconUrl),
                     "tabUrl"        => $tab->urlForService(),
                 ];
             }

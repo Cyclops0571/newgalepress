@@ -103,6 +103,7 @@ class ContentController extends Controller {
             return Redirect::to(route('home'));
         }
 
+
         $rows = Content::getContents($request);
         $categorySet = Category::where('ApplicationID', '=', $applicationID)->where("statusID", "=", eStatus::Active)->get();
         $application = Application::find($applicationID);
@@ -118,8 +119,14 @@ class ContentController extends Controller {
             'rows'        => $rows,
             'categorySet' => $categorySet,
             'application' => $application,
+            'currentPageNo' => $request->get('page', 0)
         ];
 
+        if($request->get('option', 0) == 1) {
+            return view('pages.contentoptionlist', $data);
+        }
+
+        $applicationID = $request->get('applicationID', 0);
         if ($user->UserTypeID == eUserTypes::Customer)
         {
             $appCount = DB::table('Application')
@@ -134,7 +141,7 @@ class ContentController extends Controller {
                 $app = Application::find($applicationID);
                 if (!$app)
                 {
-                    return Redirect::to(__('route.home'));
+                    return Redirect::to(route('home'));
                 }
 
                 $data = array_merge($data, ['appName' => $app->Name]);

@@ -82,7 +82,6 @@ return array(
     'categories_delete' => 'kategorien/loeschen',
 
     'reports' => 'reporting',
-    'reports_show' => 'reporting/(:num)',
     'reports_location_country' => 'reporting/standort/land',
     'reports_location_city' => 'reporting/standort/stadt',
     'reports_location_district' => 'reporting/standort/gemeinde',

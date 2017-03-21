@@ -112,8 +112,6 @@ class Content extends Model {
         $search = $request->get('search', '');
         $sort = $request->get('sort', self::defaultSort);
         $sort_dir = $request->get('sort_dir', 'DESC');
-        $option = $request->get('option', 0);
-
         $sqlCat = '(IFNULL((SELECT GROUP_CONCAT(`Name` ORDER BY `Name` SEPARATOR \', \')'
             . ' FROM `Category` WHERE ApplicationID=a.ApplicationID AND CategoryID IN '
             . '(SELECT CategoryID FROM `ContentCategory` WHERE ContentID = o.ContentID) AND StatusID = 1), \'\'))';
@@ -202,18 +200,7 @@ class Content extends Model {
             $rs->orderBy(self::defaultSort, 'DESC');
         }
 
-        if ($option == 1)
-        {
-            $data = [
-                'rows' => $rs->get(),
-            ];
-
-            return view('pages.contentoptionlist', $data);
-        }
-
         $rows = $rs->paginate(config('custom.rowcount'));
-
-        //        $rows = $rs->paginate(10);
         return $rows;
 
     }

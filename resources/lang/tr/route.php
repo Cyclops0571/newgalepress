@@ -82,7 +82,6 @@ return array(
     'categories_delete' => 'kategoriler/sil',
 
     'reports' => 'raporlar',
-    'reports_show' => 'raporlar/(:num)',
     'reports_location_country' => 'raporlar/konum/ulke',
     'reports_location_city' => 'raporlar/konum/sehir',
     'reports_location_district' => 'raporlar/konum/ilce',

@@ -112,7 +112,7 @@ class eServiceError
                 $exception = new Exception("Kategori bulunamadı.", $errorNo);
                 break;
             case eServiceError::CreateAccount:
-                $exception = new Exception(Config::get('custom.url') . " adresinden hesap oluşturmalısınız.", $errorNo);
+                $exception = new Exception(env('APP_URL') . " adresinden hesap oluşturmalısınız.", $errorNo);
                 break;
 
             //client errors
@@ -1124,7 +1124,7 @@ class Common
             })
             ->distinct()
             ->orderBy($column, 'ASC')
-            ->get($column);
+            ->get([$column]);
 
         return $rs;
     }

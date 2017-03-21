@@ -200,13 +200,8 @@ class MapController extends Controller
         return view("pages.googlemaplocation", $data);
     }
 
-    public function webview(MyResponse $myResponse, $applicationID)
+    public function webView(Application $application)
     {
-        $application = Application::find($applicationID);
-        if (!$application) {
-            return $myResponse->error(__('common.detailpage_validation'));
-        }
-
         $googleMapSet = GoogleMap::where('ApplicationID', '=', $application->ApplicationID)->where("statusID", "=", eStatus::Active)->get();
 
         $data = array();

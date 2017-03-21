@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ReportFilter;
 use App\Library\MyResponse;
+use App\Library\ReportFilter;
 use App\Models\Application;
 use App\Models\Content;
 use App\Models\Customer;
@@ -26,8 +26,7 @@ use Redirect;
 use Validator;
 use View;
 
-class CommonController extends Controller
-{
+class CommonController extends Controller {
 
     public function login(Request $request, LoginHistory $loginHistory, MyResponse $myResponse)
     {
@@ -39,56 +38,68 @@ class CommonController extends Controller
 
         $user = User::getByUsername($username);
 
-        if ($user) {
-            if (Hash::check($password, $user->Password)) {
-                if ($user->UserTypeID == eUserTypes::Customer) {
+        if ($user)
+        {
+            if (Hash::check($password, $user->Password))
+            {
+                if ($user->UserTypeID == eUserTypes::Customer)
+                {
                     $customer = Customer::getCustomerByID($user->CustomerID, eStatus::Active);
-                    if ($customer) {
+                    if ($customer)
+                    {
                         $validUser = true;
                         $activeApps = Application::getActiveAppCountByCustomerID($customer->CustomerID);
                     }
-                } else if ((int)$user->UserTypeID == (int)eUserTypes::Manager) {
+                } else if ((int)$user->UserTypeID == (int)eUserTypes::Manager)
+                {
                     $validUser = true;
                     $activeApps = true;
                 }
             }
         }
-        if (!$validUser) {
-            return  $myResponse->error(__('common.login_error'));
+        if (!$validUser)
+        {
+            return $myResponse->error(__('common.login_error'));
         }
 
-        if (!$activeApps) {
-            return  $myResponse->error(__('common.login_error_expiration'));
+        if (!$activeApps)
+        {
+            return $myResponse->error(__('common.login_error_expiration'));
         }
 
         //Kullanici aktif & Musteriyse (musteri aktif & aktif uygulamaya sahip)
 
-        if (Auth::attempt(array('username' => $username, 'password' => $password, 'StatusID' => eStatus::Active))) {
+        if (Auth::attempt(['username' => $username, 'password' => $password, 'StatusID' => eStatus::Active]))
+        {
             //once biz kontrol ettik simdi laravele diyoruz ki git kontrol et bilgileri tekrardan duzgun kullaniciyi login et - salaklik 572572
             $user = Auth::user();
 
             $loginHistory->login($user);
             Cookie::forever('DSCATALOG_USERNAME', $user->Username);
             setcookie("loggedin", "true", time() + Config::get('session.lifetime') * 60, "/");
-            return  $myResponse->success(__('common.login_success_redirect'));
-        } else {
-            return  $myResponse->error(__('common.login_error'));
+
+            return $myResponse->success(__('common.login_success_redirect'));
+        } else
+        {
+            return $myResponse->error(__('common.login_error'));
         }
     }
 
     public function forgotmypassword(Request $request, MyResponse $myResponse)
     {
         $email = $request->get('Email');
-        $rules = array(
-            'Email' => 'required|email'
-        );
+        $rules = [
+            'Email' => 'required|email',
+        ];
         $v = Validator::make($request->all(), $rules);
-        if ($v->passes()) {
+        if ($v->passes())
+        {
             /** @var User $user */
             $user = User::where('Email', '=', $email)
                 ->where('StatusID', '=', 1)
                 ->first();
-            if ($user) {
+            if ($user)
+            {
                 $pass = Common::generatePassword();
                 /** @var User $s */
                 $user->PWRecoveryCode = $pass;
@@ -100,22 +111,25 @@ class CommonController extends Controller
 
                 $applications = $user->Application();
                 $subject = __('common.login_email_subject');
-                $msg = __('common.login_email_message', array(
+                $msg = __('common.login_email_message', [
                         'Application' => $applications[0]->Name,
-                        'firstname' => $user->FirstName,
-                        'lastname' => $user->LastName,
-                        'username' => $user->Username,
-                        'url' => Config::get('custom.url') . "/" . app()->getLocale() . '/' . __('route.resetmypassword') . '?email=' . $user->Email . '&code=' . $pass
-                    )
+                        'firstname'   => $user->FirstName,
+                        'lastname'    => $user->LastName,
+                        'username'    => $user->Username,
+                        'url'         => env('APP_URL') . "/" . app()->getLocale() . '/' . __('route.resetmypassword') . '?email=' . $user->Email . '&code=' . $pass,
+                    ]
                 );
 
                 Common::sendEmail($user->Email, $user->FirstName . ' ' . $user->LastName, $subject, $msg);
-                return  $myResponse->success(__('common.login_emailsent'));
-            } else {
-                return  $myResponse->error(__('common.login_emailnotfound'));
+
+                return $myResponse->success(__('common.login_emailsent'));
+            } else
+            {
+                return $myResponse->error(__('common.login_emailnotfound'));
             }
-        } else {
-            return  $myResponse->error(__('common.detailpage_validation'));
+        } else
+        {
+            return $myResponse->error(__('common.detailpage_validation'));
         }
     }
 
@@ -132,9 +146,11 @@ class CommonController extends Controller
             ->where('StatusID', '=', 1)
             ->first();
 
-        if ($user) {
-            return View::make('pages.resetmypassword');
-        } else {
+        if ($user)
+        {
+            return view('pages.resetmypassword');
+        } else
+        {
             return Redirect::to(__('route.login'))
                 ->with('message', __('common.login_ticketnotfound'));
         }
@@ -146,16 +162,18 @@ class CommonController extends Controller
         $code = $request->get('Code');
         $password = $request->get('Password');
 
-        $rules = array(
-            'Email' => 'required|email',
-            'Code' => 'required',
-            'Password' => 'required|min:4|max:12',
-            'Password2' => 'required|min:4|max:12|same:Password'
-        );
+        $rules = [
+            'Email'     => 'required|email',
+            'Code'      => 'required',
+            'Password'  => 'required|min:4|max:12',
+            'Password2' => 'required|min:4|max:12|same:Password',
+        ];
         $v = Validator::make($request->all(), $rules);
-        if (!$v->passes()) {
+        if (!$v->passes())
+        {
             $errMsg = $v->errors()->first();
-            return  $myResponse->error($errMsg);
+
+            return $myResponse->error($errMsg);
         }
 
 
@@ -166,7 +184,8 @@ class CommonController extends Controller
             ->where('StatusID', '=', 1)
             ->first();
 
-        if ($user) {
+        if ($user)
+        {
             $s = User::find($user->UserID);
             $s->Password = Hash::make($password);
             $s->ProcessUserID = $user->UserID;
@@ -174,16 +193,18 @@ class CommonController extends Controller
             $s->ProcessTypeID = eProcessTypes::Update;
             $s->save();
 
-            return  $myResponse->success(__('common.login_passwordhasbeenchanged'));
+            return $myResponse->success(__('common.login_passwordhasbeenchanged'));
 
-        } else {
-            return  $myResponse->error(__('common.login_passwordhasbeenchanged'));
+        } else
+        {
+            return $myResponse->error(__('common.login_passwordhasbeenchanged'));
         }
     }
 
     public function logout(LoginHistory $history)
     {
-        if (Auth::check()) {
+        if (Auth::check())
+        {
             $user = Auth::user();
             $history->logout($user);
             Auth::logout();
@@ -197,8 +218,9 @@ class CommonController extends Controller
 
     public function home(Request $request)
     {
-        if (Auth::user()->UserTypeID == eUserTypes::Manager) {
-            return View::make('pages.homeadmin');
+        if (Auth::user()->UserTypeID == eUserTypes::Manager)
+        {
+            return view('pages.homeadmin');
         }
 
         $applications = Application::query()
@@ -210,20 +232,24 @@ class CommonController extends Controller
         //parametrik olacak
         $customerID = (int)Auth::user()->CustomerID;
         $applicationID = (int)$request->get('ddlApplication', '0');
-        if ($applicationID == 0) {
-            foreach ($applications as $app) {
+        if ($applicationID == 0)
+        {
+            foreach ($applications as $app)
+            {
                 $applicationID = (int)$app->ApplicationID;
                 break;
             }
-        } else if (!Common::CheckApplicationOwnership($applicationID)) {
+        } else if (!Common::CheckApplicationOwnership($applicationID))
+        {
             return view('errors.500');
         }
         $contentID = (int)$request->get('ddlContent', '0');
         $date = Common::dateWrite($request->get('date', date("d.m.Y")), false);
 
         $appDetail = Application::where('ApplicationID', '=', $applicationID)->first();
-        $arrApp = array();
-        foreach ($applications as $app) {
+        $arrApp = [];
+        foreach ($applications as $app)
+        {
             array_push($arrApp, (int)$app->ApplicationID);
         }
         $contentCount = Content::getQuery()
@@ -237,53 +263,61 @@ class CommonController extends Controller
         $downloadTotalData = 0;
         $downloadTodayTotalData = 0;
         $downloadMonthTotalData = 0;
-        $sql = File::get(app_path(ReportFilter::SqlFolder . 'Dashboard1.sql'));
+        $sql = File::get(resource_path(ReportFilter::SqlFolder . 'Dashboard1.sql'));
         $sql = str_replace('{DATE}', $date, $sql);
         $sql = str_replace('{CUSTOMERID}', ($customerID > 0 ? '' . $customerID : 'null'), $sql);
         $sql = str_replace('{APPLICATIONID}', ($applicationID > 0 ? '' . $applicationID : 'null'), $sql);
         $sql = str_replace('{CONTENTID}', ($contentID > 0 ? '' . $contentID : 'null'), $sql);
         $downloadStatistics = DB::table(DB::raw('(' . $sql . ') t'))->get();
 
-        foreach ($downloadStatistics as $d) {
-            if ((int)$d->indx == 199) {
+        foreach ($downloadStatistics as $d)
+        {
+            if ((int)$d->indx == 199)
+            {
                 //Today
                 $downloadTodayTotalData = (int)$d->DownloadCount;
-            } elseif ((int)$d->indx == 299) {
+            } elseif ((int)$d->indx == 299)
+            {
                 //Month
                 $downloadMonthTotalData = (int)$d->DownloadCount;
-            } else {
+            } else
+            {
                 //Selected week
                 $w[$d->indx] = $d->DownloadCount;
                 $downloadTotalData = $downloadTotalData + (int)$d->DownloadCount;
 
-                if ($downloadMaxData < (int)$d->DownloadCount) {
+                if ($downloadMaxData < (int)$d->DownloadCount)
+                {
                     $downloadMaxData = $d->DownloadCount;
                 }
             }
         }
 
-        $columns = array();
-        for ($i = 0; $i < 7; $i++) {
+        $columns = [];
+        for ($i = 0; $i < 7; $i++)
+        {
             $add_day = strtotime($date . " - $i days");
             $columns[$i] = date('d', $add_day) . ' ' . Common::monthName((int)date('m', $add_day));
         }
 
         //indirilme raporu son 5 ay
-        $sql = File::get(app_path(ReportFilter::SqlFolder . 'Dashboard2.sql'));
+        $sql = File::get(resource_path(ReportFilter::SqlFolder . 'Dashboard2.sql'));
         $sql = str_replace('{DATE}', $date, $sql);
         $sql = str_replace('{CUSTOMERID}', ($customerID > 0 ? '' . $customerID : 'null'), $sql);
         $sql = str_replace('{APPLICATIONID}', ($applicationID > 0 ? '' . $applicationID : 'null'), $sql);
         $sql = str_replace('{CONTENTID}', ($contentID > 0 ? '' . $contentID : 'null'), $sql);
         $previousMonths = DB::table(DB::raw('(' . $sql . ') t'))->get();
         $previousMonthsMaxData = 0;
-        foreach ($previousMonths as $d) {
-            if ($previousMonthsMaxData < (int)$d->DownloadCount) {
+        foreach ($previousMonths as $d)
+        {
+            if ($previousMonthsMaxData < (int)$d->DownloadCount)
+            {
                 $previousMonthsMaxData = $d->DownloadCount;
             }
         }
 
         //cihaz son 5 ay
-        $sql = File::get(app_path(ReportFilter::SqlFolder . 'Dashboard3.sql'));
+        $sql = File::get(resource_path(ReportFilter::SqlFolder . 'Dashboard3.sql'));
         $sql = str_replace('{DATE}', $date, $sql);
         $sql = str_replace('{CUSTOMERID}', ($customerID > 0 ? '' . $customerID : 'null'), $sql);
         $sql = str_replace('{APPLICATIONID}', ($applicationID > 0 ? '' . $applicationID : 'null'), $sql);
@@ -296,11 +330,14 @@ class CommonController extends Controller
 
         $ios = array_fill(1, 5, '0');
         $android = array_fill(1, 5, '0');
-        foreach ($devices as $d) {
-            if ($d->Device == 'iOS') {
+        foreach ($devices as $d)
+        {
+            if ($d->Device == 'iOS')
+            {
                 $ios[$d->indx] = $d->DownloadCount;
                 $iosTotalDownload = $iosTotalDownload + (int)$d->DownloadCount;
-            } else if ($d->Device == 'Android') {
+            } else if ($d->Device == 'Android')
+            {
                 $android[$d->indx] = $d->DownloadCount;
                 $androidTotalDownload = $androidTotalDownload + (int)$d->DownloadCount;
             }
@@ -308,80 +345,81 @@ class CommonController extends Controller
         $ios = array_reverse($ios);
         $android = array_reverse($android);
 
-        $deviceColumns = array();
-        foreach ($previousMonths as $month) {
+        $deviceColumns = [];
+        foreach ($previousMonths as $month)
+        {
             array_push($deviceColumns, Common::monthName($month->Month) . " " . $month->Year);
         }
 
-        $data = array(
-            'customerID' => $customerID,
-            'applicationID' => $applicationID,
-            'contentID' => $contentID,
-            'date' => $date,
-            'appDetail' => $appDetail,
-            'applications' => $applications,
-            'applicationCount' => count($applications),
-            'contentCount' => $contentCount,
-            'downloadStatistics' => implode('-', $w),
-            'downloadMaxData' => $downloadMaxData,
-            'downloadTotalData' => $downloadTotalData,
+        $data = [
+            'customerID'             => $customerID,
+            'applicationID'          => $applicationID,
+            'contentID'              => $contentID,
+            'date'                   => $date,
+            'appDetail'              => $appDetail,
+            'applications'           => $applications,
+            'applicationCount'       => count($applications),
+            'contentCount'           => $contentCount,
+            'downloadStatistics'     => implode('-', $w),
+            'downloadMaxData'        => $downloadMaxData,
+            'downloadTotalData'      => $downloadTotalData,
             'downloadTodayTotalData' => $downloadTodayTotalData,
             'downloadMonthTotalData' => $downloadMonthTotalData,
-            'columns' => implode('-', $columns),
-            'previousMonths' => $previousMonths,
-            'previousMonthsMaxData' => $previousMonthsMaxData,
-            'iosTotalDownload' => $iosTotalDownload,
-            'androidTotalDownload' => $androidTotalDownload,
-            'iosDeviceDownload' => implode('-', $ios),
-            'androidDeviceDownload' => implode('-', $android),
-            'deviceColumns' => implode('-', $deviceColumns)
-        );
-        return View::make('pages.home', $data);
+            'columns'                => implode('-', $columns),
+            'previousMonths'         => $previousMonths,
+            'previousMonthsMaxData'  => $previousMonthsMaxData,
+            'iosTotalDownload'       => $iosTotalDownload,
+            'androidTotalDownload'   => $androidTotalDownload,
+            'iosDeviceDownload'      => implode('-', $ios),
+            'androidDeviceDownload'  => implode('-', $android),
+            'deviceColumns'          => implode('-', $deviceColumns),
+        ];
+
+        return view('pages.home', $data);
     }
 
     //mydetail
     public function myDetailPage()
     {
-        $data = array(
-            'page' => __('route.mydetail'),
-            'caption' => __('common.mydetail')
-        );
-        return View::make('pages.mydetail', $data);
+        $data = [
+            'page'    => __('route.mydetail'),
+            'caption' => __('common.mydetail'),
+        ];
+
+        return view('pages.mydetail', $data);
     }
 
     public function mydetail(Request $request, MyResponse $myResponse)
     {
-        $firstName = $request->get('FirstName');
-        $lastName = $request->get('LastName');
-        $email = $request->get('Email');
-        $password = $request->get('Password', '');
-        $timezone = $request->get('Timezone', '');
-
-        $rules = array(
+        $rules = [
             'FirstName' => 'required',
-            'LastName' => 'required',
-            'Email' => 'required|email'
-        );
+            'LastName'  => 'required',
+            'Email'     => 'required|email',
+        ];
         $v = Validator::make($request->all(), $rules);
-        if ($v->passes()) {
-            /** @var User $s */
-            $s = User::find(Auth::user()->UserID);
-            $s->FirstName = $firstName;
-            $s->LastName = $lastName;
-            $s->Email = $email;
-            if (strlen(trim($password)) > 0) {
-                $s->Password = Hash::make($password);
-            }
-            $s->Timezone = $timezone;
-            $s->ProcessUserID = Auth::user()->UserID;
-            $s->ProcessDate = new DateTime();
-            $s->ProcessTypeID = eProcessTypes::Update;
-            $s->save();
-
-            return  $myResponse->success();
-        } else {
-            return  $myResponse->error(__('common.detailpage_validation'));
+        if (!$v->passes())
+        {
+            return $myResponse->error(__('common.detailpage_validation'));
         }
+
+        $password = $request->get('Password', '');
+        /** @var User $s */
+        $s = User::find(Auth::user()->UserID);
+        $s->FirstName = $request->get('FirstName');
+        $s->LastName = $request->get('LastName');
+        $s->Email = $request->get('Email');
+        if (strlen(trim($password)) > 0)
+        {
+            $s->Password = Hash::make($password);
+        }
+        $s->Timezone = $request->get('Timezone', '');
+        $s->ProcessUserID = Auth::user()->UserID;
+        $s->ProcessDate = new DateTime();
+        $s->ProcessTypeID = eProcessTypes::Update;
+        $s->save();
+
+        return $myResponse->success();
+
     }
 
     public function confirmEmailPage(Request $request, MyResponse $myResponse)
@@ -389,17 +427,19 @@ class CommonController extends Controller
         $email = $request->get('email');
         $code = $request->get('code');
 
-        $rules = array(
+        $rules = [
             'email' => 'required|email',
-            'code' => 'required',
-        );
+            'code'  => 'required',
+        ];
         $v = Validator::make($request->all(), $rules);
-        if ($v->passes()) {
+        if ($v->passes())
+        {
             $user = DB::table('User')
                 ->where('Email', '=', $email)
                 ->where('ConfirmCode', '=', $code)
                 ->first();
-            if ($user) {
+            if ($user)
+            {
                 $s = User::find($user->UserID);
                 $s->StatusID = eStatus::Active;
                 $s->ProcessUserID = $user->UserID;
@@ -408,20 +448,22 @@ class CommonController extends Controller
                 $s->save();
 
                 $subject = __('common.welcome_email_title');
-                $mailData = array(
-                    'name' => $s->FirstName,
+                $mailData = [
+                    'name'    => $s->FirstName,
                     'surname' => $s->LastName,
-                    'url' => Config::get("custom.url") . '/' . app()->getLocale() . __('route.login'),
-                );
+                    'url'     => Config::get("custom.url") . '/' . app()->getLocale() . __('route.login'),
+                ];
                 $msg = View::make('mail-templates.hosgeldiniz.index')->with($mailData)->render();
                 $mailStatus = Common::sendHtmlEmail($s->Email, $s->FirstName . ' ' . $s->LastName, $subject, $msg);
 
                 $m = new MailLog();
                 $m->MailID = 2; //Welcome
                 $m->UserID = $s->UserID;
-                if (!$mailStatus) {
+                if (!$mailStatus)
+                {
                     $m->Arrived = 0;
-                } else {
+                } else
+                {
                     $m->Arrived = 1;
                 }
                 $m->StatusID = eStatus::Active;
@@ -430,11 +472,13 @@ class CommonController extends Controller
                 return Redirect::to(__('route.login'))
                     ->with('confirm', __('common.login_accounthasbeenconfirmed'));
 
-            } else {
-                return  $myResponse->error(__('common.login_accountticketnotfound'));
+            } else
+            {
+                return $myResponse->error(__('common.login_accountticketnotfound'));
             }
-        } else {
-            return  $myResponse->error(__('common.detailpage_validation'));
+        } else
+        {
+            return $myResponse->error(__('common.detailpage_validation'));
         }
     }
 
@@ -444,7 +488,8 @@ class CommonController extends Controller
         $faceUserObj = json_decode($facebookData);
         $accessToken = $request->get('accessToken', '');
 
-        if (isset($faceUserObj->email)) {
+        if (isset($faceUserObj->email))
+        {
 
             $userEmailControl = User::getQuery()
                 ->where('Email', '=', $faceUserObj->email)
@@ -452,7 +497,8 @@ class CommonController extends Controller
                 ->orWhere('FbUsername', '=', $faceUserObj->id)
                 ->first();
 
-            if ($userEmailControl) {
+            if ($userEmailControl)
+            {
                 $s = User::find($userEmailControl->UserID);
                 $s->FbUsername = $faceUserObj->id;
                 $s->FbEmail = $faceUserObj->email;
@@ -463,7 +509,8 @@ class CommonController extends Controller
                 $s->ProcessTypeID = eProcessTypes::Update;
                 $s->save();
             }
-        } else {
+        } else
+        {
             $faceUserObj->email = "";
         }
 
@@ -474,7 +521,8 @@ class CommonController extends Controller
             ->where('StatusID', '=', eStatus::Active)
             ->first();
 
-        if (!$user) {
+        if (!$user)
+        {
             $lastCustomerNo = DB::table('Customer')
                 ->orderBy('CustomerID', 'DESC')
                 ->take(1)
@@ -538,20 +586,24 @@ class CommonController extends Controller
             //$user->ConfirmCode = $confirmCode;
             $user->save();
             //todo:571571 make it run
-            if (Auth::facebookAttempt(array('username' => $user->Username, 'fbemail' => $user->FbEmail, 'StatusID' => eStatus::Active))) {
+            if (Auth::facebookAttempt(['username' => $user->Username, 'fbemail' => $user->FbEmail, 'StatusID' => eStatus::Active]))
+            {
 
                 Auth::loginUsingId($user->UserID);
                 Cookie::forever('DSCATALOG_USERNAME', $user->Username);
                 setcookie("loggedin", "true", time() + 3600, "/");
-                return  $myResponse->success(__('common.login_success_redirect'));
-            }
-        } else if (Auth::facebookAttempt(array('username' => $user->Username, 'fbemail' => $user->FbEmail, 'StatusID' => eStatus::Active))) {
 
-                Auth::loginUsingId($user->UserID);
-                Cookie::forever('DSCATALOG_USERNAME', '');
-                setcookie("loggedin", "true", time() + 3600, "/");
-                return  $myResponse->success(__('common.login_success_redirect'));
+                return $myResponse->success(__('common.login_success_redirect'));
             }
+        } else if (Auth::facebookAttempt(['username' => $user->Username, 'fbemail' => $user->FbEmail, 'StatusID' => eStatus::Active]))
+        {
+
+            Auth::loginUsingId($user->UserID);
+            Cookie::forever('DSCATALOG_USERNAME', '');
+            setcookie("loggedin", "true", time() + 3600, "/");
+
+            return $myResponse->success(__('common.login_success_redirect'));
+        }
     }
 
     /**
@@ -567,43 +619,48 @@ class CommonController extends Controller
         /** @var User $laravelUser */
         $laravelUser = Auth::user();
         $ticketUserExists = $users->is_user($laravelUser->Username);
-        if (!$ticketUserExists) {
+        if (!$ticketUserExists)
+        {
             //add user to the system
-            $add_array = array(
-                'name' => $laravelUser->FirstName . " " . $laravelUser->LastName,
-                'email' => $laravelUser->Email,
+            $add_array = [
+                'name'              => $laravelUser->FirstName . " " . $laravelUser->LastName,
+                'email'             => $laravelUser->Email,
                 'authentication_id' => $laravelUser->UserID,
-                'allow_login' => 1,
-                'username' => $laravelUser->Username,
-                'password' => 2233,
-                'group_id' => 1,
-                'user_level' => 1,
-            );
+                'allow_login'       => 1,
+                'username'          => $laravelUser->Username,
+                'password'          => 2233,
+                'group_id'          => 1,
+                'user_level'        => 1,
+            ];
             $users->add($add_array);
-        } else {
-            $ticketUserSet = $users->get(array('username' => $laravelUser->Username));
+        } else
+        {
+            $ticketUserSet = $users->get(['username' => $laravelUser->Username]);
             $ticketUser = $ticketUserSet[0];
             $password = $laravelUser->UserTypeID == eUserTypes::Manager ? 'detay2006' : 2233;
-            $users->edit(array('id' => $ticketUser['id'], 'password' => $password));
+            $users->edit(['id' => $ticketUser['id'], 'password' => $password]);
         }
 
         //authenticate user
-        $data = array(
+        $data = [
             'api_version' => '1',
-            'api_action' => 'authenticate',
-            'api_key' => '19664485-923e-46eb-8220-338300870052',
-        );
-        if ($laravelUser->UserTypeID == eUserTypes::Manager) {
+            'api_action'  => 'authenticate',
+            'api_key'     => '19664485-923e-46eb-8220-338300870052',
+        ];
+        if ($laravelUser->UserTypeID == eUserTypes::Manager)
+        {
             //managerler tek bir accounttan login olsunlar...
             $data['username'] = 'admin';
             $data['password'] = 'detay2006';
-        } else {
+        } else
+        {
             $data["username"] = $laravelUser->Username;
             $data["password"] = 2233;
 
         }
-        $result = $api->receive(array("data" => json_encode($data)));
-        return Redirect::to(Config::get('custom.url') . '/ticket');
+        $result = $api->receive(["data" => json_encode($data)]);
+
+        return Redirect::to(env('APP_URL') . '/ticket');
     }
 
 }

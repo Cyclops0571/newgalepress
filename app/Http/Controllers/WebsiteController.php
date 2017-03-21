@@ -21,11 +21,6 @@ use View;
 
 class WebsiteController extends Controller {
 
-    public function home()
-    {
-        return View::make('website.pages.home');
-    }
-
     public function galepress()
     {
         return View::make('website.pages.galepress');

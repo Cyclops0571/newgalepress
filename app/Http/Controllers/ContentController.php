@@ -358,9 +358,11 @@ class ContentController extends Controller {
         $content->setTopics($request->get('topicIds', []));
 
         $contentFile = $content->processPdf();
-        $content->processImage($contentFile, (int)$request->get('hdnCoverImageFileSelected', 0), $request->get('hdnCoverImageFileName'));
-        ContentFile::createPdfPages($contentFile);
-        $content->callIndexingService($contentFile);
+        if($contentFile){
+            $content->processImage($contentFile, (int)$request->get('hdnCoverImageFileSelected', 0), $request->get('hdnCoverImageFileName'));
+            ContentFile::createPdfPages($contentFile);
+            $content->callIndexingService($contentFile);
+        }
 
         return $myResponse->success(['contentID' => $content->ContentID]);
     }

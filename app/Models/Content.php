@@ -435,13 +435,8 @@ class Content extends Model {
      * @param int $coverImageFileSelected
      * @param string $coverImageFileName
      */
-    public function processImage($contentFile, $coverImageFileSelected, $coverImageFileName)
+    public function processImage(ContentFile $contentFile, $coverImageFileSelected, $coverImageFileName)
     {
-
-        if (!$contentFile)
-        {
-            return;
-        }
 
         if ($coverImageFileSelected != 1)
         {

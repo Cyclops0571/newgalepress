@@ -91,10 +91,6 @@ class ContentFile extends Model
      */
     public static function createPdfPages(ContentFile &$cf)
     {
-        if (!$cf) {
-            return;
-        }
-
         $expMessage = '';
         if (count($cf->ContentFilePages) > 0) {
             //contentFile is already interactive.

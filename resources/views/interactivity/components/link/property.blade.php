@@ -47,7 +47,7 @@ if(isset($Properties))
             </div>
             <div class="tourl{{ ($type != 2 ? ' hide' : '') }}">
                 <div class="text dark inline-primary">
-                    <input type="text" name="comp-{id}-url" id="comp-{id}-url" placeholder="http://www.google.com" class="prefix" value="{{ $url }}">
+                    <input type="text" name="comp-{id}-url" id="comp-{id}-url" placeholder="https://www.google.com" class="prefix" value="{{ $url }}">
                 </div>
                 <div class="inline-secondary"><a href="#" class="to-url btn btn-primary postfix"><i
                                 class="icon-ok"></i></a></div>

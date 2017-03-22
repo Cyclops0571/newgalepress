@@ -80,7 +80,7 @@
         a.async = 1;
         a.src = g;
         m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
     ga('create', 'UA-42887832-1', 'galepress.com');
     ga('send', 'pageview');
 </script>
@@ -91,8 +91,7 @@
             var gcse = document.createElement('script');
             gcse.type = 'text/javascript';
             gcse.async = true;
-            gcse.src = (window.location.protocol == 'https:' ? 'https:' : 'http:') +
-                '//www.google.com/cse/cse.js?cx=' + cx;
+            gcse.src = 'https://www.google.com/cse/cse.js?cx=' + cx;
             var s = document.getElementsByTagName('script')[0];
             s.parentNode.insertBefore(gcse, s);
         })();

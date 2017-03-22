@@ -96,7 +96,7 @@ if(isset($Properties))
         
     	<div class="web{{ ($option == 1 ? ' hide' : '') }}">
             <div class="text dark inline-primary">
-                <input type="text" name="comp-{id}-url" id="comp-{id}-url" placeholder="http://www.google.com/123.jpg" class="prefix" value="{{ $url }}">
+                <input type="text" name="comp-{id}-url" id="comp-{id}-url" placeholder="https://www.google.com/123.jpg" class="prefix" value="{{ $url }}">
             </div>
             <div class="inline-secondary">
                 <a href="#" class="btn btn-primary postfix"><i class="icon-upload-alt"></i></a>

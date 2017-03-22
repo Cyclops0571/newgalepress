@@ -25,7 +25,7 @@ if(isset($Properties))
             @include('interactivity.components.modal')
             <h5 title="{{ __('interactivity.webcontent_type_tooltip') }}" class="tooltip">{{ __('interactivity.webcontent_type') }} <i class="icon-info-sign"></i></h5>
             <div class="text dark inline-primary">
-                <input type="text" name="comp-{id}-url" id="comp-{id}-url" placeholder="http://www.google.com" class="prefix" value="{{ $url }}">
+                <input type="text" name="comp-{id}-url" id="comp-{id}-url" placeholder="https://www.google.com" class="prefix" value="{{ $url }}">
             </div>
             <div class="inline-secondary"><a href="#" class="btn btn-primary postfix"><i class="icon-ok"></i></a></div>
             <span class="success hide"><i class="icon-ok-sign"></i>{{ __('interactivity.webcontent_success') }}</span>

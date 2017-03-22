@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Library\MyResponse;
+use App\Library\UploadHandler;
 use App\Models\Application;
 use App\Models\Customer;
 use App\Models\Package;
@@ -26,7 +27,6 @@ use Illuminate\Support\Str;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 use Subscription;
-use UploadHandler;
 use URL;
 use Validator;
 

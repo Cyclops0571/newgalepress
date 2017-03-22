@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Library\AjaxResponse;
 use App\Library\MyResponse;
+use App\Library\Uploader;
+use App\Library\UploadHandler;
 use App\Models\Application;
 use App\Models\Banner;
 use Auth;
 use eStatus;
 use eUserTypes;
 use Illuminate\Http\Request;
-use Uploader;
-use UploadHandler;
 use URL;
 use Validator;
 

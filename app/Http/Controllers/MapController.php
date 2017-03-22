@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Library\MyResponse;
+use App\Library\UploadHandler;
 use App\Models\Application;
 use App\Models\GoogleMap;
 use Auth;
@@ -15,7 +16,6 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Readers\LaravelExcelReader;
-use UploadHandler;
 use URL;
 use Validator;
 

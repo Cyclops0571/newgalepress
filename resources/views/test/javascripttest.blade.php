@@ -5,7 +5,7 @@
     <head>
 	@section('head')
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>{{ Config::get('custom.companyname') }}</title>
+        <title>{{ config('custom.companyname') }}</title>
         <!-- Meta tags -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta http-equiv="content-Language" content="{{Common::metaContentLanguage()}}" />

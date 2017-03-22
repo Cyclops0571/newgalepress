@@ -102,7 +102,7 @@
 
 <script type="text/javascript">
     var SelectedLanguage = {!! json_encode(App::getLocale()) !!}
-    var Languages = {!! json_encode(Config::get('app.languages')) !!}
+    var Languages = {!! json_encode(config('app.languages')) !!}
     $(function () {
         var j = 1;
         for (var i = 0; i < Languages.length; i++) {

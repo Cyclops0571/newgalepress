@@ -262,7 +262,7 @@
                 </div>
                 <div class="col-md-8" id="contentPdfButton">
                   <section>
-                    <a href="/{{ Session::get('language') }}/{{ __('route.interactivity') }}/{{ $ContentFileID }}"
+                    <a href="{{route('interactivity', $ContentFileID)}}"
                        onclick="cContent.openInteractiveIDE({{ $ContentFileID }});" id="btn_interactive">&#xF011;</a>
                     <span></span>
                   </section>

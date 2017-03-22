@@ -333,7 +333,7 @@
                       <input type="submit" value="{{__('website.tryit_form_submit')}}" class="btn btn-primary btn-block" style="outline:none;">
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6">
-                      <a href="/{{ Session::get('language') }}/{{__('route.login')}}" class="btn btn-bordered btn-block">{{__('website.tryit_form_return')}}</a>
+                      <a href="{{route('common_login_get')}}" class="btn btn-bordered btn-block">{{__('website.tryit_form_return')}}</a>
                     </div>
                   </div>
                 </div>

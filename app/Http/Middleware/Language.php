@@ -37,7 +37,6 @@ class Language
         }
 
         $this->app->setLocale($locale);
-
         return $next($request);
     }
 }

@@ -8,7 +8,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<ul class="breadcrumb">
-						<li><a href="/{{ Session::get('language') }}/">{{__('website.page_home')}}</a> <span class="divider">/</span></li>
+						<li><a href="{{route('website_home')}}">{{__('website.page_home')}}</a> <span class="divider">/</span></li>
 						<li class="active">Blog</li>
 					</ul>
 				</div>

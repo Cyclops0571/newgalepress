@@ -1,7 +1,7 @@
 <nav id="main-navigation" role="navigation" class="navbar navbar-fixed-top navbar-standard">
   <a href="javascript:void(0)" class="search_button"><i class="fa fa-search"></i></a>
 
-  <form action="/{{ Session::get('language') }}" method="get" role="search" class="h_search_form" id="searchForm">
+  <form action="{{route('website_home')}}" method="get" role="search" class="h_search_form" id="searchForm">
     <div class="container">
       <div class="h_search_form_wrapper">
         <div class="input-group">
@@ -20,7 +20,7 @@
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle"><i class="fa fa-align-justify fa-lg"></i></button>
-      <a href="/{{ Session::get('language') }}" class="navbar-brand">
+      <a href="{{route('website_home')}}" class="navbar-brand">
         <img src="/images/website/logo-white.png" alt="" class="logo-white">
         <img src="/images/website/logo-dark.png" alt="" class="logo-dark">
       </a>
@@ -34,7 +34,7 @@
           <a href="{{route('common_login_get')}}"><i class="fa fa-mobile fa-lg"></i>&nbsp;<span
                 class="badge">{{__('website.menu_login')}}</span></a>
         </li>
-          <?php if(count(Config::get('application.languages')) > 1): ?>
+          <?php if(count(config('application.languages')) > 1): ?>
         <li class="dropdown languageChange">
           <a href="/<?php echo app()->getLocale() ?>" data-toggle="dropdown" data-hover="dropdown"
              id="menu_item_Portfolio" data-ref="#" class="dropdown-toggle">
@@ -43,7 +43,7 @@
           </a>
           <ul aria-labelledby="menu_item_Portfolio" class="dropdown-menu"
               style="min-width:52px !important;width:52px !important;">
-              <?php foreach (Config::get('application.languages') as $lang): ?>
+              <?php foreach (config('application.languages') as $lang): ?>
               <?php if (app()->getLocale() != $lang): ?>
             <li>
               <a href="/<?php echo $lang ?>" data-ref="#">

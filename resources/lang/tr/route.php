@@ -87,7 +87,7 @@ return array(
     'reports_location_district' => 'raporlar/konum/ilce',
 
     'interactivity' => 'etkilesimli-pdf',
-    'interactivity_show' => 'etkilesimli-pdf/(:num)',
+    'interactivity_show' => 'etkilesimli-pdf/{content}',
     'interactivity_refreshtree' => 'etkilesimli-pdf/agaci-yenile',
     'interactivity_fb' => 'flipbook/(:num)',
     'interactivity_preview' => 'etkilesimli-pdf/onizle',

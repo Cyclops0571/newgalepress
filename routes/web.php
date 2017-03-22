@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\WebRouteLoadedEvent;
+
 Route::get('test', ['as' => 'mahmut', 'uses' => 'TTestController@index']);
 Route::get('test2', ['as' => 'mytest2', 'uses' => 'TTestController@test2']);
 Route::get('test3', function ()
@@ -9,7 +11,7 @@ Route::get('test3', function ()
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function ()
 {
-    Route::get(trans('route.dashboard'), ['as' => 'home', 'uses' => 'CommonController@home']);
+    Route::get(trans('route.home'), ['as' => 'home', 'uses' => 'CommonController@home']);
 
     // <editor-fold defaultstate="collapsed" desc="Crop">
     Route::get(trans('route.crop_image'), ['as' => 'crop_image', 'before' => 'auth', 'uses' => 'CropController@image']);
@@ -124,17 +126,9 @@ define("GO_BACK_TO_SHOP", 'gobacktoshop');
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
 {
-    Route::get('/', function ()
-    {
-        return redirect(route('website_home'));
-    });
+    Route::get('/', ['as' => 'website_home', 'uses' => 'WebsiteController@index']);
 
     // <editor-fold defaultstate="collapsed" desc="website">
-    Route::get(trans('route.home'), ['as' => 'website_home', 'uses' => function ()
-    {
-        return View::make('website.pages.home');
-    }]);
-
     Route::get(trans('route.website_showcase'), ['as' => 'website_showcase', 'uses' => function ()
     {
         return View::make('website.pages.showcase');
@@ -392,3 +386,4 @@ Route::any('webservice/(:num)/application-topic', ['uses' => 'webservice.topic@a
 
 
 // </editor-fold>
+event(new WebRouteLoadedEvent());

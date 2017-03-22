@@ -76,7 +76,7 @@ class CommonController extends Controller {
 
             $loginHistory->login($user);
             Cookie::forever('DSCATALOG_USERNAME', $user->Username);
-            setcookie("loggedin", "true", time() + Config::get('session.lifetime') * 60, "/");
+            setcookie("loggedin", "true", time() + config('session.lifetime') * 60, "/");
 
             return $myResponse->success(__('common.login_success_redirect'));
         } else
@@ -451,7 +451,7 @@ class CommonController extends Controller {
                 $mailData = [
                     'name'    => $s->FirstName,
                     'surname' => $s->LastName,
-                    'url'     => Config::get("custom.url") . '/' . app()->getLocale() . __('route.login'),
+                    'url'     => config("custom.url") . '/' . app()->getLocale() . __('route.login'),
                 ];
                 $msg = View::make('mail-templates.hosgeldiniz.index')->with($mailData)->render();
                 $mailStatus = Common::sendHtmlEmail($s->Email, $s->FirstName . ' ' . $s->LastName, $subject, $msg);

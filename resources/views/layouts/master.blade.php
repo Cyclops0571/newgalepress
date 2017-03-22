@@ -48,7 +48,7 @@
           <div class="controls">
             <div class="form-row">
               <div class="col-md-12">
-                  <?php foreach(Config::get('application.languages') as $lang): ?>
+                  <?php foreach(config('application.languages') as $lang): ?>
                   <?php if($lang != 'tr'):?>
                 <div class="checkbox">
                   <label>

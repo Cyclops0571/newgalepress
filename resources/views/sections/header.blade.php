@@ -1,6 +1,6 @@
 <?php
 /*
-$title = Config::get('custom.companyname');
+$title = config('custom.companyname');
 
 if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
 {
@@ -81,7 +81,7 @@ if((int)Auth::user()->UserTypeID == eUserTypes::Customer)
             <li class='active' id="tr"><a href='index.html'></a></li>
             <li id="en"><a href='#'></a></li>
             -->
-            <?php if(count(Config::get('application.languages')) > 1): ?>
+            <?php if(count(config('application.languages')) > 1): ?>
             <li id="lang-settings"><a href="#modalChangeLanguage" onclick="modalOpen()"></a></li>
             <?php endif; ?>
             <li class='last' id="logout"><a href="{{route('common_logout')}}"></a></li>

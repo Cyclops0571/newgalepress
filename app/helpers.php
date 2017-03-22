@@ -750,13 +750,13 @@ class Common
      */
     public static function sendErrorMail($msg)
     {
-        $toEmailSet = Config::get('custom.admin_email_set');
+        $toEmailSet = config('custom.admin_email_set');
         $subject = __('common.task_subject');
         Log::info($msg);
         Bundle::start('messages');
         foreach ($toEmailSet as $toEmail) {
             Message::send(function ($m) use ($toEmail, $subject, $msg) {
-                $m->from((string)__('maillang.contanct_email'), Config::get('custom.mail_displayname'));
+                $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 $m->to($toEmail);
                 $m->subject($subject);
                 $m->body($msg);
@@ -798,7 +798,7 @@ class Common
                         break;
                 }
 
-                $m->from((string)__('maillang.contanct_email'), Config::get('custom.mail_displayname'));
+                $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 $m->to($user["email"]);
                 $m->subject("Gale Press Dijital Yayin Platformu Ödeme Hatırlatma Maili");
                 $m->body($msg);
@@ -808,11 +808,11 @@ class Common
 
     public static function sendPaymentAdminReminderMail($msg)
     {
-        $adminMailSet = Config::get("custom.payment_delay_reminder_admin_mail_set");
+        $adminMailSet = config("custom.payment_delay_reminder_admin_mail_set");
         Bundle::start('messages');
         foreach ($adminMailSet as $adminMail) {
             Message::send(function ($m) use ($adminMail, $msg) {
-                $m->from((string)__('maillang.contanct_email'), Config::get('custom.mail_displayname'));
+                $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 $m->to($adminMail);
                 $m->subject("Gale Press Ödeme Hatırlatma Maili");
                 $m->body($msg);
@@ -822,13 +822,13 @@ class Common
 
     public static function sendStatusMail($msg)
     {
-        $toEmailSet = Config::get('custom.admin_email_set');
+        $toEmailSet = config('custom.admin_email_set');
         $subject = __('common.task_status');
         Log::info($msg);
         Bundle::start('messages');
         foreach ($toEmailSet as $toEmail) {
             Message::send(function ($m) use ($toEmail, $subject, $msg) {
-                $m->from((string)__('maillang.contanct_email'), Config::get('custom.mail_displayname'));
+                $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 $m->to($toEmail);
                 $m->subject($subject);
                 $m->body($msg);
@@ -841,7 +841,7 @@ class Common
         try {
             Bundle::start('messages');
             Message::send(function ($m) use ($toEmail, $toDisplayName, $subject, $msg) {
-                $m->from((string)__('maillang.contanct_email'), Config::get('custom.mail_displayname'));
+                $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 //$m->to($toEmail);
                 $m->to($toEmail, $toDisplayName);
                 $m->subject($subject);
@@ -858,7 +858,7 @@ class Common
         try {
             Bundle::start('messages');
             Message::send(function ($m) use ($toEmail, $toDisplayName, $subject, $msg) {
-                $m->from((string)__('maillang.contanct_email'), Config::get('custom.mail_displayname'));
+                $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 //$m->to($toEmail);
                 $m->to($toEmail, $toDisplayName);
                 $m->subject($subject);
@@ -1292,7 +1292,7 @@ class Common
 
     public static function getLocaleId()
     {
-        $langs = Config::get('app.langs');
+        $langs = config('app.langs');
         return $langs[App::getLocale()];
     }
 

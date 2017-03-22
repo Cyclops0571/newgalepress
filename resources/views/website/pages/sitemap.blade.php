@@ -8,7 +8,7 @@
 			<div class="row">
 				<div class="span12">
 					<ul class="breadcrumb">
-						<li><a href="/{{ Session::get('language') }}/">{{__('website.page_home')}}</a> <span class="divider">/</span></li>
+						<li><a href="/{{ app()->getLocale() }}/">{{__('website.page_home')}}</a> <span class="divider">/</span></li>
                         <li class="active">Gale Press</li>
 					</ul>
 				</div>
@@ -25,19 +25,13 @@
 			<div class="span6">
 				<ul class="sitemap list icons" style="list-style-type: none;">
 					<li>
-						<i class="icon-caret-right">&nbsp</i><a href="/{{ Session::get('language') }}/">{{__('website.page_home')}}</a>
+						<i class="icon-caret-right">&nbsp</i><a href="/{{ app()->getLocale() }}/">{{__('website.page_home')}}</a>
 					</li>
 					<li>
-						<i class="icon-caret-right">&nbsp</i><a href="/{{ Session::get('language') }}/{{__('route.website_products')}}">{{__('website.page_products')}}</a>
+						<i class="icon-caret-right">&nbsp</i><a href="{{route('website_tutorials')}}">{{__('website.page_tutorials')}}</a>
 					</li>
 					<li>
-						<i class="icon-caret-right">&nbsp</i><a href="/{{ Session::get('language') }}/{{__('route.website_advantages')}}">{{__('website.page_advantages')}}</a>
-					</li>
-					<li>
-						<i class="icon-caret-right">&nbsp</i><a href="/{{ Session::get('language') }}/{{__('route.website_tutorials')}}">{{__('website.page_tutorials')}}</a>
-					</li>
-					<li>
-						<i class="icon-caret-right">&nbsp</i><a href="/{{ Session::get('language') }}/{{__('route.website_contact')}}">{{__('website.page_contact')}}</a>
+						<i class="icon-caret-right">&nbsp</i><a href="{{route('website_contact')}}">{{__('website.page_contact')}}</a>
 					</li>
 					<?php if(app()->isLocale('tr')): ?>
 					    <li>

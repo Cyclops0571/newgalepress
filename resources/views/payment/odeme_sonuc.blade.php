@@ -117,7 +117,7 @@
 			<header id="header">
 				<div class="container">
 					<h1 class="logo">
-                        <a href="{{Config::get('custom.galepress_https_url')}}">
+                        <a href="{{config('custom.galepress_https_url')}}">
                             <img alt="Gale Press" data-sticky-width="252" data-sticky-height="82"
                                  src="/website/img/logo-dark.png">
 						</a>

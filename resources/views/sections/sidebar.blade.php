@@ -1,5 +1,5 @@
 <?php
-use App\Models\Application;$title = Config::get('custom.companyname');
+use App\Models\Application;$title = config('custom.companyname');
 $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
 ?>
 

@@ -68,7 +68,7 @@
                     <div class="col-md-9">
                         <select class="form-control select2 required" name="ApplicationLanguage">
                             <option value="" <?php echo($app->ApplicationLanguage ? '' : ' selected="selected"'); ?>></option>
-                            <?php foreach (Config::get('app.langs') as $lang): ?>
+                            <?php foreach (config('app.langs') as $lang): ?>
                             <option value="<?php echo $lang; ?>" <?php echo $lang == $app->ApplicationLanguage ? ' selected="selected"' : ''; ?>>
                                 <?php echo $lang; ?>
                             </option>

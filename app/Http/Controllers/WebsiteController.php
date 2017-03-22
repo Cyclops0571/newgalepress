@@ -7,13 +7,13 @@ use App\Models\Customer;
 use App\Models\MailLog;
 use App\User;
 use Common;
-use Config;
 use DateTime;
 use eProcessTypes;
 use eStatus;
 use Exception;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Mail;
 use Redirect;
 use Validator;
@@ -47,6 +47,7 @@ class WebsiteController extends Controller {
         }
 
         Mail::to($request->get('senderEmail'))->queue(new CustomerWelcomeMailler($request));
+
         return ['success' => 'success'];
     }
 
@@ -205,7 +206,7 @@ class WebsiteController extends Controller {
             $mailData = [
                 'name'    => $user->FirstName,
                 'surname' => $user->LastName,
-                'url'     => Config::get("custom.url") . '/' . app()->getLocale() . '/' . __('route.confirmemail') . '?email=' . $user->Email . '&code=' . $confirmCode,
+                'url'     => config("custom.url") . '/' . app()->getLocale() . '/' . __('route.confirmemail') . '?email=' . $user->Email . '&code=' . $confirmCode,
             ];
             $msg = View::make('mail-templates.aktivasyon.index')->with($mailData)->render();
             // Common::sendHtmlEmail("serdar.saygili@detaysoft.com", $s->FirstName.' '.$s->LastName, $subject, $msg)
@@ -225,6 +226,32 @@ class WebsiteController extends Controller {
             $m->save();
         }
         echo json_encode($data);
+    }
+
+    public function index(Request $request, Response $response)
+    {
+        if (isset($_SERVER['REQUEST_URI']) && isset($_SERVER['REQUEST_METHOD']))
+        {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET' && $_SERVER['REQUEST_URI'] == '/')
+            {
+                if (!empty($request->cookie('language')))
+                {
+                    $defaultLang = $request->cookie('language');
+                } else
+                {
+                    $userInfo = ip_info();
+                    $defaultLang = 'usa';
+                    if (!empty($userInfo) && !empty($userInfo["country_code"]) && $userInfo["country_code"] == "TR")
+                    {
+                        $defaultLang = 'tr';
+                    }
+                }
+
+                return view('language_redirect', compact('defaultLang'));
+            }
+        }
+
+        return response()->view('website.pages.home')->cookie('language', app()->getLocale());
     }
 
     public function article_workflow()
@@ -247,7 +274,7 @@ class WebsiteController extends Controller {
         } catch (Exception $e)
         {
             //throw new Exception($e->getMessage());
-            return Redirect::to( __('route.website_blog'));
+            return Redirect::to(__('route.website_blog'));
         }
     }
 

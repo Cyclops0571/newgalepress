@@ -42,7 +42,7 @@ class MyPcos
     public function __construct($pdfPath)
     {
         $this->pdfPath = $pdfPath;
-        $this->pdfLib = new PDFlib();
+        $this->pdfLib = new \PDFlib();
         $this->pdfLib->set_option("license=" . Config::get('custom.pdflib_license'));
         $this->pdfLib->set_option("errorpolicy=return");
         $this->document = $this->pdfLib->open_pdi_document($this->pdfPath, "");

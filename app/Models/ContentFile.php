@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Library\MyPcos;
 use Auth;
 use Common;
 use DateTime;

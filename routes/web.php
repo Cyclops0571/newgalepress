@@ -2,6 +2,22 @@
 
 use App\Events\WebRouteLoadedEvent;
 
+define("ENV_TEST", "test");
+define("ENV_LOCAL", "local");
+define("ENV_LIVE", "live");
+define("APP_VER", 94);
+define("IMAGE_CROPPED_NAME", "cropped_image");
+define("IMAGE_CROPPED_2048", "cropped_image_1536x2048.jpg");
+define("IMAGE_ORJ_EXTENSION", "_org.jpg");
+define("IMAGE_ORIGINAL", "original");
+define("IMAGE_EXTENSION", ".jpg");
+define("CATEGORY_GENEL_ID", 1);
+define("SHOW_IMAGE_CROP", "showImageCrop");
+define("PATH_TEMP_FILE", "files/temp");
+define("TAB_COUNT", 2);
+define("GO_BACK_TO_SHOP", 'gobacktoshop');
+
+
 Route::get('test', ['as' => 'mahmut', 'uses' => 'TTestController@index']);
 Route::get('test2', ['as' => 'mytest2', 'uses' => 'TTestController@test2']);
 Route::get('test3', function ()
@@ -62,23 +78,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::get(trans('route.maps'), ['as' => 'maps_list', 'uses' => 'MapController@index']);
     // </editor-fold>
 
-    // <editor-fold defaultstate="collapsed" desc="Clients">
-    Route::get(trans('route.clients'), ['as' => 'clients_list', 'uses' => 'clients@index']);
-    Route::get(trans('route.clients_new'), ['as' => 'clients_new', 'uses' => 'clients@newly']);
-    Route::get(trans('route.clients_show'), ['as' => 'clients_show', 'uses' => 'clients@show']);
-    Route::post(trans('route.clients_save'), ['as' => 'clients_save', 'uses' => 'clients@save']);
-    Route::post(trans('route.clients_send'), ['as' => 'clients_send', 'uses' => 'clients@send']);
-    Route::post(trans('route.clients_delete'), ['as' => 'clients_delete', 'uses' => 'clients@delete']);
-
-    Route::get(trans('route.clients_register'), ['as' => 'clients_register', 'uses' => 'clients@clientregister']);
-    Route::get(trans('route.clients_update'), ['as' => 'clients_register_save', 'uses' => 'clients@updateclient']);
-    Route::get(trans('route.clients_registered'), ['as' => 'clients_registered', 'uses' => 'clients@registered']);
-    Route::get(trans('route.clients_forgotpassword'), ['as' => 'clients_forgot_password', 'uses' => 'clients@forgotpassword']);
-    Route::get(trans('route.clients_resetpw'), ['as' => 'clients_reset_password', 'uses' => 'clients@resetpw']);
-    Route::get(trans('route.clients_pw_reseted'), ['as' => 'clients_password_renewed', 'uses' => 'clients@passwordreseted']);
-
-    // </editor-fold
-
     // <editor-fold defaultstate="collapsed" desc="Applications">
     Route::get(trans('route.applications'), ['as' => 'applications', 'uses' => 'ApplicationController@index']);
     Route::get(trans('route.applications_new'), ['as' => 'applications_new', 'uses' => 'ApplicationController@create']);
@@ -99,6 +98,18 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     // </editor-fold>
 
     Route::post('applications/applicationSetting', ['as' => 'application_setting_save', 'uses' => 'ApplicationSettingController@update']);
+
+    // <editor-fold defaultstate="collapsed" desc="Interactivity">
+    Route::get(trans('route.interactivity_preview'), ['as' => 'interactivity_preview', 'before' => 'auth', 'uses' => 'InteractivityController@preview']);
+    Route::get(trans('route.interactivity_show'), ['as' => 'interactivity_show', 'before' => 'auth', 'uses' => 'InteractivityController@show']);
+    Route::get(trans('route.interactivity_fb'), ['as' => 'interactivity_fb', 'uses' => 'InteractivityController@fb']);
+    Route::post(trans('route.interactivity_check'), ['as' => 'interactivity_check', 'before' => 'auth', 'uses' => 'InteractivityController@check']);
+    Route::post(trans('route.interactivity_save'), ['as' => 'interactivity_save', 'before' => 'auth|csrf', 'uses' => 'InteractivityController@save']);
+    Route::post(trans('route.interactivity_transfer'), ['as' => 'interactivity_transfer', 'before' => 'auth', 'uses' => 'InteractivityController@transfer']);
+    Route::post(trans('route.interactivity_refreshtree'), ['as' => 'interactivity_refreshtree', 'before' => 'auth', 'uses' => 'InteractivityController@refreshtree']);
+    Route::post(trans('route.interactivity_upload'), ['as' => 'interactivity_upload', 'before' => 'auth', 'uses' => 'InteractivityController@upload']);
+    Route::post(trans('route.interactivity_loadpage'), ['as' => 'interactivity_loadpage', 'before' => 'auth', 'uses' => 'InteractivityController@loadpage']);
+    // </editor-fold>
 });
 
 
@@ -106,22 +117,6 @@ Route::post('banners/imageupload', ['as' => 'banners_imageupload', 'uses' => 'Ba
 Route::get("banners/delete", ['as' => 'banners_delete', 'before' => 'auth', 'uses' => 'BannerController@delete']);
 Route::post("banners/order/{applicationId}", ['as' => 'banners_order', 'before' => 'auth', 'uses' => 'BannerController@order']);
 Route::get("banners/service_view/{applicationId}", ['as' => 'banners_service_view', 'uses' => 'BannerController@service_view']);
-
-
-define("ENV_TEST", "test");
-define("ENV_LOCAL", "local");
-define("ENV_LIVE", "live");
-define("APP_VER", 94);
-define("IMAGE_CROPPED_NAME", "cropped_image");
-define("IMAGE_CROPPED_2048", "cropped_image_1536x2048.jpg");
-define("IMAGE_ORJ_EXTENSION", "_org.jpg");
-define("IMAGE_ORIGINAL", "original");
-define("IMAGE_EXTENSION", ".jpg");
-define("CATEGORY_GENEL_ID", 1);
-define("SHOW_IMAGE_CROP", "showImageCrop");
-define("PATH_TEMP_FILE", "files/temp");
-define("TAB_COUNT", 2);
-define("GO_BACK_TO_SHOP", 'gobacktoshop');
 
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
@@ -194,6 +189,18 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     }]);
     Route::post(trans('route.login'), ['as' => 'common_login_post', 'uses' => 'CommonController@login']);
 
+    Route::get(trans('route.sign_up'), function ()
+    {
+        return view('website.signup');
+    });
+    Route::get(trans('route.forgot_password'), function ()
+    {
+        return view('website.forgotpassword');
+    });
+    Route::get(trans('route.sign_in'), function ()
+    {
+        return view('website.signin');
+    });
     // </editor-fold>
 });
 
@@ -210,6 +217,58 @@ Route::post(trans('route.website_tryit'), ['as' => 'website_tryit_post', 'uses' 
 Route::post('deneyin-test', ['as' => 'website_tryit_test_post', 'uses' => 'WebsiteController@tryIt']);//571571 Test It
 Route::post(trans('route.facebook_attempt'), ['as' => 'website_facebook_attempt_post', 'uses' => 'CommonController@facebookAttempt']); //571571 Test It
 
+//<editor-fold defaultstate="collapesd" desc="Qr Code">
+Route::get('iyzicoqr/{user}', 'IyzicoController@index');
+Route::post('iyzicoqr', 'IyzicoController@save');
+Route::get('open_iyzico_iframe/{qrCode}', 'IyzicoController@openIyzicoIframe');
+Route::any('checkout_result_form', ['as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm']);
+//</editor-fold>
+
+
+Route::post("maps/excelupload/{application}", ['before' => 'auth', 'uses' => "MapController@excelupload"]);
+Route::get("maps/delete", ['before' => 'auth', 'uses' => "MapController@delete"]);
+Route::post((string)trans('route.contents_interactivity_status'), ['uses' => "ContentController@interactivityStatus"]);
+
+Route::post('/contactmail', ['as' => 'contactmail', 'uses' => 'WebsiteController@contactForm']);
+
+Route::get(trans('appcreatewithface'), ['as' => 'appcreatewithface', 'uses' => 'WebsiteController@app_create_face']);
+
+Route::get(trans('route.website_article_workflow'), ['as' => 'website_article_workflow_get', 'uses' => 'WebsiteController@article_workflow']);
+Route::get(trans('route.website_article_brandvalue'), ['as' => 'website_article_brandvalue_get', 'uses' => 'WebsiteController@article_brandvalue']);
+Route::get(trans('route.website_article_whymobile'), ['as' => 'website_article_whymobile_get', 'uses' => 'WebsiteController@articleWhyMobile']);
+
+
+// <editor-fold defaultstate="collapsed" desc="Common">
+Route::get(trans('route.confirmemail'), ['as' => 'common_confirmemail_get', 'uses' => 'CommonController@confirmEmailPage']);
+Route::get(trans('route.my_ticket'), ['as' => 'my_ticket', 'before' => 'auth', 'uses' => 'CommonController@ticketPage']);
+// </editor-fold>
+
+Route::post("applications/refresh_identifier", ['as' => 'applicationrefreshidentifier', 'uses' => 'ApplicationController@refresh_identifier']);
+Route::post("contents/refresh_identifier", ['as' => 'contentrefreshidentifier', 'uses' => 'ContentController@refresh_identifier']);
+
+Route::get("/csstemplates/{filename}", ['as' => 'template_index', 'uses' => 'ApplicationTemplateController@theme']);
+Route::get("/template/{application}", ['as' => 'template_index', 'before' => 'auth', 'uses' => 'ApplicationTemplateController@show']);
+Route::get('maps/webview/{application}', ['as' => 'map_view', 'uses' => 'MapController@webView']);
+Route::get('payment/paymentAccountByApplicationID/(:num)', ['as' => 'app_payment_data', 'uses' => 'payment@paymentAccountByApplicationID']);
+
+/**********************CALISMAYANLAR*************************/
+// <editor-fold defaultstate="collapsed" desc="Clients">
+Route::get(trans('route.clients'), ['as' => 'clients_list', 'uses' => 'clients@index']);
+Route::get(trans('route.clients_new'), ['as' => 'clients_new', 'uses' => 'clients@newly']);
+Route::get(trans('route.clients_show'), ['as' => 'clients_show', 'uses' => 'clients@show']);
+Route::post(trans('route.clients_save'), ['as' => 'clients_save', 'uses' => 'clients@save']);
+Route::post(trans('route.clients_send'), ['as' => 'clients_send', 'uses' => 'clients@send']);
+Route::post(trans('route.clients_delete'), ['as' => 'clients_delete', 'uses' => 'clients@delete']);
+
+Route::get(trans('route.clients_register'), ['as' => 'clients_register', 'uses' => 'clients@clientregister']);
+Route::get(trans('route.clients_update'), ['as' => 'clients_register_save', 'uses' => 'clients@updateclient']);
+Route::get(trans('route.clients_registered'), ['as' => 'clients_registered', 'uses' => 'clients@registered']);
+Route::get(trans('route.clients_forgotpassword'), ['as' => 'clients_forgot_password', 'uses' => 'clients@forgotpassword']);
+Route::get(trans('route.clients_resetpw'), ['as' => 'clients_reset_password', 'uses' => 'clients@resetpw']);
+Route::get(trans('route.clients_pw_reseted'), ['as' => 'clients_password_renewed', 'uses' => 'clients@passwordreseted']);
+
+// </editor-fold
+
 // <editor-fold defaultstate="collapsed" desc="Test">
 Route::get('test/iosInternalTest', 'test@iosInternalTest');
 Route::get("move", "test@moveInteractivite");
@@ -221,29 +280,11 @@ Route::post("test/download", "test@download");
 Route::get('test/v(:num)', 'test@routetest');
 Route::get('test/interactive', 'test@interactive');
 // </editor-fold>
-//<editor-fold defaultstate="collapesd" desc="Qr Code">
-Route::get('iyzicoqr/{user}', 'IyzicoController@index');
-Route::post('iyzicoqr', 'IyzicoController@save');
-Route::get('open_iyzico_iframe/{qrCode}', 'IyzicoController@openIyzicoIframe');
-Route::any('checkout_result_form', ['as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm']);
-//</editor-fold>
 
 
 Route::post("clients/excelupload", ['before' => 'auth', 'uses' => "clients@excelupload"]);
-Route::post("maps/excelupload/{application}", ['before' => 'auth', 'uses' => "MapController@excelupload"]);
-Route::get("maps/delete", ['before' => 'auth', 'uses' => "MapController@delete"]);
-Route::post((string)trans('route.contents_interactivity_status'), ['uses' => "ContentController@interactivityStatus"]);
-
-Route::post('/contactmail', ['as' => 'contactmail', 'uses' => 'WebsiteController@contactForm']);
 Route::post('/search', 'webservice.search@search');
 Route::post('/searchgraff', 'webservice.search@searchgraff');
-
-
-Route::get(trans('appcreatewithface'), ['as' => 'appcreatewithface', 'uses' => 'WebsiteController@app_create_face']);
-
-Route::get(trans('route.website_article_workflow'), ['as' => 'website_article_workflow_get', 'uses' => 'WebsiteController@article_workflow']);
-Route::get(trans('route.website_article_brandvalue'), ['as' => 'website_article_brandvalue_get', 'uses' => 'WebsiteController@article_brandvalue']);
-Route::get(trans('route.website_article_whymobile'), ['as' => 'website_article_whymobile_get', 'uses' => 'WebsiteController@articleWhyMobile']);
 
 
 //<editor-fold desc="Payment">
@@ -255,14 +296,6 @@ Route::post(trans('route.payment_approvement'), ['as' => 'payment_approvement', 
 Route::get(trans('route.website_payment_result'), ['as' => 'website_payment_result_get', 'uses' => 'payment@payment_result']);
 //</editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Common">
-
-
-Route::get(trans('route.confirmemail'), ['as' => 'common_confirmemail_get', 'uses' => 'CommonController@confirmEmailPage']);
-Route::get(trans('route.my_ticket'), ['as' => 'my_ticket', 'before' => 'auth', 'uses' => 'CommonController@ticketPage']);
-
-// </editor-fold>
-
 // <editor-fold defaultstate="collapsed" desc="Users">
 Route::get(trans('route.users'), ['as' => 'users', 'before' => 'auth', 'uses' => 'users@index']);
 Route::get(trans('route.users_new'), ['as' => 'users_new', 'before' => 'auth', 'uses' => 'users@newly']);
@@ -271,8 +304,6 @@ Route::post(trans('route.users_save'), ['as' => 'users_save', 'before' => 'auth|
 Route::post(trans('route.users_send'), ['as' => 'users_send', 'before' => 'auth|csrf', 'uses' => 'users@send']);
 Route::post(trans('route.users_delete'), ['as' => 'users_delete', 'before' => 'auth|csrf', 'uses' => 'users@delete']);
 // </editor-fold>
-
-
 // <editor-fold defaultstate="collapsed" desc="Customers">
 Route::get(trans('route.customers'), ['as' => 'customers', 'before' => 'auth', 'uses' => 'customers@index']);
 Route::get(trans('route.customers_new'), ['as' => 'customers_new', 'before' => 'auth', 'uses' => 'customers@newly']);
@@ -304,34 +335,6 @@ Route::post(trans('route.categories_save'), ['as' => 'categories_save', 'before'
 Route::post(trans('route.categories_delete'), ['as' => 'categories_delete', 'before' => 'auth', 'uses' => 'categories@delete']);
 // </editor-fold>
 
-
-// <editor-fold defaultstate="collapsed" desc="Interactivity">
-Route::get(trans('route.interactivity_preview'), ['as' => 'interactivity_preview', 'before' => 'auth', 'uses' => 'interactivity@preview']);
-Route::get(trans('route.interactivity_show'), ['as' => 'interactivity_show', 'before' => 'auth', 'uses' => 'interactivity@show']);
-Route::get(trans('route.interactivity_fb'), ['as' => 'interactivity_fb', 'uses' => 'interactivity@fb']);
-Route::post(trans('route.interactivity_check'), ['as' => 'interactivity_check', 'before' => 'auth', 'uses' => 'interactivity@check']);
-Route::post(trans('route.interactivity_save'), ['as' => 'interactivity_save', 'before' => 'auth|csrf', 'uses' => 'interactivity@save']);
-Route::post(trans('route.interactivity_transfer'), ['as' => 'interactivity_transfer', 'before' => 'auth', 'uses' => 'interactivity@transfer']);
-Route::post(trans('route.interactivity_refreshtree'), ['as' => 'interactivity_refreshtree', 'before' => 'auth', 'uses' => 'interactivity@refreshtree']);
-Route::post(trans('route.interactivity_upload'), ['as' => 'interactivity_upload', 'before' => 'auth', 'uses' => 'interactivity@upload']);
-Route::post(trans('route.interactivity_loadpage'), ['as' => 'interactivity_loadpage', 'before' => 'auth', 'uses' => 'interactivity@loadpage']);
-// </editor-fold>
-
-
-Route::get(trans('route.sign_up'), function ()
-{
-    return view('website.signup');
-});
-Route::get(trans('route.forgot_password'), function ()
-{
-    return view('website.forgotpassword');
-});
-Route::get(trans('route.sign_in'), function ()
-{
-    return view('website.signin');
-});
-
-
 // <editor-fold defaultstate="collapsed" desc="managements">
 Route::get(trans('route.managements_list'), ['as' => 'managements_list', 'uses' => 'managements@list']);
 Route::get('managements/import', ['as' => 'managements_importlanguages', 'uses' => 'managements@importlanguages']);
@@ -343,14 +346,6 @@ Route::post('managements/export', ['as' => 'managements_exportlanguages', 'uses'
 Route::post('clients/clientregister', ['as' => 'clientsregistersave', 'uses' => 'clients@clientregister']);
 Route::post('clients/forgotpassword', ['as' => 'clientsregistered', 'uses' => 'clients@forgotpassword']);
 Route::post("clients/resetpw", ['as' => 'clientsresetpw', 'uses' => 'clients@resetpw']);
-Route::post("applications/refresh_identifier", ['as' => 'applicationrefreshidentifier', 'uses' => 'ApplicationController@refresh_identifier']);
-Route::post("contents/refresh_identifier", ['as' => 'contentrefreshidentifier', 'uses' => 'ContentController@refresh_identifier']);
-
-Route::get("/csstemplates/{filename}", ['as' => 'template_index', 'uses' => 'ApplicationTemplateController@theme']);
-Route::get("/template/{application}", ['as' => 'template_index', 'before' => 'auth', 'uses' => 'ApplicationTemplateController@show']);
-Route::get('maps/webview/{application}', ['as' => 'map_view', 'uses' => 'MapController@webView']);
-Route::get('payment/paymentAccountByApplicationID/(:num)', ['as' => 'app_payment_data', 'uses' => 'payment@paymentAccountByApplicationID']);
-
 Route::get('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'payment@secure_3d_response']);
 Route::post('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'payment@secure_3d_response']);
 
@@ -383,7 +378,17 @@ Route::post('webservice/(:num)/statistics', ['uses' => 'webservice.statistics@cr
 //WS-Topic
 Route::any('webservice/(:num)/topic', ['uses' => 'webservice.topic@topic']);
 Route::any('webservice/(:num)/application-topic', ['uses' => 'webservice.topic@applicationTopic']);
-
-
 // </editor-fold>
+
+
+
+
+
+
+
+
+
+
+
+
 event(new WebRouteLoadedEvent());

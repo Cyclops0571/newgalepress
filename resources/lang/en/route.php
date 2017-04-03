@@ -87,7 +87,7 @@ return array(
     'reports_location_district' => 'reports/location/district',
 
     'interactivity' => 'interactive-pdf',
-    'interactivity_show' => 'interactive-pdf/(:num)',
+    'interactivity_show' => 'interactive-pdf/{content}',
     'interactivity_refreshtree' => 'interactive-pdf/refresh-tree',
     'interactivity_fb' => 'flipbook/(:num)',
     'interactivity_preview' => 'interactive-pdf/preview',

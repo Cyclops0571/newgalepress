@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Application;
+use App\Models\Component;
 use App\Models\Content;
 use App\Models\ContentFile;
 use App\Models\Requestt;
@@ -8,55 +9,54 @@ use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Str;
 
 
-abstract class Interactivity
-{
+abstract class Interactivity {
+
     const ProcessAvailable = 0;
     const ProcessQueued = 1;
     const ProcessContinues = 2;
 }
 
-abstract class eStatus
-{
+abstract class eStatus {
+
     const All = 0;
     const Active = 1;
     const Passive = 2;
     const Deleted = 3;
 }
 
-abstract class eDeviceType
-{
+abstract class eDeviceType {
+
     const ios = 'ios';
     const android = 'android';
 }
 
-abstract class eRemoveFromMobile
-{
+abstract class eRemoveFromMobile {
+
     const Active = 1;
     const Passive = 0;
 }
 
-abstract class eRequestType
-{
+abstract class eRequestType {
+
     const NORMAL_IMAGE_FILE = 1101;
     const SMALL_IMAGE_FILE = 1102;
     const PDF_FILE = 1001;
 }
 
-abstract class eUserTypes
-{
+abstract class eUserTypes {
+
     const Manager = 101;
     const Customer = 111;
 }
 
-abstract class eProcessTypes
-{
+abstract class eProcessTypes {
+
     const Insert = 51;
     const Update = 52;
     const Delete = 53;
 }
 
-class eServiceError
-{
+class eServiceError {
 
     const ServiceNotFound = 1;
     const IncorrectPassword = 101;
@@ -83,7 +83,8 @@ class eServiceError
      */
     public static function getException($errorNo, $errorMsg = "")
     {
-        switch ($errorNo) {
+        switch ($errorNo)
+        {
             case eServiceError::ServiceNotFound:
                 $exception = new Exception("Servis versiyonu hatalı", $errorNo);
                 break;
@@ -131,17 +132,18 @@ class eServiceError
             default:
                 $exception = new Exception();
         }
+
         return $exception;
     }
 
 }
 
-class eTemplateColor
-{
+class eTemplateColor {
+
     private static $imageFolder = 'img/template-chooser/';
     private static $imageGeneratedFolder = 'img/template-generated/';
 
-    private static $requiredImageSet = array(
+    private static $requiredImageSet = [
         'menu1.png',
         'home_selected1.png',
         'library_selected1.png',
@@ -152,15 +154,17 @@ class eTemplateColor
         'left_menu_link1.png',
         'reader_menu1.png',
         'reader_share1.png',
-    );
+    ];
 
     public static function templateCss($fileName)
     {
         $templateColorCode = basename($fileName, '.css');
-        foreach (self::$requiredImageSet as $requiredImageTmp) {
+        foreach (self::$requiredImageSet as $requiredImageTmp)
+        {
             $requiredImageWithPath = public_path(self::$imageGeneratedFolder . str_replace('1', $templateColorCode, $requiredImageTmp));
             $origImgWithPath = public_path(self::$imageFolder . $requiredImageTmp);
-            if (!File::exists($requiredImageWithPath)) {
+            if (!File::exists($requiredImageWithPath))
+            {
                 exec("convert " . $origImgWithPath . ' -fuzz 90% -fill \'#' . $templateColorCode . '\' -opaque blue ' . $requiredImageWithPath);
             }
         }
@@ -168,24 +172,25 @@ class eTemplateColor
         $fileContent = File::get(resource_path("templates/color.css"));
         $fileContent = str_replace("#TemplateColor#", $templateColorCode, $fileContent);
         $fileContent = str_replace("#APP_VER#", APP_VER, $fileContent);
+
         return $fileContent;
     }
 
 }
 
-class Subscription
-{
+class Subscription {
+
     const week = 1;
     const mounth = 2;
     const year = 3;
 
     public static function types()
     {
-        return array(
+        return [
             1 => "week_subscription",
             2 => "month_subscription",
             3 => "year_subscription",
-        );
+        ];
     }
 
 }
@@ -199,7 +204,7 @@ class Subscription
  * @param  string $language
  * @return \Symfony\Component\Translation\TranslatorInterface|string
  */
-function __($key, $replacements = array(), $language = null)
+function __($key, $replacements = [], $language = null)
 {
     return trans($key, $replacements, 'messages', $language);
 }
@@ -218,17 +223,20 @@ function dj($value)
  */
 function array_strip_slashes($array)
 {
-    $result = array();
+    $result = [];
 
-    foreach ($array as $key => $value) {
+    foreach ($array as $key => $value)
+    {
         $key = stripslashes($key);
 
         // If the value is an array, we will just recurse back into the
         // function to keep stripping the slashes out of the array,
         // otherwise we will set the stripped value.
-        if (is_array($value)) {
+        if (is_array($value))
+        {
             $result[$key] = array_strip_slashes($value);
-        } else {
+        } else
+        {
             $result[$key] = stripslashes($value);
         }
     }
@@ -236,18 +244,19 @@ function array_strip_slashes($array)
     return $result;
 }
 
-class Common
-{
+class Common {
 
     public static function htmlOddEven($name)
     {
-        static $status = array();
+        static $status = [];
 
-        if (!isset($status[$name])) {
+        if (!isset($status[$name]))
+        {
             $status[$name] = 0;
         }
 
         $status[$name] = 1 - $status[$name];
+
         return ($status[$name] % 2 == 0) ? 'even' : 'odd';
     }
 
@@ -255,36 +264,43 @@ class Common
     {
         if (is_file($dir))
             return filesize($dir);
-        if ($dh = opendir($dir)) {
+        if ($dh = opendir($dir))
+        {
             $size = 0;
-            while (($file = readdir($dh)) !== false) {
+            while (($file = readdir($dh)) !== false)
+            {
                 if ($file == '.' || $file == '..')
                     continue;
                 $s = Common::dirsize($dir . '/' . $file);
                 $size += $s;
             }
             closedir($dh);
+
             return $size;
         }
+
         return 0;
     }
 
     public static function xmlEscape($string)
     {
-        return str_replace(array('&', '<', '>', '\'', '"'), array('&amp;', '&lt;', '&gt;', '&apos;', '&quot;'), $string);
+        return str_replace(['&', '<', '>', '\'', '"'], ['&amp;', '&lt;', '&gt;', '&apos;', '&quot;'], $string);
     }
 
     public static function CheckCategoryOwnership($categoryID)
     {
         $currentUser = Auth::user();
 
-        if ((int)$currentUser->UserTypeID == eUserTypes::Customer) {
+        if ((int)$currentUser->UserTypeID == eUserTypes::Customer)
+        {
             $count = DB::table('Customer AS c')
-                ->join('Application AS a', function (JoinClause $join) {
+                ->join('Application AS a', function (JoinClause $join)
+                {
                     $join->on('a.CustomerID', '=', 'c.CustomerID');
                     $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
                 })
-                ->join('Category AS t', function (JoinClause $join) use ($categoryID) {
+                ->join('Category AS t', function (JoinClause $join) use ($categoryID)
+                {
                     $join->on('t.CategoryID', '=', DB::raw($categoryID));
                     $join->on('t.ApplicationID', '=', 'a.ApplicationID');
                     $join->on('t.StatusID', '=', DB::raw(eStatus::Active));
@@ -292,11 +308,14 @@ class Common
                 ->where('c.CustomerID', '=', $currentUser->CustomerID)
                 ->where('c.StatusID', '=', eStatus::Active)
                 ->count();
-            if ($count > 0) {
+            if ($count > 0)
+            {
                 return true;
             }
+
             return false;
-        } else {
+        } else
+        {
             return true;
         }
     }
@@ -307,15 +326,19 @@ class Common
 
         $chk4Application = Common::CheckApplicationOwnership($applicationID);
 
-        if ($chk4Application) {
-            if ((int)$currentUser->UserTypeID == eUserTypes::Customer) {
+        if ($chk4Application)
+        {
+            if ((int)$currentUser->UserTypeID == eUserTypes::Customer)
+            {
                 $count = DB::table('Customer AS c')
-                    ->join('Application AS a', function (JoinClause $join) use ($applicationID) {
+                    ->join('Application AS a', function (JoinClause $join) use ($applicationID)
+                    {
                         $join->on('a.ApplicationID', '=', DB::raw($applicationID));
                         $join->on('a.CustomerID', '=', 'c.CustomerID');
                         $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
                     })
-                    ->join('Category AS t', function (JoinClause $join) use ($categoryID) {
+                    ->join('Category AS t', function (JoinClause $join) use ($categoryID)
+                    {
                         $join->on('t.CategoryID', '=', DB::raw($categoryID));
                         $join->on('t.ApplicationID', '=', 'a.ApplicationID');
                         $join->on('t.StatusID', '=', DB::raw(eStatus::Active));
@@ -323,51 +346,64 @@ class Common
                     ->where('c.CustomerID', '=', $currentUser->CustomerID)
                     ->where('c.StatusID', '=', eStatus::Active)
                     ->count();
-                if ($count > 0) {
+                if ($count > 0)
+                {
                     return true;
                 }
-            } else {
+            } else
+            {
                 $count = DB::table('Category')
                     ->where('CategoryID', '=', $categoryID)
                     ->where('ApplicationID', '=', $applicationID)
                     ->where('StatusID', '=', eStatus::Active)
                     ->count();
-                if ($count > 0) {
+                if ($count > 0)
+                {
                     return true;
                 }
             }
         }
+
         return false;
     }
 
     public static function CheckApplicationOwnership($applicationID)
     {
         $currentUser = Auth::user();
-        if ($currentUser == NULL) {
-            return FALSE;
+        if ($currentUser == null)
+        {
+            return false;
         }
 
-        if ((int)$currentUser->UserTypeID == eUserTypes::Manager) {
+        if ((int)$currentUser->UserTypeID == eUserTypes::Manager)
+        {
             return true;
         }
 
-        if ((int)$applicationID == 0) {
-            return FALSE;
+        if ((int)$applicationID == 0)
+        {
+            return false;
         }
 
-        if ((int)$currentUser->UserTypeID == eUserTypes::Customer) {
+        if ((int)$currentUser->UserTypeID == eUserTypes::Customer)
+        {
             $a = Application::find($applicationID);
-            if ($a) {
-                if ((int)$a->StatusID == eStatus::Active) {
+            if ($a)
+            {
+                if ((int)$a->StatusID == eStatus::Active)
+                {
                     $c = $a->Customer;
-                    if ((int)$c->StatusID == eStatus::Active) {
-                        if ((int)$currentUser->CustomerID == (int)$c->CustomerID) {
+                    if ((int)$c->StatusID == eStatus::Active)
+                    {
+                        if ((int)$currentUser->CustomerID == (int)$c->CustomerID)
+                        {
                             return true;
                         }
                     }
                 }
             }
         }
+
         return false;
     }
 
@@ -375,17 +411,21 @@ class Common
     {
         $currentUser = Auth::user();
 
-        if ((int)$currentUser->UserTypeID == eUserTypes::Customer) {
+        if ((int)$currentUser->UserTypeID == eUserTypes::Customer)
+        {
             $count = DB::table('Customer AS c')
-                ->join('Application AS a', function (JoinClause $join) {
+                ->join('Application AS a', function (JoinClause $join)
+                {
                     $join->on('a.CustomerID', '=', 'c.CustomerID');
                     $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
                 })
-                ->join('Content AS cn', function (JoinClause $join) {
+                ->join('Content AS cn', function (JoinClause $join)
+                {
                     $join->on('cn.ApplicationID', '=', 'a.ApplicationID');
                     $join->on('cn.StatusID', '=', DB::raw(eStatus::Active));
                 })
-                ->join('ContentPassword AS cp', function (JoinClause $join) use ($contentPasswordID) {
+                ->join('ContentPassword AS cp', function (JoinClause $join) use ($contentPasswordID)
+                {
                     $join->on('cp.ContentPasswordID', '=', DB::raw($contentPasswordID));
                     $join->on('cp.ContentID', '=', 'cn.ContentID');
                     $join->on('cp.StatusID', '=', DB::raw(eStatus::Active));
@@ -393,40 +433,50 @@ class Common
                 ->where('c.CustomerID', '=', $currentUser->CustomerID)
                 ->where('c.StatusID', '=', eStatus::Active)
                 ->count();
-            if ($count > 0) {
+            if ($count > 0)
+            {
                 return true;
             }
+
             return false;
-        } else {
+        } else
+        {
             return true;
         }
     }
 
     public static function AuthInteractivity($applicationID)
     {
-        if (Common::CheckApplicationOwnership($applicationID)) {
+        if (Common::CheckApplicationOwnership($applicationID))
+        {
             $a = Application::find($applicationID);
-            if ($a) {
+            if ($a)
+            {
                 return (1 == (int)$a->Package->Interactive);
             }
         }
+
         return false;
     }
 
     public static function AuthMaxPDF($applicationID)
     {
-        if (Common::CheckApplicationOwnership($applicationID)) {
+        if (Common::CheckApplicationOwnership($applicationID))
+        {
             $currentPDF = (int)Content::where('ApplicationID', '=', $applicationID)->where('Status', '=', 1)->where('StatusID', '=', eStatus::Active)->count();
             $maxPDF = 0;
 
             $a = Application::find($applicationID);
-            if ($a) {
+            if ($a)
+            {
                 $maxPDF = (int)Application::find($applicationID)->Package->MaxActivePDF;
-                if ($currentPDF < $maxPDF) {
+                if ($currentPDF < $maxPDF)
+                {
                     return true;
                 }
             }
         }
+
         return false;
     }
 
@@ -440,30 +490,35 @@ class Common
         $oContentFileName = '';
 
         $c = DB::table('Customer AS c')
-            ->join('Application AS a', function (JoinClause $join) {
+            ->join('Application AS a', function (JoinClause $join)
+            {
                 $join->on('a.CustomerID', '=', 'c.CustomerID');
                 $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
             })
-            ->join('Content AS o', function (JoinClause $join) use ($ContentID) {
+            ->join('Content AS o', function (JoinClause $join) use ($ContentID)
+            {
                 $join->on('o.ContentID', '=', DB::raw($ContentID));
                 $join->on('o.ApplicationID', '=', 'a.ApplicationID');
                 $join->on('o.StatusID', '=', DB::raw(eStatus::Active));
             })
             ->where('c.StatusID', '=', eStatus::Active)
-            ->first(array('c.CustomerID', 'a.ApplicationID', 'o.ContentID', 'o.IsProtected'));
-        if ($c) {
+            ->first(['c.CustomerID', 'a.ApplicationID', 'o.ContentID', 'o.IsProtected']);
+        if ($c)
+        {
             $oCustomerID = (int)$c->CustomerID;
             $oApplicationID = (int)$c->ApplicationID;
             $oContentID = (int)$c->ContentID;
             $IsProtected = (int)$c->IsProtected;
-            if ($IsProtected == 1) {
+            if ($IsProtected == 1)
+            {
                 //Content
                 $authPwd = false;
                 $checkPwd = DB::table('Content')
                     ->where('ContentID', '=', $oContentID)
                     ->where('StatusID', '=', eStatus::Active)
                     ->first();
-                if ($checkPwd) {
+                if ($checkPwd)
+                {
                     $authPwd = Hash::check($Password, $checkPwd->Password);
                 }
                 //Content password
@@ -472,14 +527,19 @@ class Common
                     ->where('ContentID', '=', $oContentID)
                     ->where('StatusID', '=', eStatus::Active)
                     ->get();
-                if ($checkPwdList) {
-                    foreach ($checkPwdList as $pwd) {
-                        if ((int)$pwd->Qty > 0) {
-                            if (Hash::check($Password, $pwd->Password)) {
+                if ($checkPwdList)
+                {
+                    foreach ($checkPwdList as $pwd)
+                    {
+                        if ((int)$pwd->Qty > 0)
+                        {
+                            if (Hash::check($Password, $pwd->Password))
+                            {
                                 $authPwdList = true;
                                 //dec counter
                                 $current = ContentPassword::find($pwd->ContentPasswordID);
-                                if ((int)$current->Qty > 0) {
+                                if ((int)$current->Qty > 0)
+                                {
                                     $current->Qty = $current->Qty - 1;
                                     $current->save();
                                 }
@@ -489,7 +549,8 @@ class Common
                     }
                 }
 
-                if (!($authPwd || $authPwdList)) {
+                if (!($authPwd || $authPwdList))
+                {
                     throw new Exception(__('common.contents_wrongpassword'), "101");
                 }
             }
@@ -499,23 +560,29 @@ class Common
                 ->where('StatusID', '=', eStatus::Active)
                 ->orderBy('ContentFileID', 'DESC')
                 ->first();
-            if ($cf) {
+            if ($cf)
+            {
                 $oContentFileID = (int)$cf->ContentFileID;
                 $oContentFilePath = $cf->FilePath;
                 $oContentFileName = $cf->FileName;
 
-                if ((int)$cf->Interactivity == Interactivity::ProcessQueued) {
-                    if ((int)$cf->HasCreated == 1) {
+                if ((int)$cf->Interactivity == Interactivity::ProcessQueued)
+                {
+                    if ((int)$cf->HasCreated == 1)
+                    {
                         $oContentFilePath = $cf->InteractiveFilePath;
                         $oContentFileName = $cf->InteractiveFileName;
-                    } else {
+                    } else
+                    {
                         throw new Exception(__('common.contents_interactive_file_hasnt_been_created'), "104");
                     }
                 }
-            } else {
+            } else
+            {
                 throw new Exception(__('common.list_norecord'), "102");
             }
-        } else {
+        } else
+        {
             throw new Exception(__('common.list_norecord'), "102");
         }
     }
@@ -524,7 +591,8 @@ class Common
     {
         $file = public_path($filepath . '/' . $filename);
 
-        if (file_exists($file) && is_file($file)) {
+        if (file_exists($file) && is_file($file))
+        {
             $fileSize = File::size($file);
             //throw new Exception($fileSize);
 
@@ -537,7 +605,8 @@ class Common
             $r->ApplicationID = $ApplicationID;
             $r->ContentID = $ContentID;
             $r->ContentFileID = $ContentFileID;
-            if ($ContentCoverImageFileID > 0) {
+            if ($ContentCoverImageFileID > 0)
+            {
                 $r->ContentCoverImageFileID = $ContentCoverImageFileID;
             }
             $r->RequestDate = new DateTime();
@@ -563,7 +632,7 @@ class Common
             ob_end_clean();
             set_time_limit(0);
             header("Cache-Control: no-store, no-cache, must-revalidate");
-            header("Cache-Control: post-check=0, pre-check=0", FALSE);
+            header("Cache-Control: post-check=0, pre-check=0", false);
             header("Pragma: no-cache");
             header("Expires: " . GMDATE("D, d M Y H:i:s", MKTIME(DATE("H") + 2, DATE("i"), DATE("s"), DATE("m"), DATE("d"), DATE("Y"))) . " GMT");
             header("Last-Modified: " . GMDATE("D, d M Y H:i:s") . " GMT");
@@ -583,7 +652,8 @@ class Common
             //SELECT RequestID, FileSize, DataTransferred, Percentage FROM Request ORDER BY RequestID DESC LIMIT 10;
             //ignore_user_abort(true);
 
-            while (!feof($fc) && connection_status() == 0) {
+            while (!feof($fc) && connection_status() == 0)
+            {
 
                 //echo fread($fc, round($download_rate * 1024));
                 print fread($fc, round($download_rate * 1024));
@@ -607,7 +677,8 @@ class Common
 
             // close file stream
             fclose($fc);
-        } else {
+        } else
+        {
             throw new Exception(__('common.file_notfound'), "102");
         }
     }
@@ -615,18 +686,21 @@ class Common
     public static function downloadImage($ContentID, $RequestTypeID, $Width, $Height)
     {
         $content = DB::table('Customer AS c')
-            ->join('Application AS a', function (JoinClause $join) {
+            ->join('Application AS a', function (JoinClause $join)
+            {
                 $join->on('a.CustomerID', '=', 'c.CustomerID');
                 $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
             })
-            ->join('Content AS o', function (JoinClause $join) use ($ContentID) {
+            ->join('Content AS o', function (JoinClause $join) use ($ContentID)
+            {
                 $join->on('o.ContentID', '=', DB::raw($ContentID));
                 $join->on('o.ApplicationID', '=', 'a.ApplicationID');
                 $join->on('o.StatusID', '=', DB::raw(eStatus::Active));
             })
             ->where('c.StatusID', '=', eStatus::Active)
-            ->first(array('c.CustomerID', 'a.ApplicationID', 'o.ContentID', 'o.IsProtected'));
-        if (!$content) {
+            ->first(['c.CustomerID', 'a.ApplicationID', 'o.ContentID', 'o.IsProtected']);
+        if (!$content)
+        {
             throw new Exception(__('common.list_norecord'), "102");
         }
         $contentFile = DB::table('ContentFile')
@@ -635,7 +709,8 @@ class Common
             ->orderBy('ContentFileID', 'DESC')
             ->first();
 
-        if (!$contentFile) {
+        if (!$contentFile)
+        {
             throw new Exception(__('common.list_norecord'), "102");
         }
         $contentCoverImageFile = DB::table('ContentCoverImageFile')
@@ -643,21 +718,26 @@ class Common
             ->where('StatusID', '=', eStatus::Active)
             ->orderBy('ContentCoverImageFileID', 'DESC')
             ->first();
-        if (!$contentCoverImageFile) {
+        if (!$contentCoverImageFile)
+        {
             throw new Exception(__('common.list_norecord'), "102");
         }
 
-        if ($Width > 0 && $Height > 0) {
+        if ($Width > 0 && $Height > 0)
+        {
             //image var mi kontrol edip yok ise olusturup, ismini set edelim;
             $originalImage = public_path($contentCoverImageFile->FilePath . '/' . IMAGE_CROPPED_2048);
-            if (!is_file($originalImage)) {
+            if (!is_file($originalImage))
+            {
                 $originalImage = public_path($contentCoverImageFile->FilePath . '/' . $contentCoverImageFile->SourceFileName);
             }
             $pathInfoOI = pathinfo($originalImage);
             $fileName = IMAGE_CROPPED_NAME . "_" . $Width . "x" . $Height . ".jpg";
-            if (!is_file($pathInfoOI["dirname"] . "/" . $fileName)) {
+            if (!is_file($pathInfoOI["dirname"] . "/" . $fileName))
+            {
                 //resize original image to new path and then save it.
-                if (!is_file($originalImage)) {
+                if (!is_file($originalImage))
+                {
                     throw new Exception(__('common.file_notfound'), "102");
                 }
                 $im = new Imagick($originalImage);
@@ -665,8 +745,10 @@ class Common
                 $im->writeImage($pathInfoOI["dirname"] . "/" . $fileName);
                 $im->destroy();
             }
-        } else {
-            switch ($RequestTypeID) {
+        } else
+        {
+            switch ($RequestTypeID)
+            {
                 case eRequestType::SMALL_IMAGE_FILE:
                     $fileName = $contentCoverImageFile->FileName2;
                     break;
@@ -679,7 +761,8 @@ class Common
         }
 
         $file = public_path($contentCoverImageFile->FilePath . '/' . $fileName);
-        if (!is_file($file)) {
+        if (!is_file($file))
+        {
             throw new Exception(__('common.file_notfound'), "102");
         }
         $fileSize = File::size($file);
@@ -714,7 +797,7 @@ class Common
         ob_end_clean();
         set_time_limit(0);
         header("Cache-Control: no-store, no-cache, must-revalidate");
-        header("Cache-Control: post-check=0, pre-check=0", FALSE);
+        header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
         header("Expires: " . GMDATE("D, d M Y H:i:s", MKTIME(DATE("H") + 2, DATE("i"), DATE("s"), DATE("m"), DATE("d"), DATE("Y"))) . " GMT");
         header("Last-Modified: " . GMDATE("D, d M Y H:i:s") . " GMT");
@@ -724,7 +807,8 @@ class Common
         header("Content-Transfer-Encoding: binary\n");
         // open file stream
         $fc = fopen($file, "r");
-        while (!feof($fc) && connection_status() == 0) {
+        while (!feof($fc) && connection_status() == 0)
+        {
             //echo fread($fc, round($download_rate * 1024));
             print fread($fc, round($download_rate * 1024));
 
@@ -754,8 +838,10 @@ class Common
         $subject = __('common.task_subject');
         Log::info($msg);
         Bundle::start('messages');
-        foreach ($toEmailSet as $toEmail) {
-            Message::send(function ($m) use ($toEmail, $subject, $msg) {
+        foreach ($toEmailSet as $toEmail)
+        {
+            Message::send(function ($m) use ($toEmail, $subject, $msg)
+            {
                 $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 $m->to($toEmail);
                 $m->subject($subject);
@@ -768,14 +854,18 @@ class Common
     {
         return; //573573
         Bundle::start('messages');
-        foreach ($userList as $user) {
-            if (!in_array($user["warning_mail_phase"], array(1, 2, 3))) {
+        foreach ($userList as $user)
+        {
+            if (!in_array($user["warning_mail_phase"], [1, 2, 3]))
+            {
                 continue;
             }
 
-            Message::send(function ($m) use ($user) {
+            Message::send(function ($m) use ($user)
+            {
                 $msg = "";
-                switch ($user["warning_mail_phase"]) {
+                switch ($user["warning_mail_phase"])
+                {
                     case 1:
                         $msg = "Değerli Müşterimiz, \r\n\r\n"
                             . "Bekleyen bir ödemeniz bulunmaktadır ve iki hafta içinde ödemenizi tamamlamanız gerekmektedir. "
@@ -810,8 +900,10 @@ class Common
     {
         $adminMailSet = config("custom.payment_delay_reminder_admin_mail_set");
         Bundle::start('messages');
-        foreach ($adminMailSet as $adminMail) {
-            Message::send(function ($m) use ($adminMail, $msg) {
+        foreach ($adminMailSet as $adminMail)
+        {
+            Message::send(function ($m) use ($adminMail, $msg)
+            {
                 $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 $m->to($adminMail);
                 $m->subject("Gale Press Ödeme Hatırlatma Maili");
@@ -826,8 +918,10 @@ class Common
         $subject = __('common.task_status');
         Log::info($msg);
         Bundle::start('messages');
-        foreach ($toEmailSet as $toEmail) {
-            Message::send(function ($m) use ($toEmail, $subject, $msg) {
+        foreach ($toEmailSet as $toEmail)
+        {
+            Message::send(function ($m) use ($toEmail, $subject, $msg)
+            {
                 $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 $m->to($toEmail);
                 $m->subject($subject);
@@ -838,9 +932,11 @@ class Common
 
     public static function sendEmail($toEmail, $toDisplayName, $subject, $msg)
     {
-        try {
+        try
+        {
             Bundle::start('messages');
-            Message::send(function ($m) use ($toEmail, $toDisplayName, $subject, $msg) {
+            Message::send(function ($m) use ($toEmail, $toDisplayName, $subject, $msg)
+            {
                 $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 //$m->to($toEmail);
                 $m->to($toEmail, $toDisplayName);
@@ -848,16 +944,19 @@ class Common
                 $m->body($msg);
                 //$m->html(true);
             });
-        } catch (Exception $e) {
+        } catch (Exception $e)
+        {
             //return 'Mailer error: ' . $e->getMessage();
         }
     }
 
     public static function sendHtmlEmail($toEmail, $toDisplayName, $subject, $msg)
     {
-        try {
+        try
+        {
             Bundle::start('messages');
-            Message::send(function ($m) use ($toEmail, $toDisplayName, $subject, $msg) {
+            Message::send(function ($m) use ($toEmail, $toDisplayName, $subject, $msg)
+            {
                 $m->from((string)__('maillang.contanct_email'), config('custom.mail_displayname'));
                 //$m->to($toEmail);
                 $m->to($toEmail, $toDisplayName);
@@ -865,8 +964,10 @@ class Common
                 $m->body($msg);
                 $m->html(true);
             });
+
             return true;
-        } catch (Exception $e) {
+        } catch (Exception $e)
+        {
             // return 'Mailer error: ' . $e->getMessage();
             return false;
         }
@@ -884,15 +985,18 @@ class Common
         $password = "";
         $counter = 0;
 
-        while ($counter < $length) {
+        while ($counter < $length)
+        {
             $actChar = substr($validchars[$level], rand(0, strlen($validchars[$level]) - 1), 1);
 
             // All character must be different
-            if (!strstr($password, $actChar)) {
+            if (!strstr($password, $actChar))
+            {
                 $password .= $actChar;
                 $counter++;
             }
         }
+
         return $password;
     }
 
@@ -903,20 +1007,24 @@ class Common
 
     public static function dateWrite($date, $useLocal = true)
     {
-        if (empty($date)) {
+        if (empty($date))
+        {
             $date = date("Y-m-d");
         }
         $ret = date('Y-m-d H:i:s', strtotime($date));
-        if ($useLocal) {
+        if ($useLocal)
+        {
             $ret = Common::convert2Localzone($ret, true);
         }
+
         return $ret;
     }
 
     public static function convert2Localzone($d, $write = false)
     {
         //2009-07-14 04:27:16
-        if (Auth::check()) {
+        if (Auth::check())
+        {
             $sign = '+';
             $hour = 0;
             $minute = 0;
@@ -926,15 +1034,18 @@ class Common
             $timezone = preg_replace('/\s+/', '', $timezone);
             //var_dump($timezone);
 
-            if (Str::length($timezone) > 0) {
+            if (mb_strlen($timezone) > 0)
+            {
 
                 $sign = substr($timezone, 0, 1);
                 $timezone = str_replace($sign, '', $timezone);
                 $pos = strrpos($timezone, ":");
-                if ($pos === false) {
+                if ($pos === false)
+                {
                     //yok
                     $hour = (int)$timezone;
-                } else {
+                } else
+                {
                     //var
                     $segment = explode(":", $timezone);
                     $hour = (int)$segment[0];
@@ -947,25 +1058,31 @@ class Common
             //var_dump($minute);
             //var_dump($d);
 
-            if ($write) {
-                if ($sign == '+') {
+            if ($write)
+            {
+                if ($sign == '+')
+                {
                     $sign = '-';
-                } else {
+                } else
+                {
                     $sign = '+';
                 }
             }
 
-            if ($hour > 0) {
+            if ($hour > 0)
+            {
                 $date = new DateTime($d);
                 $d = date("Y-m-d H:i:s", strtotime($sign . $hour . ' hours', $date->getTimestamp()));
             }
 
-            if ($minute > 0) {
+            if ($minute > 0)
+            {
                 $date = new DateTime($d);
                 $d = date("Y-m-d H:i:s", strtotime($sign . $minute . ' minutes', $date->getTimestamp()));
             }
             //var_dump($d);
         }
+
         return $d;
     }
 
@@ -979,43 +1096,56 @@ class Common
         //DateTime
         //Date
         //Bit
-        if ($type == "Number") {
+        if ($type == "Number")
+        {
             $ret = $data;
-        } elseif ($type == "String") {
-            if (Common::startsWith($data, '!!!')) {
+        } elseif ($type == "String")
+        {
+            if (Common::startsWith($data, '!!!'))
+            {
                 $ret = __('common.' . str_replace('!!!', '', $data))->get();
-            } else {
+            } else
+            {
                 $ret = $data;
             }
-        } elseif ($type == "Percent") {
+        } elseif ($type == "Percent")
+        {
             $ret = '% ' . round((float)$data, 2);
-        } elseif ($type == "DateTime") {
+        } elseif ($type == "DateTime")
+        {
             $ret = Common::dateRead($data, "dd.MM.yyyy HH:mm");
-        } elseif ($type == "Date") {
+        } elseif ($type == "Date")
+        {
             $ret = Common::dateRead($data, "dd.MM.yyyy");
-        } elseif ($type == "Bit") {
+        } elseif ($type == "Bit")
+        {
             $ret = ((int)$data == 1 ? "Evet" : "Hayır");
-        } elseif ($type == "Size") {
+        } elseif ($type == "Size")
+        {
 
             $size = (float)$data;
             $s = "Byte";
 
-            if ($size > 1024) {
+            if ($size > 1024)
+            {
 
                 $size = $size / 1024;
                 $s = "KB";
 
-                if ($size > 1024) {
+                if ($size > 1024)
+                {
 
                     $size = $size / 1024;
                     $s = "MB";
 
-                    if ($size > 1024) {
+                    if ($size > 1024)
+                    {
 
                         $size = $size / 1024;
                         $s = "GB";
 
-                        if ($size > 1024) {
+                        if ($size > 1024)
+                        {
 
                             $size = $size / 1024;
                             $s = "TB";
@@ -1025,53 +1155,66 @@ class Common
             }
             $size = number_format($size, 2, '.', '');
             $ret = $size . " " . $s;
-        } else {
+        } else
+        {
             $ret = $data;
         }
+
         return $ret;
     }
 
     public static function startsWith($haystack, $needle)
     {
         $length = strlen($needle);
+
         return (substr($haystack, 0, $length) === $needle);
     }
 
     public static function dateRead($date, $format, $useLocal = true)
     {
-        if (empty($date)) {
+        if (empty($date))
+        {
             $date = date("Y-m-d");
         }
         $ret = "";
-        if ($useLocal) {
+        if ($useLocal)
+        {
             $date = Common::convert2Localzone($date);
         }
 
-        if (App::isLocale('usa')) {
-            if ($format == 'd.m.Y') {
+        if (App::isLocale('usa'))
+        {
+            if ($format == 'd.m.Y')
+            {
                 $format = 'm/d/Y';
-            } else if ($format == 'd.m.Y H:i') {
+            } else if ($format == 'd.m.Y H:i')
+            {
                 $format = 'm/d/Y H:i';
-            } else if ($format == 'd.m.Y H:i:s') {
+            } else if ($format == 'd.m.Y H:i:s')
+            {
                 $format = 'm/d/Y H:i:s';
             }
         }
+
         return date($format, strtotime($date));
     }
 
     public static function endsWith($haystack, $needle)
     {
         $length = strlen($needle);
-        if ($length == 0) {
+        if ($length == 0)
+        {
             //return true;
             return false;
         }
+
         return (substr($haystack, -$length) === $needle);
     }
 
     public static function monthName($month)
     {
         $m = __('common.month_names');
+
         return $m[$month];
     }
 
@@ -1084,40 +1227,52 @@ class Common
         $isDistrict = false;
         $column = 'Country';
 
-        if ($type == 'country') {
+        if ($type == 'country')
+        {
             $isCountry = true;
             $column = 'Country';
-        } elseif ($type == 'city') {
+        } elseif ($type == 'city')
+        {
             $isCity = true;
             $column = 'City';
-        } elseif ($type == 'district') {
+        } elseif ($type == 'district')
+        {
             $isDistrict = true;
             $column = 'District';
         }
 
         $rs = DB::table('Statistic')
-            ->where(function ($query) use ($currentUser, $isCountry, $isCity, $isDistrict, $customerID, $applicationID, $contentID, $country, $city) {
-                if ((int)$currentUser->UserTypeID == eUserTypes::Manager && $customerID > 0) {
+            ->where(function ($query) use ($currentUser, $isCountry, $isCity, $isDistrict, $customerID, $applicationID, $contentID, $country, $city)
+            {
+                if ((int)$currentUser->UserTypeID == eUserTypes::Manager && $customerID > 0)
+                {
                     $query->where('CustomerID', '=', $customerID);
-                } elseif ((int)$currentUser->UserTypeID == eUserTypes::Customer) {
+                } elseif ((int)$currentUser->UserTypeID == eUserTypes::Customer)
+                {
                     $query->where('CustomerID', '=', $currentUser->CustomerID);
                 }
 
-                if ($applicationID > 0) {
-                    if (Common::CheckApplicationOwnership($applicationID)) {
+                if ($applicationID > 0)
+                {
+                    if (Common::CheckApplicationOwnership($applicationID))
+                    {
                         $query->where('ApplicationID', '=', $applicationID);
                     }
                 }
 
-                if ($contentID > 0) {
-                    if (Common::CheckContentOwnership($contentID)) {
+                if ($contentID > 0)
+                {
+                    if (Common::CheckContentOwnership($contentID))
+                    {
                         $query->where('ContentID', '=', $contentID);
                     }
                 }
 
-                if ($isCity) {
+                if ($isCity)
+                {
                     $query->where('Country', '=', (strlen($country) > 0 ? $country : '???'));
-                } elseif ($isDistrict) {
+                } elseif ($isDistrict)
+                {
                     $query->where('Country', '=', (strlen($country) > 0 ? $country : '???'));
                     $query->where('City', '=', (strlen($city) > 0 ? $city : '???'));
                 }
@@ -1133,37 +1288,49 @@ class Common
     {
         $currentUser = Auth::user();
 
-        if ((int)$currentUser->UserTypeID == eUserTypes::Customer) {
+        if ((int)$currentUser->UserTypeID == eUserTypes::Customer)
+        {
             $content = Content::find($contentID);
-            if ($content) {
-                if ((int)$content->StatusID == eStatus::Active) {
-                    if ((int)$content->Application->StatusID == eStatus::Active) {
+            if ($content)
+            {
+                if ((int)$content->StatusID == eStatus::Active)
+                {
+                    if ((int)$content->Application->StatusID == eStatus::Active)
+                    {
                         $c = $content->Application->Customer;
-                        if ((int)$c->StatusID == eStatus::Active) {
-                            if ((int)$currentUser->CustomerID == (int)$c->CustomerID) {
+                        if ((int)$c->StatusID == eStatus::Active)
+                        {
+                            if ((int)$currentUser->CustomerID == (int)$c->CustomerID)
+                            {
                                 return true;
                             }
                         }
                     }
                 }
             }
+
             return false;
-        } else {
+        } else
+        {
             return true;
         }
     }
 
     public static function toExcel($twoDimensionalArray, $toFile)
     {
-        $rows = array();
+        $rows = [];
         $sep = "\t";
-        foreach ($twoDimensionalArray as $row) {
+        foreach ($twoDimensionalArray as $row)
+        {
             $tmpStr = "";
-            foreach ($row as $cell) {
+            foreach ($row as $cell)
+            {
                 $r = "";
-                if ($cell != "") {
+                if ($cell != "")
+                {
                     $r .= "$cell" . $sep;
-                } else {
+                } else
+                {
                     $r .= "" . $sep;
                 }
                 $tmpStr .= $r;
@@ -1189,36 +1356,44 @@ class Common
     public static function getPostDataString($postData)
     {
         $postDataString = "";
-        foreach ($postData as $key => $value) {
-            if (empty($postDataString)) {
+        foreach ($postData as $key => $value)
+        {
+            if (empty($postDataString))
+            {
                 $postDataString .= $key . "=" . $value;
-            } else {
+            } else
+            {
                 $postDataString .= '&' . $key . "=" . $value;
             }
         }
+
         return $postDataString;
     }
 
-    public static function localize($key, $replacements = array(), $language = null)
+    public static function localize($key, $replacements = [], $language = null)
     {
         $action = app('request')->route()->getAction();
 
         $result = trans(class_basename($action['controller']) . '.' . $key, $replacements, 'messages', $language);
-        if (empty($result)) {
+        if (empty($result))
+        {
             $result = $key;
         }
+
         return $result;
     }
 
     public static function moneyFormat($inputName)
     {
         $input = request($inputName);
+
         return str_replace(",", ".", str_replace(".", "", $input));
     }
 
     public static function metaContentLanguage()
     {
-        switch (app()->getLocale()) {
+        switch (app()->getLocale())
+        {
             case 'tr':
                 return 'tr';
             case 'en':
@@ -1239,24 +1414,34 @@ class Common
     {
         $rtn = "";
         $count = 0;
-        foreach ($exception->getTrace() as $frame) {
+        foreach ($exception->getTrace() as $frame)
+        {
             $args = "";
-            if (isset($frame['args'])) {
-                $args = array();
-                foreach ($frame['args'] as $arg) {
-                    if (is_string($arg)) {
+            if (isset($frame['args']))
+            {
+                $args = [];
+                foreach ($frame['args'] as $arg)
+                {
+                    if (is_string($arg))
+                    {
                         $args[] = "'" . $arg . "'";
-                    } elseif (is_array($arg)) {
+                    } elseif (is_array($arg))
+                    {
                         $args[] = "Array";
-                    } elseif (is_null($arg)) {
+                    } elseif (is_null($arg))
+                    {
                         $args[] = 'NULL';
-                    } elseif (is_bool($arg)) {
+                    } elseif (is_bool($arg))
+                    {
                         $args[] = ($arg) ? "true" : "false";
-                    } elseif (is_object($arg)) {
+                    } elseif (is_object($arg))
+                    {
                         $args[] = get_class($arg);
-                    } elseif (is_resource($arg)) {
+                    } elseif (is_resource($arg))
+                    {
                         $args[] = get_resource_type($arg);
-                    } else {
+                    } else
+                    {
                         $args[] = $arg;
                     }
                 }
@@ -1273,6 +1458,7 @@ class Common
                 $args);
             $count++;
         }
+
         return $rtn;
     }
 
@@ -1280,11 +1466,14 @@ class Common
     {
         $sourceReflection = new \ReflectionObject($source);
         $sourceProperties = $sourceReflection->getProperties();
-        foreach ($sourceProperties as $sourceProperty) {
+        foreach ($sourceProperties as $sourceProperty)
+        {
             $name = $sourceProperty->getName();
-            if (gettype($destination->{$name}) == "object") {
+            if (gettype($destination->{$name}) == "object")
+            {
                 self::Cast($destination->{$name}, $source->$name);
-            } else {
+            } else
+            {
                 $destination->{$name} = $source->$name;
             }
         }
@@ -1293,71 +1482,86 @@ class Common
     public static function getLocaleId()
     {
         $langs = config('app.langs');
+
         return $langs[App::getLocale()];
     }
 
-    public static function getClass($row) {
-        if(isset($row->IsMaster) && $row->IsMaster == 1) {
+    public static function getClass($row)
+    {
+        if (isset($row->IsMaster) && $row->IsMaster == 1)
+        {
             return ' class="masterContentRow"';
         }
+
         return '';
     }
 }
 
 
-function localDateFormat($format = 'dd.MM.yyyy') {
+function localDateFormat($format = 'dd.MM.yyyy')
+{
     $currentLang = app()->getLocale();
-    if($currentLang != 'usa') {
+    if ($currentLang != 'usa')
+    {
         return $format;
-    } else {
-        if($format == 'dd.MM.yyyy') {
+    } else
+    {
+        if ($format == 'dd.MM.yyyy')
+        {
             return 'mm/dd/yyyy';
         }
     }
 
 }
 
-function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
-    $output = NULL;
-    if(!isset($_SERVER["REMOTE_ADDR"])) {
+function ip_info($ip = null, $purpose = "location", $deep_detect = true)
+{
+    $output = null;
+    if (!isset($_SERVER["REMOTE_ADDR"]))
+    {
         return $output;
     }
-    if (filter_var($ip, FILTER_VALIDATE_IP) === FALSE) {
+    if (filter_var($ip, FILTER_VALIDATE_IP) === false)
+    {
         $ip = $_SERVER["REMOTE_ADDR"];
-        if ($deep_detect) {
+        if ($deep_detect)
+        {
             if (filter_var(@$_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP))
                 $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
             if (filter_var(@$_SERVER['HTTP_CLIENT_IP'], FILTER_VALIDATE_IP))
                 $ip = $_SERVER['HTTP_CLIENT_IP'];
         }
     }
-    $purpose = str_replace(array("name", "\n", "\t", " ", "-", "_"), NULL, strtolower(trim($purpose)));
-    $support = array("country", "countrycode", "state", "region", "city", "location", "address");
-    $continents = array(
+    $purpose = str_replace(["name", "\n", "\t", " ", "-", "_"], null, strtolower(trim($purpose)));
+    $support = ["country", "countrycode", "state", "region", "city", "location", "address"];
+    $continents = [
         "AF" => "Africa",
         "AN" => "Antarctica",
         "AS" => "Asia",
         "EU" => "Europe",
         "OC" => "Australia (Oceania)",
         "NA" => "North America",
-        "SA" => "South America"
-    );
-    if (filter_var($ip, FILTER_VALIDATE_IP) && in_array($purpose, $support)) {
+        "SA" => "South America",
+    ];
+    if (filter_var($ip, FILTER_VALIDATE_IP) && in_array($purpose, $support))
+    {
         $ipdat = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $ip));
-        if (@strlen(trim($ipdat->geoplugin_countryCode)) == 2) {
-            switch ($purpose) {
+        if (@strlen(trim($ipdat->geoplugin_countryCode)) == 2)
+        {
+            switch ($purpose)
+            {
                 case "location":
-                    $output = array(
-                        "city" => @$ipdat->geoplugin_city,
-                        "state" => @$ipdat->geoplugin_regionName,
-                        "country" => @$ipdat->geoplugin_countryName,
-                        "country_code" => @$ipdat->geoplugin_countryCode,
-                        "continent" => @$continents[strtoupper($ipdat->geoplugin_continentCode)],
-                        "continent_code" => @$ipdat->geoplugin_continentCode
-                    );
+                    $output = [
+                        "city"           => @$ipdat->geoplugin_city,
+                        "state"          => @$ipdat->geoplugin_regionName,
+                        "country"        => @$ipdat->geoplugin_countryName,
+                        "country_code"   => @$ipdat->geoplugin_countryCode,
+                        "continent"      => @$continents[strtoupper($ipdat->geoplugin_continentCode)],
+                        "continent_code" => @$ipdat->geoplugin_continentCode,
+                    ];
                     break;
                 case "address":
-                    $address = array($ipdat->geoplugin_countryName);
+                    $address = [$ipdat->geoplugin_countryName];
                     if (@strlen($ipdat->geoplugin_regionName) >= 1)
                         $address[] = $ipdat->geoplugin_regionName;
                     if (@strlen($ipdat->geoplugin_city) >= 1)
@@ -1382,5 +1586,10 @@ function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
             }
         }
     }
+
     return $output;
+}
+
+function interactiveComponents() {
+    return Component::orderBy('DisplayOrder', 'ASC')->get();
 }

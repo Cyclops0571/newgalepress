@@ -15,7 +15,7 @@ $rotation = 0;
 $rotationspeed = 1000;
 $rotationeffect = 'linear';
 $reverse= 0;
-$loop= 0;
+$myLoop= 0;
 $unvisibleStart=0;
 $animedelay = 0;
 $animeinterval = 0;
@@ -60,7 +60,7 @@ if(isset($Properties))
 		if($prop->Name == 'rotationspeed') $rotationspeed = (int)$prop->Value;
 		if($prop->Name == 'rotationeffect') $rotationeffect = $prop->Value;
 		if($prop->Name == 'reverse') $reverse = (int)$prop->Value;
-		if($prop->Name == 'loop') $loop = (int)$prop->Value;
+		if($prop->Name == 'loop') $myLoop = (int)$prop->Value;
 		if($prop->Name == 'unvisibleStart') $unvisibleStart = (int)$prop->Value;
 		if($prop->Name == 'animedelay') $animedelay = (int)$prop->Value;
 		if($prop->Name == 'animeinterval') $animeinterval = (int)$prop->Value;
@@ -122,7 +122,7 @@ if(isset($Properties))
     	
         <div class="properties component-panel{{ ($fileSelected == 0 ? ' hide' : '') }}">
             <div class="file-header">
-                <h4>{{ Str::limit($filename, 26) }}</h4>
+                <h4>{{ str_limit($filename, 26) }}</h4>
                 <span>{{ $fileSize }}</span>
                 <a href="#" class="delete" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
             </div>
@@ -154,7 +154,7 @@ if(isset($Properties))
 			</div>
 
             <?php
-            $effects = __("interactivity.animation_effects")->get();
+            $effects =  trans("interactivity.animation_effects");
             ?>
             <div class="text dark">
 				<label for="comp-{id}-effect" id="label_fade_effect">{{ __('interactivity.animation_effect') }}</label>
@@ -197,7 +197,7 @@ if(isset($Properties))
 			</div>
 
             <div class="checkbox js-checkbox{{ ($reverse == 1 ? ' checked' : '') }}">{{ __('interactivity.animation_reverse') }}<input type="hidden" name="comp-{id}-reverse" value="{{ $reverse }}" /></div>
-            <div class="checkbox js-checkbox{{ ($loop == 1 ? ' checked' : '') }}">{{ __('interactivity.animation_repeat') }}<input type="hidden" name="comp-{id}-loop" value="{{ $loop }}" /></div>
+            <div class="checkbox js-checkbox{{ ($myLoop == 1 ? ' checked' : '') }}">{{ trans('interactivity.animation_repeat') }}<input type="hidden" name="comp-{id}-loop" value="{{ $myLoop }}" /></div>
             <div id="comp-{id}-animefade" class="checkbox js-checkbox{{ ($unvisibleStart == 1 || $effect == 'fade' ? ' checked' : ' hide') }}" no="{{$unvisibleStart}}">{{ __('interactivity.animation_hidden_start') }}<input type="hidden" name="comp-{id}-unvisibleStart" value="{{ $unvisibleStart }}" /></div>
 
             @include('interactivity.components.import')

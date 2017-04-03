@@ -87,7 +87,7 @@ return array(
     'reports_location_district' => 'reporting/standort/gemeinde',
 
     'interactivity' => 'interaktives-pdf',
-    'interactivity_show' => 'interaktives-pdf/(:num)',
+    'interactivity_show' => 'interaktives-pdf/{content}',
     'interactivity_refreshtree' => 'interaktives-pdf/aktualisieren',
     'interactivity_fb' => 'flipbook/(:num)',
     'interactivity_preview' => 'interaktives-pdf/vorschau',

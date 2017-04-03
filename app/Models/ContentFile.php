@@ -92,11 +92,13 @@ class ContentFile extends Model
      */
     public static function createPdfPages(ContentFile &$cf)
     {
+
         $expMessage = '';
         if (count($cf->ContentFilePages) > 0) {
             //contentFile is already interactive.
             return;
         }
+
 
         $cf->PageCreateProgress = ContentFile::ContentFileInUse;
         $cf->save();

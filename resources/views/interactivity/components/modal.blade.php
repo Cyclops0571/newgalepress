@@ -41,7 +41,7 @@ if(isset($Properties))
         </div>
     </div>
     <!-- end progress -->
-    <a {{ (Str::length($modaliconname) > 0 ? 'href="'.$modaliconname.'" ' : '') }} target="_blank" class="modal-icon modal-img{{ ($modalIconSelected == 0 ? ' hide' : '') }}">{{ Str::limit($modaliconname, 17) }}</a>
+    <a {{ (mb_strlen($modaliconname) > 0 ? 'href="'.$modaliconname.'" ' : '') }} target="_blank" class="modal-icon modal-img{{ ($modalIconSelected == 0 ? ' hide' : '') }}">{{ str_limit($modaliconname, 17) }}</a>
     <a class="close{{ ($modalIconSelected == 0 ? ' hide' : '') }}"><i class="icon-remove"></i></a>
     
    <!--  <span class="error hide"><i class="icon-exclamation-sign"></i>{{ __('interactivity.video_poster_error') }}</span> -->

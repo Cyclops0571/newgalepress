@@ -36,7 +36,7 @@
 
 					<article class="post post-large blog-single-post">
 						<div class="post-date">
-							<span><i class="icon icon-calendar"></i> <?php $m = __('common.month_names')->get(); echo $m[12];?> 23, 2014 </span>
+							<span><i class="icon icon-calendar"></i> <?php $m = trans('common.month_names'); echo $m[12];?> 23, 2014 </span>
                             <span>&nbsp;<i class="icon icon-user"></i>&nbsp;<a href="#">Gale Press</a> </span>
 						</div>
 

@@ -21,6 +21,7 @@ class CustomerWelcomeMailler extends Mailable
      */
     public function __construct(Request $request)
     {
+
         $this->data = [
             'name' => $request->get('senderEmail', ''),
             'phone' => $request->get('phone', ''),

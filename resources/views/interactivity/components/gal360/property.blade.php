@@ -23,7 +23,7 @@ if(isset($Properties))
 				$filename = '';
 			}
 			
-			if(Str::length($filename) > 0)
+			if(mb_strlen($filename) > 0)
 			{
 				$files .= '<li>'.($index > 9 ? "".$index: "0".$index).' - '.$filename.'<input type="hidden" name="comp-{id}-filename[]" class="required" value="'.$filename.'" /><a href="#" class="delete"><i class="icon-remove"></i></a></li>';
 			}
@@ -33,7 +33,7 @@ if(isset($Properties))
 	}
 }
 $fileSelected = 0;
-if(Str::length($files) > 0)
+if(mb_strlen($files) > 0)
 {
 	$fileSelected = 1;
 }

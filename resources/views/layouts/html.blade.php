@@ -34,13 +34,7 @@
         <link media="screen" type="text/css" rel="stylesheet" href="{{elixir('/css/galepress-all.css')}}"/>
 
         <!-- Begin JavaScript -->
-        <script type="text/javascript">
-            var currentLanguage = {!! json_encode(\App::getLocale()) !!};
-            var route = {!! json_encode(__('route')) !!};
-            var notification = {!! json_encode(__('notification')) !!};
-            var javascriptLang = {!! json_encode(__('javascriptLang')) !!};
-            var interactivity = {!! json_encode(__('interactivity')) !!};
-        </script>
+        @include('js.language')
         <script src="/js/jquery-2.1.4.min.js"></script>
         <script src="/js/jquery-ui-1.10.4.custom.min.js"></script>
         <script src="/js/bootstrap.min.js"></script>
@@ -66,10 +60,7 @@
         <script src="/jqplot/jqplot.highlighter.min.js"></script>
         <script src="/jqplot/jqplot.dateAxisRenderer.min.js"></script>
         <script src="/jqplot/jqplot.categoryAxisRenderer.min.js"></script>
-        <script src="/js/gurus.common.js"></script>
-        <script src="/js/gurus.string.js"></script>
-        <script src="/js/gurus.date.js"></script>
-        <script src="/js/gurus.projectcore.js"></script>
+        <script src="{{elixir('/js/gurus.js')}}"></script>
         <script src="/js/session-check.js"></script>
         <script src="/js/lib.js"></script>
 

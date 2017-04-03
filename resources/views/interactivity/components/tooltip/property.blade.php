@@ -103,7 +103,7 @@ if(isset($Properties))
                 </div>
             </div>
             <!-- end progress -->
-            <a {{ (Str::length($filename) > 0 ? 'href="'.$filename.'" ' : '') }} target="_blank" class="tooltip-icon1{{ ($fileSelected == 0 ? ' hide' : '') }}">1) {{ Str::limit($filename, 17) }}</a>
+            <a {{ (mb_strlen($filename) > 0 ? 'href="'.$filename.'" ' : '') }} target="_blank" class="tooltip-icon1{{ ($fileSelected == 0 ? ' hide' : '') }}">1) {{ str_limit($filename, 17) }}</a>
             <a class="close{{ ($fileSelected == 0 ? ' hide' : '') }}"><i class="icon-remove"></i></a>
             
             <span class="error hide"><i class="icon-exclamation-sign"></i>{{ __('interactivity.video_poster_error') }}</span>
@@ -125,7 +125,7 @@ if(isset($Properties))
                 </div>
             </div>
             <!-- end progress -->
-            <a {{ (Str::length($filename2) > 0 ? 'href="'.$filename2.'" ' : '') }} target="_blank" class="tooltip-icon2{{ ($fileSelected2 == 0 ? ' hide' : '') }}">2) {{ Str::limit($filename2, 17) }}</a>
+            <a {{ (mb_strlen($filename2) > 0 ? 'href="'.$filename2.'" ' : '') }} target="_blank" class="tooltip-icon2{{ ($fileSelected2 == 0 ? ' hide' : '') }}">2) {{ str_limit($filename2, 17) }}</a>
             <a class="close{{ ($fileSelected2 == 0 ? ' hide' : '') }}"><i class="icon-remove"></i></a>
             
             <span class="error hide"><i class="icon-exclamation-sign"></i>{{ __('interactivity.video_poster_error') }}</span>

@@ -358,6 +358,7 @@ class ContentController extends Controller {
         $content->setTopics($request->get('topicIds', []));
 
         $contentFile = $content->processPdf();
+        $contentFile = ContentFile::where('ContentID', 6353)->get()->last();
         if($contentFile){
             $content->processImage($contentFile, (int)$request->get('hdnCoverImageFileSelected', 0), $request->get('hdnCoverImageFileName'));
             ContentFile::createPdfPages($contentFile);

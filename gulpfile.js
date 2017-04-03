@@ -31,7 +31,7 @@ elixir((mix) => {
         'website/main-responsive.scss',
         'website/theme_royalblue.scss',
         'website/myWebsiteStyles.scss'
-    ], 'public/css/website.css');
+    ], 'public/css/website.css').version('css/website.css');
 
     mix.scripts([
         'website/modernizr.js',
@@ -66,33 +66,68 @@ elixir((mix) => {
         'website/jquery.gmap.min.js',
         'website/circle_diagram.js',
         'website/main.js',
-    ], 'public/js/website.js');
-
-    mix.sass('website/font-awesome.scss');
-    mix.version('/css/website.css');
-    mix.version('/js/website.js');
+    ], 'public/js/website.js').version('js/website.js');
 
     mix.styles([
-        'bootstrap.min.css',
-        'bootstrap-editable.css',
-        'jquery-ui.min.css',
-        'font-awesome.min.css',
-        'select2.css',
-        'stylesheet.css',
-        'backgrounds.css',
-        'themes.css',
-        'general.css',
-        'myApp.css',
-        'mystyles.css',
-        'btn_interactive.css',
-        'device-mockups2.css',
-        'bootstrap-colorpicker.min.css'],
+            'bootstrap.min.css',
+            'bootstrap-editable.css',
+            'jquery-ui.min.css',
+            'font-awesome.min.css',
+            'select2.css',
+            'stylesheet.css',
+            'backgrounds.css',
+            'themes.css',
+            'general.css',
+            'myApp.css',
+            'mystyles.css',
+            'btn_interactive.css',
+            'device-mockups2.css',
+            'bootstrap-colorpicker.min.css'],
         'public/css/galepress-all.css'
-    );
-    mix.version('/css/galepress-all.css');
+    ).version('css/galepress-all.css');
 
-   //mix.sass('animate.scss').version();
-   /*mix.webpack('app.js');*/
-   // mix.version('css/mystyles.css'); //elixir('css/styles.css')
+    mix.styles([
+        'app.css',
+        'app-extra.css',
+        'font-awesome.css',
+        'redactor.css',
+        'colorpicker.css'
+    ], 'public/css/interactive.css').version('css/interactive.css');
+
+    mix.version('js/jquery.js');
+    mix.version('js/jquery-ui.js');
+    mix.scripts([
+        'website/bootstrap.js',
+        'jquery.cookie.js',
+        'website/queryloader2.min.js',
+        'fullscreen.js',
+        'SCF.ui/Equalizer.js',
+        'SCF.ui/appreciate.js',
+        'SCF.ui/commutator.js',
+        'SCF.ui/datepicker.js',
+        'SCF.ui/pagination.js',
+        'SCF.ui/scrollbox.js',
+        'SCF.ui/slideshow.js',
+        'SCF.ui/tabbox.js',
+        'SCF.ui/starbar.js',
+        'SCF.ui/checkbox.js',
+        'SCF.ui/radio.js',
+        'SCF.ui/player.js',
+        'SCF.ui/currentlyPlaying.js',
+        'website/jquery.placeholder.js'
+    ], 'public/js/interactive.js').version('js/interactive.js');
+
+    mix.scripts([
+        'gurus.common.js',
+        'gurus.string.js',
+        'gurus.date.js',
+        'gurus.projectcore.js'
+    ], 'public/js/gurus.js').version('js/gurus.js');
+    mix.scripts('galepress-interactivity.js').version('js/galepress-interactivity.js');
+    mix.sass('website/font-awesome.scss');
+
+
+
+
 
 });

@@ -110,7 +110,7 @@ if(isset($Properties))
     
         <div class="properties component-panel{{ ($fileSelected == 0 ? ' hide' : '') }}">
             <div class="file-header">
-                <h4>{{ Str::limit($filename, 26) }}</h4>
+                <h4>{{ str_limit($filename, 26) }}</h4>
                 <span>{{ $fileSize }}</span>
                 <a href="#" class="delete" title="{{ __('interactivity.delete') }}"><i class="icon-remove"></i></a>
             </div>
@@ -146,7 +146,7 @@ if(isset($Properties))
                 </div>
                 
                 <!-- end progress -->
-                <a {{ (Str::length($posterimagename) > 0 ? 'href="'.$posterimagename.'" ' : '') }}target="_blank" class="poster-image modal-img{{ ($posterImageSelected == 0 ? ' hide' : '') }}">{{ Str::limit($posterimagename, 17) }}</a>
+                <a {{ (mb_strlen($posterimagename) > 0 ? 'href="'.$posterimagename.'" ' : '') }}target="_blank" class="poster-image modal-img{{ ($posterImageSelected == 0 ? ' hide' : '') }}">{{ str_limit($posterimagename, 17) }}</a>
                 <a class="close{{ ($posterImageSelected == 0 ? ' hide' : '') }}"><i class="icon-remove"></i></a>
                 
                 <span class="error hide"><i class="icon-exclamation-sign"></i>{{ __('interactivity.video_poster_error') }}</span>

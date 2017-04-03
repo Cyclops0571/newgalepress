@@ -200,8 +200,7 @@ var cInteractivity = new function () {
         $("#pdf-page").val(pageno + '/' + pageCount);
 
         var src = $("div.thumblist ul.slideshow-slides li.each-slide a[pageno='" + pageno + "'] img").attr("src");
-        console.log("SDfasdfasdf");
-        return;
+
 
         var img = new Image();
         img.onload = function () {

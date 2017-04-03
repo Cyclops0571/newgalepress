@@ -31,7 +31,7 @@ elixir((mix) => {
         'website/main-responsive.scss',
         'website/theme_royalblue.scss',
         'website/myWebsiteStyles.scss'
-    ], 'public/css/website.css').version('css/website.css');
+    ], 'public/css/website.css');
 
     mix.scripts([
         'website/modernizr.js',
@@ -66,7 +66,7 @@ elixir((mix) => {
         'website/jquery.gmap.min.js',
         'website/circle_diagram.js',
         'website/main.js',
-    ], 'public/js/website.js').version('js/website.js');
+    ], 'public/js/website.js');
 
     mix.styles([
             'bootstrap.min.css',
@@ -84,7 +84,7 @@ elixir((mix) => {
             'device-mockups2.css',
             'bootstrap-colorpicker.min.css'],
         'public/css/galepress-all.css'
-    ).version('css/galepress-all.css');
+    );
 
     mix.styles([
         'app.css',
@@ -92,10 +92,8 @@ elixir((mix) => {
         'font-awesome.css',
         'redactor.css',
         'colorpicker.css'
-    ], 'public/css/interactive.css').version('css/interactive.css');
+    ], 'public/css/interactive.css');
 
-    mix.version('js/jquery.js');
-    mix.version('js/jquery-ui.js');
     mix.scripts([
         'website/bootstrap.js',
         'jquery.cookie.js',
@@ -115,17 +113,19 @@ elixir((mix) => {
         'SCF.ui/player.js',
         'SCF.ui/currentlyPlaying.js',
         'website/jquery.placeholder.js'
-    ], 'public/js/interactive.js').version('js/interactive.js');
+    ], 'public/js/interactive.js');
 
     mix.scripts([
         'gurus.common.js',
         'gurus.string.js',
         'gurus.date.js',
         'gurus.projectcore.js'
-    ], 'public/js/gurus.js').version('js/gurus.js');
-    mix.scripts('galepress-interactivity.js').version('js/galepress-interactivity.js');
+    ], 'public/js/gurus.js');
+    mix.scripts('galepress-interactivity.js')
+
     mix.sass('website/font-awesome.scss');
 
+    mix.version(['js/jquery-ui.js', 'js/website.js', 'js/jquery.js', 'css/website.css', 'css/galepress-all.css', 'css/interactive.css', 'js/gurus.js', 'js/interactive.js', 'js/galepress-interactivity.js']);
 
 
 

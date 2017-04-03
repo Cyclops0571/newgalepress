@@ -626,7 +626,7 @@ class Application extends Model {
 
             if (!File::exists($targetRealPath))
             {
-                File::makeDirectory($targetRealPath, 777, true);
+                File::makeDirectory($targetRealPath, 0777, true);
             }
 
             File::move($sourceFileNameFull, $targetFileNameFull);

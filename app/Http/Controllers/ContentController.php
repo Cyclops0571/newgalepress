@@ -358,7 +358,6 @@ class ContentController extends Controller {
         $content->setTopics($request->get('topicIds', []));
 
         $contentFile = $content->processPdf();
-        $contentFile = ContentFile::where('ContentID', 6353)->get()->last();
         if($contentFile){
             $content->processImage($contentFile, (int)$request->get('hdnCoverImageFileSelected', 0), $request->get('hdnCoverImageFileName'));
             ContentFile::createPdfPages($contentFile);
@@ -429,7 +428,7 @@ class ContentController extends Controller {
 
                 $destinationFolder = 'public/files/customer_' . $customerID . '/application_' . $c->ApplicationID . '/content_' . $c->ContentID;
 
-                File::makeDirectory($destinationFolder, 777, true);
+                File::makeDirectory($destinationFolder, 0777, true);
                 File::copy($targetFilePath, $destinationFolder . '/' . $contentFile->FileName);
                 // Log::info($targetFilePath."|||".$destinationFolder.'/'.$contentFile->FileName);
 

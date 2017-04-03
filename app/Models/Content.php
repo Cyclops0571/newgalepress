@@ -363,7 +363,7 @@ class Content extends Model {
         {
             if (!File::exists($destinationFolder))
             {
-                File::makeDirectory($destinationFolder, 777, true);
+                File::makeDirectory($destinationFolder, 0777, true);
             }
 
             $this->PdfVersion += 1;

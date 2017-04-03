@@ -106,7 +106,7 @@ class ContentFile extends Model
 
         //create folder if does not exist
         if (!File::exists($cf->pdfFolderPathAbsolute())) {
-            File::makeDirectory($cf->pdfFolderPathAbsolute(), 777, true);
+            File::makeDirectory($cf->pdfFolderPathAbsolute(), 0777, true);
         }
 
         try {
@@ -165,7 +165,7 @@ class ContentFile extends Model
     private function createOutputFolder()
     {
         if (!File::exists($this->pdfFolderPathAbsolute() . '/output')) {
-            File::makeDirectory($this->pdfFolderPathAbsolute() . '/output', 777, true);
+            File::makeDirectory($this->pdfFolderPathAbsolute() . '/output', 0777, true);
         }
     }
 

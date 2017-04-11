@@ -2,27 +2,29 @@
 
 namespace App\Mail;
 
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CustomerWelcomeMailler extends Mailable implements ShouldQueue
+class ScheduledJobsMailler extends Mailable
 {
     use Queueable, SerializesModels;
     protected $locale;
-    protected $user;
+    protected $data = [];
 
     /**
      * Create a new message instance.
      *
-     * @param User $user
+     * @param $msg
      */
-    public function __construct(User $user)
+    public function __construct($msg)
     {
         $this->locale = app()->getLocale();
-        $this->user = $user;
+        $this->data['url'] = '';
+        $this->data['content'] = $msg;
+        $this->data['title'] = '';
+
     }
 
     /**
@@ -33,8 +35,7 @@ class CustomerWelcomeMailler extends Mailable implements ShouldQueue
     public function build()
     {
         app()->setLocale($this->locale);
-        return $this->view('mail-templates.customer_welcome_mail')
-            ->with(['user' => $this->user])
-            ->subject(trans('common.welcome_email_title'));
+        return $this->view('mail-templates.scheduled_job_mail')
+            ->with($this->data);
     }
 }

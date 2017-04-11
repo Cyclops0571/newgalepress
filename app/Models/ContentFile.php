@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Library\MyPcos;
+use App\Library\PageComponentDecorator;
 use Auth;
 use Common;
 use DateTime;
@@ -13,6 +14,10 @@ use File;
 use Illuminate\Database\Eloquent\Model;
 use Imagick;
 use Interactivity;
+use PDFlib;
+use PDFlibException;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 use ZipArchive;
 
 /**
@@ -88,7 +93,7 @@ class ContentFile extends Model
     /**
      * After pdf uploaded this function creates page snap shots, bookmarks and annotation
      * @param ContentFile $cf
-     * @return string|void
+     * @return void|string
      */
     public static function createPdfPages(ContentFile &$cf)
     {
@@ -154,6 +159,7 @@ class ContentFile extends Model
         }
 //        $cf->PageCreateProgress  = ContentFile::ContentFileAvailable;
 //        $cf->save();
+
         return $expMessage;
     }
 
@@ -192,12 +198,12 @@ class ContentFile extends Model
             $this->createOutputFolder();
             $basePath = $this->pdfFolderPathAbsolute() . '/output';
             $this->deleteOldZip($basePath);
-            $zip = new ZipArchive();
-
             $fileOutput = $basePath . "/" . $pdfFile;
             //-----------------------------------------------------------------------------------------------
             $p = new PDFlib();
-            $p->set_option("license=" . config('custom.pdflib_license'));
+            if(!app()->isLocal()) {
+                $p->set_option("license=" . config('custom.pdflib_license'));
+            }
             $p->set_option("errorpolicy=return");
             $doc = $p->begin_document($fileOutput, "destination={type=fitwindow} pagelayout=singlepage");
             if ($doc == 0) {
@@ -338,17 +344,13 @@ class ContentFile extends Model
                     $importCount = 0;
 
                     if (!$included) {
-                        $importCount = DB::table('PageComponentProperty')
-                            ->where('PageComponentID', '=', $checkComponentID)
+                        $importCount = PageComponentProperty::where('PageComponentID', '=', $checkComponentID)
                             ->where('Name', '=', 'import')
                             ->where('Value', '=', 1)
-                            ->where('StatusID', '=', eStatus::Active)
                             ->count();
                     }
 
-                    $checkComponentCount = DB::table('PageComponent')
-                        ->where('PageComponentID', '=', $checkComponentID)
-                        ->where('StatusID', '=', eStatus::Active)
+                    $checkComponentCount = PageComponent::where('PageComponentID', '=', $checkComponentID)
                         ->count();
 
                     if ($importCount == 1) {
@@ -547,19 +549,10 @@ class ContentFile extends Model
         return '/' . $this->pdfFolderPathRelative() . '/file.pdf';
     }
 
-    public function Pages($statusID = eStatus::Active)
-    {
-        return $this->hasMany(ContentFilePage::class , self::$key)->getQuery()->where('StatusID', '=', $statusID)->get();
-    }
-
-    public function ActivePages()
-    {
-        return $this->hasMany(ContentFilePage::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->get();
-    }
-
+    /** @return ContentCoverImageFile|null  */
     public function ActiveCoverImageFile()
     {
-        return $this->ContentCoverImageFile()->where('StatusID', '=', eStatus::Active)->first();
+        return $this->ContentCoverImageFile->first();
     }
 
     /**

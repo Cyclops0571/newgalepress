@@ -1,5 +1,12 @@
 /* global route, currentLanguage */
 
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+})
+
+
 ///////////////////////////////////////////////////////////////////////////////////////
 // USER
 var cUser = new function () {

@@ -316,7 +316,7 @@ class MapController extends Controller
 
         $googleMap->StatusID = eStatus::Deleted;
         $googleMap->save();
-        return "success=" . base64_encode("true");
+        return $myResponse->success();
     }
 
 }

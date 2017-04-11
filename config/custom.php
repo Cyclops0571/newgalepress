@@ -5,8 +5,6 @@ return array(
     'mail_displayname' => 'GALE PRESS',
     'mail_email' => 'info@galepress.com', //sifre: detay2006 //571571 'usa@galepress.com'
     'url' => env('SERVER_URL', 'http://www.galepress.com'),
-    'admin_email_set' => array('serdar.saygili@detaysoft.com'),
-    'admin_email' => 'serdar.saygili@detaysoft.com',
     'pdflib_license' => 'L900202-010503-800050-T58UH2-3ASLA2',
     'api_key1' => 'AIzaSyA7xMDIVl2332zCKP70HceFTuq2gdwBwx0',
     'api_key2' => 'AIzaSyCFt9FNEys_tXed-VHu5CaI2_9bezEiaJY',
@@ -23,7 +21,7 @@ return array(
     'iyzico_bin_check_url' => 'https://api.iyzico.com/bin-check',
     'iyzico_api_id' => env('IYZICO_API_ID','im015089500879819fdc991436189064'),
     'iyzico_secret' => env('IYZICO_SECRET', 'im015536200eaf0002c8d01436189064'),
-    'payment_delay_reminder_admin_mail_set' => array('serdar.saygili@detaysoft.com', 'enes.taskiran@detaysoft.com', 'ercan.solcun@detaysoft.com'),
+    'payment_delay_reminder_admin_mail' => 'enes.taskiran@detaysoft.com',
     'payment_amount' => env('PAYMENT_AMOUNT', 100),
     'payment_count' => 12,
     'rowcount' => 100,

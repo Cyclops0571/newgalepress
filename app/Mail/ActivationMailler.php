@@ -8,16 +8,17 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CustomerWelcomeMailler extends Mailable implements ShouldQueue
+class ActivationMailler extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
-    protected $locale;
     protected $user;
+    protected $locale;
 
     /**
      * Create a new message instance.
      *
      * @param User $user
+     * @internal param $locale
      */
     public function __construct(User $user)
     {
@@ -33,8 +34,14 @@ class CustomerWelcomeMailler extends Mailable implements ShouldQueue
     public function build()
     {
         app()->setLocale($this->locale);
-        return $this->view('mail-templates.customer_welcome_mail')
-            ->with(['user' => $this->user])
-            ->subject(trans('common.welcome_email_title'));
+
+        $data = [
+            'name'    => $this->user->FirstName,
+            'surname' => $this->user->LastName,
+            'url'     => route('common_confirmemail_get', ['email' => $this->user->Email, 'code' => $this->user->ConfirmCode]),
+        ];
+        return $this->view('mail-templates.activation_mail')
+            ->with($data)
+            ->subject(trans('common.confirm_email_title'));
     }
 }

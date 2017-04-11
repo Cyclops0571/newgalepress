@@ -108,21 +108,22 @@ class ContentController extends Controller {
         $categorySet = Category::where('ApplicationID', '=', $applicationID)->where("statusID", "=", eStatus::Active)->get();
         $application = Application::find($applicationID);
         $data = [
-            'page'        => $this->page,
-            'route'       => $this->route,
-            'caption'     => $this->caption,
-            'pk'          => $this->pk,
-            'fields'      => $this->fields,
-            'search'      => $search,
-            'sort'        => $sort,
-            'sort_dir'    => $sort_dir,
-            'rows'        => $rows,
-            'categorySet' => $categorySet,
-            'application' => $application,
-            'currentPageNo' => $request->get('page', 0)
+            'page'          => $this->page,
+            'route'         => $this->route,
+            'caption'       => $this->caption,
+            'pk'            => $this->pk,
+            'fields'        => $this->fields,
+            'search'        => $search,
+            'sort'          => $sort,
+            'sort_dir'      => $sort_dir,
+            'rows'          => $rows,
+            'categorySet'   => $categorySet,
+            'application'   => $application,
+            'currentPageNo' => $request->get('page', 0),
         ];
 
-        if($request->get('option', 0) == 1) {
+        if ($request->get('option', 0) == 1)
+        {
             return view('pages.contentoptionlist', $data);
         }
 
@@ -358,7 +359,8 @@ class ContentController extends Controller {
         $content->setTopics($request->get('topicIds', []));
 
         $contentFile = $content->processPdf();
-        if($contentFile){
+        if ($contentFile)
+        {
             $content->processImage($contentFile, (int)$request->get('hdnCoverImageFileSelected', 0), $request->get('hdnCoverImageFileName'));
             ContentFile::createPdfPages($contentFile);
             $content->callIndexingService($contentFile);
@@ -698,6 +700,8 @@ class ContentController extends Controller {
         for ($i = 0; $i < 240; $i++)
         {
             $contentFile = ContentFile::find($contentFileID);
+            dd($contentFile);
+
             if ($contentFile && $contentFile->HasCreated)
             {
                 return AjaxResponse::success();

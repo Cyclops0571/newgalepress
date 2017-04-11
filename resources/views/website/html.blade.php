@@ -15,8 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Pinterest Code -->
     <meta name="p:domain_verify" content="bd06007c526f4484a919814eab99d5e6"/>
-
     <link rel="shortcut icon" href="/images/website/favicon2.ico">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{ elixir('css/website.css') }}">
 

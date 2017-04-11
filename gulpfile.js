@@ -116,8 +116,8 @@ elixir((mix) => {
     ], 'public/js/interactive.js');
 
     mix.scripts([
-        'gurus.common.js',
         'gurus.string.js',
+        'gurus.common.js',
         'gurus.date.js',
         'gurus.projectcore.js'
     ], 'public/js/gurus.js');

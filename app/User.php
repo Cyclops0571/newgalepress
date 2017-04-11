@@ -5,6 +5,7 @@ namespace App;
 use App\Models\Application;
 use App\Models\Customer;
 use App\Models\LoginHistory;
+use App\Scopes\StatusScope;
 use DB;
 use eStatus;
 use eUserTypes;
@@ -93,6 +94,12 @@ class User extends Authenticatable
         'Password', 'remember_token',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+        self::addGlobalScope(new StatusScope);
+    }
+
     /**
      * @param $username
      * @return array|null|\stdClass|User
@@ -141,7 +148,7 @@ class User extends Authenticatable
      */
     public function Applications()
     {
-        return $this->hasMany(Application::class, 'CustomerID');
+        return $this->hasMany(Application::class, 'CustomerID', 'CustomerID');
     }
 
 
@@ -154,9 +161,9 @@ class User extends Authenticatable
     {
 
         if ($this->UserTypeID == eUserTypes::Manager) {
-            $applications = Application::where('StatusID', '=', $statusID)->get();
+            $applications = Application::withoutGlobalScopes()->where('StatusID', '=', $statusID)->get();
         } else {
-            $applications = $this->Applications()->getQuery()->where('StatusID', '=', $statusID)->get();
+            $applications = $this->Applications()->where('StatusID', '=', $statusID)->get();
         }
         return $applications;
     }
@@ -168,6 +175,17 @@ class User extends Authenticatable
     public function Customer()
     {
         return $this->belongsTo(Customer::class, 'CustomerID');
+    }
+
+    public function __get($key)
+    {
+        switch ($key) {
+            case 'email':
+                return $this->Email;
+            case 'name':
+                return $this->FirstName . " " . $this->LastName;
+        }
+        return parent::__get($key);
     }
 
 }

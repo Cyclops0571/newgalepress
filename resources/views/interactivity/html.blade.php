@@ -7,6 +7,7 @@
     <title>Gale Press</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Content">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="shortcut icon" href="/website/img/favicon2.ico">
@@ -28,7 +29,7 @@
     <script src="{{elixir('/js/interactive.js')}}" ></script>
     <script src="/uploadify/jquery.uploadify-3.1.min.js?v=<?php echo APP_VER; ?>" ></script>
     <script src="/chosen_v1.0.0/chosen.jquery.js" ></script>
-    <script src="/zoom_assets/jquery.smoothZoom.js?v=<?php echo APP_VER; ?>"></script>
+    <script src="/js/zoom_assets/jquery.smoothZoom.js?v=<?php echo APP_VER; ?>"></script>
     <script src="/js/jquery.gselectable.js?v=<?php echo APP_VER; ?>" ></script>
     <script src="/js/jquery.component.js?v=<?php echo APP_VER; ?>" ></script>
     <script src="/js/jquery.collapse.js?v=<?php echo APP_VER; ?>" ></script>

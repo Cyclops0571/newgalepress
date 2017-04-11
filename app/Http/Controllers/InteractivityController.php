@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\CreateInteractivePdf;
+use App\Library\AjaxResponse;
 use App\Library\MyResponse;
 use App\Library\UploadHandler;
 use App\Models\Application;
@@ -383,10 +384,10 @@ class InteractivityController extends Controller {
             }
             if ($connectable)
             {
-                return true;
+                return $myResponse->success();
             }
 
-            return false;
+            return $myResponse->error();
         } catch (Exception $e)
         {
             return $myResponse->error($e->getMessage());
@@ -423,12 +424,12 @@ class InteractivityController extends Controller {
 
             if (!$contentFilePage)
             {
-                return "success=" . base64_encode("false") . "&errmsg=" . base64_encode('ContentFilePage not found');
+                return $myResponse->error('ContentFilePage not found');
             } else
             {
                 if ($contentFilePage->OperationStatus && strtotime($contentFilePage->ProcessDate) > time() - 30)
                 {
-                    return "success=" . base64_encode("false") . "&errmsg=" . base64_encode('Previous save operation not complete');
+                    return $myResponse->error('Previous save operation not complete');
                 } else
                 {
                     $contentFilePage->OperationStatus = 1;
@@ -685,15 +686,11 @@ class InteractivityController extends Controller {
                             //TODO:Delete current file
                         }
                     }
-                    //Log::info('logInfo -- ' . 'line:' . __LINE__ . ' time:' . microtime());
                 });
-            //Log::info('logInfo -- ' . 'line:' . __LINE__ . ' time:' . microtime());
             if ($request->get('closing') == "true")
             {
-                $job = new CreateInteractivePdf($request);
-                \Queue::push($job);
+                $this->dispatch(new CreateInteractivePdf);
             }
-            //echo 'breakPoint: ' . $i++ . " -- " . microtime(true), PHP_EOL;
             $contentFilePage->OperationStatus = 0;
             $contentFilePage->save();
 
@@ -916,7 +913,7 @@ class InteractivityController extends Controller {
         $upload_handler->post("");
     }
 
-    public function loadpage(Request $request)
+    public function loadpage(Request $request, MyResponse $myResponse)
     {
         try
         {
@@ -1027,10 +1024,10 @@ class InteractivityController extends Controller {
                 $propC .= $prop;
             }
 
-            return "success=" . base64_encode("true") . "&tool=" . base64_encode($toolC) . "&prop=" . base64_encode($propC);
+            return $myResponse->success(['tool' => $toolC, 'prop' => $propC]);
         } catch (Exception $e)
         {
-            return "success=" . base64_encode("false") . "&errmsg=" . base64_encode($e->getMessage());
+            return $myResponse->error($e->getMessage());
         }
     }
 

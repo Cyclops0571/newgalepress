@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Library\MyResponse;
 use App\Library\ReportFilter;
+use App\Mail\CustomerWelcomeMailler;
+use App\Mail\ResetPasswordMailler;
 use App\Models\Application;
 use App\Models\Content;
 use App\Models\Customer;
@@ -22,6 +24,7 @@ use eUserTypes;
 use File;
 use Hash;
 use Illuminate\Http\Request;
+use Mail;
 use Redirect;
 use Validator;
 use View;
@@ -109,19 +112,7 @@ class CommonController extends Controller {
                 $user->ProcessTypeID = eProcessTypes::Update;
                 $user->save();
 
-                $applications = $user->Application();
-                $subject = __('common.login_email_subject');
-                $msg = __('common.login_email_message', [
-                        'Application' => $applications[0]->Name,
-                        'firstname'   => $user->FirstName,
-                        'lastname'    => $user->LastName,
-                        'username'    => $user->Username,
-                        'url'         => env('APP_URL') . "/" . app()->getLocale() . '/' . __('route.resetmypassword') . '?email=' . $user->Email . '&code=' . $pass,
-                    ]
-                );
-
-                Common::sendEmail($user->Email, $user->FirstName . ' ' . $user->LastName, $subject, $msg);
-
+                Mail::to($user)->queue(new ResetPasswordMailler(app()->getLocale(), $user));
                 return $myResponse->success(__('common.login_emailsent'));
             } else
             {
@@ -434,41 +425,15 @@ class CommonController extends Controller {
         $v = Validator::make($request->all(), $rules);
         if ($v->passes())
         {
-            $user = DB::table('User')
+            $user = User::withoutGlobalScopes()
                 ->where('Email', '=', $email)
                 ->where('ConfirmCode', '=', $code)
                 ->first();
             if ($user)
             {
-                $s = User::find($user->UserID);
-                $s->StatusID = eStatus::Active;
-                $s->ProcessUserID = $user->UserID;
-                $s->ProcessDate = new DateTime();
-                $s->ProcessTypeID = eProcessTypes::Update;
-                $s->save();
-
-                $subject = __('common.welcome_email_title');
-                $mailData = [
-                    'name'    => $s->FirstName,
-                    'surname' => $s->LastName,
-                    'url'     => config("custom.url") . '/' . app()->getLocale() . __('route.login'),
-                ];
-                $msg = View::make('mail-templates.hosgeldiniz.index')->with($mailData)->render();
-                $mailStatus = Common::sendHtmlEmail($s->Email, $s->FirstName . ' ' . $s->LastName, $subject, $msg);
-
-                $m = new MailLog();
-                $m->MailID = 2; //Welcome
-                $m->UserID = $s->UserID;
-                if (!$mailStatus)
-                {
-                    $m->Arrived = 0;
-                } else
-                {
-                    $m->Arrived = 1;
-                }
-                $m->StatusID = eStatus::Active;
-                $m->save();
-
+                $user->StatusID = eStatus::Active;
+                $user->save();
+                Mail::to($user)->queue(new CustomerWelcomeMailler($user));
                 return Redirect::to(__('route.login'))
                     ->with('confirm', __('common.login_accounthasbeenconfirmed'));
 

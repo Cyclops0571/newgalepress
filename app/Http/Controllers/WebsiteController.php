@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Mail\CustomerWelcomeMailler;
+use App\Library\MyResponse;
+use App\Mail\ActivationMailler;
+use App\Mail\ContactFormMailler;
 use App\Models\Application;
 use App\Models\Customer;
 use App\Models\MailLog;
@@ -31,7 +33,7 @@ class WebsiteController extends Controller {
         return View::make('website.pages.products');
     }
 
-    public function contactForm(Request $request)
+    public function contactForm(Request $request, MyResponse $myResponse)
     {
         $rules = [
             "senderName"  => 'required',
@@ -46,9 +48,9 @@ class WebsiteController extends Controller {
             return $v->errors->first();
         }
 
-        Mail::to($request->get('senderEmail'))->queue(new CustomerWelcomeMailler($request));
+        Mail::to(config('mail.from.address'))->queue(new ContactFormMailler($request));
 
-        return ['success' => 'success'];
+        return $myResponse->success();
     }
 
     public function tryIt(Request $request)
@@ -201,29 +203,7 @@ class WebsiteController extends Controller {
             $user->ProcessTypeID = eProcessTypes::Insert;
             $user->ConfirmCode = $confirmCode;
             $user->save();
-
-            $subject = __('common.confirm_email_title');
-            $mailData = [
-                'name'    => $user->FirstName,
-                'surname' => $user->LastName,
-                'url'     => config("custom.url") . '/' . app()->getLocale() . '/' . __('route.confirmemail') . '?email=' . $user->Email . '&code=' . $confirmCode,
-            ];
-            $msg = View::make('mail-templates.aktivasyon.index')->with($mailData)->render();
-            // Common::sendHtmlEmail("serdar.saygili@detaysoft.com", $s->FirstName.' '.$s->LastName, $subject, $msg)
-            $mailStatus = Common::sendHtmlEmail($user->Email, $user->FirstName . ' ' . $user->LastName, $subject, $msg);
-
-            $m = new MailLog();
-            $m->MailID = 1; //activation
-            $m->UserID = $user->UserID;
-            if (!$mailStatus)
-            {
-                $m->Arrived = 0;
-            } else
-            {
-                $m->Arrived = 1;
-            }
-            $m->StatusID = eStatus::Active;
-            $m->save();
+            Mail::to($user)->queue(new ActivationMailler($user));
         }
         echo json_encode($data);
     }

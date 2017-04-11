@@ -1,16 +1,16 @@
 $(function()
 {
-	initPdfPage();
-	initTabs();
-	initTree();
-	initPageClickEvent();
-	initPageTooltip();
-	initComponentInfo();
-	initSidebarTooltip();
-	initDroppable();
-	initDraggable();
-	initPreview();
-	initFullscreen();
+    initPdfPage();
+    initTabs();
+    initTree();
+    initPageClickEvent();
+    initPageTooltip();
+    initComponentInfo();
+    initSidebarTooltip();
+    initDroppable();
+    initDraggable();
+    initPreview();
+    initFullscreen();
 });
 
 function initPdfPage()

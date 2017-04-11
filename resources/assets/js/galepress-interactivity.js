@@ -3,8 +3,34 @@
 var cInteractivity = new function () {
     this.objectName = "interactivity";
     var smoothZoomInitialized = false;
-    this.doAsyncRequest = function (t, u, d, funcSuccess, funcError) {
-        cAjax.doAsyncRequest(t, u, "obj=" + this.objectName + "&" + d, funcSuccess, funcError, true);
+    this.ajaxRequest = function (url, data, funcSuccess, funcError) {
+        updatePageRequestTime();
+        if (typeof funcSuccess === "undefined") {
+            funcSuccess = cNotification.success();
+        }
+
+        if (typeof funcError === "undefined") {
+            funcError = function (ret) {
+                cNotification.failure(ret.getValue("errmsg"));
+            };
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: function (ret) {
+                if (ret.getValue("success") === "true") {
+                    funcSuccess(ret);
+                } else {
+                    funcError(ret);
+                }
+            },
+            error: function() {
+                alert('Ajax Request Failed');
+                funcError();
+            }
+        });
     };
 
     this.clickOk = function () {
@@ -80,18 +106,16 @@ var cInteractivity = new function () {
         this.saveCurrentPage();
         cInteractivity.showPage($("#pageno").val());
 
-        var t = 'POST';
-        var u = '/' + currentLanguage + '/' + route["interactivity_transfer"];
-        var d = "contentfileid=" + contentFileID + "&componentid=" + componentID + "&from=" + from + "&to=" + to;
-        var ret = cInteractivity.doAsyncRequest(t, u, d);
-        if (ret.getValue("success") == "true") {
-            this.refreshTree();
-            this.clearPage();
-            this.closeTransferModal();
+        var url = '/' + currentLanguage + '/' + route["interactivity_transfer"];
+        var data = "contentfileid=" + contentFileID + "&componentid=" + componentID + "&from=" + from + "&to=" + to;
+        var success = function () {
+            cInteractivity.refreshTree();
+            cInteractivity.clearPage();
+            cInteractivity.closeTransferModal();
         }
-        else {
-            cNotification.failure(ret.getValue("errmsg"));
-        }
+
+        cInteractivity.ajaxRequest(url, data, success, error);
+
     };
 
     this.openSettings = function () {
@@ -129,10 +153,9 @@ var cInteractivity = new function () {
     };
     this.refreshTree = function () {
         var contentFileID = $("#contentfileid").val();
-        var t = 'POST';
-        var u = '/' + currentLanguage + '/' + route["interactivity_refreshtree"];
-        var d = "contentfileid=" + contentFileID;
-        cInteractivity.doAsyncRequest(t, u, d, function (ret) {
+        var url = '/' + currentLanguage + '/' + route["interactivity_refreshtree"];
+        var data = "contentfileid=" + contentFileID;
+        cInteractivity.ajaxRequest(url, data, function (ret) {
             //Collapse destroy
             $('div.tree a').unbind('click');
             $('#tabs-2').html(ret.getValue("html"));
@@ -142,7 +165,7 @@ var cInteractivity = new function () {
             $('div.tree a.selectcomponent').click(function () {
                 cInteractivity.selectComponent($(this));
             });
-        });
+        })
     };
 
     this.selectComponent = function (obj) {
@@ -247,12 +270,10 @@ var cInteractivity = new function () {
     };
 
     this.loadPage = function (pageno, func, obj) {
-        return;
         var frm = $("#pagecomponents");
-        var t = 'POST';
-        var u = '/' + currentLanguage + '/' + route["interactivity_loadpage"];
-        var d = cForm.serialize(frm);
-        cInteractivity.doAsyncRequest(t, u, d, function (ret) {
+        var url = '/' + currentLanguage + '/' + route["interactivity_loadpage"];
+        var data = cForm.serialize(frm);
+        var success = function (ret) {
             //Sayfa henuz yuklenmeden degistirilirse eski icerikleri gosterme!
             if (parseInt($("#pageno").val()) !== parseInt(pageno)) {
                 return;
@@ -303,7 +324,6 @@ var cInteractivity = new function () {
             if (func && (typeof func == "function")) {
                 func(obj);
             }
-            //$('#saveAndExitBtn').removeAttr("disabled");
             $('#saveAndExitBtn').show();
             $('#saveProgressBar').hide();
             var d = new Date();
@@ -315,7 +335,9 @@ var cInteractivity = new function () {
                 .replace("{minute}", m)
                 .replace("{second}", second);
             $("#pdf-save span.save-info").html(s);
-        });
+        };
+
+        cInteractivity.ajaxRequest(url, data, success);
     };
 
     this.saveCurrentPage = function (successFunction) {
@@ -323,12 +345,11 @@ var cInteractivity = new function () {
         $("#pdf-save span.save-info").html('');
         $('#saveAndExitBtn').hide();
         $('#saveProgressBar').show();
-        var t = 'POST';
-        var u = '/' + currentLanguage + '/' + route["interactivity_save"];
-        var d = $("#pagecomponents").serialize();
-        var onSuccess = successFunction ? successFunction : function () {
+        var url = '/' + currentLanguage + '/' + route["interactivity_save"];
+        var data = $("#pagecomponents").serialize();
+        var success = successFunction ? successFunction : function () {
         };
-        cInteractivity.doAsyncRequest(t, u, d, onSuccess);
+        cInteractivity.ajaxRequest(url, data, success);
     };
 
     this.saveAndClose = function () {

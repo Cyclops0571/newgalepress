@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
 @section('content')
-Test Index
+{!! dd($user) !!}
 
 @endsection

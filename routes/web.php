@@ -45,6 +45,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::post(trans('route.contents_delete'), ['as' => 'contents_delete', 'uses' => 'ContentController@delete']);
     Route::post(trans('route.contents_uploadfile'), ['as' => 'contents_uploadfile', 'uses' => 'ContentController@uploadfile']);
     Route::post(trans('route.contents_uploadcoverimage'), ['as' => 'contents_uploadcoverimage', 'uses' => 'ContentController@uploadCoverImage']);
+    Route::post(trans('route.contents_interactivity_status'), ['uses' => "ContentController@interactivityStatus"]);
+    Route::any(trans('route.contents_interactivity_status'), ['uses' => "ContentController@interactivityStatus"]);
+
     // </editor-fold>
 
 
@@ -227,8 +230,6 @@ Route::any('checkout_result_form', ['as' => 'get_checkout_result_form', 'uses' =
 
 Route::post("maps/excelupload/{application}", ['before' => 'auth', 'uses' => "MapController@excelupload"]);
 Route::get("maps/delete", ['before' => 'auth', 'uses' => "MapController@delete"]);
-Route::post((string)trans('route.contents_interactivity_status'), ['uses' => "ContentController@interactivityStatus"]);
-
 Route::post('/contactmail', ['as' => 'contactmail', 'uses' => 'WebsiteController@contactForm']);
 
 Route::get(trans('appcreatewithface'), ['as' => 'appcreatewithface', 'uses' => 'WebsiteController@app_create_face']);

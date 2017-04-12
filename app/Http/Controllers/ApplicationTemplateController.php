@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\TemplateColor;
 use App\Models\Application;
 use App\Models\Banner;
 use DB;
-use eTemplateColor;
 use Illuminate\Http\Request;
 
 class ApplicationTemplateController extends Controller
@@ -43,6 +43,6 @@ class ApplicationTemplateController extends Controller
 
     public function theme($fileName)
     {
-        return response()->make(eTemplateColor::templateCss($fileName), 200, array('content-type' => 'text/css'));
+        return response()->make(TemplateColor::templateCss($fileName), 200, array('content-type' => 'text/css'));
     }
 }

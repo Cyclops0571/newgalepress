@@ -304,10 +304,10 @@ $(document).ready(function () {
 
     $('#logout').hover(
         function () {
-            $('#header-background').css("background", "url(//img//headerRed.png) repeat-x");
+            $('#header-background').css("background", "url(/img/headerRed.png) repeat-x");
         },
         function () {
-            $('#header-background').css("background", "url(//img//headerBlue.png) repeat-x");
+            $('#header-background').css("background", "url(/img/headerBlue.png) repeat-x");
         }
     );
 

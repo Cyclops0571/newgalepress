@@ -79,7 +79,7 @@ return array(
 
     'commandbar_add' => 'Ekle',
     'commandbar_excel_upload' => 'Excel Dosyası Yükle',
-    'commandbar_excel_download' => 'Download Sample Excel File',
+    'commandbar_excel_download' => 'Örnek Excel Dostasını İndir',
     'commandbar_search' => 'Ara',
 
     'header_upload' => 'Yüklenmedi',

@@ -297,10 +297,10 @@ var cApplication = new function () {
         }
 
         if (warningText == "") {
-            cCommon.save('application_usersettings',
+            cCommon.save('application_settings',
                 function () {
                     cNotification.success();
-                    window.location = '/' + currentLanguage + '/' + route["application_setting"].replace('{application}', $('input[name=ApplicationID]').val());
+                    window.location.reload();
                 }
             );
         }

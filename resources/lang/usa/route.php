@@ -132,7 +132,6 @@ return array(
     'maps_location' => 'maps/location/',
 
     'banners' => 'banners',
-    'banners_show' => 'banners/(:num)',
     'banners_new' => 'banners/new',
     'banners_save' => 'banners/save',
     'banners_setting_save' => 'banners/setting_save',

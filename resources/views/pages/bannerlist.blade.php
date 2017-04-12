@@ -2,11 +2,11 @@
 
 @section('content')
 <?php
+    use App\Models\Banner;
 /** @var App\Models\Banner[] $rows */;
 /** @var App\Models\Application $application */
 /** @var array $fields */
 ?>
-
         <!--<form id="list">-->
 <div class="col-md-11">
     <form id="bannerForm">

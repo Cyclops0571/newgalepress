@@ -132,7 +132,6 @@ return array(
     'maps_location' => 'harita/konum/',
 
     'banners' => 'banners',
-    'banners_show' => 'banners/(:num)',
     'banners_new' => 'banners/yeni',
     'banners_save' => 'banners/kaydet',
     'banners_setting_save' => 'banners/setting_save',

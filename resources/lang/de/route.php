@@ -132,7 +132,6 @@ return array(
     'maps_location' => 'karte/position/',
 
     'banners' => 'banner',
-    'banners_show' => 'banner/(:num)',
     'banners_new' => 'banner/neu',
     'banners_save' => 'banner/speichern',
     'banners_setting_save' => 'banners/setting_save',

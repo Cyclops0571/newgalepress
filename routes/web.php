@@ -67,7 +67,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
 
     // <editor-fold defaultstate="collapsed" desc="Banners">
     Route::get(trans('route.banners'), ['as' => 'banners_list', 'uses' => 'BannerController@index']);
-    Route::get(trans('route.banners_show'), ['as' => 'banners_show', 'uses' => 'BannerController@show']);
     Route::get(trans('route.banners_new'), ['as' => 'banners_new', 'uses' => 'BannerController@newly']);
     Route::post(trans('route.banners_save'), ['as' => 'banners_save', 'uses' => 'BannerController@save']);
     Route::post(trans('route.banners_setting_save'), ['as' => 'banners_setting_save', 'uses' => 'BannerController@save_banner_setting']);

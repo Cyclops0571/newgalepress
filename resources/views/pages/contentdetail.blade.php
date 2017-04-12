@@ -138,14 +138,13 @@
               </div>
               <div class="col-md-8">
                 <select id="CategoryID" name="chkCategoryID[]" multiple="multiple" class="chosen-container required">
-                  @if(count($content->hasContentCategory(0)))
+                  @if(count($content->ContentCategory))
                     <option value="" selected="selected">{{ __('common.contents_category_list_general') }}</option>
                   @else
                     <option value="">{{ __('common.contents_category_list_general') }}</option>
                   @endif
                     <?php foreach ($categories as $category): ?>
-                  <option
-                      value="{{ $category->CategoryID }}"{{ ($content->hasContentCategory($category->CategoryID) ? ' selected="selected"' : '') }}>{{ $category->Name }}</option>
+                  <option value="{{ $category->CategoryID }}"{{ ($content->hasContentCategory($category->CategoryID) ? ' selected="selected"' : '') }}>{{ $category->Name }}</option>
                     <?php endforeach; ?>
                 </select>
               </div>

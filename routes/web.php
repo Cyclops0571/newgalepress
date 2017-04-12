@@ -89,6 +89,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::post(trans('route.applications_delete'), ['as' => 'applications_delete', 'uses' => 'ApplicationController@delete']);
     Route::post(trans('route.applications_uploadfile'), ['as' => 'applications_uploadfile', 'uses' => 'ApplicationController@uploadFile']);
     Route::get(trans('route.applications_settings'), ['as' => 'application_setting', 'uses' => 'ApplicationSettingController@show']);
+    Route::post('applications/applicationSetting', ['as' => 'application_setting_save', 'uses' => 'ApplicationSettingController@update']);
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Reports">
@@ -99,7 +100,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::get(trans('route.reports_location_district'), ['as' => 'reports_location_district', 'before' => 'auth', 'uses' => 'ReportController@district']);
     // </editor-fold>
 
-    Route::post('applications/applicationSetting', ['as' => 'application_setting_save', 'uses' => 'ApplicationSettingController@update']);
 
     // <editor-fold defaultstate="collapsed" desc="Interactivity">
     Route::get(trans('route.interactivity_preview'), ['as' => 'interactivity_preview', 'before' => 'auth', 'uses' => 'InteractivityController@preview']);
@@ -111,6 +111,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::post(trans('route.interactivity_refreshtree'), ['as' => 'interactivity_refreshtree', 'before' => 'auth', 'uses' => 'InteractivityController@refreshtree']);
     Route::post(trans('route.interactivity_upload'), ['as' => 'interactivity_upload', 'before' => 'auth', 'uses' => 'InteractivityController@upload']);
     Route::post(trans('route.interactivity_loadpage'), ['as' => 'interactivity_loadpage', 'before' => 'auth', 'uses' => 'InteractivityController@loadpage']);
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Category">
+    Route::get(trans('route.categories'), ['as' => 'categories', 'before' => 'auth', 'uses' => 'CategoryController@index']);
+    Route::post(trans('route.categories_save'), ['as' => 'categories_save', 'before' => 'auth|csrf', 'uses' => 'CategoryController@save']);
+    Route::post(trans('route.categories_delete'), ['as' => 'categories_delete', 'before' => 'auth', 'uses' => 'CategoryController@delete']);
     // </editor-fold>
 });
 
@@ -327,12 +333,6 @@ Route::get(trans('route.orders_show'), ['as' => 'orders_show', 'before' => 'auth
 Route::post(trans('route.orders_save'), ['as' => 'orders_save', 'uses' => 'orders@save']);
 Route::post(trans('route.orders_delete'), ['as' => 'orders_delete', 'before' => 'auth|csrf', 'uses' => 'orders@delete']);
 Route::post(trans('route.orders_uploadfile'), ['as' => 'orders_uploadfile', 'uses' => 'orders@uploadfile']);
-// </editor-fold>
-
-// <editor-fold defaultstate="collapsed" desc="Category">
-Route::get(trans('route.categories'), ['as' => 'categories', 'before' => 'auth', 'uses' => 'categories@index']);
-Route::post(trans('route.categories_save'), ['as' => 'categories_save', 'before' => 'auth|csrf', 'uses' => 'categories@save']);
-Route::post(trans('route.categories_delete'), ['as' => 'categories_delete', 'before' => 'auth', 'uses' => 'categories@delete']);
 // </editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="managements">

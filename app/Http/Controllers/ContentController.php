@@ -216,7 +216,7 @@ class ContentController extends Controller {
         }
 
         $data['app'] = $app;
-        $data['categories'] = $app->Categories();
+        $data['categories'] = $app->Categories;
         $data['groupCodes'] = GroupCode::getGroupCodesWithName('Currencies');
         $data['authMaxPDF'] = Common::AuthMaxPDF($app->ApplicationID);
         $data['authInteractivity'] = (1 == (int)$app->Package->Interactive);
@@ -253,7 +253,6 @@ class ContentController extends Controller {
             {
                 $this->route = __('route.' . $this->page) . '?applicationID=' . $content->ApplicationID;
 
-
                 $data = [
                     'page'          => $this->page,
                     'route'         => $this->route,
@@ -261,7 +260,7 @@ class ContentController extends Controller {
                     'detailCaption' => $this->detailCaption,
                     'content'       => $content,
                     'app'           => $content->Application,
-                    'categories'    => $content->Application->Categories(),
+                    'categories'    => $content->Application->Categories,
                     'groupCodes'    => GroupCode::getGroupCodesWithName('Currencies'),
                     'showCropPage'  => $showCropPage,
                     'contentList'   => $contentList,

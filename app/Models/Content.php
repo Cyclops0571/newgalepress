@@ -725,7 +725,6 @@ class Content extends Model {
     public function hasContentCategory($categoryID)
     {
         $categoryIds = $this->Category->pluck('CategoryID')->toArray();
-
         return in_array($categoryID, $categoryIds);
     }
 }

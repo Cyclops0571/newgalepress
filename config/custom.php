@@ -27,7 +27,7 @@ return array(
     'rowcount' => 100,
     'passphrase' => '1234',
     'google_api_key' => 'AIzaSyCj2v2727lBWLeXbgM_Hw_VEQgzjDgb8KY',
-    'google_map_api_key' => 'AIzaSyBTRQYksszCfeIa2qrLQ7l60lVmSSdmDdA',
+    'google_map_api_key' => env('GOOGLE_MAP_API_KEY', 'AIzaSyBTRQYksszCfeIa2qrLQ7l60lVmSSdmDdA'),
     'testdeneme_task' => 1,
     'backupdatabase_task' => 2,
     'createinteractivepdf_task' => 3,

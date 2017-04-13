@@ -76,7 +76,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::get(trans('route.maps_new'), ['as' => 'maps_new', 'uses' => 'MapController@create']);
     Route::get(trans('route.maps_show'), ['as' => 'maps_show', 'uses' => 'MapController@show']);
     Route::post(trans('route.maps_save'), ['as' => 'maps_save', 'uses' => 'MapController@save']);
-    Route::get(trans('route.maps_location') . "{id}", ['as' => 'maps_location', 'uses' => 'MapController@location']);
     Route::get(trans('route.maps'), ['as' => 'maps_list', 'uses' => 'MapController@index']);
     // </editor-fold>
 

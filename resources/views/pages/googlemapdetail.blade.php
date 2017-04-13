@@ -69,7 +69,7 @@
             color: #fff !important;
         }
     </style>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key={{config('custom.google_map_api_key')}}&sensor=false"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key={{config('custom.google_map_api_key')}}"></script>
     <script type="text/javascript">
         var markerLat = Number({{$Latitude}});
         var markerLog = Number({{$Longitude}});

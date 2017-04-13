@@ -12,7 +12,7 @@
                   <div data-device="ipad" data-orientation="portrait" data-color="white" class="device-mockup">
                     <div class="device">
                       <div class="screen">
-                        <iframe src="{{ route('maps_location', request('applicationID', 0))  }}" scrolling="no"
+                        <iframe src="{{ route('map_view', request('applicationID', 0))  }}" scrolling="no"
                                 frameborder="0"
                                 style="width:100% !important; height:100% !important; overflow:hidden;"></iframe>
                       </div>

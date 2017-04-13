@@ -143,6 +143,7 @@ use Subscription;
  * @property-read \App\Models\Package $Package
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $Categories
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Content[] $Contents
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GoogleMap[] $GoogleMap
  */
 class Application extends Model {
 
@@ -654,5 +655,8 @@ class Application extends Model {
         return false;
     }
 
+    public function GoogleMap() {
+        return $this->hasMany(GoogleMap::class, self::$key);
+    }
 
 }

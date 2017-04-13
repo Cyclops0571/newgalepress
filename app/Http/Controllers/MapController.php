@@ -184,30 +184,12 @@ class MapController extends Controller
         return $myResponse->success();
     }
 
-    public function location(MyResponse $myResponse, $applicationID)
-    {
-        if (!Common::CheckApplicationOwnership($applicationID)) {
-            return $myResponse->error(__('common.detailpage_validation'));
-        }
-
-        $googleMapSet = GoogleMap::where('ApplicationID', '=', $applicationID)->where("statusID", "=", eStatus::Active)->get();
-        $application = Application::find($applicationID);
-        $initialLocation = $application->initialLocation();
-
-        $data = array();
-        $data["googleMapSet"] = $googleMapSet;
-        $data["initialLocation"] = $initialLocation;
-        return view("pages.googlemaplocation", $data);
-    }
 
     public function webView(Application $application)
     {
-        $googleMapSet = GoogleMap::where('ApplicationID', '=', $application->ApplicationID)->where("statusID", "=", eStatus::Active)->get();
-
         $data = array();
-        $data["googleMapSet"] = $googleMapSet;
-        $initialLocation = $application->initialLocation();
-        $data["initialLocation"] = $initialLocation;
+        $data["googleMapSet"] = $application->GoogleMap;
+        $data["initialLocation"] = $application->initialLocation();
         return view("pages.googlemapwebview", $data);
     }
 

@@ -138,7 +138,7 @@
               </div>
               <div class="col-md-8">
                 <select id="CategoryID" name="chkCategoryID[]" multiple="multiple" class="chosen-container required">
-                  @if(count($content->ContentCategory))
+                  @if(count($content->ContentCategory) == 0 || $content->hasContentCategory(0))
                     <option value="" selected="selected">{{ __('common.contents_category_list_general') }}</option>
                   @else
                     <option value="">{{ __('common.contents_category_list_general') }}</option>

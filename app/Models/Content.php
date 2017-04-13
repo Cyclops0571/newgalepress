@@ -224,7 +224,7 @@ class Content extends Model {
      */
     public function ContentCategory()
     {
-        return $this->hasMany(ContentCategory::class, 'CategoryID');
+        return $this->hasMany(ContentCategory::class, 'ContentID');
     }
 
     public function Currency($languageID)
@@ -724,7 +724,7 @@ class Content extends Model {
 
     public function hasContentCategory($categoryID)
     {
-        $categoryIds = $this->Category->pluck('CategoryID')->toArray();
+        $categoryIds = $this->ContentCategory->pluck('CategoryID')->toArray();
         return in_array($categoryID, $categoryIds);
     }
 }

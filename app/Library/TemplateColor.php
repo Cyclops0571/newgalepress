@@ -26,6 +26,12 @@ class TemplateColor {
     public static function templateCss($fileName)
     {
         $templateColorCode = basename($fileName, '.css');
+        if(!File::isDirectory(self::$imageGeneratedFolder)) {
+            File::makeDirectory(self::$imageGeneratedFolder);
+        }
+        if(!File::isDirectory(self::$imageFolder)) {
+            File::makeDirectory(self::$imageFolder);
+        }
         foreach (self::$requiredImageSet as $requiredImageTmp)
         {
             $requiredImageWithPath = public_path(self::$imageGeneratedFolder . str_replace('1', $templateColorCode, $requiredImageTmp));

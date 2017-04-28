@@ -15,26 +15,25 @@ return array(
     'personol_info' => 'Personal Informations',
     'reset_password' => 'Password Reset Page',
     'registered_email_subject' => ':Application Application Registration',
-    'registered_email_message' => ":firstname :lastname, \n\n" .
-        "Your registration for :Application Application succesfully completed.\n" .
-        "Your Username is :username, \n" .
-        "Your Password is :pass. \n\n" .
-        "Regards, \n" .
+    'registered_email_message' => ":firstname :lastname, <br/><br/>" .
+        "Your registration for :Application Application succesfully completed.<br/>" .
+        "Your Username is :username, <br/><br/>" .
+        "Your Password is :pass. <br/><br/>" .
+        "Regards, <br/>" .
         "Gale Press",
 
     'login_email_subject' => ':Application Application password resetting e-mail',
-    'login_email_message' => ":firstname :lastname, \n\n" .
-        "Your :Application application Username is :username, \n" .
-        "Click under the link for reset your :Application applicaton password. If you don't want it, please don't regard this e-mail.\n\n" .
-        ":url\n\n" .
-        "Regards, \n" .
+    'login_email_message' => ":firstname :lastname, <br/><br/>" .
+        "Your :Application application Username is :username, <br/>" .
+        "Click under the link for reset your :Application applicaton password. If you don't want it, please don't regard this e-mail.<br/><br/>" .
+        ":url<br/><br/>" .
+        "Regards, <br/>" .
         "Gale Press",
     'login_resetpassword_email_subject' => ':Application Application password resetting e-mail',
-    'login_resetpassword_email_message' => ":firstname :lastname, \n\n" .
-        "Your :Application Application password changed \n" .
-        "Your Username is :username, \n" .
-        "Password is changed as :pass. \n\n" .
-        "Regards, \n" .
+    'login_resetpassword_email_message' => ":firstname :lastname, <br/><br/>" .
+        "Your :Application Application password changed <br/>" .
+        "Your Username is :username <br/>" .
+        "Regards, <br/>" .
         "Gale Press",
     'selected_content_name' => 'Selected Contents',
     'selectable_content_name' => 'Selectable Contents',

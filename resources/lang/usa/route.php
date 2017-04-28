@@ -26,7 +26,6 @@ return array(
     
     'clients' => 'clients',
     'clients_new' => 'clients/new',
-    'clients_show' => 'clients/(:num)',
     'clients_save' => 'clients/save',
     'clients_send' => 'clients/send',
     'clients_delete' => 'clients/delete',

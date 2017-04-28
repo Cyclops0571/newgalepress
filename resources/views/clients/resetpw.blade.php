@@ -1,4 +1,4 @@
-@layout('layouts.genericmaster')
+@extends('layouts.genericmaster')
 
 @section('content')
 <script>

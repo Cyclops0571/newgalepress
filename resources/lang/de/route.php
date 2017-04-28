@@ -26,15 +26,14 @@ return array(
 
     'clients' => 'mobilnutzer',
     'clients_new' => 'mobilnutzer/neu',
-    'clients_show' => 'mobilnutzer/(:num)',
     'clients_save' => 'mobilnutzer/speichern',
     'clients_send' => 'mobilnutzer/senden',
     'clients_delete' => 'mobilnutzer/loeschen',
-    'clients_register' => 'mobilnutzer/registrieren/(:num)',
+    'clients_register' => 'mobilnutzer/registrieren/{application}',
     'clients_update' => 'clients/update/(:num)/(:any)',
     'clients_register_save' => 'mobilnutzer/registrierungspeichern',
     'clients_registered' => 'mobilnutzer/erfolgreichregistriert',
-    'clients_forgotpassword' => 'mobilnutzer/passwortvergessen/(:num)',
+    'clients_forgotpassword' => 'mobilnutzer/passwortvergessen/{application}',
     'clients_resetpw' => 'mobilnutzer/passwortzuruecksetzen',
     'clients_pw_reseted' => 'mobilnutzer/passwortzurueckgesetzt',
 

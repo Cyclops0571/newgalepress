@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'max_service_version' => env('MAX_SERVICE_VERSION', 1000),
     'name' => 'Gale Press Digital Publishing Platform',
     'env' => env('APP_ENV', 'production'),
     'debug' => env('APP_DEBUG', false),

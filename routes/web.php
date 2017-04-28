@@ -19,11 +19,106 @@ define("GO_BACK_TO_SHOP", 'gobacktoshop');
 
 
 Route::get('test', ['as' => 'mahmut', 'uses' => 'TTestController@index']);
+Route::get('test', ['prefix' => LaravelLocalization::setLocale(), 'as' => 'mahmut', 'uses' => 'TTestController@index']);
 Route::get('test2', ['as' => 'mytest2', 'uses' => 'TTestController@test2']);
 Route::get('test3', function ()
 {
     return View::make('test/test3');
 });
+
+Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
+{
+
+    Route::get(trans('route.clients_resetpw'), ['as' => 'clients_reset_password', 'uses' => 'ClientController@resetPasswordForm']);
+    Route::post('clients/clientregister', ['as' => 'clientsregistersave', 'uses' => 'ClientController@clientregister']);
+    Route::post('clients/forgotpassword', ['as' => 'clientsregistered', 'uses' => 'ClientController@forgotpassword']);
+    Route::post("clients/resetpw", ['as' => 'clientsresetpw', 'uses' => 'ClientController@resetpw']);
+    Route::post("clients/excelupload", ['before' => 'auth', 'uses' => "ClientController@excelupload"]);
+
+    // <editor-fold defaultstate="collapsed" desc="website">
+    Route::get('/', ['as' => 'website_home', 'uses' => 'WebsiteController@index']);
+
+    Route::get(trans('route.website_showcase'), ['as' => 'website_showcase', 'uses' => function ()
+    {
+        return View::make('website.pages.showcase');
+    }]);
+
+    Route::get(trans('route.website_tutorials'), ['as' => 'website_tutorials', 'uses' => function ()
+    {
+        return View::make('website.pages.tutorials');
+    }]);
+
+    Route::get(trans('route.website_contact'), ['as' => 'website_contact', 'uses' => function ()
+    {
+        return View::make('website.pages.contact');
+    }]);
+
+    Route::get(trans('route.website_sectors'), ['as' => 'website_sectors', 'uses' => function ()
+    {
+        return View::make('website.pages.sectors');
+    }]);
+
+    Route::get(trans('route.website_sectors_retail'), ['as' => 'website_sectors_retail', 'uses' => function ()
+    {
+        return View::make('website.pages.sectors-retail');
+    }]);
+    Route::get(trans('route.website_sectors_humanresources'), ['as' => 'website_sectors_humanresources', 'uses' => function ()
+    {
+        return View::make('website.pages.sectors-humanresources');
+    }]);
+    Route::get(trans('route.website_sectors_education'), ['as' => 'website_sectors_education', 'uses' => function ()
+    {
+        return View::make('website.pages.sectors-education');
+    }]);
+
+    Route::get(trans('route.website_sectors_realty'), ['as' => 'website_sectors_realty', 'uses' => function ()
+    {
+        return View::make('website.pages.sectors-realty');
+    }]);
+    Route::get(trans('route.website_sectors_medicine'), ['as' => 'website_sectors_medicine', 'uses' => function ()
+    {
+        return View::make('website.pages.sectors-medicine');
+    }]);
+    Route::get(trans('route.website_sectors_digitalpublishing'), ['as' => 'website_sectors_digitalpublishing', 'uses' => function ()
+    {
+        return View::make('website.pages.sectors-digitalpublishing');
+    }]);
+    Route::get(trans('route.website_why_galepress'), ['as' => 'website_why_galepress', 'uses' => function ()
+    {
+        return View::make('website.pages.why-galepress');
+    }]);
+    Route::get(trans('route.website_tryit'), ['as' => 'website_tryit', 'uses' => function ()
+    {
+        return View::make('website.pages.tryit');
+    }]); //571571 MeCaptcha\Captcha not found...
+
+    Route::get('deneyin-test', ['as' => 'deneyin-test', 'uses' => function ()
+    {
+        return View::make('website.pages.tryit-test');
+    }]);//571571 MeCaptcha\Captcha not found...
+
+    Route::get(trans('route.login'), ['middleware' => 'RedirectIfAuthenticated', 'as' => 'common_login_get', 'uses' => function ()
+    {
+        return view('pages.login');
+    }]);
+    Route::post(trans('route.login'), ['as' => 'common_login_post', 'uses' => 'CommonController@login']);
+
+    Route::get(trans('route.sign_up'), function ()
+    {
+        return view('website.signup');
+    });
+    Route::get(trans('route.forgot_password'), function ()
+    {
+        return view('website.forgotpassword');
+    });
+    Route::get(trans('route.sign_in'), function ()
+    {
+        return view('website.signin');
+    });
+    // </editor-fold>
+
+});
+
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function ()
 {
@@ -117,6 +212,29 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::post(trans('route.categories_save'), ['as' => 'categories_save', 'before' => 'auth|csrf', 'uses' => 'CategoryController@save']);
     Route::post(trans('route.categories_delete'), ['as' => 'categories_delete', 'before' => 'auth', 'uses' => 'CategoryController@delete']);
     // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Clients">
+    Route::get(trans('route.clients'), ['as' => 'clients_list', 'uses' => 'ClientController@index']);
+    Route::get(trans('route.clients_new'), ['as' => 'clients_new', 'uses' => 'ClientController@create']);
+    Route::get(trans('route.clients') . "/{client}", ['as' => 'clients_show', 'uses' => 'ClientController@show']);
+    Route::post(trans('route.clients_save'), ['as' => 'clients_save', 'uses' => 'ClientController@save']);
+    Route::post(trans('route.clients_send'), ['as' => 'clients_send', 'uses' => 'ClientController@send']);
+    Route::post(trans('route.clients_delete'), ['as' => 'clients_delete', 'uses' => 'ClientController@delete']);
+
+    Route::get(trans('route.clients_register'), ['as' => 'clients_register', 'uses' => 'ClientController@register']);
+    Route::get(trans('route.clients_update'), ['as' => 'clients_register_save', 'uses' => 'ClientController@updateclient']);
+    Route::get(trans('route.clients_registered'), ['as' => 'clients_registered', 'uses' => function ()
+    {
+        return view('clients.registered');
+    }]);
+    Route::get(trans('route.clients_forgotpassword'), ['as' => 'clients_forgot_password', 'uses' => 'ClientController@forgotpasswordform']);
+    Route::get(trans('route.clients_pw_reseted'), ['as' => 'clients_password_renewed', 'uses' => function ()
+    {
+        return view('clients.passwordreseted');
+    }]);
+
+
+    // </editor-fold
 });
 
 
@@ -125,91 +243,6 @@ Route::get("banners/delete", ['as' => 'banners_delete', 'before' => 'auth', 'use
 Route::post("banners/order/{applicationId}", ['as' => 'banners_order', 'before' => 'auth', 'uses' => 'BannerController@order']);
 Route::get("banners/service_view/{applicationId}", ['as' => 'banners_service_view', 'uses' => 'BannerController@service_view']);
 
-
-Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
-{
-    Route::get('/', ['as' => 'website_home', 'uses' => 'WebsiteController@index']);
-
-    // <editor-fold defaultstate="collapsed" desc="website">
-    Route::get(trans('route.website_showcase'), ['as' => 'website_showcase', 'uses' => function ()
-    {
-        return View::make('website.pages.showcase');
-    }]);
-
-    Route::get(trans('route.website_tutorials'), ['as' => 'website_tutorials', 'uses' => function ()
-    {
-        return View::make('website.pages.tutorials');
-    }]);
-
-    Route::get(trans('route.website_contact'), ['as' => 'website_contact', 'uses' => function ()
-    {
-        return View::make('website.pages.contact');
-    }]);
-
-    Route::get(trans('route.website_sectors'), ['as' => 'website_sectors', 'uses' => function ()
-    {
-        return View::make('website.pages.sectors');
-    }]);
-
-    Route::get(trans('route.website_sectors_retail'), ['as' => 'website_sectors_retail', 'uses' => function ()
-    {
-        return View::make('website.pages.sectors-retail');
-    }]);
-    Route::get(trans('route.website_sectors_humanresources'), ['as' => 'website_sectors_humanresources', 'uses' => function ()
-    {
-        return View::make('website.pages.sectors-humanresources');
-    }]);
-    Route::get(trans('route.website_sectors_education'), ['as' => 'website_sectors_education', 'uses' => function ()
-    {
-        return View::make('website.pages.sectors-education');
-    }]);
-
-    Route::get(trans('route.website_sectors_realty'), ['as' => 'website_sectors_realty', 'uses' => function ()
-    {
-        return View::make('website.pages.sectors-realty');
-    }]);
-    Route::get(trans('route.website_sectors_medicine'), ['as' => 'website_sectors_medicine', 'uses' => function ()
-    {
-        return View::make('website.pages.sectors-medicine');
-    }]);
-    Route::get(trans('route.website_sectors_digitalpublishing'), ['as' => 'website_sectors_digitalpublishing', 'uses' => function ()
-    {
-        return View::make('website.pages.sectors-digitalpublishing');
-    }]);
-    Route::get(trans('route.website_why_galepress'), ['as' => 'website_why_galepress', 'uses' => function ()
-    {
-        return View::make('website.pages.why-galepress');
-    }]);
-    Route::get(trans('route.website_tryit'), ['as' => 'website_tryit', 'uses' => function ()
-    {
-        return View::make('website.pages.tryit');
-    }]); //571571 MeCaptcha\Captcha not found...
-
-    Route::get('deneyin-test', ['as' => 'deneyin-test', 'uses' => function ()
-    {
-        return View::make('website.pages.tryit-test');
-    }]);//571571 MeCaptcha\Captcha not found...
-
-    Route::get(trans('route.login'), ['middleware' => 'RedirectIfAuthenticated', 'as' => 'common_login_get', 'uses' => function ()
-    {
-        return view('pages.login');
-    }]);
-    Route::post(trans('route.login'), ['as' => 'common_login_post', 'uses' => 'CommonController@login']);
-
-    Route::get(trans('route.sign_up'), function ()
-    {
-        return view('website.signup');
-    });
-    Route::get(trans('route.forgot_password'), function ()
-    {
-        return view('website.forgotpassword');
-    });
-    Route::get(trans('route.sign_in'), function ()
-    {
-        return view('website.signin');
-    });
-    // </editor-fold>
-});
 
 Route::group(['middleware' => 'auth'], function ()
 {
@@ -257,22 +290,6 @@ Route::get('maps/webview/{application}', ['as' => 'map_view', 'uses' => 'MapCont
 Route::get('payment/paymentAccountByApplicationID/(:num)', ['as' => 'app_payment_data', 'uses' => 'payment@paymentAccountByApplicationID']);
 
 /**********************CALISMAYANLAR*************************/
-// <editor-fold defaultstate="collapsed" desc="Clients">
-Route::get(trans('route.clients'), ['as' => 'clients_list', 'uses' => 'clients@index']);
-Route::get(trans('route.clients_new'), ['as' => 'clients_new', 'uses' => 'clients@newly']);
-Route::get(trans('route.clients_show'), ['as' => 'clients_show', 'uses' => 'clients@show']);
-Route::post(trans('route.clients_save'), ['as' => 'clients_save', 'uses' => 'clients@save']);
-Route::post(trans('route.clients_send'), ['as' => 'clients_send', 'uses' => 'clients@send']);
-Route::post(trans('route.clients_delete'), ['as' => 'clients_delete', 'uses' => 'clients@delete']);
-
-Route::get(trans('route.clients_register'), ['as' => 'clients_register', 'uses' => 'clients@clientregister']);
-Route::get(trans('route.clients_update'), ['as' => 'clients_register_save', 'uses' => 'clients@updateclient']);
-Route::get(trans('route.clients_registered'), ['as' => 'clients_registered', 'uses' => 'clients@registered']);
-Route::get(trans('route.clients_forgotpassword'), ['as' => 'clients_forgot_password', 'uses' => 'clients@forgotpassword']);
-Route::get(trans('route.clients_resetpw'), ['as' => 'clients_reset_password', 'uses' => 'clients@resetpw']);
-Route::get(trans('route.clients_pw_reseted'), ['as' => 'clients_password_renewed', 'uses' => 'clients@passwordreseted']);
-
-// </editor-fold
 
 // <editor-fold defaultstate="collapsed" desc="Test">
 Route::get('test/iosInternalTest', 'test@iosInternalTest');
@@ -287,7 +304,6 @@ Route::get('test/interactive', 'test@interactive');
 // </editor-fold>
 
 
-Route::post("clients/excelupload", ['before' => 'auth', 'uses' => "clients@excelupload"]);
 Route::post('/search', 'webservice.search@search');
 Route::post('/searchgraff', 'webservice.search@searchgraff');
 
@@ -341,14 +357,10 @@ Route::post('managements/import', ['as' => 'managements_importlanguages', 'uses'
 Route::post('managements/export', ['as' => 'managements_exportlanguages', 'uses' => 'managements@exportlanguages']);
 // </editor-fold>
 
-
-Route::post('clients/clientregister', ['as' => 'clientsregistersave', 'uses' => 'clients@clientregister']);
-Route::post('clients/forgotpassword', ['as' => 'clientsregistered', 'uses' => 'clients@forgotpassword']);
-Route::post("clients/resetpw", ['as' => 'clientsresetpw', 'uses' => 'clients@resetpw']);
 Route::get('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'payment@secure_3d_response']);
 Route::post('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'payment@secure_3d_response']);
 
-
+Route::get('clients/reset-my-password', ['uses' => 'ClientController@resetPasswordForm']);
 // <editor-fold defaultstate="collapsed" desc="New Webservice Routes">
 Route::get('webservice/{ws}/applications/{applicationID}/version', ['uses' => 'webservice.applications@version']);
 Route::post('webservice/(:num)/applications/(:num)/version', ['uses' => 'webservice.applications@version']);
@@ -378,16 +390,6 @@ Route::post('webservice/(:num)/statistics', ['uses' => 'webservice.statistics@cr
 Route::any('webservice/(:num)/topic', ['uses' => 'webservice.topic@topic']);
 Route::any('webservice/(:num)/application-topic', ['uses' => 'webservice.topic@applicationTopic']);
 // </editor-fold>
-
-
-
-
-
-
-
-
-
-
 
 
 event(new WebRouteLoadedEvent());

@@ -16,13 +16,13 @@ return array(
     'login_error' => 'You have entered an incorrect user information!',
     'login_error_expiration' => 'The period of validity of your application terminated!',
     'login_email_subject' => 'Gale Press password resetting e-mail',
-    'login_email_message' => ":firstname :lastname, \n\n"
-        . "Your :Application application Username is :username, \n"
-        . "Click under the link for reset your password.\n"
-        . ":url\n\n"
-        . "Click this link to bypass Password Reset and login to Gale Press:\n"
-        . "http://www.galepress.com/usa/\n\n"
-        . "Regards, \n"
+    'login_email_message' => ":firstname :lastname, <br/><br/>"
+        . "Your :Application application Username is :username, <br/>"
+        . "Click under the link for reset your password.<br/>"
+        . ":url<br/><br/>"
+        . "Click this link to bypass Password Reset and login to Gale Press:<br/>"
+        . "http://www.galepress.com/usa/<br/><br/>"
+        . "Regards, <br/>"
         . "Gale Press",
     'login_resetpassword_email_subject' => 'Gale Press password resetting e-mail',
     'login_resetpassword_email_message' => "" . ":firstname :lastname, \n\n" .

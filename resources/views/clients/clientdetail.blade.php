@@ -1,4 +1,4 @@
-@layout('layouts.master')
+@extends('layouts.master')
 
 @section('content')
 
@@ -35,7 +35,7 @@
           <h2><?php echo __('common.detailpage_caption'); ?> </h2>
         </div>
         <div class="content controls">
-          <form method="post" action="{{route('client_save')}}">
+          <form method="post" action="{{route('clients_save')}}">
               <?php echo Form::token(); ?>
             <input type="hidden" name="ClientID" id="ClientID" value="<?php echo $ClientID; ?>"/>
               <?php if (count($applications) > 1): ?>

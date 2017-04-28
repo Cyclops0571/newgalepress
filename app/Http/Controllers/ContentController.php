@@ -104,7 +104,7 @@ class ContentController extends Controller {
         }
 
 
-        $rows = Content::getContents($request);
+        $rows = Content::contentList($request);
         $categorySet = Category::where('ApplicationID', '=', $applicationID)->where("statusID", "=", eStatus::Active)->get();
         $application = Application::find($applicationID);
         $data = [

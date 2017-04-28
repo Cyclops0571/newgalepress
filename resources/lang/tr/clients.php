@@ -17,27 +17,26 @@ return array(
 
     'registered_email_subject' => ':Application Uygulama Kaydı',
     'registered_email_message' => "" .
-        "Sayın :firstname :lastname, \n\n" .
-        ":Application uygulamasına kaydınız başarıyla yapıldı.\n" .
-        "Kullanıcı Adınız is :username, \n" .
-        "Parolanız :pass. \n\n" .
-        "Saygılarımızla, \n" .
+        "Sayın :firstname :lastname, <br/><br/>" .
+        ":Application uygulamasına kaydınız başarıyla yapıldı.<br/>" .
+        "Kullanıcı Adınız is :username, <br/><br/>" .
+        "Parolanız :pass. <br/><br/>" .
+        "Saygılarımızla, <br/>" .
         ":Application",
 
     'login_email_subject' => ':Application uygulaması parola sıfırlama e-postası',
-    'login_email_message' => "Sayın :firstname :lastname, \n\n"
-        . "Kullanıcı Adınız :username, \n\n"
-        . ":Application uygulaması parolanızı sıfırlamak için aşağıdaki linke tıklayabilirsiniz. \n"
-        . "Eğer böyle bir talepte bulunmadıysanız lütfen bu e-postayı önemsemeyiniz.\n\n"
-        . ":url\n\n"
-        . "Saygılarımızla, \n"
+    'login_email_message' => "Sayın :firstname :lastname, <br/><br/>"
+        . "Kullanıcı Adınız :username, <br/><br/>"
+        . ":Application uygulaması parolanızı sıfırlamak için aşağıdaki linke tıklayabilirsiniz. <br/>"
+        . "Eğer böyle bir talepte bulunmadıysanız lütfen bu e-postayı önemsemeyiniz.<br/><br/>"
+        . ":url<br/><br/>"
+        . "Saygılarımızla, <br/>"
         . ":Application",
     'login_resetpassword_email_subject' => ':Application parola sıfırlama e-postası',
-    'login_resetpassword_email_message' => "Sayın :firstname :lastname, \n\n" .
-        ":Application uygulamasi şifreniz değiştirilmiştir.\n" .
-        "Kullanıcı Adınız :username, \n" .
-        "Parolanız :pass olarak değiştirilmiştir. \n\n" .
-        "Saygılarımızla, \n" .
+    'login_resetpassword_email_message' => "Sayın :firstname :lastname, <br/><br/>" .
+        ":Application uygulamasi şifreniz değiştirilmiştir.<br/>" .
+        "Kullanıcı Adınız :username <br/>" .
+        "Saygılarımızla, <br/><br/>" .
         ":Application",
     'selected_content_name' => 'Seçilmiş İçerikler',
     'selectable_content_name' => 'Seçilebilir İçerikler',

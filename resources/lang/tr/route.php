@@ -26,15 +26,14 @@ return array(
 
     'clients' => 'mobil-kullanici',
     'clients_new' => 'mobil-kullanici/yeni',
-    'clients_show' => 'mobil-kullanici/(:num)',
     'clients_save' => 'mobil-kullanici/kaydet',
     'clients_send' => 'mobil-kullanici/gonder',
     'clients_delete' => 'mobil-kullanici/sil',
-    'clients_register' => 'mobil-kullanici/kayitol/(:num)',
+    'clients_register' => 'mobil-kullanici/kayitol/{application}',
     'clients_update' => 'mobil-kullanici/guncelle/(:num)/(:any)',
     'clients_register_save' => 'mobil-kullanici/kayitol',
     'clients_registered' => 'mobil-kullanici/kayit-basarili',
-    'clients_forgotpassword' => 'mobil-kullanici/sifremi-unuttum/(:num)',
+    'clients_forgotpassword' => 'mobil-kullanici/sifremi-unuttum/{application}',
     'clients_resetpw' => 'mobil-kullanici/parolami-sifirla',
     'clients_pw_reseted' => 'mobil-kullanici/sifre-yenilendi',
 

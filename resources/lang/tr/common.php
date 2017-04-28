@@ -16,11 +16,11 @@ return array(
     'login_error' => 'Hatalı kullanıcı bilgisi girdiniz!',
     'login_error_expiration' => 'uygulamanızın geçerlilik süresi sonlanmıştır!',
     'login_email_subject' => 'Gale Press parola sıfırlama e-postası',
-    'login_email_message' => "Sayın :firstname :lastname, \n\n" .
-        "Kullanıcı Adınız :username, \n\n" .
-        ":Application uygulaması parolanızı sıfırlamak için aşağıdaki linke tıklayabilirsiniz. Eğer böyle bir talepte bulunmadıysanız lütfen bu e-postayı önemsemeyiniz.\n\n" .
-        ":url\n\n" .
-        "Saygılarımızla, \n" .
+    'login_email_message' => "Sayın :firstname :lastname, <br/><br/>" .
+        "Kullanıcı Adınız :username, <br/><br/>" .
+        ":Application uygulaması parolanızı sıfırlamak için aşağıdaki linke tıklayabilirsiniz. Eğer böyle bir talepte bulunmadıysanız lütfen bu e-postayı önemsemeyiniz.<br/><br/>" .
+        ":url<br/><br/>" .
+        "Saygılarımızla, <br/>" .
         "Gale Press",
 
 

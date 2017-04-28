@@ -163,7 +163,7 @@ class User extends Authenticatable
         if ($this->UserTypeID == eUserTypes::Manager) {
             $applications = Application::withoutGlobalScopes()->where('StatusID', '=', $statusID)->get();
         } else {
-            $applications = $this->Applications()->where('StatusID', '=', $statusID)->get();
+            $applications = $this->Applications;
         }
         return $applications;
     }

@@ -104,7 +104,7 @@ class Content extends Model {
 
     const defaultSort = 'OrderNo';
 
-    public static function getContents(Request $request)
+    public static function contentList(Request $request)
     {
 
         //$applicationID, $search, $p, $option, $sort, $sort_dir

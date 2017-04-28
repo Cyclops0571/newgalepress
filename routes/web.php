@@ -289,6 +289,7 @@ Route::get("/template/{application}", ['as' => 'template_index', 'before' => 'au
 Route::get('maps/webview/{application}', ['as' => 'map_view', 'uses' => 'MapController@webView']);
 Route::get('payment/paymentAccountByApplicationID/(:num)', ['as' => 'app_payment_data', 'uses' => 'payment@paymentAccountByApplicationID']);
 
+
 /**********************CALISMAYANLAR*************************/
 
 // <editor-fold defaultstate="collapsed" desc="Test">
@@ -304,8 +305,7 @@ Route::get('test/interactive', 'test@interactive');
 // </editor-fold>
 
 
-Route::post('/search', 'webservice.search@search');
-Route::post('/searchgraff', 'webservice.search@searchgraff');
+
 
 
 //<editor-fold desc="Payment">
@@ -362,33 +362,33 @@ Route::post('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 
 
 Route::get('clients/reset-my-password', ['uses' => 'ClientController@resetPasswordForm']);
 // <editor-fold defaultstate="collapsed" desc="New Webservice Routes">
-Route::get('webservice/{ws}/applications/{applicationID}/version', ['uses' => 'webservice.applications@version']);
-Route::post('webservice/(:num)/applications/(:num)/version', ['uses' => 'webservice.applications@version']);
-Route::get('webservice/(:num)/applications/(:num)/detail', ['uses' => 'webservice.applications@detail']);
-Route::post('webservice/(:num)/applications/(:num)/detail', ['uses' => 'webservice.applications@detail']);
-Route::get('webservice/(:num)/applications/(:num)/categories', ['uses' => 'webservice.applications@categories']);
-Route::get('webservice/(:num)/applications/(:num)/categories/(:num)/detail', ['uses' => 'webservice.applications@categoryDetail']);
+Route::get('webservice/{ws}/applications/{applicationID}/version', ['uses' => 'Service.applications@version']);
+Route::post('webservice/(:num)/applications/(:num)/version', ['uses' => 'Service.applications@version']);
+Route::get('webservice/(:num)/applications/(:num)/detail', ['uses' => 'Service.applications@detail']);
+Route::post('webservice/(:num)/applications/(:num)/detail', ['uses' => 'Service.applications@detail']);
+Route::get('webservice/(:num)/applications/(:num)/categories', ['uses' => 'Service.applications@categories']);
+Route::get('webservice/(:num)/applications/(:num)/categories/(:num)/detail', ['uses' => 'Service.applications@categoryDetail']);
 
-Route::get('webservice/(:num)/applications/(:num)/contents', ['uses' => 'webservice.applications@contents']);
-Route::post('webservice/(:num)/applications/(:num)/receipt', ['uses' => 'webservice.applications@receipt']);
-Route::post('webservice/(:num)/applications/(:num)/androidrestore', ['uses' => 'webservice.applications@androidrestore']);
+Route::get('webservice/(:num)/applications/(:num)/contents', ['uses' => 'Service.applications@contents']);
+Route::post('webservice/(:num)/applications/(:num)/receipt', ['uses' => 'Service.applications@receipt']);
+Route::post('webservice/(:num)/applications/(:num)/androidrestore', ['uses' => 'Service.applications@androidrestore']);
 
 
-Route::get('webservice/(:num)/applications/authorized_application_list', ['uses' => 'webservice.applications@authorized_application_list']);
-Route::post('webservice/(:num)/applications/authorized_application_list', ['uses' => 'webservice.applications@authorized_application_list']);
-Route::post('webservice/(:num)/applications/login_application', ['uses' => 'webservice.applications@login_application']);
-Route::get('webservice/(:num)/applications/login_application', ['uses' => 'webservice.applications@login_application']);
-Route::post('webservice/(:num)/applications/fblogin', ['uses' => 'webservice.applications@fblogin']);
+Route::get('webservice/(:num)/applications/authorized_application_list', ['uses' => 'Service.applications@authorized_application_list']);
+Route::post('webservice/(:num)/applications/authorized_application_list', ['uses' => 'Service.applications@authorized_application_list']);
+Route::post('webservice/(:num)/applications/login_application', ['uses' => 'Service.applications@login_application']);
+Route::get('webservice/(:num)/applications/login_application', ['uses' => 'Service.applications@login_application']);
+Route::post('webservice/(:num)/applications/fblogin', ['uses' => 'Service.applications@fblogin']);
 // WS-Contents
-Route::get('webservice/(:num)/contents/(:num)/version', ['uses' => 'webservice.contents@version']);
-Route::get('webservice/(:num)/contents/(:num)/detail', ['uses' => 'webservice.contents@detail']);
-Route::get('webservice/(:num)/contents/(:num)/cover-image', ['uses' => 'webservice.contents@coverImage']);
-Route::get('webservice/(:num)/contents/(:num)/file', ['uses' => 'webservice.contents@file']);
+Route::get('webservice/(:num)/contents/(:num)/version', ['uses' => 'Service.contents@version']);
+Route::get('webservice/(:num)/contents/(:num)/detail', ['uses' => 'Service.contents@detail']);
+Route::get('webservice/(:num)/contents/(:num)/cover-image', ['uses' => 'Service.contents@coverImage']);
+Route::get('webservice/(:num)/contents/(:num)/file', ['uses' => 'Service.contents@file']);
 // WS-Statistics
-Route::post('webservice/(:num)/statistics', ['uses' => 'webservice.statistics@create']);
+Route::post('webservice/(:num)/statistics', ['uses' => 'Service.statistics@create']);
 //WS-Topic
-Route::any('webservice/(:num)/topic', ['uses' => 'webservice.topic@topic']);
-Route::any('webservice/(:num)/application-topic', ['uses' => 'webservice.topic@applicationTopic']);
+Route::any('webservice/(:num)/topic', ['uses' => 'Service.topic@topic']);
+Route::any('webservice/(:num)/application-topic', ['uses' => 'Service.topic@applicationTopic']);
 // </editor-fold>
 
 

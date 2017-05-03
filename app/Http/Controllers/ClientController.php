@@ -16,8 +16,6 @@ use Common;
 use DateTime;
 use DB;
 use eStatus;
-use Exception;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Redirect;
 use Response;

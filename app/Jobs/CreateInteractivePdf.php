@@ -4,12 +4,9 @@ namespace App\Jobs;
 
 use App\Mail\ErrorMailler;
 use App\Models\ContentFile;
-use Common;
-use eStatus;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;

@@ -20,7 +20,7 @@ use eStatus;
 use eUserTypes;
 use Exception;
 use File;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;

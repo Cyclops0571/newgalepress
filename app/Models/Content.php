@@ -16,7 +16,7 @@ use eUserTypes;
 use File;
 use Hash;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 /**

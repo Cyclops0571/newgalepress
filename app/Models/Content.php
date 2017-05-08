@@ -629,7 +629,7 @@ class Content extends Model {
         return Content::whereIn('ContentID', $contentIds)
             ->where('StatusID', '=', eStatus::Active)
             ->where('PublishDate', '<=', DB::raw('now()'))
-            ->where(function (Builder $query)
+            ->where(function (\Illuminate\Database\Eloquent\Builder $query)
             {
                 $query->where('IsUnpublishActive', '=', 0);
                 $query->orWhere('UnpublishDate', '>', DB::raw('now()'));
@@ -653,7 +653,7 @@ class Content extends Model {
         return Content::whereIn('Content.ContentID', $contentIds)
             ->where('StatusID', '=', eStatus::Active)
             ->where('PublishDate', '<=', DB::raw('now()'))
-            ->where(function (Builder $query)
+            ->where(function (\Illuminate\Database\Eloquent\Builder $query)
             {
                 $query->where('IsUnpublishActive', '=', 0);
                 $query->orWhere('UnpublishDate', '>', DB::raw('now()'));

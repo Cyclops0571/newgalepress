@@ -20,6 +20,7 @@ class ClientRegisteredMailler extends Mailable implements ShouldQueue
      * Create a new message instance.
      *
      * @param Client $client
+     * @param $password
      */
     public function __construct(Client $client, $password)
     {

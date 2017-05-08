@@ -59,6 +59,7 @@ abstract class eProcessTypes {
 class eServiceError {
 
     const ServiceNotFound = 1;
+    const ServiceMethodObsolete = 2;
     const IncorrectPassword = 101;
     const ContentNotFound = 102;
     const ContentBlocked = 103;
@@ -87,6 +88,9 @@ class eServiceError {
         {
             case eServiceError::ServiceNotFound:
                 $exception = new Exception("Servis versiyonu hatalı", $errorNo);
+                break;
+            case eServiceError::ServiceMethodObsolete:
+                $exception = new Exception('Servis methodu artık kullanılmıyor.');
                 break;
             case eServiceError::IncorrectPassword:
                 $exception = new Exception("Hatalı parola!", $errorNo);

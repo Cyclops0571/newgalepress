@@ -25,6 +25,7 @@ class WebService {
     const GoogleConsumptionStatePurchased = 0;
     const GoogleConsumptionStateCanceled = 1;
     const GoogleConsumptionStateRefunded = 2;
+    const Version = 103;
     public static $availableServices = [103];
 
     /**
@@ -67,15 +68,13 @@ class WebService {
 
     /**
      *
-     * @param int $ServiceVersion
      * @param int $applicationID
      * @return Application
      * @throws Exception
      */
-    public static function getCheckApplication($ServiceVersion, $applicationID)
+    public static function getCheckApplication($applicationID)
     {
-        self::checkServiceVersion($ServiceVersion);
-        $application = Application::where('ApplicationID', '=', $applicationID)->where('StatusID', '=', eStatus::Active)->first();
+        $application = Application::find($applicationID);
         if (!$application)
         {
             throw eServiceError::getException(eServiceError::ApplicationNotFound);
@@ -88,18 +87,15 @@ class WebService {
         return $application;
     }
 
-    public static function getCheckApplicationCategories($ServiceVersion, $applicationID)
+    public static function getCheckApplicationCategories(Application $application)
     {
-        self::checkServiceVersion($ServiceVersion);
-
-        $application = Application::find($applicationID);
         $categories = [];
         //add general
         array_push($categories, [
             'CategoryID'   => 0,
             'CategoryName' => trans('common.contents_category_list_general', [], 'messages', $application->ApplicationLanguage),
         ]);
-        $rs = Category::where('ApplicationID', '=', $applicationID)->orderBy('Name', 'ASC')->get();
+        $rs = Category::where('ApplicationID', '=', $application->ApplicationID)->orderBy('Name', 'ASC')->get();
         foreach ($rs as $r)
         {
             array_push($categories, [
@@ -111,9 +107,8 @@ class WebService {
         return $categories;
     }
 
-    public static function getCheckApplicationCategoryDetail($ServiceVersion, $applicationID, $categoryID)
+    public static function getCheckApplicationCategoryDetail($applicationID, $categoryID)
     {
-        self::checkServiceVersion($ServiceVersion);
         $category = Category::where('CategoryID', '=', $categoryID)
             ->where('ApplicationID', '=', $applicationID)->first();
         if (!$category)
@@ -241,9 +236,8 @@ class WebService {
         return $user;
     }
 
-    public static function saveToken($ServiceVersion, $customerID, $applicationID)
+    public static function saveToken(Application $application)
     {
-        self::checkServiceVersion($ServiceVersion);
         $UDID = request('udid', '');
         $applicationToken = request('applicationToken', '');
         $deviceToken = request('deviceToken', '');
@@ -256,7 +250,7 @@ class WebService {
         {
             if ($deviceType == eDeviceType::android && !empty($UDID))
             {
-                $token = Token::where('ApplicationID', '=', $applicationID)
+                $token = Token::where('ApplicationID', '=', $application->ApplicationID)
                     ->where('UDID', '=', $UDID)
                     ->first();
                 if ($token)
@@ -280,8 +274,8 @@ class WebService {
             if (empty($token))
             {
                 $token = new Token();
-                $token->CustomerID = (int)$customerID;
-                $token->ApplicationID = (int)$applicationID;
+                $token->CustomerID = $application->CustomerID;
+                $token->ApplicationID = $application->ApplicationID;
                 $token->UDID = $UDID;
                 $token->ApplicationToken = $applicationToken;
                 $token->DeviceToken = $deviceToken;
@@ -296,7 +290,6 @@ class WebService {
 
     /**
      *
-     * @param int $ServiceVersion
      * @param string $username
      * @param string $password
      * @param string $userFacebookID
@@ -304,10 +297,9 @@ class WebService {
      * @return User
      * @throws Exception
      */
-    public static function getCheckUser($ServiceVersion, $username, $password, $userFacebookID, $userFbEmail)
+    public static function getCheckUser($username, $password, $userFacebookID, $userFbEmail)
     {
 
-        self::checkServiceVersion($ServiceVersion);
         if (!empty($username) && !empty($password))
         {
             //username ve password login

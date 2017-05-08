@@ -373,7 +373,7 @@ class ApplicationController extends Controller
                     $application->handleCkPem($sourceFileNameFull);
                 }
 
-                $application->setTopics($request->get('topicIds', array()));
+                $application->Topic()->sync($request->get('topicIds', []));
 
                 return $myResponse->success();
             } else {

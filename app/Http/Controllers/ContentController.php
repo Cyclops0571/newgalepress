@@ -355,7 +355,7 @@ class ContentController extends Controller {
 
         $content->save();
         $content->Category()->sync($selectedCategories);
-        $content->setTopics($request->get('topicIds', []));
+        $content->Topic()->sync($request->get('topicIds', []));
 
         $contentFile = $content->processPdf();
         if ($contentFile)

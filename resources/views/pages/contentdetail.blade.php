@@ -95,7 +95,7 @@
                 </a>
               </div>
             </div>
-              <?php if($app->TopicStatus == eStatus::Active && count($app->ApplicationTopics)): ?>
+              <?php if($app->TopicStatus == eStatus::Active && $app->Topic->count()): ?>
             <div class="form-row">
               <div class="col-md-3">
                 <label class="label-grey" for="topicIds">{{ __('applicationlang.application_category') }}</label>
@@ -107,15 +107,10 @@
                                <?php echo $content->TopicStatus || !$content->ContentID ? 'checked="checked"' : ''?>id="topicStatus">
                       </span>
                   <select id="topicIds" name="topicIds[]" multiple="multiple" class="chosen-container">
-                      <?php
-                      $contentTopicIds = array_map(function ($o)
-                      {
-                          return $o->TopicID;
-                      }, $content->ContentTopics);
-                      foreach($app->ApplicationTopics as $applicationTopic):?>
-                      <?php $selected = in_array($applicationTopic->TopicID, $contentTopicIds) || !$content->ContentID ? ' selected="selected"' : '';?>
-                    <option value="<?php echo $applicationTopic->TopicID ?>" <?php echo $selected; ?> >
-                        <?php echo $applicationTopic->Topic->Name; ?>
+                      <?php foreach($app->Topic as $topic):?>
+                      <?php $selected = $content->Topic->has($topic->TopicID) || !$content->exists ? ' selected="selected"' : '';?>
+                    <option value="<?php echo $topic->TopicID ?>" <?php echo $selected; ?> >
+                        <?php echo $topic->Name; ?>
                     </option>
                       <?php endforeach; ?>
                   </select>

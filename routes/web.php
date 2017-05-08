@@ -35,6 +35,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::post("clients/resetpw", ['as' => 'clientsresetpw', 'uses' => 'ClientController@resetpw']);
     Route::post("clients/excelupload", ['before' => 'auth', 'uses' => "ClientController@excelupload"]);
 
+
+
+    Route::get(trans('route.clients_register'), ['as' => 'clients_register', 'uses' => 'ClientController@register']);
+    Route::get(trans('route.clients_update'), ['as' => 'clients_register_save', 'uses' => 'ClientController@updateclient']);
+    Route::get(trans('route.clients_registered'), ['as' => 'clients_registered', 'uses' => function ()
+    {
+        return view('clients.registered');
+    }]);
+    Route::get(trans('route.clients_forgotpassword'), ['as' => 'clients_forgot_password', 'uses' => 'ClientController@forgotpasswordform']);
+    Route::get(trans('route.clients_pw_reseted'), ['as' => 'clients_password_renewed', 'uses' => function ()
+    {
+        return view('clients.passwordreseted');
+    }]);
     // <editor-fold defaultstate="collapsed" desc="website">
     Route::get('/', ['as' => 'website_home', 'uses' => 'WebsiteController@index']);
 
@@ -221,17 +234,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::post(trans('route.clients_send'), ['as' => 'clients_send', 'uses' => 'ClientController@send']);
     Route::post(trans('route.clients_delete'), ['as' => 'clients_delete', 'uses' => 'ClientController@delete']);
 
-    Route::get(trans('route.clients_register'), ['as' => 'clients_register', 'uses' => 'ClientController@register']);
-    Route::get(trans('route.clients_update'), ['as' => 'clients_register_save', 'uses' => 'ClientController@updateclient']);
-    Route::get(trans('route.clients_registered'), ['as' => 'clients_registered', 'uses' => function ()
-    {
-        return view('clients.registered');
-    }]);
-    Route::get(trans('route.clients_forgotpassword'), ['as' => 'clients_forgot_password', 'uses' => 'ClientController@forgotpasswordform']);
-    Route::get(trans('route.clients_pw_reseted'), ['as' => 'clients_password_renewed', 'uses' => function ()
-    {
-        return view('clients.passwordreseted');
-    }]);
 
 
     // </editor-fold

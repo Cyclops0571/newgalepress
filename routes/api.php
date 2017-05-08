@@ -24,31 +24,29 @@ Route::post('/searchgraff', 'Service\SearchController@searchGraff');
 /***********CALISMAYANLAR *****************/
 
 // <editor-fold defaultstate="collapsed" desc="New Webservice Routes">
-Route::get('Service/{ws}/applications/{applicationID}/version', ['uses' => 'Service.applications@version']);
-Route::post('Service/(:num)/applications/(:num)/version', ['uses' => 'Service.applications@version']);
-Route::get('Service/(:num)/applications/(:num)/detail', ['uses' => 'Service.applications@detail']);
-Route::post('Service/(:num)/applications/(:num)/detail', ['uses' => 'Service.applications@detail']);
-Route::get('Service/(:num)/applications/(:num)/categories', ['uses' => 'Service.applications@categories']);
-Route::get('Service/(:num)/applications/(:num)/categories/(:num)/detail', ['uses' => 'Service.applications@categoryDetail']);
+Route::any('webservice/{sv}/applications/{application}/version', ['uses' => 'Service\AppController@version']);
+Route::any('webservice/{sv}/applications/{application}/detail', ['uses' => 'Service\AppController@detail']);
+Route::any('webservice/{sv}/applications/{application}/categories', ['uses' => 'Service\AppController@categories']);
+Route::any('webservice/{sv}/applications/{application}/categories/{category}/detail', ['uses' => 'Service\AppController@categoryDetail']);
 
-Route::get('Service/(:num)/applications/(:num)/contents', ['uses' => 'Service.applications@contents']);
-Route::post('Service/(:num)/applications/(:num)/receipt', ['uses' => 'Service.applications@receipt']);
-Route::post('Service/(:num)/applications/(:num)/androidrestore', ['uses' => 'Service.applications@androidrestore']);
+Route::get('webservice/{sv}/applications/{application}/contents', ['uses' => 'Service\AppController@contents']);
+Route::any('webservice/{sv}/applications/{applicationID}/receipt', ['uses' => 'Service\AppController@receipt']);
+Route::any('webservice/{sv}/applications/{application}/androidrestore', ['uses' => 'Service\AppController@androidRestore']);
 
+Route::any('webservice/{sv}/applications/authorized_application_list', ['uses' => 'Service\AppController@authorizedApplicationList']);
+Route::any('webservice/{sv}/applications/login_application', ['uses' => 'Service\AppController@loginApplication']);
+Route::any('webservice/{sv}/applications/fblogin', ['uses' => 'Service\AppController@facebookLogin']);
 
-Route::get('Service/(:num)/applications/authorized_application_list', ['uses' => 'Service.applications@authorized_application_list']);
-Route::post('Service/(:num)/applications/authorized_application_list', ['uses' => 'Service.applications@authorized_application_list']);
-Route::post('Service/(:num)/applications/login_application', ['uses' => 'Service.applications@login_application']);
-Route::get('Service/(:num)/applications/login_application', ['uses' => 'Service.applications@login_application']);
-Route::post('Service/(:num)/applications/fblogin', ['uses' => 'Service.applications@fblogin']);
 // WS-Contents
-Route::get('Service/(:num)/contents/(:num)/version', ['uses' => 'Service.contents@version']);
-Route::get('Service/(:num)/contents/(:num)/detail', ['uses' => 'Service.contents@detail']);
-Route::get('Service/(:num)/contents/(:num)/cover-image', ['uses' => 'Service.contents@coverImage']);
-Route::get('Service/(:num)/contents/(:num)/file', ['uses' => 'Service.contents@file']);
-// WS-Statistics
-Route::post('Service/(:num)/statistics', ['uses' => 'Service.statistics@create']);
-//WS-Topic
-Route::any('Service/(:num)/topic', ['uses' => 'Service.topic@topic']);
-Route::any('Service/(:num)/application-topic', ['uses' => 'Service.topic@applicationTopic']);
+Route::any('webservice/{sv}/contents/{content}/version', ['uses' => 'Service\ContentServiceController@version']);
+Route::any('webservice/{sv}/contents/{contentID}/detail', ['uses' => 'Service\ContentServiceController@detail']);
+Route::any('webservice/{sv}/contents/{content}/cover-image', ['uses' => 'Service\ContentServiceController@coverImage']);
+Route::any('webservice/{sv}/contents/{content}/file', ['uses' => 'Service\ContentServiceController@file']);
+
+//// WS-Statistics
+Route::any('webservice/{sv}/statistics', ['uses' => 'Service\StatisticController@create']);
+Route::any('webservice/{sv}/graff_statistics', array('uses' => 'Service\StatisticController@graff'));
+////WS-Topic
+Route::any('webservice/{sv}/topic', ['uses' => 'Service\TopicController@topic']);
+Route::any('webservice/{sv}/application-topic', ['uses' => 'Service\TopicController@applicationTopic']);
 // </editor-fold>

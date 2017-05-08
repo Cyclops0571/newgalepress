@@ -2,7 +2,8 @@
 
 @section('content')
     <?php
-    /** @var $app Application */
+    /** @var app\Models\Topic[] $topics */use App\Models\Application;
+    /** @var app\Models\Application $app */
     ?>
     <div class="col-md-8">
         <form method="post" action="applications_save">
@@ -99,15 +100,9 @@
                             <select id="topicIds" name="topicIds[]" multiple="multiple"
                                     class="chosen-container" required>
                                 <?php
-                                /** @var Topic[] $topics */
                                 foreach ($topics as $topic): ?>
                                 <?php
-                                $selected = '';
-                                foreach ($app->ApplicationTopics as $applicationTopic) {
-                                    if ($applicationTopic->TopicID == $topic->TopicID) {
-                                        $selected = ' selected="selected"';
-                                    }
-                                }
+                                $selected = $app->Topic->has($topic->TopicID) ? ' selected="selected"' : '';
                                 ?>
                                 <option value="<?php echo $topic->TopicID ?>" <?php echo $selected ?>>
                                     <?php echo $topic->Name; ?>

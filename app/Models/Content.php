@@ -94,6 +94,7 @@ use Illuminate\Http\Request;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereUnpublishDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereVersion($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Topic[] $Topic
  */
 class Content extends Model {
 
@@ -546,56 +547,8 @@ class Content extends Model {
         return $this->Identifier;
     }
 
-
-    public function ContentTopics()
-    {
-        return $this->hasMany(ContentTopic::class, 'ContentID');
-    }
-
-    /**
-     * @desc Saves Topic - Content relations to ContentTopic table
-     * @param array $topicIds
-     */
-    public function setTopics($topicIds)
-    {
-        if ($this->TopicStatus != eStatus::Active)
-        {
-            return;
-        }
-
-        if (empty($topicIds))
-        {
-            foreach ($this->ContentTopics as $contentTopic)
-            {
-                $contentTopic->delete();
-            }
-
-            return;
-        }
-        $myTopicIds = [];
-        foreach ($this->ContentTopics as $contentTopic)
-        {
-            $myTopicIds[] = $contentTopic->TopicID;
-        }
-
-
-        foreach ($topicIds as $topicId)
-        {
-            foreach ($this->ContentTopics as $contentTopic)
-            {
-                if (!in_array($contentTopic->TopicID, $topicIds))
-                {
-                    $contentTopic->delete();
-                }
-            }
-            if (!in_array($topicId, $myTopicIds))
-            {
-                $contentTopic = new ContentTopic();
-                $contentTopic->ContentID = $this->ContentID;
-                $contentTopic->TopicID = $topicId;
-                $contentTopic->save();
-            }
-        }
+    public function Topic() {
+        return $this->belongsToMany(Topic::class, 'ContentTopic', 'ContentID', 'TopicID');
     }
 
     /**

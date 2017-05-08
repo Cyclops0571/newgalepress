@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Str;
 
 class Handler extends ExceptionHandler
 {
@@ -44,6 +45,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if(Str::startsWith($request->route()->getActionName(),'App\Http\Controllers\Service\\') && !app()->isLocal()) {
+            return response([
+                'status' => $exception->getCode(),
+                'error'  => $exception->getMessage(),
+            ]);
+        }
+
         return parent::render($request, $exception);
     }
 

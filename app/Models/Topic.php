@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\StatusScope;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Topic whereOrder($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Topic whereStatusID($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $Application
  */
 class Topic extends Model
 {
@@ -24,7 +26,17 @@ class Topic extends Model
     protected $primaryKey  = 'TopicID';
     public static $key = 'TopicID';
 
+    protected static function boot()
+    {
+        parent::boot();
+        self::addGlobalScope(new StatusScope);
+    }
+
     public function getServiceData() {
         return array('id' => $this->TopicID, 'name' => $this->Name);
+    }
+
+    public function Application() {
+        return $this->belongsToMany(Application::class, 'ApplicationTopic', 'TopicID', 'ApplicationID');
     }
 }

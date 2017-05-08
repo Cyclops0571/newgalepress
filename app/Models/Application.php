@@ -144,6 +144,7 @@ use Subscription;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $Categories
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Content[] $Contents
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GoogleMap[] $GoogleMap
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Topic[] $Topic
  */
 class Application extends Model {
 
@@ -564,57 +565,7 @@ class Application extends Model {
 
         return $location;
     }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany|ApplicationTopic[]
-     */
-    public function ApplicationTopics()
-    {
-        return $this->hasMany(ApplicationTopic::class, self::$key);
-    }
-
-    public function setTopics($newTopicIds)
-    {
-        if ($this->TopicStatus != eStatus::Active)
-        {
-            return;
-        }
-        if (empty($newTopicIds))
-        {
-            foreach ($this->ApplicationTopics as $applicationTopic)
-            {
-                $applicationTopic->delete();
-            }
-
-            return;
-        }
-
-        $applicationTopicIds = [];
-        foreach ($this->ApplicationTopics as $topic)
-        {
-            $applicationTopicIds[] = $topic->TopicID;
-        }
-
-
-        foreach ($newTopicIds as $newTopicId)
-        {
-            foreach ($this->ApplicationTopics as $applicationTopic)
-            {
-                if (!in_array($applicationTopic->TopicID, $newTopicIds))
-                {
-                    $applicationTopic->delete();
-                }
-            }
-            if (!in_array($newTopicId, $applicationTopicIds))
-            {
-                $applicationTopic = new ApplicationTopic();
-                $applicationTopic->ApplicationID = $this->ApplicationID;
-                $applicationTopic->TopicID = $newTopicId;
-                $applicationTopic->save();
-            }
-        }
-
-    }
+    
 
     public function handleCkPem($sourceFileNameFull)
     {
@@ -659,4 +610,11 @@ class Application extends Model {
         return $this->hasMany(GoogleMap::class, self::$key);
     }
 
+    public function isOnAir() {
+        return $this->ExpirationDate >= date("Y-m-d H:i:s") && $this->Blocked == 0 && $this->Status == 1;
+    }
+
+    public function Topic() {
+        return $this->belongsToMany(Topic::class, 'ApplicationTopic', 'ApplicationID', 'TopicID');
+    }
 }

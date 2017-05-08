@@ -1,5 +1,4 @@
-@layout('layouts.genericmaster')
-
+@extends('layouts.genericmaster')
 @section('content')
     <style type="text/css">
         .whiteMessage {

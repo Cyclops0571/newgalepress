@@ -58,6 +58,14 @@ use Log;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereUsername($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereVersion($value)
  * @mixin \Eloquent
+ * @property string $FbAppID
+ * @property string $FbUserID
+ * @property string $FbEmail
+ * @property string $FbToken
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbAppID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbUserID($value)
  */
 class Client extends Model {
 

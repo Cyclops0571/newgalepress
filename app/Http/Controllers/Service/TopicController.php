@@ -31,7 +31,7 @@ class TopicController extends Controller {
                 $content = Content::where('ApplicationID', $application->ApplicationID)
                     ->whereHas('Topic', function (Builder $query) use ($topic)
                     {
-                        $query->where('TopicID', $topic->TopicID);
+                        $query->where('Topic.TopicID', $topic->TopicID);
                     })->orderBy('ProcessDate', 'desc')->first();
 
                 $responseTopicChunk = [];
@@ -90,7 +90,7 @@ class TopicController extends Controller {
         {
             $builder = Content::whereHas('Topic', function (Builder $query) use ($topicID)
             {
-                $query->where('TopicID', $topicID);
+                $query->where('Topic.TopicID', $topicID);
             });
         } else
         {

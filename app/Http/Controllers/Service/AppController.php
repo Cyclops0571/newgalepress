@@ -272,7 +272,7 @@ class AppController extends Controller {
 
 
         $v = Validator::make($request->all(), $rules);
-        if ($v->invalid())
+        if ($v->fails())
         {
             throw eServiceError::getException(eServiceError::GenericError, $v->errors()->first());
         }
@@ -360,7 +360,7 @@ class AppController extends Controller {
         ];
 
         $v = Validator::make($request->all(), $rules);
-        if ($v->invalid())
+        if ($v->fails())
         {
             throw eServiceError::getException(eServiceError::GenericError, $v->errors()->first());
         }
@@ -420,7 +420,7 @@ class AppController extends Controller {
         ];
 
         $v = Validator::make($request->all(), $rules);
-        if ($v->invalid())
+        if ($v->fails())
         {
             throw eServiceError::getException(eServiceError::GenericError, $v->errors()->first());
         }

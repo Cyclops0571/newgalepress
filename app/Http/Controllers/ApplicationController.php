@@ -145,7 +145,7 @@ class ApplicationController extends Controller
 
             if ($option == 1) {
                 $data = array(
-                    'rows' => $currentUser->Customer->Applications(eStatus::Active)
+                    'rows' => $currentUser->Customer->Application
                 );
                 return view('pages.applicationoptionlist', $data);
             }

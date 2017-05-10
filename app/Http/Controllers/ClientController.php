@@ -683,7 +683,7 @@ class ClientController extends Controller {
         ];
 
         $v = Validator::make($request->all(), $rules);
-        if ($v->invalid())
+        if ($v->fails())
         {
             $errorMsg = $v->errors()->first();
             if (empty($errorMsg))

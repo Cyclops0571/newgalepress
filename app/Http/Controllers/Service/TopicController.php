@@ -58,11 +58,11 @@ class TopicController extends Controller {
         }
 
         $topics = Topic::orderBy('Order')->get();
-        $response["topics"] = array_map(function (/** @var Topic $o */
-            $o)
-        {
-            return $o->getServiceData();
-        }, $topics);
+        $response["topics"] =  $topics->mapWithKeys(function (Topic $topic) {
+            return $topic->getServiceData();
+        });
+
+//            array('id' => $this->TopicID, 'name' => $this->Name);
         $response["status"] = 0;
         $response["error"] = "";
 

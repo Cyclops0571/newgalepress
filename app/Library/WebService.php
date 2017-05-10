@@ -6,6 +6,7 @@ use App\Models\Application;
 use App\Models\Category;
 use App\Models\Client;
 use App\Models\Content;
+use App\Models\ContentCategory;
 use App\Models\Customer;
 use App\Models\Token;
 use App\User;
@@ -128,7 +129,7 @@ class WebService {
         $accessToken = isset($data["accessToken"]) ? $data["accessToken"] : false;
         $isTest = isset($data["isTest"]) ? $data["isTest"] : false;
 
-        $query = Content::where('ApplicationID', '=', $application->ApplicationID)
+        $query = Content::where('ApplicationID', $application->ApplicationID)
             ->orderBy('OrderNo', 'DESC')
             ->orderBy('MonthlyName', 'ASC')
             ->orderBy('Name', 'ASC');
@@ -136,21 +137,23 @@ class WebService {
         {
             $query->where(function (Builder $q)
             {
-                $q->orWhere("RemoveFromMobile", "=", eRemoveFromMobile::Active);
+                $q->where('Status', eStatus::Active);
+                $q->orWhere("RemoveFromMobile", eRemoveFromMobile::Active);
             });
         }
 
 
         $categoryID = request('categoryID', '-1');
-        if ($categoryID !== -1)
+        if ($categoryID != -1)
         {
-            $query->whereIn('ContentID', DB::raw('(SELECT ContentID FROM ContentCategory WHERE CategoryID=' . (int)$categoryID . ')'));
+            $query->whereHas('ContentCategory', function (Builder $builder) use ($categoryID)
+            {
+                   $builder->where('CategoryID', $categoryID);
+            });
         }
 
-        /** @var Content[] $rs */
         $rs = $query->get();
         $contents = [];
-        /* @var $client Client */
         $client = WebService::getClientFromAccessToken($accessToken, $application->ApplicationID);
         foreach ($rs as $r)
         {

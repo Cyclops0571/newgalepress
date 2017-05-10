@@ -56,7 +56,7 @@ class AppController extends Controller {
     }
 
 
-    public function get_detail($sv, Application $application)
+    public function detail($sv, Application $application)
     {
 
         /*

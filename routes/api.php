@@ -21,9 +21,7 @@ Route::post('/search', 'Service\SearchController@search');
 Route::post('/searchgraff', 'Service\SearchController@searchGraff');
 
 
-/***********CALISMAYANLAR *****************/
 
-// <editor-fold defaultstate="collapsed" desc="New Webservice Routes">
 Route::any('webservice/{sv}/applications/{application}/version', ['uses' => 'Service\AppController@version']);
 Route::any('webservice/{sv}/applications/{application}/detail', ['uses' => 'Service\AppController@detail']);
 Route::any('webservice/{sv}/applications/{application}/categories', ['uses' => 'Service\AppController@categories']);
@@ -42,6 +40,8 @@ Route::any('webservice/{sv}/contents/{content}/version', ['uses' => 'Service\Con
 Route::any('webservice/{sv}/contents/{contentID}/detail', ['uses' => 'Service\ContentServiceController@detail']);
 Route::any('webservice/{sv}/contents/{content}/cover-image', ['uses' => 'Service\ContentServiceController@coverImage']);
 Route::any('webservice/{sv}/contents/{content}/file', ['uses' => 'Service\ContentServiceController@file']);
+Route::get('webservice/content-file', ['as' => 'contents_file', 'uses' => 'Service\ContentServiceController@contentFile']);
+
 
 //// WS-Statistics
 Route::any('webservice/{sv}/statistics', ['uses' => 'Service\StatisticController@create']);
@@ -49,4 +49,3 @@ Route::any('webservice/{sv}/graff_statistics', array('uses' => 'Service\Statisti
 ////WS-Topic
 Route::any('webservice/{sv}/topic', ['uses' => 'Service\TopicController@topic']);
 Route::any('webservice/{sv}/application-topic', ['uses' => 'Service\TopicController@applicationTopic']);
-// </editor-fold>

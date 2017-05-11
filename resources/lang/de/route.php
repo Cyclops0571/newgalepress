@@ -54,7 +54,6 @@ return array(
     'application_settings_save' => 'apps/einstellungenspeichern',
 
     'contents' => 'inhalte',
-    'contents_request' => 'inhalte/anfordern',
     'contents_new' => 'inhalte/neu',
     'contents_show' => 'inhalte/(:num)',
     'contents_save' => 'inhalte/speichern',

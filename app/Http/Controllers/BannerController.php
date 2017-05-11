@@ -254,7 +254,7 @@ class BannerController extends Controller {
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes())
         {
-            $errMsg = $v->errors->first();
+            $errMsg = $v->errors()->first();
             foreach ($ruleNames as $inputName => $ruleName)
             {
                 $errMsg = str_replace($inputName, $ruleName, $errMsg);
@@ -301,7 +301,7 @@ class BannerController extends Controller {
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes())
         {
-            return AjaxResponse::error($v->errors->first());
+            return AjaxResponse::error($v->errors()->first());
         }
 
         $element = $request->get('element');

@@ -59,7 +59,7 @@ class ApplicationSettingController extends Controller
 
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes()) {
-            $errMsg = $v->errors->first();
+            $errMsg = $v->errors()->first();
 
             return $myResponse->error($errMsg);
         }

@@ -154,42 +154,6 @@ class ContentController extends Controller {
         return $html = View::make('pages.contentlist', $data);
     }
 
-    public function request(Request $request)
-    {
-        //"http://www.galepress.com/tr/icerikler/talep?W=%s&H=%s&RequestTypeID=%s&ContentID=%s";
-        $RequestTypeID = (int)$request->get('RequestTypeID', 0);
-        $ContentID = (int)$request->get('ContentID', 0);
-        $Password = $request->get('Password', '');
-        $Width = (int)$request->get('W', 0);
-        $Height = (int)$request->get('H', 0);
-
-
-        //http://localhost/tr/icerikler/talep?RequestTypeID=203&ApplicationID=1&ContentID=1187&Password=
-        try
-        {
-            if ($RequestTypeID == eRequestType::PDF_FILE)
-            {
-                //get file
-                $oCustomerID = 0;
-                $oApplicationID = 0;
-                $oContentID = 0;
-                $oContentFileID = 0;
-                $oContentFilePath = '';
-                $oContentFileName = '';
-                Common::getContentDetail($ContentID, $Password, $oCustomerID, $oApplicationID, $oContentID, $oContentFileID, $oContentFilePath, $oContentFileName);
-                Common::download($RequestTypeID, $oCustomerID, $oApplicationID, $oContentID, $oContentFileID, 0, $oContentFilePath, $oContentFileName);//todo: break this function to small pieces
-            } else
-            {
-                //get image
-                Common::downloadImage($ContentID, $RequestTypeID, $Width, $Height);//todo: break this function to small pieces
-            }
-        } catch (Exception $e)
-        {
-            return Response::make($this->xmlResponse($e), 200, ['content-type' => 'text/xml']);
-        }
-
-        return abort(404);
-    }
 
     public function newly(Request $request)
     {
@@ -672,9 +636,9 @@ class ContentController extends Controller {
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes())
         {
-            return $myResponse->error($v->errors->first());
+            return $myResponse->error($v->errors()->first());
 
-            //	    AjaxResponse::error($v->errors->first());
+            //	    AjaxResponse::error($v->errors()->first());
         }
 
         $content = Content::find($request->get("ContentID"));
@@ -693,7 +657,7 @@ class ContentController extends Controller {
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes())
         {
-            return AjaxResponse::error($v->errors->first());
+            return AjaxResponse::error($v->errors()->first());
         }
         $contentFileID = $request->get("contentFileID");
         for ($i = 0; $i < 240; $i++)
@@ -709,20 +673,5 @@ class ContentController extends Controller {
         }
 
         return AjaxResponse::error(trans('error.interactivity_error'));
-    }
-
-    /**
-     * @param $e
-     * @return string
-     */
-    protected function xmlResponse(Exception $e)
-    {
-        $r = '';
-        $r .= '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' . "\n";
-        $r .= "<Response>\n";
-        $r .= "<Error code=\"" . $e->getCode() . "\">" . Common::xmlEscape($e->getMessage()) . "</Error>\n";
-        $r .= "</Response>\n";
-
-        return $r;
     }
 }

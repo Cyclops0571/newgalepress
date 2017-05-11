@@ -432,7 +432,7 @@ class ApplicationController extends Controller
         );
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes()) {
-          return $myResponse->error($v->errors->first());
+          return $myResponse->error($v->errors()->first());
         }
 
         $application = Application::find($request->get("ApplicationID"));

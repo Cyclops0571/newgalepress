@@ -26,6 +26,8 @@ Route::get('test3', function ()
     return View::make('test/test3');
 });
 
+
+
 Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
 {
 
@@ -143,9 +145,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Contents">
-    Route::get("contents/remove_from_mobile/(:num)", ["as" => "content_remove_from_mobile", 'uses' => 'ContentController@remove_from_mobile']);
+    Route::get("contents/remove_from_mobile/{contentID}", ["as" => "content_remove_from_mobile", 'uses' => 'ContentController@remove_from_mobile']);
     Route::get(trans('route.contents'), ['as' => 'contents_list', 'uses' => 'ContentController@index']);
-    Route::get(trans('route.contents_request'), ['as' => 'contents_request', 'uses' => 'ContentController@request']);
     Route::get(trans('route.contents_new'), ['as' => 'contents_new', 'uses' => 'ContentController@newly']);
     Route::get(trans('route.contents') . "/{content}", ['as' => 'contents_show', 'uses' => 'ContentController@show']);
     Route::post(trans('route.contents_save'), ['as' => 'contents_save', 'uses' => 'ContentController@save']);
@@ -289,34 +290,18 @@ Route::post("contents/refresh_identifier", ['as' => 'contentrefreshidentifier', 
 Route::get("/csstemplates/{filename}", ['as' => 'template_index', 'uses' => 'ApplicationTemplateController@theme']);
 Route::get("/template/{application}", ['as' => 'template_index', 'before' => 'auth', 'uses' => 'ApplicationTemplateController@show']);
 Route::get('maps/webview/{application}', ['as' => 'map_view', 'uses' => 'MapController@webView']);
-Route::get('payment/paymentAccountByApplicationID/(:num)', ['as' => 'app_payment_data', 'uses' => 'payment@paymentAccountByApplicationID']);
+Route::get('payment/paymentAccountByApplicationID/(:num)', ['as' => 'app_payment_data', 'uses' => 'PaymentController@paymentAccountByApplicationID']);
 
 
 /**********************CALISMAYANLAR*************************/
 
-// <editor-fold defaultstate="collapsed" desc="Test">
-Route::get('test/iosInternalTest', 'test@iosInternalTest');
-Route::get("move", "test@moveInteractivite");
-Route::get("test/image", "test@image");
-Route::post("test/image", "test@image");
-Route::get("test/download", "test@download");
-Route::post("test/download", "test@download");
-
-Route::get('test/v(:num)', 'test@routetest');
-Route::get('test/interactive', 'test@interactive');
-// </editor-fold>
-
-
-
-
-
 //<editor-fold desc="Payment">
-Route::get(trans('route.shop'), ['as' => 'payment_shop', 'uses' => 'payment@shop']);
-Route::get('payment-galepress', ['as' => 'website_payment_galepress_get', 'before' => 'auth', 'uses' => 'payment@payment_galepress']);
-Route::post('payment-galepress', ['as' => 'website_payment_galepress_post', 'before' => 'auth', 'uses' => 'payment@payment_galepress']);
-Route::post(trans('route.payment_card_info'), ['as' => 'payment_card_info', 'before' => 'auth', 'uses' => 'payment@card_info']);
-Route::post(trans('route.payment_approvement'), ['as' => 'payment_approvement', 'before' => 'auth', 'uses' => 'payment@payment_approval']);
-Route::get(trans('route.website_payment_result'), ['as' => 'website_payment_result_get', 'uses' => 'payment@payment_result']);
+Route::get(trans('route.shop'), ['as' => 'payment_shop', 'uses' => 'PaymentController@shop']);
+Route::get('payment-galepress', ['as' => 'website_payment_galepress_get', 'before' => 'auth', 'uses' => 'PaymentController@payment_galepress']);
+Route::post('payment-galepress', ['as' => 'website_payment_galepress_post', 'before' => 'auth', 'uses' => 'PaymentController@payment_galepress']);
+Route::post(trans('route.payment_card_info'), ['as' => 'payment_card_info', 'before' => 'auth', 'uses' => 'PaymentController@card_info']);
+Route::post(trans('route.payment_approvement'), ['as' => 'payment_approvement', 'before' => 'auth', 'uses' => 'PaymentController@payment_approval']);
+Route::get(trans('route.website_payment_result'), ['as' => 'website_payment_result_get', 'uses' => 'PaymentController@payment_result']);
 //</editor-fold>
 
 // <editor-fold defaultstate="collapsed" desc="Users">
@@ -359,8 +344,8 @@ Route::post('managements/import', ['as' => 'managements_importlanguages', 'uses'
 Route::post('managements/export', ['as' => 'managements_exportlanguages', 'uses' => 'managements@exportlanguages']);
 // </editor-fold>
 
-Route::get('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'payment@secure_3d_response']);
-Route::post('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'payment@secure_3d_response']);
+Route::get('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'PaymentController@secure_3d_response']);
+Route::post('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'PaymentController@secure_3d_response']);
 
 Route::get('clients/reset-my-password', ['uses' => 'ClientController@resetPasswordForm']);
 

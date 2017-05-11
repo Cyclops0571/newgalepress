@@ -108,7 +108,7 @@ class SearchController extends Controller {
             if(!$availableContents->contains('ContentID', $result->contentId)) {
                 unset($response->result[$key]);
             } else {
-                $response->result[$key]->applicationId = $availableContents->where('ContentID', $result->contentId)->first()->ApplicationID;
+                $response->result[$key]->applicationId = (int)$availableContents->where('ContentID', $result->contentId)->first()->ApplicationID;
             }
         }
 

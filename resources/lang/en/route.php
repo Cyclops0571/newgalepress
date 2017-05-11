@@ -54,7 +54,6 @@ return array(
     'application_settings_save' => 'applications/applicationSetting',
 
     'contents' => 'contents',
-    'contents_request' => 'contents/request',
     'contents_new' => 'contents/new',
     'contents_show' => 'contents/(:num)',
     'contents_save' => 'contents/save',

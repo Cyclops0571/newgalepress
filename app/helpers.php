@@ -4,7 +4,9 @@ use App\Models\Application;
 use App\Models\Component;
 use App\Models\Content;
 use App\Models\ContentFile;
+use App\Models\ContentPassword;
 use App\Models\Requestt;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Str;
 
@@ -428,8 +430,6 @@ class Common {
         if (Common::CheckApplicationOwnership($applicationID))
         {
             $currentPDF = (int)Content::where('ApplicationID', '=', $applicationID)->where('Status', '=', 1)->where('StatusID', '=', eStatus::Active)->count();
-            $maxPDF = 0;
-
             $a = Application::find($applicationID);
             if ($a)
             {
@@ -559,9 +559,6 @@ class Common {
         {
             $fileSize = File::size($file);
             //throw new Exception($fileSize);
-
-            $dataTransferred = 0;
-            $percentage = 0;
 
             $r = new Requestt();
             $r->RequestTypeID = $RequestTypeID;
@@ -793,13 +790,6 @@ class Common {
     }
 
 
-
-
-
-
-
-
-
     public static function generatePassword($length = 6, $level = 2)
     {
         list($usec, $sec) = explode(' ', microtime());
@@ -915,7 +905,6 @@ class Common {
 
     public static function getFormattedData($data, $type)
     {
-        $ret = "";
         //$FieldTypeVariant
         //Number
         //String
@@ -930,7 +919,7 @@ class Common {
         {
             if (Common::startsWith($data, '!!!'))
             {
-                $ret = __('common.' . str_replace('!!!', '', $data))->get();
+                $ret = trans('common.' . str_replace('!!!', '', $data));
             } else
             {
                 $ret = $data;
@@ -1003,7 +992,6 @@ class Common {
         {
             $date = date("Y-m-d");
         }
-        $ret = "";
         if ($useLocal)
         {
             $date = Common::convert2Localzone($date);
@@ -1069,7 +1057,7 @@ class Common {
         }
 
         $rs = DB::table('Statistic')
-            ->where(function ($query) use ($currentUser, $isCountry, $isCity, $isDistrict, $customerID, $applicationID, $contentID, $country, $city)
+            ->where(function (Builder $query) use ($currentUser, $isCountry, $isCity, $isDistrict, $customerID, $applicationID, $contentID, $country, $city)
             {
                 if ((int)$currentUser->UserTypeID == eUserTypes::Manager && $customerID > 0)
                 {
@@ -1328,17 +1316,11 @@ class Common {
 function localDateFormat($format = 'dd.MM.yyyy')
 {
     $currentLang = app()->getLocale();
-    if ($currentLang != 'usa')
+    if ($currentLang == 'usa' && $format == 'dd.MM.yyyy')
     {
-        return $format;
-    } else
-    {
-        if ($format == 'dd.MM.yyyy')
-        {
-            return 'mm/dd/yyyy';
-        }
+        return 'mm/dd/yyyy';
     }
-
+    return $format;
 }
 
 function ip_info($ip = null, $purpose = "location", $deep_detect = true)
@@ -1417,6 +1399,7 @@ function ip_info($ip = null, $purpose = "location", $deep_detect = true)
     return $output;
 }
 
-function interactiveComponents() {
+function interactiveComponents()
+{
     return Component::orderBy('DisplayOrder', 'ASC')->get();
 }

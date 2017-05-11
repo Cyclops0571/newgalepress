@@ -15,7 +15,7 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
 @if(Auth::user()->UserTypeID == eUserTypes::Customer)
     <?php
     /** @var Application[] $applicationSet */
-    $applicationSet = Auth::user()->Customer->Applications(eStatus::Active);
+    $applicationSet = Auth::user()->Customer->Application;
     $reportLinks = array(1001, 1301, 1302);
     $customer = Auth::user()->Customer;
     $title = Auth::user()->FirstName . " " . Auth::user()->LastName;

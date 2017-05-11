@@ -91,15 +91,6 @@ class Customer extends Model
         ->first();
     }
 
-
-    /**
-     * @param int $statusID
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
-     */
-    public function Applications($statusID = eStatus::All) {
-        return $this->Application()->where('StatusID', $statusID)->get();
-    }
-
     /**
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Relations\HasMany
      */

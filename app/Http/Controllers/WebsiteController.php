@@ -45,7 +45,7 @@ class WebsiteController extends Controller {
         $v = Validator::make($request->all(), $rules);
         if (!$v->passes())
         {
-            return $v->errors->first();
+            return $v->errors()->first();
         }
 
         Mail::to(config('mail.from.address'))->queue(new ContactFormMailler($request));

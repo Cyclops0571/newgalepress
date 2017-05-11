@@ -54,7 +54,6 @@ return array(
     'application_settings_save' => 'applications/applicationSetting',
 
     'contents' => 'icerikler',
-    'contents_request' => 'icerikler/talep',
     'contents_new' => 'icerikler/yeni',
     'contents_show' => 'icerikler/(:num)',
     'contents_save' => 'icerikler/kaydet',

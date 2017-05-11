@@ -41,7 +41,7 @@ class TopicController extends Controller {
                     'H'             => $height,
                     'RequestTypeID' => eRequestType::SMALL_IMAGE_FILE,
                     'ContentID'     => $content->ContentID];
-                $responseTopicChunk["CoverImageUrl"] = \URL::to("/tr/icerikler/talep", $parameters);
+                $responseTopicChunk["CoverImageUrl"] = route('contents_file', $parameters);
                 $responseTopicChunk["Order"] = strtotime($content->ProcessDate);
                 $responseChunk["Topics"][] = $responseTopicChunk;
             }

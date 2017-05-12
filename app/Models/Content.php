@@ -59,7 +59,7 @@ use Illuminate\Http\Request;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $Category
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentCategory[] $ContentCategory
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentFile[] $ContentFile
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentTopic[] $ContentTopics
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Topic[] $Topic
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereApplicationID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereApproval($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereAutoDownload($value)
@@ -94,7 +94,6 @@ use Illuminate\Http\Request;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereUnpublishDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereVersion($value)
  * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Topic[] $Topic
  */
 class Content extends Model {
 

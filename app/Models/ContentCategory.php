@@ -9,8 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $ContentID
  * @property int $CategoryID
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCategory whereContentID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCategory whereCategoryID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCategory whereContentID($value)
  * @mixin \Eloquent
  */
 class ContentCategory extends Model

@@ -17,14 +17,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $Description
  * @property string $Watermark
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereCropID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereHeight($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereObjectType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereParentID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereWidth($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereHeight($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereRadius($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereType($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereWatermark($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Crop whereWidth($value)
  * @mixin \Eloquent
  */
 class Crop extends Model

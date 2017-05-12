@@ -12,12 +12,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $Name
  * @property int $Order
  * @property int $StatusID
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Topic whereTopicID($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $Application
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Topic whereName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Topic whereOrder($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Topic whereStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Topic whereTopicID($value)
  * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $Application
  */
 class Topic extends Model
 {

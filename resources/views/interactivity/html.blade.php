@@ -10,7 +10,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="shortcut icon" href="/website/img/favicon2.ico">
+    <link rel="shortcut icon" href="/images/website/favicon2.ico">
     <!-- Included CSS Files -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=all" />
     <link rel="stylesheet" href="{{elixir('css/interactive.css')}}">

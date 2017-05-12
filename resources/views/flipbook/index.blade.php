@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="/flipbook/css/font-awesome.min.css?v=<?php echo APP_VER; ?>">
 	<link rel="stylesheet" type="text/css" href="/flipbook/css/jquery.switchButton.css?v=<?php echo APP_VER; ?>">
 	<link rel="stylesheet" type="text/css" href='http://fonts.googleapis.com/css?family=Lato:300,400'>
-	<link rel="shortcut icon" href="/website/img/favicon2.ico">
+	<link rel="shortcut icon" href="/images/website/favicon2.ico">
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top myNavbar" role="navigation">

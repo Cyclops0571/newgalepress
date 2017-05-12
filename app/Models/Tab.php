@@ -17,16 +17,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $StatusID
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereTabID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereApplicationID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereTabTitle($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereUrl($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereInhouseUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereCreatedAt($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereIconUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereInhouseUrl($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereStatus($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereStatusID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereTabID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereTabTitle($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Tab whereUrl($value)
  * @mixin \Eloquent
  */
 class Tab extends Model

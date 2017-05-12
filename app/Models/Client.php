@@ -20,6 +20,10 @@ use Log;
  * @property string $Username
  * @property string $Password
  * @property string $Email
+ * @property string $FbAppID
+ * @property string $FbUserID
+ * @property string $FbEmail
+ * @property string $FbToken
  * @property string $Token
  * @property string $DeviceToken
  * @property string $Name
@@ -43,6 +47,10 @@ use Log;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereCreatorUserID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereDeviceToken($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbAppID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbUserID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereInvalidPasswordAttempts($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereLastLoginDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereName($value)
@@ -58,14 +66,6 @@ use Log;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereUsername($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereVersion($value)
  * @mixin \Eloquent
- * @property string $FbAppID
- * @property string $FbUserID
- * @property string $FbEmail
- * @property string $FbToken
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbAppID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbToken($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereFbUserID($value)
  */
 class Client extends Model {
 

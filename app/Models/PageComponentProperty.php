@@ -12,7 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * App\Models\PageComponentProperty
  *
- * @mixin \Eloquent
  * @property int $PageComponentPropertyID
  * @property int $PageComponentID
  * @property string $Name
@@ -33,6 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponentProperty whereProcessUserID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponentProperty whereStatusID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponentProperty whereValue($value)
+ * @mixin \Eloquent
  */
 class PageComponentProperty extends Model {
 

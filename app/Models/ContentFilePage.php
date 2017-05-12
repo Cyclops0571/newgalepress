@@ -31,22 +31,22 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $ProcessDate
  * @property int $ProcessTypeID
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PageComponent[] $PageComponents
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereContentFilePageID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereContentFileID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereNo($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereOperationStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereWidth($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereHeight($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereFilePath($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereFileName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereFileName2($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereFileSize($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereContentFilePageID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereCreatorUserID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereDateCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereFileName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereFileName2($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereFilePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereFileSize($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereHeight($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereNo($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereOperationStatus($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereProcessDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereProcessTypeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFilePage whereWidth($value)
  * @mixin \Eloquent
  */
 class ContentFilePage extends Model

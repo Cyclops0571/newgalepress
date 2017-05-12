@@ -10,7 +10,7 @@
         <meta name="keywords" content="Gale Press, Paketler"/>
         <meta name="description" content="Gale Press paket bilgilerinin bulunduğu sayfa.">
         <meta name="author" content="Gale Press">
-		<link rel="shortcut icon" href="/website/img/favicon2.ico">
+		<link rel="shortcut icon" href="/images/website/favicon2.ico">
 		<!-- Mobile Metas -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -119,7 +119,7 @@
 					<h1 class="logo">
                         <a href="{{config('custom.galepress_https_url')}}">
                             <img alt="Gale Press" data-sticky-width="252" data-sticky-height="82"
-                                 src="/website/img/logo-dark.png">
+                                 src="/images/website/logo-dark.png">
 						</a>
 					</h1>
 					<nav>

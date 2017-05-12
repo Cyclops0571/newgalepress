@@ -115,7 +115,7 @@ return array(
     'website_tryit' => 'tryit',
     'website_captcha' => 'mecaptcha',
     'website_why_galepress' => 'how-it-works',
-    'website_payment_result' => 'payment-result/(:all)',
+    'website_payment_result' => 'payment-result/{resultText}',
 
     'confirmemail' => 'confirm-account',
 

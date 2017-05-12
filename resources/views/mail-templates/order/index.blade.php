@@ -584,7 +584,7 @@
                                                 style="text-decoration:none;text-underline:none"><img border="0"
                                                                                                       width="210"
                                                                                                       id="_x0000_i1026"
-                                                                                                      src="http://www.galepress.com/website/img/logo-dark.png"
+                                                                                                      src="http://www.galepress.com/images/website/logo-dark.png"
                                                                                                       alt="Gale Press"
                                                                                                       style="margin-top:15px;"></span></a>
                                 </p>
@@ -610,7 +610,7 @@
    solid #D1D1D1 .75pt;padding:0cm 0cm 0cm 0cm;height:15.0pt">
                 <p class="MsoNormal"><span style="font-size:9.0pt;font-family:&quot;Arial&quot;,&quot;sans-serif&quot;;
    color:#292929"><img border="0" width="698" height="20" id="_x0000_i1027"
-                       src="http://www.galepress.com/website/img/mail/head-gradient.jpg"><o:p></o:p></span></p>
+                       src="http://www.galepress.com/images/website/mail/head-gradient.jpg"><o:p></o:p></span></p>
             </td>
         </tr>
         </thead>
@@ -878,7 +878,7 @@
                                   target="_blank">
                             <area shape="Rect" coords="646, 3, 697, 36" href="http://sk.com/" target="_blank">
                         </map><img border="0" width="700" height="36" id="_x0000_i1033"
-                                   src="http://www.galepress.com/website/img/mail/footer.jpg"
+                                   src="http://www.galepress.com/images/website/mail/footer.jpg"
                                    usemap="#MicrosoftOfficeMap0"><o:p></o:p></span></p>
             </td>
         </tr>

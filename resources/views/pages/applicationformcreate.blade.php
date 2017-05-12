@@ -263,7 +263,7 @@ if (isset($_GET['qty'])) {
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav side-nav"
-                style="background: #F7F7F7 url('/website/img/sidebarlogo.png') no-repeat center 200px;">
+                style="background: #F7F7F7 url('/images/website/sidebarlogo.png') no-repeat center 200px;">
                 <li class="active"><a href="#" id="firstListItem" style="line-height: 15px;"><span
                                 class="liBordersActive"></span> {{ __('common.orders_app_detail') }}<i
                                 class="fa fa-check-circle pull-right" style="opacity:0.3; padding:1px"></i></a></li>

@@ -115,7 +115,7 @@ return array(
     'website_tryit' => 'deneyin',
     'website_captcha' => 'mecaptcha',
     'website_why_galepress' => 'nasil-calisir',
-    'website_payment_result' => 'odeme-sonuc/(:all)',
+    'website_payment_result' => 'odeme-sonuc/{resultText}',
 
     'confirmemail' => 'hesab-onayla',
 

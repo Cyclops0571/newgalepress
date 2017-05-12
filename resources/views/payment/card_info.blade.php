@@ -3,7 +3,7 @@
 <head>
     <title>{{__('website.galepress_payment') }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="shortcut icon" href="/website/img/favicon2.ico">
+    <link rel="shortcut icon" href="/images/website/favicon2.ico">
     <!-- Libs CSS -->
     <link rel="stylesheet" href="/website/styles/shop/vendor/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="/website/styles/shop/vendor/font-awesome/css/font-awesome.css">
@@ -42,7 +42,7 @@
 
         .jp-card .jp-card-front {
             background-color: #333333 !important;
-            background-image: url(/website/img/galepress.png) !important;
+            background-image: url(/images/website/galepress.png) !important;
         }
 
         .jp-card-back {
@@ -95,7 +95,7 @@ if (false) {
         <h1 class="logo">
             <a href="index.html">
                 <img alt="Gale Press" data-sticky-width="252" data-sticky-height="82"
-                     src="/website/img/logo-dark.png">
+                     src="/images/website/logo-dark.png">
             </a>
         </h1>
         <nav>
@@ -121,6 +121,7 @@ if (false) {
 
     <div class="form-container active">
         <form action="{{route('payment_approvement')}}" method="post" id="paymentForm" class="form-horizontal" autocomplete="off">
+            {!! csrf_field() !!}
             <input type="hidden" name="card_brand" id="card_brand" value=""/>
             <div class="form-group">
                 <label class="control-label col-md-5">{{__('website.price')}}</label>

@@ -29,19 +29,19 @@ use Iyzipay\Request\CreateCheckoutFormInitializeRequest;
  * @property string $CallbackUrl
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static Builder|Qrcode whereQrcodeID($value)
- * @method static Builder|Qrcode whereQrSiteClientID($value)
- * @method static Builder|Qrcode whereName($value)
- * @method static Builder|Qrcode whereEmail($value)
- * @method static Builder|Qrcode whereTcNo($value)
- * @method static Builder|Qrcode whereAddress($value)
- * @method static Builder|Qrcode whereCity($value)
- * @method static Builder|Qrcode wherePhone($value)
- * @method static Builder|Qrcode wherePrice($value)
- * @method static Builder|Qrcode whereParameter($value)
- * @method static Builder|Qrcode whereCallbackUrl($value)
- * @method static Builder|Qrcode whereCreatedAt($value)
- * @method static Builder|Qrcode whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereCallbackUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereCity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereParameter($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode wherePhone($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereQrSiteClientID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereQrcodeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereTcNo($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Qrcode whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class Qrcode extends Model

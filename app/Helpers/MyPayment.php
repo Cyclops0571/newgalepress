@@ -4,8 +4,13 @@
 namespace App\Helpers;
 
 
+use App\Library\IyzicoThreeDResponse;
 use App\Models\Customer;
 use App\Models\PaymentAccount;
+use App\Models\PaymentTransaction;
+use App\Models\ServerErrorLog;
+use App\User;
+use Auth;
 use Iyzipay\Model\BasicPayment;
 use Iyzipay\Model\BasicThreedsInitialize;
 use Iyzipay\Model\BasicThreedsPayment;
@@ -57,21 +62,9 @@ class MyPayment
         }
     }
 
-    /**
-     * @return User
-     */
-    private function getUser()
-    {
-        if (\App::isLocal()) {
-            return User::find(65);
-        }
-        return Auth::user();
-    }
-
     public function paymentFromWeb(PaymentCard $pc)
     {
-        $user = $this->getUser();
-        $this->setPaymentAccount($user);
+        $this->paymentAccount = Auth::user()->Customer->getLastSelectedPaymentAccount();
         $this->setPaymentTransaction($this->paymentAccount);
         $request = $this->getRequest();
         $pc->setRegisterCard(1);
@@ -88,8 +81,7 @@ class MyPayment
      */
     public function paymentFromWebThreeD(PaymentCard $pc)
     {
-        $user = $this->getUser();
-        $this->setPaymentAccount($user);
+        $this->paymentAccount = Auth::user()->Customer->getLastSelectedPaymentAccount();
         $this->setPaymentTransaction($this->paymentAccount);
 
         $request = $this->getRequest(config("custom.galepress_https_url") . '/' . app()->getLocale() . '/3d-secure-response');
@@ -142,15 +134,6 @@ class MyPayment
         return $userInfoSet;
     }
 
-    /**
-     * @param User $user
-     * @return PaymentAccount
-     */
-    private function setPaymentAccount(User $user)
-    {
-        $customer = Customer::find($user->CustomerID);
-        return $this->paymentAccount = $customer->getLastSelectedPaymentAccount();
-    }
 
     /**
      * @param PaymentAccount $paymentAccount
@@ -190,7 +173,7 @@ class MyPayment
         return $request;
     }
 
-    public function get3dsResponse(iyzico3dsResponse $response)
+    public function get3dsResponse(IyzicoThreeDResponse $response)
     {
         $this->paymentTransaction = PaymentTransaction::find($response->conversationId);
         if (!$this->paymentTransaction) {

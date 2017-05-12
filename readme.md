@@ -1,4 +1,4 @@
-<p align="center"><a href="https://galepress.com" target="_blank"><img width="150"src="http://www.galepress.com/website/img/logo-dark.png"></a></p>
+<p align="center"><a href="https://galepress.com" target="_blank"><img width="150"src="http://www.galepress.com/images/website/logo-dark.png"></a></p>
 
 ## About Galepress
 

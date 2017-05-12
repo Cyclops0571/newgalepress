@@ -115,7 +115,7 @@ return array(
     'website_tryit' => 'jetztanmelden',
     'website_captcha' => 'sicherheitscode',
     'website_why_galepress' => 'funktionsweise',
-    'website_payment_result' => 'bezahlungs-status/(:all)',
+    'website_payment_result' => 'bezahlungs-status/{resultText}',
 
     'confirmemail' => 'kontobestaetigen',
 

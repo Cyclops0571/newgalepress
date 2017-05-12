@@ -21,15 +21,15 @@ use Illuminate\Database\Query\JoinClause;
  * @property int $ProcessUserID
  * @property string $ProcessDate
  * @property int $ProcessTypeID
- * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereGroupCodeID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereGroupName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereDisplayOrder($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereStatusID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereCreatorUserID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereDateCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereDisplayOrder($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereGroupCodeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereGroupName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereProcessDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereProcessTypeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereStatusID($value)
  * @mixin \Eloquent
  */
 class GroupCode extends Model

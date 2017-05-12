@@ -9,7 +9,8 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
   @else
     <div class="name">{{ __('common.welcome') }},<br/> {{ $title }}</div>
   @endif
-  <div class="control"><a href="#" class="psn-control"><span class="icon-reorder" style="color:#1681bf;"></span></a>
+  <div class="control">
+    <a href="#" class="psn-control"><span class="icon-reorder" style="color:#1681bf;"></span></a>
   </div>
 </div>
 @if(Auth::user()->UserTypeID == eUserTypes::Customer)
@@ -22,11 +23,14 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
     $showPaymentLink = false;
     $showInAppPuchaseLink = false;
 
-    foreach ($applicationSet as $app) {
-        if ($app->Price > 0) {
+    foreach ($applicationSet as $app)
+    {
+        if ($app->Price > 0)
+        {
             $showPaymentLink = true;
         }
-        if ($app->InAppPurchaseActive) {
+        if ($app->InAppPurchaseActive)
+        {
             $showInAppPuchaseLink = true;
         }
     }
@@ -54,14 +58,14 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
       <li>
         <a href="#"><span class="icon-file-text-alt"></span> {{ __('common.menu_caption_reports') }}</a>
         <ul id="allReports">
-            @foreach($reportLinks as $reportLink)
-                <a href="{{__('route.reports') . '?r=' . $reportLink}}" >{{__('common.menu_report_' . $reportLink)}}</a>
-            @endforeach
-      </li>
+          @foreach($reportLinks as $reportLink)
+            <li>
+              <a href="{{__('route.reports') . '?r=' . $reportLink}}">{{__('common.menu_report_' . $reportLink)}}</a>
+            </li>
+          @endforeach
         </ul>
-        <li>
-        <a href="{{route('common_mydetail_get')}}"><span class="icon-user"></span>{{ __('common.menu_mydetail') }}
-        </a>
+      <li>
+        <a href="{{route('common_mydetail_get')}}"><span class="icon-user"></span>{{ __('common.menu_mydetail') }}</a>
       </li>
       <li>
         @if(count($applicationSet) == 1)
@@ -104,31 +108,30 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
       <a href="{{route('home')}}"><span class="icon-home"></span>{{ __('common.home') }}</a>
     </li>
     <li>
-      <a href="{{route('managements_list')}}"><span
-            class="icon-wrench"></span>{{ __('common.management') }}</a>
+      <a href="{{route('managements_list')}}"><span class="icon-wrench"></span>{{ __('common.management') }}</a>
     </li>
     <li>
       <a href="#"><span class="icon-sitemap"></span> {{ __('common.menu_caption') }}</a>
       <ul>
-          <a href="{{__('route.customers')}}" >{{__('common.menu_customers')}}</a>
-          <a href="{{__('route.applications')}}" >{{__('common.menu_applications')}}</a>
-          <a href="{{__('route.contents')}}" >{{__('common.menu_contents')}}</a>
-          <a href="{{__('route.orders')}}" >{{__('common.menu_orders')}}</a>
+        <a href="{{__('route.customers')}}">{{__('common.menu_customers')}}</a>
+        <a href="{{__('route.applications')}}">{{__('common.menu_applications')}}</a>
+        <a href="{{__('route.contents')}}">{{__('common.menu_contents')}}</a>
+        <a href="{{__('route.orders')}}">{{__('common.menu_orders')}}</a>
       </ul>
     </li>
     <li>
       <a href="#"><span class="icon-file-text-alt"></span> {{ __('common.menu_caption_reports') }}</a>
       <ul id="allReports">
-          @foreach($reportLinks as $reportLink)
-              <a href="{{__('route.reports') . '?r=' . $reportLink}}" >{{__('common.menu_report_' . $reportLink)}}</a>
-            @endforeach
+        @foreach($reportLinks as $reportLink)
+          <a href="{{__('route.reports') . '?r=' . $reportLink}}">{{__('common.menu_report_' . $reportLink)}}</a>
+        @endforeach
       </ul>
     </li>
     <li>
       <a href="#"><span class="icon-user"></span>Kullanıcı Ayarları</a>
       <ul>
-          <a href="{{__('route.users')}}" >{{__('common.menu_users')}}</a>
-          <a href="{{__('route.mydetail')}}" >{{__('common.menu_mydetail')}}</a>
+        <a href="{{__('route.users')}}">{{__('common.menu_users')}}</a>
+        <a href="{{__('route.mydetail')}}">{{__('common.menu_mydetail')}}</a>
       </ul>
     </li>
     <li>

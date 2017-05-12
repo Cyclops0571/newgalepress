@@ -49,36 +49,36 @@ use ZipArchive;
  * @property int $ProcessUserID
  * @property string $ProcessDate
  * @property int $ProcessTypeID
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereContentFileID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereContentID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereDateAdded($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFilePath($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFileName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFileName2($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFileSize($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile wherePageCreateProgress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereTransferred($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractivity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereHasCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereErrorCount($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereLastErrorDetail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFilePath($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFileName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFileName2($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFileSize($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereTotalFileSize($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereIncluded($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereIndexed($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereStatusID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereCreatorUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereDateCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessTypeID($value)
- * @mixin \Eloquent
  * @property-read \App\Models\Content $Content
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentCoverImageFile[] $ContentCoverImageFile
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ContentFilePage[] $ContentFilePages
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereContentFileID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereContentID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereCreatorUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereDateAdded($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereDateCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereErrorCount($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFileName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFileName2($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFilePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereFileSize($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereHasCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereIncluded($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereIndexed($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFileName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFileName2($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFilePath($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractiveFileSize($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereInteractivity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereLastErrorDetail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile wherePageCreateProgress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessTypeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereTotalFileSize($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentFile whereTransferred($value)
+ * @mixin \Eloquent
  */
 class ContentFile extends Model
 {

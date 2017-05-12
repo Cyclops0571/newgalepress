@@ -24,18 +24,18 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $ProcessTypeID
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereContentCoverImageFileID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereContentFileID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereCreatorUserID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereDateAdded($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereFilePath($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereSourceFileName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereDateCreated($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereFileName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereFileName2($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereFilePath($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereFileSize($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereStatusID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereCreatorUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereDateCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereProcessUserID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereProcessDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereProcessTypeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereSourceFileName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentCoverImageFile whereStatusID($value)
  * @mixin \Eloquent
  */
 class ContentCoverImageFile extends Model

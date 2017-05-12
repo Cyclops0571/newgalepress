@@ -467,9 +467,9 @@ Gale Press offers a mobile solution which can save you time while allowing your 
 ultimate shopping convenience. They have access to what you offer at any time, on any device.
 Through our mobile platform, you can offer e‐commerce and online ordering options to better serve
 your customers. Gale Press offers the opportunity to stand out from your competitors, or at least to
-stay competitive in the rapidly digitized mobile world.</br>
+stay competitive in the rapidly digitized mobile world.<br/>
 In addition to saving money on printing catalogues and brochures, you can market to and target
-customers geographically using our location based services.</br>
+customers geographically using our location based services.<br/>
 Go mobile! Don’t let your competitors beat you to the future of digital marketing.',
 
     'tryit_form_title' => 'Create Application',

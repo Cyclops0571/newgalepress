@@ -15,10 +15,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 /**
  * App\User
  *
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $readNotifications
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $unreadNotifications
- * @mixin \Eloquent
  * @property int $UserID
  * @property int $UserTypeID
  * @property int $CustomerID
@@ -40,31 +36,31 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string $ProcessDate
  * @property int $ProcessTypeID
  * @property string $ConfirmCode
- * @method static \Illuminate\Database\Query\Builder|\App\User whereUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereUserTypeID($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $Applications
+ * @property-read \App\Models\Customer $Customer
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereConfirmCode($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatorUserID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereCustomerID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereUsername($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereDateCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereFbAccessToken($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereFbEmail($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereFbUsername($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereFirstName($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereLastName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereFbEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereFbAccessToken($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereTimezone($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User wherePWRecoveryCode($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User wherePWRecoveryDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereStatusID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereCreatorUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereDateCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User wherePassword($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereProcessDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereProcessTypeID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\User whereConfirmCode($value)
- * @property string $remember_token
- * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
- * @property-read \App\Models\Customer $Customer
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $Applications
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereTimezone($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereUserTypeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereUsername($value)
+ * @mixin \Eloquent
  */
 class User extends Authenticatable
 {

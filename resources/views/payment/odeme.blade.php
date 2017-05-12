@@ -41,7 +41,7 @@ $data =  'api_id=im0322080005c70f195bca1434712720' . //size özel iyzico api
     <head>
       <style type="text/css">
         body{
-          background: url(/website/img/galepress.png);
+          background: url(/images/website/galepress.png);
           background-opacity: 0.5;
         }
         .iyzico-payment-form.iyziForm{

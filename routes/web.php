@@ -132,12 +132,24 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     });
     // </editor-fold>
 
+
+
 });
+
+
+Route::get('payment/paymentAccountByApplicationID/{applicationID}', ['as' => 'app_payment_data', 'uses' => 'PaymentController@paymentAccountByApplicationID']);
+Route::post('payment-galepress', ['as' => 'website_payment_galepress', 'before' => 'auth', 'uses' => 'PaymentController@paymentGalepress']);
 
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function ()
 {
     Route::get(trans('route.home'), ['as' => 'home', 'uses' => 'CommonController@home']);
+
+    Route::any('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'uses' => 'PaymentController@secure3dResponse']);
+    Route::get(trans('route.shop'), ['as' => 'payment_shop', 'uses' => 'PaymentController@shop']);
+    Route::post(trans('route.payment_card_info'), ['as' => 'payment_card_info', 'uses' => 'PaymentController@cardInfo']);
+    Route::post(trans('route.payment_approvement'), ['as' => 'payment_approvement', 'uses' => 'PaymentController@paymentApproval']);
+    Route::get(trans('route.website_payment_result'), ['as' => 'website_payment_result', 'uses' => 'PaymentController@paymentResult']);
 
     // <editor-fold defaultstate="collapsed" desc="Crop">
     Route::get(trans('route.crop_image'), ['as' => 'crop_image', 'before' => 'auth', 'uses' => 'CropController@image']);
@@ -290,20 +302,12 @@ Route::post("contents/refresh_identifier", ['as' => 'contentrefreshidentifier', 
 Route::get("/csstemplates/{filename}", ['as' => 'template_index', 'uses' => 'ApplicationTemplateController@theme']);
 Route::get("/template/{application}", ['as' => 'template_index', 'before' => 'auth', 'uses' => 'ApplicationTemplateController@show']);
 Route::get('maps/webview/{application}', ['as' => 'map_view', 'uses' => 'MapController@webView']);
-Route::get('payment/paymentAccountByApplicationID/(:num)', ['as' => 'app_payment_data', 'uses' => 'PaymentController@paymentAccountByApplicationID']);
-
-
-/**********************CALISMAYANLAR*************************/
-
 //<editor-fold desc="Payment">
-Route::get(trans('route.shop'), ['as' => 'payment_shop', 'uses' => 'PaymentController@shop']);
-Route::get('payment-galepress', ['as' => 'website_payment_galepress_get', 'before' => 'auth', 'uses' => 'PaymentController@payment_galepress']);
-Route::post('payment-galepress', ['as' => 'website_payment_galepress_post', 'before' => 'auth', 'uses' => 'PaymentController@payment_galepress']);
-Route::post(trans('route.payment_card_info'), ['as' => 'payment_card_info', 'before' => 'auth', 'uses' => 'PaymentController@card_info']);
-Route::post(trans('route.payment_approvement'), ['as' => 'payment_approvement', 'before' => 'auth', 'uses' => 'PaymentController@payment_approval']);
-Route::get(trans('route.website_payment_result'), ['as' => 'website_payment_result_get', 'uses' => 'PaymentController@payment_result']);
+
+
 //</editor-fold>
 
+/**********************CALISMAYANLAR*************************/
 // <editor-fold defaultstate="collapsed" desc="Users">
 Route::get(trans('route.users'), ['as' => 'users', 'before' => 'auth', 'uses' => 'users@index']);
 Route::get(trans('route.users_new'), ['as' => 'users_new', 'before' => 'auth', 'uses' => 'users@newly']);
@@ -344,8 +348,6 @@ Route::post('managements/import', ['as' => 'managements_importlanguages', 'uses'
 Route::post('managements/export', ['as' => 'managements_exportlanguages', 'uses' => 'managements@exportlanguages']);
 // </editor-fold>
 
-Route::get('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'PaymentController@secure_3d_response']);
-Route::post('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'before' => 'auth', 'uses' => 'PaymentController@secure_3d_response']);
 
 Route::get('clients/reset-my-password', ['uses' => 'ClientController@resetPasswordForm']);
 

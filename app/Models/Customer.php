@@ -28,29 +28,28 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $ProcessUserID
  * @property string $ProcessDate
  * @property int $ProcessTypeID
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $Applications
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereCustomerID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereCustomerNo($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereCustomerName($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $Application
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereBillAddress($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereBillName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereBillTaxNumber($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereBillTaxOffice($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereCity($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereCountry($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereCreatorUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereCustomerID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereCustomerName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereCustomerNo($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereDateCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereEmail($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer wherePhone1($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer wherePhone2($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereBillName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereBillAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereBillTaxOffice($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereBillTaxNumber($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereTotalFileSize($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereStatusID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereCreatorUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereDateCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereProcessUserID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereProcessDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereProcessTypeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereTotalFileSize($value)
  * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Application[] $Application
  */
 class Customer extends Model
 {

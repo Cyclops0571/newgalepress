@@ -12,7 +12,7 @@
     <meta name="author" content="Serdar Saygılı"/>
     <meta name="copyright" content="Gale Press Technology"/>
     <meta name="company" content="Detay Danışmanlık Bilgisayar Hiz. San. ve Dış Tic. A.Ş."/>
-    <link rel="shortcut icon" href="/website/img/favicon2.ico">
+    <link rel="shortcut icon" href="/images/website/favicon2.ico">
 
     <!-- Latest compiled and minified CSS -->
     {{ Html::style('css/mobilestyle.css?v=' . APP_VER) }}

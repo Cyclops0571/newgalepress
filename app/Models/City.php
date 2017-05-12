@@ -9,13 +9,13 @@ use Illuminate\Database\Query\Builder;
 /**
  * App\Models\City
  *
- * @property int $CityID Description
- * @property int $CityName Description
- * @property int $StatusID Description
+ * @property int $CityID
+ * @property string $CityName
+ * @property bool $StatusID
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\City whereCityID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\City whereCityName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\City whereStatusID($value)
  * @mixin \Eloquent
- * @method static Builder|City whereCityID($value)
- * @method static Builder|City whereCityName($value)
- * @method static Builder|City whereStatusID($value)
  */
 class City extends Model
 {

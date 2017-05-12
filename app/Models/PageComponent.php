@@ -23,20 +23,20 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $ProcessUserID
  * @property string $ProcessDate
  * @property int $ProcessTypeID
- * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent wherePageComponentID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereContentFilePageID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereComponentID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereNo($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereStatusID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereCreatorUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereDateCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereProcessUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereProcessDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereProcessTypeID($value)
- * @mixin \Eloquent
  * @property-read \App\Models\Component $Component
  * @property-read \App\Models\ContentFilePage $ContentFilePage
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\PageComponentProperty[] $PageComponentProperty
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereComponentID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereContentFilePageID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereCreatorUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereDateCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereNo($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent wherePageComponentID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereProcessDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereProcessTypeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\PageComponent whereStatusID($value)
+ * @mixin \Eloquent
  */
 class PageComponent extends Model
 {

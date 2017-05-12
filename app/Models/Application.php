@@ -77,74 +77,74 @@ use Subscription;
  * @property int $ProcessUserID
  * @property string $ProcessDate
  * @property int $ProcessTypeID
- * @property \App\Models\Customer $Customer
- * @property \App\Models\ApplicationTopic[] $ApplicationTopics
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $Categories
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Content[] $Contents
+ * @property-read \App\Models\Customer $Customer
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GoogleMap[] $GoogleMap
+ * @property-read \App\Models\Package $Package
+ * @property-read \App\Models\PaymentAccount $PaymentAccount
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationTag[] $Tags
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Topic[] $Topic
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationUser[] $Users
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereAndroidLink($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereAndroidVersion($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereApplicationID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereCustomerID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereDetail($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereApplicationLanguage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereApplicationStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerAutoplay($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerColor($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerCustomerActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerCustomerUrl($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerIntervalTime($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerRandom($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerSlideAnimation($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerTransitionRate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBlocked($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBreadCrumbActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBundleText($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereCkPem($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereConfirmationMessage($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereCreatorUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereCustomerID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereDateCreated($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereDetail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereExpirationDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereFlipboardActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereForce($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereGoogleDeveloperEmail($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereGoogleDeveloperKey($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereIOSHexPasswordForSubscription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereIOSLink($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereIOSVersion($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereInAppPurchaseActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereInstallment($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereMonthIdentifier($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereNotificationText($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application wherePackageID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereProcessDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereProcessTypeID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereProcessUserID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereShowDashboard($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereStartDate($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereStatusID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereSubscriptionMonthActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereSubscriptionWeekActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereSubscriptionYearActive($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereTabActive($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereThemeBackground($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereThemeForeground($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereThemeForegroundColor($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application wherePrice($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereInstallment($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereInAppPurchaseActive($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereFlipboardActive($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBreadCrumbActive($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBundleText($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereStartDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereExpirationDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereApplicationStatusID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereIOSVersion($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereIOSLink($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereIOSHexPasswordForSubscription($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereAndroidVersion($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereAndroidLink($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application wherePackageID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBlocked($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereTopicStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereTotalFileSize($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereTrail($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereVersion($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereForce($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereTotalFileSize($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereNotificationText($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereCkPem($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerActive($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerRandom($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerCustomerActive($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerCustomerUrl($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerAutoplay($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerIntervalTime($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerTransitionRate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerColor($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereBannerSlideAnimation($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereTabActive($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereGoogleDeveloperKey($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereGoogleDeveloperEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereSubscriptionWeekActive($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereWeekIdentifier($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereSubscriptionMonthActive($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereMonthIdentifier($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereSubscriptionYearActive($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereYearIdentifier($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereShowDashboard($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereConfirmationMessage($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereTopicStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereStatusID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereCreatorUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereDateCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereProcessUserID($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereProcessDate($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereProcessTypeID($value)
  * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationUser[] $Users
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationTag[] $Tags
- * @property-read \App\Models\Package $Package
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Category[] $Categories
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Content[] $Contents
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\GoogleMap[] $GoogleMap
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Topic[] $Topic
  */
 class Application extends Model {
 
@@ -348,11 +348,11 @@ class Application extends Model {
 
     /**
      *
-     * @return PaymentAccount|\Illuminate\Database\Eloquent\Builder
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function PaymentAccount()
     {
-        return $this->hasOne(PaymentAccount::class, "ApplicationID")->getQuery()->first();
+        return $this->hasOne(PaymentAccount::class, "ApplicationID");
     }
 
     /**

@@ -10,7 +10,7 @@ use App\User;
     <a href="https://www.youtube.com/channel/UCIJuAlRjVwV6OdCK9uzoN5w">
       <img style="display:block; line-height:0; font-size:0; border:0;" class="img1"
            src="http://www.galepress.com/img/mail-templates/hosgeldiniz/img.png" alt="img" width="500" height="250"/>
-      </br></br>
+      <br/><br/>
     </a>
     {!! trans('maillang.subscription_welcome_part2', ["NAME" => $user->FirstName, "SURNAME" => $user->LastName]) !!}
 @endsection

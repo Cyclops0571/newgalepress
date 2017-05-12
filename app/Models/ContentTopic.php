@@ -12,8 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $TopicID
  * @property-read \App\Models\Content $Content
  * @property-read \App\Models\Topic $Topic
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentTopic whereContentTopicID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentTopic whereContentID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentTopic whereContentTopicID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ContentTopic whereTopicID($value)
  * @mixin \Eloquent
  */

@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $ApplicationTopicID
  * @property int $ApplicationID
  * @property int $TopicID
- * @method static \Illuminate\Database\Query\Builder|\App\Models\ApplicationTopic whereApplicationTopicID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ApplicationTopic whereApplicationID($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\ApplicationTopic whereApplicationTopicID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\ApplicationTopic whereTopicID($value)
  * @mixin \Eloquent
  */

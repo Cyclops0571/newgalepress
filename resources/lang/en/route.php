@@ -19,7 +19,7 @@ return array(
 
     'users' => 'users',
     'users_new' => 'users/new',
-    'users_show' => 'users/(:num)',
+    'users_show' => 'users/{user}',
     'users_save' => 'users/save',
     'users_send' => 'users/send',
     'users_delete' => 'users/delete',

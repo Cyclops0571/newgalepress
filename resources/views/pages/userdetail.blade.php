@@ -26,26 +26,6 @@
         $UserTypeID = eUserTypes::Customer;
         $CustomerID = (int)request('customerID', 0);
     }
-
-    $groupcodes = DB::table('GroupCode AS gc')
-            ->join('GroupCodeLanguage AS gcl', function (JoinClause $join) {
-                $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
-                $join->on('gcl.LanguageID', '=', Common::getLocaleId());
-            })
-            ->where('gc.GroupName', '=', 'UserTypes')
-            ->where('gc.StatusID', '=', eStatus::Active)
-            ->orderBy('gc.DisplayOrder', 'ASC')
-            ->orderBy('gcl.DisplayName', 'ASC')
-            ->get();
-
-    $customers = DB::table('Customer')
-            ->where('StatusID', '=', eStatus::Active)
-            ->orderBy('CustomerName', 'ASC')
-            ->get();
-
-    $timezones = DB::table('Timezone')
-            ->orderBy('TimezoneID', 'ASC')
-            ->get();
     ?>
     <div class="col-md-8">
         <div class="block block-drop-shadow">

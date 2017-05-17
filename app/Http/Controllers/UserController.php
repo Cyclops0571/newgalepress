@@ -6,10 +6,13 @@ use App\Library\MyResponse;
 use App\Mail\ClientPasswordChangedMailler;
 use App\Mail\ResetPasswordMailler;
 use App\Mail\SendPasswordMailler;
+use App\Models\Customer;
+use App\Models\GroupCode;
 use App\User;
 use Auth;
 use Common;
 use DateTime;
+use DB;
 use eProcessTypes;
 use eStatus;
 use Hash;
@@ -36,12 +39,11 @@ class UserController extends Controller {
         $this->caption = __('common.users_caption');
         $this->detailcaption = __('common.users_caption_detail');
         $this->fields = [
-            0 => ['35px', __('common.users_list_column1'), ''],
-            1 => ['125px', __('common.users_list_column2'), 'UserTypeName'],
-            2 => ['125px', __('common.users_list_column3'), 'FirstName'],
-            3 => ['', __('common.users_list_column4'), 'LastName'],
-            4 => ['175px', __('common.users_list_column5'), 'Email'],
-            5 => ['75px', __('common.users_list_column6'), 'UserID'],
+            0 => [__('common.users_list_column2'), 'UserTypeName'],
+            1 => [__('common.users_list_column3'), 'FirstName'],
+            2 => [__('common.users_list_column4'), 'LastName'],
+            3 => [__('common.users_list_column5'), 'Email'],
+            4 => [__('common.users_list_column6'), 'UserID'],
         ];
     }
 
@@ -77,25 +79,30 @@ class UserController extends Controller {
             'route'         => $this->route,
             'caption'       => $this->caption,
             'detailcaption' => $this->detailcaption,
+            'groupcodes' => GroupCode::getGroupCodesWithName('UserTypes'),
+            'customers' => Customer::orderBy('CustomerName')->get(),
+            'timezones' => DB::table('Timezone')->orderBy('TimezoneID', 'ASC')->get(),
         ];
 
         return view('pages.userdetail', $data);
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        $row = User::find($id);
-
         $data = [
             'page'          => $this->page,
             'route'         => $this->route,
             'caption'       => $this->caption,
             'detailcaption' => $this->detailcaption,
-            'row'           => $row,
+            'row'           => $user,
+            'groupcodes' => GroupCode::getGroupCodesWithName('UserTypes'),
+            'customers' => Customer::orderBy('CustomerName')->get(),
+            'timezones' => DB::table('Timezone')->orderBy('TimezoneID', 'ASC')->get(),
         ];
 
         return view('pages.userdetail', $data);
     }
+
 
     //POST
     public function save(Request $request, MyResponse $myResponse)
@@ -188,16 +195,22 @@ class UserController extends Controller {
 
     /**
      * Makes StatusID eStatus::Deleted from user
+     * @param Request $request
+     * @param MyResponse $myResponse
+     * @return string
      */
     public function delete(Request $request, MyResponse $myResponse)
     {
         $id = $request->get($this->pk, '0');
 
-        $s = User::find($id);
-        if (!$s->exists())
+        $user = User::find($id);
+        if (!$user->exists())
         {
             return $myResponse->error(trans('error.something_went_wrong'));
         }
+
+        $user->StatusID = eStatus::Deleted;
+        $user->save();
 
         return $myResponse->success();
     }

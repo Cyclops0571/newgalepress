@@ -4,9 +4,6 @@
     <?php
     $currentPageNo = (int)request('page', 0);
     $applicationID = (int)request('applicationID', 0);
-    $appLink = $applicationID > 0 ? '&applicationID=' . $applicationID : '';
-    $searchLink = '&search=' . $search;
-    $sortDirLink = '&sort_dir=' . ($sort_dir == 'DESC' ? 'ASC' : 'DESC');
     ?>
     <script>
         var currentPageNo = <?php echo (int)$currentPageNo; ?>;

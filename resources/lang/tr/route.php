@@ -19,7 +19,7 @@ return array(
 
     'users' => 'kullanicilar',
     'users_new' => 'kullanicilar/yeni',
-    'users_show' => 'kullanicilar/(:num)',
+    'users_show' => 'kullanicilar/{user}',
     'users_save' => 'kullanicilar/kaydet',
     'users_send' => 'kullanicilar/gonder',
     'users_delete' => 'kullanicilar/sil',

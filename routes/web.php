@@ -27,7 +27,6 @@ Route::get('test3', function ()
 });
 
 
-
 Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
 {
 
@@ -36,7 +35,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::post('clients/forgotpassword', ['as' => 'clientsregistered', 'uses' => 'ClientController@forgotpassword']);
     Route::post("clients/resetpw", ['as' => 'clientsresetpw', 'uses' => 'ClientController@resetpw']);
     Route::post("clients/excelupload", ['before' => 'auth', 'uses' => "ClientController@excelupload"]);
-
 
 
     Route::get(trans('route.clients_register'), ['as' => 'clients_register', 'uses' => 'ClientController@register']);
@@ -131,7 +129,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
         return view('website.signin');
     });
     // </editor-fold>
-
 
 
 });
@@ -248,7 +245,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::post(trans('route.clients_delete'), ['as' => 'clients_delete', 'uses' => 'ClientController@delete']);
 
 
-
     // </editor-fold
 });
 
@@ -302,20 +298,22 @@ Route::post("contents/refresh_identifier", ['as' => 'contentrefreshidentifier', 
 Route::get("/csstemplates/{filename}", ['as' => 'template_index', 'uses' => 'ApplicationTemplateController@theme']);
 Route::get("/template/{application}", ['as' => 'template_index', 'before' => 'auth', 'uses' => 'ApplicationTemplateController@show']);
 Route::get('maps/webview/{application}', ['as' => 'map_view', 'uses' => 'MapController@webView']);
-//<editor-fold desc="Payment">
 
 
-//</editor-fold>
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['auth', 'admin']], function ()
+{
+    // <editor-fold defaultstate="collapsed" desc="Users">
+    Route::get(trans('route.users'), ['as' => 'users', 'uses' => 'UserController@index']);
+    Route::get(trans('route.users_new'), ['as' => 'users_new', 'uses' => 'UserController@create']);
+    Route::get(trans('route.users_show'), ['as' => 'users_show', 'uses' => 'UserController@show']);
+    Route::post(trans('route.users_save'), ['as' => 'users_save', 'uses' => 'UserController@save']);
+    Route::post(trans('route.users_send'), ['as' => 'users_send', 'uses' => 'UserController@send']);
+    Route::post(trans('route.users_delete'), ['as' => 'users_delete', 'uses' => 'UserController@delete']);
+    // </editor-fold>
+});
 
 /**********************CALISMAYANLAR*************************/
-// <editor-fold defaultstate="collapsed" desc="Users">
-Route::get(trans('route.users'), ['as' => 'users', 'before' => 'auth', 'uses' => 'users@index']);
-Route::get(trans('route.users_new'), ['as' => 'users_new', 'before' => 'auth', 'uses' => 'users@newly']);
-Route::get(trans('route.users_show'), ['as' => 'users_show', 'before' => 'auth', 'uses' => 'users@show']);
-Route::post(trans('route.users_save'), ['as' => 'users_save', 'before' => 'auth|csrf', 'uses' => 'users@save']);
-Route::post(trans('route.users_send'), ['as' => 'users_send', 'before' => 'auth|csrf', 'uses' => 'users@send']);
-Route::post(trans('route.users_delete'), ['as' => 'users_delete', 'before' => 'auth|csrf', 'uses' => 'users@delete']);
-// </editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="Customers">
 Route::get(trans('route.customers'), ['as' => 'customers', 'before' => 'auth', 'uses' => 'customers@index']);
 Route::get(trans('route.customers_new'), ['as' => 'customers_new', 'before' => 'auth', 'uses' => 'customers@newly']);

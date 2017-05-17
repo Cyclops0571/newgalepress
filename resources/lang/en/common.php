@@ -25,10 +25,10 @@ return array(
         . "Regards, <br/>"
         . "Gale Press",
     'login_resetpassword_email_subject' => 'Gale Press password resetting e-mail',
-    'login_resetpassword_email_message' => "" . ":firstname :lastname, \n\n" .
-        "Your :Application application Username is :username, \n\n" .
-        "Password is changed as :pass. \n\n" .
-        "Regards, \n" .
+    'login_resetpassword_email_message' => "" . ":firstname :lastname, <br/><br/>" .
+        "Your :Application application Username is :username, <br/><br/>" .
+        "Password is changed as :pass. <br/><br/>" .
+        "Regards, <br/>" .
         "Gale Press",
     'login_emailsent' => 'Password reset link has been sent to your e-mail.',
     'login_emailnotfound' => "A registered E-mail adress hasn't been found!",

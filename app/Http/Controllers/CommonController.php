@@ -112,7 +112,7 @@ class CommonController extends Controller {
                 $user->ProcessTypeID = eProcessTypes::Update;
                 $user->save();
 
-                Mail::to($user)->queue(new ResetPasswordMailler(app()->getLocale(), $user));
+                Mail::to($user)->queue(new ResetPasswordMailler($user));
                 return $myResponse->success(__('common.login_emailsent'));
             } else
             {

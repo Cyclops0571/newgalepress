@@ -25,10 +25,10 @@ return array(
 
 
     'login_resetpassword_email_subject' => 'Gale Press parola sıfırlama e-postası',
-    'login_resetpassword_email_message' => "Sayın :firstname :lastname, \n\n" .
-        ":Application uygulaması icin kullanıcı Adınız :username, \n\n" .
-        "Parolanız :pass olarak değiştirilmiştir. \n\n" .
-        "Saygılarımızla, \n" .
+    'login_resetpassword_email_message' => "Sayın :firstname :lastname, <br/><br/>" .
+        ":Application uygulaması icin kullanıcı Adınız :username, <br/><br/>" .
+        "Parolanız :pass olarak değiştirilmiştir. <br/><br/>" .
+        "Saygılarımızla, <br/>" .
         "Gale Press",
     'login_emailsent' => 'Parolanızı sıfırlayabileceğiniz link e-posta adresinize gönderilmiştir.',
     'login_emailnotfound' => 'Kayıtlı bir e-posta adresi bulunamadı!',

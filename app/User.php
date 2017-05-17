@@ -6,9 +6,11 @@ use App\Models\Application;
 use App\Models\Customer;
 use App\Models\LoginHistory;
 use App\Scopes\StatusScope;
+use Common;
 use DB;
 use eStatus;
 use eUserTypes;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -62,8 +64,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUsername($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable
-{
+class User extends Authenticatable {
+
     use Notifiable;
 
     public $timestamps = false;
@@ -89,6 +91,44 @@ class User extends Authenticatable
     protected $hidden = [
         'Password', 'remember_token',
     ];
+
+    public static function userList($customerID = 0, $search = '', $sort = 'UserID', $sortDirection = 'desc')
+    {
+
+
+        $sql = '' .
+            'SELECT '
+            . 'u.CustomerID, '
+            . '(SELECT DisplayName FROM `GroupCodeLanguage` WHERE GroupCodeID=u.UserTypeID AND '
+            . 'LanguageID=' . Common::getLocaleId() . ') AS UserTypeName, '
+            . 'u.FirstName, '
+            . 'u.LastName, '
+            . 'u.Email, '
+            . 'u.UserID '
+            . 'FROM `User` AS u '
+            . 'WHERE u.StatusID=1';
+
+        $rs = DB::table(DB::raw('(' . $sql . ') t'))
+            ->where(function (Builder $query) use ($customerID, $search)
+            {
+                if ($customerID > 0)
+                {
+                    $query->where('CustomerID', '=', $customerID);
+                }
+
+                if (strlen(trim($search)) > 0)
+                {
+                    $query->where('UserTypeName', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('FirstName', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('LastName', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('Email', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('UserID', 'LIKE', '%' . $search . '%');
+                }
+            })
+            ->orderBy($sort, $sortDirection);
+
+        return $rs->paginate(config('custom.rowcount'));
+    }
 
     protected static function boot()
     {
@@ -121,7 +161,8 @@ class User extends Authenticatable
             ->getQuery()
             ->where('action', 'login')
             ->orderBy('id', 'Desc')->first();
-        if ($loginHistory) {
+        if ($loginHistory)
+        {
             return $loginHistory->created_at;
         }
 
@@ -156,11 +197,14 @@ class User extends Authenticatable
     public function Application($statusID = eStatus::Active)
     {
 
-        if ($this->UserTypeID == eUserTypes::Manager) {
+        if ($this->UserTypeID == eUserTypes::Manager)
+        {
             $applications = Application::withoutGlobalScopes()->where('StatusID', '=', $statusID)->get();
-        } else {
+        } else
+        {
             $applications = $this->Applications;
         }
+
         return $applications;
     }
 
@@ -175,13 +219,20 @@ class User extends Authenticatable
 
     public function __get($key)
     {
-        switch ($key) {
+        switch ($key)
+        {
             case 'email':
                 return $this->Email;
             case 'name':
                 return $this->FirstName . " " . $this->LastName;
         }
+
         return parent::__get($key);
+    }
+
+    public function isAdmin()
+    {
+        return $this->UserTypeID == eUserTypes::Manager;
     }
 
 }

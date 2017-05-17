@@ -25,10 +25,10 @@ return array(
         ":Application",
     'login_resetpassword_email_subject' => 'Email zum Zurücksetzen  des Passworts für Galepress.com',
     'login_resetpassword_email_message' => "" .
-        "Ehrenwert :firstname :lastname, \n\n" .
-        "Ihr Benutzername :username, \n\n" .
-        "Ihr Passwort :pass in der geänderten Fassung. \n\n" .
-        "Grüße, \n" .
+        "Ehrenwert :firstname :lastname, <br/><br/>" .
+        "Ihr Benutzername :username, <br/><br/>" .
+        "Ihr Passwort :pass in der geänderten Fassung. <br/><br/>" .
+        "Grüße, <br/>" .
         ":Application",
     'login_emailsent' => 'Der Link zum Zurücksetzen  des Passworts wurde zu Ihrer Email-Adresse geschickt.',
     'login_emailnotfound' => 'Keine gespeicherte Email-Adresse vorhanden!',

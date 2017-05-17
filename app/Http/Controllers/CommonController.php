@@ -10,11 +10,9 @@ use App\Models\Application;
 use App\Models\Content;
 use App\Models\Customer;
 use App\Models\LoginHistory;
-use App\Models\MailLog;
 use App\User;
 use Auth;
 use Common;
-use Config;
 use Cookie;
 use DateTime;
 use DB;
@@ -27,7 +25,6 @@ use Illuminate\Http\Request;
 use Mail;
 use Redirect;
 use Validator;
-use View;
 
 class CommonController extends Controller {
 
@@ -203,7 +200,7 @@ class CommonController extends Controller {
 
         setcookie("loggedin", "false", time(), "/");
 
-        return Redirect::to(__('route.login'))
+        return Redirect::route('common_login_get')
             ->with('message', __('common.login_succesfullyloggedout'));
     }
 

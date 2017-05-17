@@ -39,7 +39,7 @@ return array(
 
     'customers' => 'kunden',
     'customers_new' => 'kunden/neu',
-    'customers_show' => 'kunden/(:num)',
+    'customers_show' => 'kunden/{customer}',
     'customers_save' => 'kunden/speichern',
     'customers_delete' => 'kunden/loeschen',
 

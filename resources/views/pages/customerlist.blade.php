@@ -6,7 +6,7 @@
             <div class="content controls bg-light-rtl">
                 <div class="form-row ">
                     <div class="col-md-12">         
-                        {{ $commandbar }}
+                        @include('sections.commandbar')
                     </div>
                 </div>
                 <div class="form-row">

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use DB;
 use eStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 /**
  * App\Models\Customer
@@ -51,8 +53,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Customer whereTotalFileSize($value)
  * @mixin \Eloquent
  */
-class Customer extends Model
-{
+class Customer extends Model {
 
 
     public $timestamps = false;
@@ -64,11 +65,14 @@ class Customer extends Model
         $command = 'du -ha ' . public_path('files/') . ' --max-depth=1| sort -hr';
         $folderStructure = shell_exec($command);
         $folders = explode(PHP_EOL, $folderStructure);
-        $folderSizes = array();
-        foreach ($folders as $folder) {
+        $folderSizes = [];
+        foreach ($folders as $folder)
+        {
             $list = explode("\t", $folder);
-            if (count($list) == 2) {
-                if (strpos($list[1], "customer_")) {
+            if (count($list) == 2)
+            {
+                if (strpos($list[1], "customer_"))
+                {
                     $customerID = str_replace(public_path('files/customer_'), '', $list[1]);
                     $folderSizes[$list[0]] = Customer::query()->find($customerID);
                 }
@@ -86,8 +90,8 @@ class Customer extends Model
     public static function getCustomerByID($CustomerID, $Active)
     {
         return self::where('CustomerID', '=', $CustomerID)
-        ->where('StatusID', '=', $Active)
-        ->first();
+            ->where('StatusID', '=', $Active)
+            ->first();
     }
 
     /**
@@ -116,4 +120,34 @@ class Customer extends Model
         return $this->hasOne(PaymentAccount::class, "CustomerID")->getQuery()->first();
     }
 
+    public static function customerList($search = '', $sort = 'CustomerID', $sortDirection = 'DESC')
+    {
+        $sql = '' .
+            'SELECT ' .
+            '(SELECT COUNT(*) FROM `Application` WHERE CustomerID=c.CustomerID AND StatusID=1) AS ApplicationCount, ' .
+            '(SELECT COUNT(*) FROM `User` WHERE CustomerID=c.CustomerID AND StatusID=1) AS UserCount, ' .
+            'c.CustomerNo, ' .
+            'c.CustomerName, ' .
+            'c.Phone1, ' .
+            'c.Email, ' .
+            'c.CustomerID ' .
+            'FROM `Customer` AS c ' .
+            'WHERE c.StatusID=1';
+
+        return DB::table(DB::raw('(' . $sql . ') t'))
+            ->where(function (Builder $query) use ($search)
+            {
+                if (strlen(trim($search)) > 0)
+                {
+                    $query->where('ApplicationCount', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('UserCount', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('CustomerNo', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('CustomerName', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('Phone1', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('Email', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('CustomerID', 'LIKE', '%' . $search . '%');
+                }
+            })
+            ->orderBy($sort, $sortDirection)->paginate(config('custom.rowcount'));
+    }
 }

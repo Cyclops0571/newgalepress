@@ -39,7 +39,7 @@ return array(
     
     'customers' => 'customers',
     'customers_new' => 'customers/new',
-    'customers_show' => 'customers/(:num)',
+    'customers_show' => 'customers/{customer}',
     'customers_save' => 'customers/save',
     'customers_delete' => 'customers/delete',
 

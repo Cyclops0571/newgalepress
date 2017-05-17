@@ -310,17 +310,19 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::post(trans('route.users_send'), ['as' => 'users_send', 'uses' => 'UserController@send']);
     Route::post(trans('route.users_delete'), ['as' => 'users_delete', 'uses' => 'UserController@delete']);
     // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Customers">
+    Route::get(trans('route.customers'), ['as' => 'customers', 'uses' => 'CustomerController@index']);
+    Route::get(trans('route.customers_new'), ['as' => 'customers_new', 'uses' => 'CustomerController@create']);
+    Route::get(trans('route.customers_show'), ['as' => 'customers_show', 'uses' => 'CustomerController@show']);
+    Route::post(trans('route.customers_save'), ['as' => 'customers_save', 'uses' => 'CustomerController@save']);
+    Route::post(trans('route.customers_delete'), ['as' => 'customers_delete', 'uses' => 'CustomerController@delete']);
+    // </editor-fold>
 });
 
 /**********************CALISMAYANLAR*************************/
 
-// <editor-fold defaultstate="collapsed" desc="Customers">
-Route::get(trans('route.customers'), ['as' => 'customers', 'before' => 'auth', 'uses' => 'customers@index']);
-Route::get(trans('route.customers_new'), ['as' => 'customers_new', 'before' => 'auth', 'uses' => 'customers@newly']);
-Route::get(trans('route.customers_show'), ['as' => 'customers_show', 'before' => 'auth', 'uses' => 'customers@show']);
-Route::post(trans('route.customers_save'), ['as' => 'customers_save', 'before' => 'auth|csrf', 'uses' => 'customers@save']);
-Route::post(trans('route.customers_delete'), ['as' => 'customers_delete', 'before' => 'auth|csrf', 'uses' => 'customers@delete']);
-// </editor-fold>
+
 
 
 // <editor-fold defaultstate="collapsed" desc="Password">

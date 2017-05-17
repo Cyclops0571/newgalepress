@@ -39,7 +39,7 @@ return array(
 
     'customers' => 'musteriler',
     'customers_new' => 'musteriler/yeni',
-    'customers_show' => 'musteriler/(:num)',
+    'customers_show' => 'musteriler/{customer}',
     'customers_save' => 'musteriler/kaydet',
     'customers_delete' => 'musteriler/sil',
 

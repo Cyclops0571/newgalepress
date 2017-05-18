@@ -318,6 +318,17 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::post(trans('route.customers_save'), ['as' => 'customers_save', 'uses' => 'CustomerController@save']);
     Route::post(trans('route.customers_delete'), ['as' => 'customers_delete', 'uses' => 'CustomerController@delete']);
     // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Orders">
+    Route::get(trans('route.application_form_create'), ['as' => 'application_form_create', 'uses' => 'OrderController@appForm']);
+    Route::get(trans('route.orders'), ['as' => 'orders', 'before' => 'auth', 'uses' => 'OrderController@index']);
+    Route::get(trans('route.orders_new'), ['as' => 'orders_new', 'before' => 'auth', 'uses' => 'OrderController@create']);
+    Route::get(trans('route.orders_show'), ['as' => 'orders_show', 'before' => 'auth', 'uses' => 'OrderController@show']);
+    Route::post(trans('route.orders_save'), ['as' => 'orders_save', 'uses' => 'OrderController@save']);
+    Route::post(trans('route.orders_delete'), ['as' => 'orders_delete', 'before' => 'auth|csrf', 'uses' => 'OrderController@delete']);
+    Route::post(trans('route.orders_uploadfile'), ['as' => 'orders_uploadfile', 'uses' => 'OrderController@uploadfile']);
+    // </editor-fold>
+
 });
 
 /**********************CALISMAYANLAR*************************/
@@ -331,15 +342,7 @@ Route::post(trans('route.contents_passwords_save'), ['as' => 'contents_passwords
 Route::post(trans('route.contents_passwords_delete'), ['as' => 'contents_passwords_delete', 'before' => 'auth', 'uses' => 'contentpasswords@delete']);
 // </editor-fold>
 
-// <editor-fold defaultstate="collapsed" desc="Orders">
-Route::get(trans('route.application_form_create'), ['as' => 'application_form_create', 'uses' => 'orders@appForm']);
-Route::get(trans('route.orders'), ['as' => 'orders', 'before' => 'auth', 'uses' => 'orders@index']);
-Route::get(trans('route.orders_new'), ['as' => 'orders_new', 'before' => 'auth', 'uses' => 'orders@newly']);
-Route::get(trans('route.orders_show'), ['as' => 'orders_show', 'before' => 'auth', 'uses' => 'orders@show']);
-Route::post(trans('route.orders_save'), ['as' => 'orders_save', 'uses' => 'orders@save']);
-Route::post(trans('route.orders_delete'), ['as' => 'orders_delete', 'before' => 'auth|csrf', 'uses' => 'orders@delete']);
-Route::post(trans('route.orders_uploadfile'), ['as' => 'orders_uploadfile', 'uses' => 'orders@uploadfile']);
-// </editor-fold>
+
 
 // <editor-fold defaultstate="collapsed" desc="managements">
 Route::get(trans('route.managements_list'), ['as' => 'managements_list', 'uses' => 'managements@list']);

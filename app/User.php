@@ -63,6 +63,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUserTypeID($value)
  * @method static \Illuminate\Database\Query\Builder|\App\User whereUsername($value)
  * @mixin \Eloquent
+ * @property string $remember_token
+ * @method static \Illuminate\Database\Query\Builder|\App\User whereRememberToken($value)
  */
 class User extends Authenticatable {
 

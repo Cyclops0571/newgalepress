@@ -785,7 +785,7 @@ if (isset($_GET['qty'])) {
                                     <div class="col-lg-6">
                                         <div class="btn-primary">
                                             <div class="noWhiteSpace"><i class="fa fa-cloud-upload"
-                                                                         style="font-size:18px;"></i><br>{{ __('common.orders_image1024x1024') }}
+                                                                         style="font-size:18px;"></i><br>{{ trans('common.orders_image1024x1024') }}
                                             </div>
                                             <input id="Image1024x1024" name="Image1024x1024" type="file" class="upload"
                                                    required/>

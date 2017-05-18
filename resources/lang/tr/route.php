@@ -70,7 +70,7 @@ return array(
 
     'orders' => 'siparisler',
     'orders_new' => 'siparisler/yeni',
-    'orders_show' => 'siparisler/(:num)',
+    'orders_show' => 'siparisler/{order}',
     'orders_save' => 'siparisler/kaydet',
     'orders_delete' => 'siparisler/sil',
     'orders_uploadfile' => 'siparisler/dosya-yukle',

@@ -70,7 +70,7 @@ return array(
 
     'orders' => 'orders',
     'orders_new' => 'orders/new',
-    'orders_show' => 'orders/(:num)',
+    'orders_show' => 'orders/{order}',
     'orders_save' => 'orders/save',
     'orders_delete' => 'orders/delete',
     'orders_uploadfile' => 'orders/file-upload',

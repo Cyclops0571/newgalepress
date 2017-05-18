@@ -80,6 +80,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\PaymentAccount whereVergiNo($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\PaymentAccount whereWarningMailPhase($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\City $city
  */
 class PaymentAccount extends Model
 {
@@ -98,7 +99,7 @@ class PaymentAccount extends Model
      */
     public function city()
     {
-        return $this->belongsTo('City', 'CityID');
+        return $this->belongsTo(City::class, 'CityID');
     }
 
     public function save(array $option = [])

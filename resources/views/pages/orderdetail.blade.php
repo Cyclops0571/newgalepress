@@ -245,7 +245,7 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="col-md-3">{{ __('common.orders_Image1024x1024') }}<span class="error">*</span></div>
+              <div class="col-md-3">{{ __('common.orders_image1024x1024') }}<span class="error">*</span></div>
               {{ $errors->first('Image1024x1024', '<p class="error">:message</p>') }}
               <div class="col-md-9">
                 <div class="fileupload_container">
@@ -336,7 +336,7 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="col-md-3">{{ __('common.orders_Image640x960') }}</div>
+              <div class="col-md-3">{{ __('common.orders_image640x960') }}</div>
               <div class="col-md-9">
                 <div class="fileupload_container">
                   @if(strlen($Image640x960) > 0)
@@ -424,7 +424,7 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="col-md-3">{{ __('common.orders_Image640x1136') }}</div>
+              <div class="col-md-3">{{ __('common.orders_image640x1136') }}</div>
               <div class="col-md-9">
                 <div class="fileupload_container">
                   @if(strlen($Image640x1136) > 0)
@@ -514,7 +514,7 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="col-md-3">{{ __('common.orders_Image1536x2048') }}</div>
+              <div class="col-md-3">{{ __('common.orders_image1536x2048') }}</div>
               <div class="col-md-9">
                 <div class="fileupload_container">
                   @if(strlen($Image1536x2048) > 0)
@@ -604,7 +604,7 @@
               </div>
             </div>
             <div class="form-row">
-              <div class="col-md-3">{{ __('common.orders_Image2048x1536') }}</div>
+              <div class="col-md-3">{{ __('common.orders_image2048x1536') }}</div>
               <div class="col-md-9">
                 <div class="fileupload_container">
                   @if(strlen($Image2048x1536) > 0)

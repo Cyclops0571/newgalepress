@@ -246,6 +246,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
 
 
     // </editor-fold
+
+
 });
 
 
@@ -332,15 +334,6 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
 });
 
 /**********************CALISMAYANLAR*************************/
-
-
-
-
-// <editor-fold defaultstate="collapsed" desc="Password">
-Route::get(trans('route.contents_passwords'), ['as' => 'contents_passwords', 'before' => 'auth', 'uses' => 'contentpasswords@index']);
-Route::post(trans('route.contents_passwords_save'), ['as' => 'contents_passwords_save', 'before' => 'auth|csrf', 'uses' => 'contentpasswords@save']);
-Route::post(trans('route.contents_passwords_delete'), ['as' => 'contents_passwords_delete', 'before' => 'auth', 'uses' => 'contentpasswords@delete']);
-// </editor-fold>
 
 
 

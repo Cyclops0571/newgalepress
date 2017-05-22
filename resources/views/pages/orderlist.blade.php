@@ -17,6 +17,7 @@
                 <tr>
                   @foreach($fields as $field)
                         <?php
+                      /** @var App\Models\Order $row */
                         $parameters = [
                             'page'     => 1,
                             'search'   => $search,

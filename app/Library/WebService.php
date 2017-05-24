@@ -58,7 +58,7 @@ class WebService {
     public static function getCheckCustomer($ServiceVersion, $customerID)
     {
         self::checkServiceVersion($ServiceVersion);
-        $customer = Customer::where('CustomerID', '=', $customerID)->first();
+        $customer = Customer::where('CustomerID', $customerID)->first();
         if (!$customer)
         {
             throw eServiceError::getException(eServiceError::UserNotFound);
@@ -96,7 +96,7 @@ class WebService {
             'CategoryID'   => 0,
             'CategoryName' => trans('common.contents_category_list_general', [], 'messages', $application->ApplicationLanguage),
         ]);
-        $rs = Category::where('ApplicationID', '=', $application->ApplicationID)->orderBy('Name', 'ASC')->get();
+        $rs = Category::where('ApplicationID', $application->ApplicationID)->orderBy('Name', 'ASC')->get();
         foreach ($rs as $r)
         {
             array_push($categories, [
@@ -110,8 +110,8 @@ class WebService {
 
     public static function getCheckApplicationCategoryDetail($applicationID, $categoryID)
     {
-        $category = Category::where('CategoryID', '=', $categoryID)
-            ->where('ApplicationID', '=', $applicationID)->first();
+        $category = Category::where('CategoryID', $categoryID)
+            ->where('ApplicationID', $applicationID)->first();
         if (!$category)
         {
             throw eServiceError::getException(eServiceError::CategoryNotFound);
@@ -175,8 +175,8 @@ class WebService {
      */
     public static function getClientFromAccessToken($accessToken, $applicationID)
     {
-        $client = Client::where("Token", "=", $accessToken)
-            ->where('ApplicationID', '=', $applicationID)->first();
+        $client = Client::where("Token", $accessToken)
+            ->where('ApplicationID', $applicationID)->first();
         if (!empty($accessToken) && !$client)
         {
             throw eServiceError::getException(eServiceError::ClientNotFound);
@@ -194,11 +194,11 @@ class WebService {
     public static function getCheckContent($ServiceVersion, $contentID)
     {
         self::checkServiceVersion($ServiceVersion);
-        $content = Content::withoutGlobalScopes()->where('ContentID', '=', $contentID)
+        $content = Content::withoutGlobalScopes()->where('ContentID', $contentID)
             ->where(function (Builder $q)
             {
-                $q->where('StatusID', '=', eStatus::Active);
-                $q->orWhere("RemoveFromMobile", "=", eRemoveFromMobile::Active);
+                $q->where('StatusID', eStatus::Active);
+                $q->orWhere("RemoveFromMobile", eRemoveFromMobile::Active);
             })
             ->first();
 
@@ -223,8 +223,8 @@ class WebService {
         $user = null;
         if (strlen($username) > 0)
         {
-            $user = User::where('CustomerID', '=', (int)$customerID)
-                ->where('Username', '=', $username)->first();
+            $user = User::where('CustomerID', (int)$customerID)
+                ->where('Username', $username)->first();
             if (!$user)
             {
                 throw eServiceError::getException(eServiceError::IncorrectUserCredentials);
@@ -253,8 +253,8 @@ class WebService {
         {
             if ($deviceType == eDeviceType::android && !empty($UDID))
             {
-                $token = Token::where('ApplicationID', '=', $application->ApplicationID)
-                    ->where('UDID', '=', $UDID)
+                $token = Token::where('ApplicationID', $application->ApplicationID)
+                    ->where('UDID', $UDID)
                     ->first();
                 if ($token)
                 {
@@ -263,7 +263,7 @@ class WebService {
                 }
             } else
             {
-                $token = Token::where('ApplicationToken', '=', $applicationToken)->where('DeviceToken', '=', $deviceToken)->first();
+                $token = Token::where('ApplicationToken', $applicationToken)->where('DeviceToken', $deviceToken)->first();
                 if ($token)
                 {
                     //INFO:Added due to https://github.com/galepress/gp/issues/2
@@ -306,7 +306,7 @@ class WebService {
         if (!empty($username) && !empty($password))
         {
             //username ve password login
-            $user = User::where('Username', '=', $username)->where('StatusID', '=', eStatus::Active)->first();
+            $user = User::where('Username', $username)->where('StatusID', eStatus::Active)->first();
             if (!$user)
             {
                 throw eServiceError::getException(eServiceError::IncorrectUserCredentials);
@@ -319,9 +319,9 @@ class WebService {
         } else if (!empty($userFacebookID) && !empty($userFbEmail))
         {
             //facebook login
-            $user = User::where('FbUsername', '=', $userFacebookID)
-                ->where('FbEmail', '=', $userFbEmail)
-                ->where('StatusID', '=', eStatus::Active)->first();
+            $user = User::where('FbUsername', $userFacebookID)
+                ->where('FbEmail', $userFbEmail)
+                ->where('StatusID', eStatus::Active)->first();
             if (!$user)
             {
                 throw eServiceError::getException(eServiceError::CreateAccount);
@@ -358,9 +358,9 @@ class WebService {
         }
 
         /* @var $client Client */
-        $client = Client::where('ApplicationID', '=', $applicationID)
-            ->where('Username', '=', $username)
-            ->where('StatusID', '=', eStatus::Active)->first();
+        $client = Client::where('ApplicationID', $applicationID)
+            ->where('Username', $username)
+            ->where('StatusID', eStatus::Active)->first();
         if (!$client)
         {
             throw eServiceError::getException(eServiceError::ClientNotFound);

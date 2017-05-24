@@ -95,8 +95,8 @@ class CommonController extends Controller {
         if ($v->passes())
         {
             /** @var User $user */
-            $user = User::where('Email', '=', $email)
-                ->where('StatusID', '=', 1)
+            $user = User::where('Email', $email)
+                ->where('StatusID', 1)
                 ->first();
             if ($user)
             {
@@ -128,10 +128,10 @@ class CommonController extends Controller {
         $code = $request->get('code');
 
         $user = DB::table('User')
-            ->where('Email', '=', $email)
-            ->where('PWRecoveryCode', '=', $code)
+            ->where('Email', $email)
+            ->where('PWRecoveryCode', $code)
             ->where('PWRecoveryDate', '>', DB::raw('ADDDATE(CURDATE(), INTERVAL -7 DAY)'))
-            ->where('StatusID', '=', 1)
+            ->where('StatusID', 1)
             ->first();
 
         if ($user)
@@ -166,10 +166,10 @@ class CommonController extends Controller {
 
 
         $user = DB::table('User')
-            ->where('Email', '=', $email)
-            ->where('PWRecoveryCode', '=', $code)
+            ->where('Email', $email)
+            ->where('PWRecoveryCode', $code)
             ->where('PWRecoveryDate', '>', DB::raw('ADDDATE(CURDATE(), INTERVAL -7 DAY)'))
-            ->where('StatusID', '=', 1)
+            ->where('StatusID', 1)
             ->first();
 
         if ($user)
@@ -212,8 +212,8 @@ class CommonController extends Controller {
         }
 
         $applications = Application::query()
-            ->where('CustomerID', '=', Auth::user()->CustomerID)
-            ->where('StatusID', '=', eStatus::Active)
+            ->where('CustomerID', Auth::user()->CustomerID)
+            ->where('StatusID', eStatus::Active)
             ->orderBy('Name', 'ASC')
             ->get();
 
@@ -234,7 +234,7 @@ class CommonController extends Controller {
         $contentID = (int)$request->get('ddlContent', '0');
         $date = Common::dateWrite($request->get('date', date("d.m.Y")), false);
 
-        $appDetail = Application::where('ApplicationID', '=', $applicationID)->first();
+        $appDetail = Application::where('ApplicationID', $applicationID)->first();
         $arrApp = [];
         foreach ($applications as $app)
         {
@@ -242,7 +242,7 @@ class CommonController extends Controller {
         }
         $contentCount = Content::getQuery()
             ->whereIn('ApplicationID', $arrApp)
-            ->where('StatusID', '=', eStatus::Active)
+            ->where('StatusID', eStatus::Active)
             ->count();
 
         //indirilme raporu son hafta
@@ -423,8 +423,8 @@ class CommonController extends Controller {
         if ($v->passes())
         {
             $user = User::withoutGlobalScopes()
-                ->where('Email', '=', $email)
-                ->where('ConfirmCode', '=', $code)
+                ->where('Email', $email)
+                ->where('ConfirmCode', $code)
                 ->first();
             if ($user)
             {
@@ -454,9 +454,9 @@ class CommonController extends Controller {
         {
 
             $userEmailControl = User::getQuery()
-                ->where('Email', '=', $faceUserObj->email)
-                ->where('StatusID', '=', eStatus::Active)
-                ->orWhere('FbUsername', '=', $faceUserObj->id)
+                ->where('Email', $faceUserObj->email)
+                ->where('StatusID', eStatus::Active)
+                ->orWhere('FbUsername', $faceUserObj->id)
                 ->first();
 
             if ($userEmailControl)
@@ -477,10 +477,10 @@ class CommonController extends Controller {
         }
 
         $user = DB::table('User')
-            ->where('FbUsername', '=', $faceUserObj->id)
-            // ->where('FbEmail', '=', $faceUserObj->email)
-            //->where('Password', '=', Hash::make($password))
-            ->where('StatusID', '=', eStatus::Active)
+            ->where('FbUsername', $faceUserObj->id)
+            // ->where('FbEmail', $faceUserObj->email)
+            //->where('Password', Hash::make($password))
+            ->where('StatusID', eStatus::Active)
             ->first();
 
         if (!$user)

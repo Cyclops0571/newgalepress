@@ -25,7 +25,7 @@ class PaymentUser_Task {
     {
         $WarningMailSet = [];
         /** @var PaymentAccount[] $paymentAccounts */
-        $paymentAccounts = PaymentAccount::where('StatusID', '=', eStatus::Active)->get();
+        $paymentAccounts = PaymentAccount::where('StatusID', eStatus::Active)->get();
         foreach ($paymentAccounts as $paymentAccount)
         {
             $payment = new MyPayment();

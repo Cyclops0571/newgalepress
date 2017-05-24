@@ -22,16 +22,16 @@ class CropController extends Controller
     public function image(Request $request) {
         $cropSet = Crop::get();
         $contentID=$request->get("contentID");
-        $contentFile = ContentFile::where('ContentID', '=', $contentID)
-            ->where('StatusID', '=', eStatus::Active)
+        $contentFile = ContentFile::where('ContentID', $contentID)
+            ->where('StatusID', eStatus::Active)
             ->orderBy('ContentFileID', 'DESC')->first();
 
         if (!$contentFile) {
             return Redirect::to($this->errorPage);
         }
 
-        $ccif = ContentCoverImageFile::where('ContentFileID', '=', $contentFile->ContentFileID)
-            ->where('StatusID', '=', eStatus::Active)
+        $ccif = ContentCoverImageFile::where('ContentFileID', $contentFile->ContentFileID)
+            ->where('StatusID', eStatus::Active)
             ->orderBy('ContentCoverImageFileID', 'DESC')->first();
         if (!$ccif) {
             return Redirect::to($this->errorPage);
@@ -62,16 +62,16 @@ class CropController extends Controller
         $contentID = (int) $request->get("contentID", 0);
 
         /** @var ContentFile $contentFile */
-        $contentFile = ContentFile::where('ContentID', '=', $contentID)
-            ->where('StatusID', '=', eStatus::Active)
+        $contentFile = ContentFile::where('ContentID', $contentID)
+            ->where('StatusID', eStatus::Active)
             ->orderBy('ContentFileID', 'DESC')->first();
         if (!$contentFile) {
             return Redirect::to($this->errorPage);
         }
 
         /** @var ContentCoverImageFile $ccif */
-        $ccif = ContentCoverImageFile::where('ContentFileID', '=', $contentFile->ContentFileID)
-            ->where('StatusID', '=', eStatus::Active)
+        $ccif = ContentCoverImageFile::where('ContentFileID', $contentFile->ContentFileID)
+            ->where('StatusID', eStatus::Active)
             ->orderBy('ContentCoverImageFileID', 'DESC')
             ->first();
 

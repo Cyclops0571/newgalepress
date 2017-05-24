@@ -34,7 +34,7 @@ class CreateInteractivePdf implements ShouldQueue
     {
         try {
             /** @var ContentFile[] $cf */
-            $cf = ContentFile::where('Interactivity', '=', Interactivity::ProcessQueued)
+            $cf = ContentFile::where('Interactivity', Interactivity::ProcessQueued)
                 ->where(function (Builder $query) {
                     $query->whereNull('HasCreated');
                     $query->orWhere('HasCreated', '<>', 1);

@@ -189,7 +189,7 @@ return array(
     'applications_list_column8' => 'Durum',
     'applications_list_column9' => 'Bitiş Tarihi',
     'applications_list_column10' => 'ID',
-    'applications_list_column11' => 'Süresi?',
+    'applications_list_column11' => 'Süresi',
 
     'application_settings_caption_detail' => 'Uygulama Ayarları',
     'application_settings_caption_template' => 'Tema Ayarları',

@@ -45,6 +45,7 @@ return array(
 
     'applications' => 'applications',
     'applications_new' => 'applications/new',
+    'applications_list' => 'applications/list',
     'applications_show' => 'applications/{application}',
     'applications_pushnotification' => 'applications/(:num)/push-notification',
     'applications_save' => 'applications/save',

@@ -182,15 +182,15 @@ class Application extends Model {
      */
     public static function find($applicationID, $columns = ['*'])
     {
-        return Application::query()->where(self::$key, "=", $applicationID)->first($columns);
+        return Application::query()->where(self::$key, $applicationID)->first($columns);
     }
 
     public static function getActiveAppCountByCustomerID($CustomerID)
     {
         return self::getQuery()
-                ->where('CustomerID', '=', $CustomerID)
+                ->where('CustomerID', $CustomerID)
                 ->where('ExpirationDate', '>=', DB::raw('CURDATE()'))
-                ->where('StatusID', '=', eStatus::Active)
+                ->where('StatusID', eStatus::Active)
                 ->count() > 0;
     }
 
@@ -252,8 +252,8 @@ class Application extends Model {
      */
     public function getContentSet()
     {
-        return Content::query()->where('ApplicationID', '=', $this->ApplicationID)
-            ->where('StatusID', '=', eStatus::Active)
+        return Content::query()->where('ApplicationID', $this->ApplicationID)
+            ->where('StatusID', eStatus::Active)
             ->orderBy('Name', 'ASC')
             ->get();
     }
@@ -341,7 +341,7 @@ class Application extends Model {
      */
     public function Tabs()
     {
-        return $this->hasMany(Tab::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)
+        return $this->hasMany(Tab::class, self::$key)->getQuery()->where('StatusID', eStatus::Active)
             ->take(TAB_COUNT)
             ->get();
     }
@@ -484,7 +484,7 @@ class Application extends Model {
             'CategoryName' => trans('common.contents_category_list_general'),
         ]);
 
-        $rs = Category::query()->where('ApplicationID', '=', $this->ApplicationID)->where('StatusID', '=', eStatus::Active)->orderBy('Name', 'ASC')->get();
+        $rs = Category::query()->where('ApplicationID', $this->ApplicationID)->where('StatusID', eStatus::Active)->orderBy('Name', 'ASC')->get();
         foreach ($rs as $r)
         {
             array_push($categories, [

@@ -30,7 +30,7 @@
     /** @var App\Models\ContentFile $ContentFile */
     $ContentFile = $content->ContentFile()
         ->getQuery()
-        ->where('StatusID', '=', eStatus::Active)
+        ->where('StatusID', eStatus::Active)
         ->orderBy('ContentFileID', 'DESC')
         ->take(1)->first();
 

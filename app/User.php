@@ -115,7 +115,7 @@ class User extends Authenticatable {
             {
                 if ($customerID > 0)
                 {
-                    $query->where('CustomerID', '=', $customerID);
+                    $query->where('CustomerID', $customerID);
                 }
 
                 if (strlen(trim($search)) > 0)
@@ -144,8 +144,8 @@ class User extends Authenticatable {
      */
     public static function getByUsername($username)
     {
-        return self::where('Username', '=', $username)
-            ->where('StatusID', '=', eStatus::Active)
+        return self::where('Username', $username)
+            ->where('StatusID', eStatus::Active)
             ->first();
     }
 
@@ -201,7 +201,7 @@ class User extends Authenticatable {
 
         if ($this->UserTypeID == eUserTypes::Manager)
         {
-            $applications = Application::withoutGlobalScopes()->where('StatusID', '=', $statusID)->get();
+            $applications = Application::withoutGlobalScopes()->where('StatusID', $statusID)->get();
         } else
         {
             $applications = $this->Applications;

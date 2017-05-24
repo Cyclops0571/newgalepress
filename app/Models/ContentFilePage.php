@@ -82,9 +82,9 @@ class ContentFilePage extends Model
      */
     public static function getPage($contentFileID, $pageNo)
     {
-        return ContentFilePage::where('ContentFileID', '=', $contentFileID)
-            ->where('No', '=', $pageNo)
-            ->where('StatusID', '=', eStatus::Active)
+        return ContentFilePage::where('ContentFileID', $contentFileID)
+            ->where('No', $pageNo)
+            ->where('StatusID', eStatus::Active)
             ->first();
     }
 
@@ -133,14 +133,14 @@ class ContentFilePage extends Model
      */
     public function previousContentFilePage()
     {
-        return ContentFilePage::where('ContentFileID', '=', $this->ContentFileID)
-            ->where('No', '=', ($this->No - 1))
+        return ContentFilePage::where('ContentFileID', $this->ContentFileID)
+            ->where('No', ($this->No - 1))
             ->first();
     }
 
     public function PageComponents()
     {
-        return $this->hasMany(PageComponent::class, self::$key)->where('StatusID', '=', eStatus::Active);
+        return $this->hasMany(PageComponent::class, self::$key)->where('StatusID', eStatus::Active);
     }
 
 
@@ -148,7 +148,7 @@ class ContentFilePage extends Model
     {
         PageComponentProperty::where('PageComponentID', 'IN', DB::raw('(SELECT `PageComponentID` FROM `PageComponent` WHERE `PageComponentID`='
                 . $pageComponentID . ' AND `ContentFilePageID`=' . $this->ContentFilePageID . ' AND `StatusID`=1)'))
-            ->where('StatusID', '=', eStatus::Active)
+            ->where('StatusID', eStatus::Active)
             ->update(
                 array(
                     'StatusID' => eStatus::Deleted,
@@ -159,9 +159,9 @@ class ContentFilePage extends Model
             );
 
         PageComponent::getQuery()
-            ->where('PageComponentID', '=', $pageComponentID)
-            ->where('ContentFilePageID', '=', $this->ContentFilePageID)
-            ->where('StatusID', '=', eStatus::Active)
+            ->where('PageComponentID', $pageComponentID)
+            ->where('ContentFilePageID', $this->ContentFilePageID)
+            ->where('StatusID', eStatus::Active)
             ->update(
                 array(
                     'StatusID' => eStatus::Deleted,
@@ -188,9 +188,9 @@ class ContentFilePage extends Model
 
     public function nextPage()
     {
-        return ContentFilePage::where('ContentFileID', '=', $this->ContentFileID)
-            ->where('No', '=', $this->No + 1)
-            ->where('StatusID', '=', eStatus::Active)
+        return ContentFilePage::where('ContentFileID', $this->ContentFileID)
+            ->where('No', $this->No + 1)
+            ->where('StatusID', eStatus::Active)
             ->first();
     }
 

@@ -1,6 +1,6 @@
 <?php
 $components = DB::table('Component')
-        ->where('StatusID', '=', eStatus::Active)
+        ->where('StatusID', eStatus::Active)
         ->orderBy('DisplayOrder', 'ASC')
         ->get();
 ?>

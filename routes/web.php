@@ -198,7 +198,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Applications">
-    Route::get(trans('route.applications'), ['as' => 'applications', 'uses' => 'ApplicationController@index']);
+    Route::get(trans('route.applications_list'), ['as' => 'customer_application_list', 'uses' => 'ApplicationController@customerApplicationList']);
     Route::get(trans('route.applications_new'), ['as' => 'applications_new', 'uses' => 'ApplicationController@create']);
     Route::get(trans('route.applications_show'), ['as' => 'applications_show', 'uses' => 'ApplicationController@show']);
     Route::post(trans('route.applications_pushnotification'), ['as' => 'applications_push', 'uses' => 'ApplicationController@push']);
@@ -304,6 +304,8 @@ Route::get('maps/webview/{application}', ['as' => 'map_view', 'uses' => 'MapCont
 
 Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['auth', 'admin']], function ()
 {
+    Route::get(trans('route.applications'), ['as' => 'applications', 'uses' => 'ApplicationController@index']);
+
     // <editor-fold defaultstate="collapsed" desc="Users">
     Route::get(trans('route.users'), ['as' => 'users', 'uses' => 'UserController@index']);
     Route::get(trans('route.users_new'), ['as' => 'users_new', 'uses' => 'UserController@create']);
@@ -331,18 +333,20 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     Route::post(trans('route.orders_uploadfile'), ['as' => 'orders_uploadfile', 'uses' => 'OrderController@uploadfile']);
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="managements">
+    Route::get(trans('route.managements_list'), ['as' => 'managements_list', 'uses' => 'ManagementController@list']);
+    Route::get('managements/import', ['as' => 'managements_importlanguages', 'uses' => 'ManagementController@importlanguages']);
+    Route::post('managements/import', ['as' => 'managements_importlanguages', 'uses' => 'ManagementController@importlanguages']);
+    Route::post('managements/export', ['as' => 'managements_exportlanguages', 'uses' => 'ManagementController@exportlanguages']);
+    // </editor-fold>
+
 });
 
 /**********************CALISMAYANLAR*************************/
 
 
 
-// <editor-fold defaultstate="collapsed" desc="managements">
-Route::get(trans('route.managements_list'), ['as' => 'managements_list', 'uses' => 'managements@list']);
-Route::get('managements/import', ['as' => 'managements_importlanguages', 'uses' => 'managements@importlanguages']);
-Route::post('managements/import', ['as' => 'managements_importlanguages', 'uses' => 'managements@importlanguages']);
-Route::post('managements/export', ['as' => 'managements_exportlanguages', 'uses' => 'managements@exportlanguages']);
-// </editor-fold>
+
 
 
 Route::get('clients/reset-my-password', ['uses' => 'ClientController@resetPasswordForm']);

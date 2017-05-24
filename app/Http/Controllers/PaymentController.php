@@ -150,9 +150,9 @@ class PaymentController extends Controller {
 
 
         //eger kullanici bugun icinde bir odeme yapmis ise baska bir odeme almayalim...
-        $oldPaymentTransactions = PaymentTransaction::where('PaymentAccountID', '=', $paymentAccount->PaymentAccountID)
+        $oldPaymentTransactions = PaymentTransaction::where('PaymentAccountID', $paymentAccount->PaymentAccountID)
             ->where('created_at', ">", date('Y-m-d'))
-            ->where('paid', '=', 1)
+            ->where('paid', 1)
             ->first();
 
         if ($oldPaymentTransactions)
@@ -248,7 +248,7 @@ class PaymentController extends Controller {
 
     public function paymentAccountByApplicationID($appID)
     {
-        return PaymentAccount::where('ApplicationID', "=", $appID)->first()->toArray();
+        return PaymentAccount::where('ApplicationID', $appID)->first()->toArray();
     }
 
 }

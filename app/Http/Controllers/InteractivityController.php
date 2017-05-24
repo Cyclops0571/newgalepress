@@ -326,7 +326,7 @@ class InteractivityController extends Controller {
             'WHERE CategoryID IN (SELECT CategoryID FROM `ContentCategory` WHERE ContentID IN (SELECT ContentID FROM (' . $sql . ') t)) AND StatusID=1 ' .
             'ORDER BY `Name` ASC';
         $categories = DB::table(DB::raw('(' . $sql . ') t'))->get();
-        //$categories = Category::where('ApplicationID', '=', (int)$applicationID)->where('StatusID', '=', eStatus::Active)->order_by('Name', 'ASC')->get();
+        //$categories = Category::where('ApplicationID', (int)$applicationID)->where('StatusID', eStatus::Active)->order_by('Name', 'ASC')->get();
 
         $data = [
             'filterSearch' => $search,
@@ -566,10 +566,10 @@ class InteractivityController extends Controller {
                                             } else
                                             {
                                                 $oldValue = PageComponentProperty::withoutGlobalScopes()
-                                                    ->where('PageComponentID', '=', $pageComponent->PageComponentID)
-                                                    ->where('Name', '=', $name)
+                                                    ->where('PageComponentID', $pageComponent->PageComponentID)
+                                                    ->where('Name', $name)
                                                     ->where('Value', 'LIKE', '%' . $v)
-                                                    ->where('StatusID', '=', eStatus::Deleted)
+                                                    ->where('StatusID', eStatus::Deleted)
                                                     ->orderBy('PageComponentPropertyID', 'DESC')
                                                     ->first(['Value']);
                                                 if ($oldValue)
@@ -623,9 +623,9 @@ class InteractivityController extends Controller {
                                         } else
                                         {
                                             $oldValue = PageComponentProperty::withoutGlobalScopes()
-                                                ->where('PageComponentID', '=', $pageComponent->PageComponentID)
-                                                ->where('Name', '=', $name)
-                                                ->where('StatusID', '=', eStatus::Deleted)
+                                                ->where('PageComponentID', $pageComponent->PageComponentID)
+                                                ->where('Name', $name)
+                                                ->where('StatusID', eStatus::Deleted)
                                                 ->orderBy('PageComponentPropertyID', 'DESC')
                                                 ->first(['Value']);
 
@@ -735,9 +735,9 @@ class InteractivityController extends Controller {
             {
                 $contentFilePageIDFrom = 0;
                 $cfp = DB::table('ContentFilePage')
-                    ->where('ContentFileID', '=', $contentFileID)
-                    ->where('No', '=', $pageFrom)
-                    ->where('StatusID', '=', eStatus::Active)
+                    ->where('ContentFileID', $contentFileID)
+                    ->where('No', $pageFrom)
+                    ->where('StatusID', eStatus::Active)
                     ->first();
                 if ($cfp)
                 {
@@ -746,16 +746,16 @@ class InteractivityController extends Controller {
 
                 $contentFilePageIDTo = 0;
                 $cfp = DB::table('ContentFilePage')
-                    ->where('ContentFileID', '=', $contentFileID)
-                    ->where('No', '=', $pageTo)
-                    ->where('StatusID', '=', eStatus::Active)
+                    ->where('ContentFileID', $contentFileID)
+                    ->where('No', $pageTo)
+                    ->where('StatusID', eStatus::Active)
                     ->first();
                 if ($cfp)
                 {
                     $contentFilePageIDTo = (int)$cfp->ContentFilePageID;
                 }
 
-                $cnt = (int)DB::table('PageComponent')->where('ContentFilePageID', '=', $contentFilePageIDFrom)->where('StatusID', '=', eStatus::Active)->count();
+                $cnt = (int)DB::table('PageComponent')->where('ContentFilePageID', $contentFilePageIDFrom)->where('StatusID', eStatus::Active)->count();
                 if ($cnt == 0)
                 {
                     throw new Exception(__('interactivity.transfer_error_insufficient'));
@@ -764,9 +764,9 @@ class InteractivityController extends Controller {
                 if ($componentID > 0)
                 {
                     DB::table('PageComponent')
-                        ->where('ContentFilePageID', '=', $contentFilePageIDFrom)
-                        ->where('No', '=', $componentID)
-                        ->where('StatusID', '=', eStatus::Active)
+                        ->where('ContentFilePageID', $contentFilePageIDFrom)
+                        ->where('No', $componentID)
+                        ->where('StatusID', eStatus::Active)
                         ->update([
                                 'ContentFilePageID' => $contentFilePageIDTo,
                                 'ProcessUserID'     => $currentUser->UserID,
@@ -777,8 +777,8 @@ class InteractivityController extends Controller {
                 } else
                 {
                     DB::table('PageComponent')
-                        ->where('ContentFilePageID', '=', $contentFilePageIDFrom)
-                        ->where('StatusID', '=', eStatus::Active)
+                        ->where('ContentFilePageID', $contentFilePageIDFrom)
+                        ->where('StatusID', eStatus::Active)
                         ->update([
                                 'ContentFilePageID' => $contentFilePageIDTo,
                                 'ProcessUserID'     => $currentUser->UserID,
@@ -791,14 +791,14 @@ class InteractivityController extends Controller {
                 //From
                 $componentNo = 1;
                 $pageComponents = DB::table('PageComponent')
-                    ->where('ContentFilePageID', '=', $contentFilePageIDFrom)
-                    ->where('StatusID', '=', eStatus::Active)
+                    ->where('ContentFilePageID', $contentFilePageIDFrom)
+                    ->where('StatusID', eStatus::Active)
                     ->orderBy('PageComponentID', 'ASC')
                     ->get();
                 foreach ($pageComponents as $component)
                 {
                     DB::table('PageComponent')
-                        ->where('PageComponentID', '=', $component->PageComponentID)
+                        ->where('PageComponentID', $component->PageComponentID)
                         ->update([
                                 'No'            => $componentNo,
                                 'ProcessUserID' => $currentUser->UserID,
@@ -812,14 +812,14 @@ class InteractivityController extends Controller {
                 //To
                 $componentNo = 1;
                 $pageComponents = DB::table('PageComponent')
-                    ->where('ContentFilePageID', '=', $contentFilePageIDTo)
-                    ->where('StatusID', '=', eStatus::Active)
+                    ->where('ContentFilePageID', $contentFilePageIDTo)
+                    ->where('StatusID', eStatus::Active)
                     ->orderBy('PageComponentID', 'ASC')
                     ->get();
                 foreach ($pageComponents as $component)
                 {
                     DB::table('PageComponent')
-                        ->where('PageComponentID', '=', $component->PageComponentID)
+                        ->where('PageComponentID', $component->PageComponentID)
                         ->update([
                                 'No'            => $componentNo,
                                 'ProcessUserID' => $currentUser->UserID,
@@ -955,7 +955,7 @@ class InteractivityController extends Controller {
             {
                 $componentClass = PageComponent::find($c->PageComponentID)->Component->Class;
 
-                $cp = PageComponentProperty::where('PageComponentID', '=', $c->PageComponentID)
+                $cp = PageComponentProperty::where('PageComponentID',$c->PageComponentID)
                     ->get();
 
                 $cpX = PageComponentProperty::where('PageComponentID', $c->PageComponentID)

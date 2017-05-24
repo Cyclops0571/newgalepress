@@ -30,11 +30,11 @@ class ContentHelper {
     {
         // /***** HEDEF CONTENTIN SAYFALARI OLUSUTURLMUS OLMALI YANI INTERAKTIF TASARLAYICISI ACILMIS OLMALI!!!*****/
         // TAŞINACAK CONTENT'IN FILE ID'SI
-        $contentFile = ContentFile::where('ContentID', '=', $sourceContentID)
+        $contentFile = ContentFile::where('ContentID', $sourceContentID)
             ->orderBy('ContentFileID', 'DESC')
             ->first();
 
-        $contentFilePage = ContentFilePage::where('ContentFileID', '=', $contentFile->ContentFileID)
+        $contentFilePage = ContentFilePage::where('ContentFileID', $contentFile->ContentFileID)
             ->get();
 
         if (sizeof($contentFilePage) == 0)
@@ -43,12 +43,12 @@ class ContentHelper {
         } else
         {
 
-            $contentFilePageNewCount = ContentFilePage::where('ContentFileID', '=', $targetContentFileID)
+            $contentFilePageNewCount = ContentFilePage::where('ContentFileID', $targetContentFileID)
                 ->count();
 
-            $targetApplicationID = Content::where('ContentID', '=', $targetContentID)->first();
+            $targetApplicationID = Content::where('ContentID', $targetContentID)->first();
 
-            $targetCustomerID = Application::where('ApplicationID', '=', $targetApplicationID->ApplicationID)->first();
+            $targetCustomerID = Application::where('ApplicationID', $targetApplicationID->ApplicationID)->first();
 
             if ($destinationFolder != "null")
             { /* kopyalanacak icerigin sayfalari yok ise olusturur */
@@ -87,7 +87,7 @@ class ContentHelper {
             {
 
 
-                $filePageComponent = PageComponent::where('ContentFilePageID', '=', $cfp->ContentFilePageID)->get();
+                $filePageComponent = PageComponent::where('ContentFilePageID', $cfp->ContentFilePageID)->get();
 
                 if (sizeof($filePageComponent) == 0)
                 {
@@ -95,7 +95,7 @@ class ContentHelper {
                 }
 
                 //HANGI CONTENT'E TASINACAKSA O CONTENT'IN FILE ID'SI
-                $contentFilePageNew = ContentFilePage::where('ContentFileID', '=', $targetContentFileID)
+                $contentFilePageNew = ContentFilePage::where('ContentFileID', $targetContentFileID)
                     ->where('No', $cfp->No)
                     ->first();
 
@@ -125,7 +125,7 @@ class ContentHelper {
                         $s->ProcessTypeID = eProcessTypes::Insert;
                         $s->save();
 
-                        $filePageComponentProperties = PageComponentProperty::where('PageComponentID', '=', $fpc->PageComponentID)->get();
+                        $filePageComponentProperties = PageComponentProperty::where('PageComponentID', $fpc->PageComponentID)->get();
 
                         foreach ($filePageComponentProperties as $filePageComponentProperty)
                         {

@@ -11,14 +11,14 @@
         <th><?php echo __('common.sort'); ?></th>
       @endif
         <?php foreach ($fields as $field): ?>
-        <?php $sort == $field[1] ? ($sort_dir == 'ASC' ? array('class' => 'sort_up') : array('class' => 'sort_down')) : array(); ?>
+        <?php $sortClass = $sort == $field[1] ? ($sort_dir == 'ASC' ? array('class' => 'sort_up') : array('class' => 'sort_down')) : array(); ?>
         <?php $linkParameters = [
             'page'          => 1,
             'applicationID' => $applicationID,
             'search'        => $search,
             'sort'          => $field[1],
             'sort_dir'      => ($sort_dir == 'DESC' ? 'ASC' : 'DESC')]; ?>
-      <th scope="col">{!! Html::link(route('contents_list', $linkParameters), $field[0], $sort) !!}</th>
+      <th scope="col">{!! Html::link(route('contents_list', $linkParameters), $field[0], $sortClass) !!}</th>
         <?php endforeach; ?>
     </tr>
   </thead>

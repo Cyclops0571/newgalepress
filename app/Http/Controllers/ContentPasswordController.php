@@ -46,7 +46,7 @@ class ContentPasswordController extends Controller
 
         $contentID = (int) $request->get('contentID', 0);
 
-        $rows = ContentPassword::where('ContentID', '=', $contentID)
+        $rows = ContentPassword::where('ContentID', $contentID)
             ->orderBy('Name', 'ASC')
             ->get();
 

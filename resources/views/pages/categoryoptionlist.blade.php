@@ -2,7 +2,7 @@
 $selected = 0;
 if($contentID > 0)
 {
-    $selected = DB::table('ContentCategory')->where('ContentID', '=', $contentID)->where('CategoryID', '=', '0')->count();  
+    $selected = DB::table('ContentCategory')->where('ContentID', $contentID)->where('CategoryID', '0')->count();
 }
 ?>
 <option value=""{{ ($selected == 1 ? ' selected="selected"' : '') }}>{{ __('common.contents_category_list_general') }}</option>
@@ -11,7 +11,7 @@ if($contentID > 0)
     $selected = 0;
     if($contentID > 0)
     {
-        $selected = DB::table('ContentCategory')->where('ContentID', '=', $contentID)->where('CategoryID', '=', $row->CategoryID)->count(); 
+        $selected = DB::table('ContentCategory')->where('ContentID', $contentID)->where('CategoryID', $row->CategoryID)->count();
     }
     ?>
 	<option value="{{ $row->CategoryID }}"{{ ($selected == 1 ? ' selected="selected"' : '') }}>{{ $row->Name }}</option>
@@ -26,7 +26,7 @@ if($contentID > 0)
 $selected = 0;
 if($contentID > 0)
 {
-	$selected = DB::table('ContentCategory')->where('ContentID', '=', $contentID)->where('CategoryID', '=', '0')->count();	
+	$selected = DB::table('ContentCategory')->where('ContentID', $contentID)->where('CategoryID', '0')->count();
 }
 ?>
 <li><input type="checkbox" name="chkCategoryID[]" value="0"{{ ($selected == 1 ? ' checked="checked"' : '') }} />{{ __('common.contents_category_list_general') }}</li>
@@ -35,7 +35,7 @@ if($contentID > 0)
     $selected = 0;
     if($contentID > 0)
     {
-        $selected = DB::table('ContentCategory')->where('ContentID', '=', $contentID)->where('CategoryID', '=', $row->CategoryID)->count();	
+        $selected = DB::table('ContentCategory')->where('ContentID', $contentID)->where('CategoryID', $row->CategoryID)->count();
     }
     ?>
 	<li><input type="checkbox" name="chkCategoryID[]" value="{{ $row->CategoryID }}"{{ ($selected == 1 ? ' checked="checked"' : '') }} />{{ $row->Name }}</li>

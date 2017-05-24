@@ -212,8 +212,8 @@ class ClientController extends Controller {
         if ($clientID == 0)
         {
             $rules['Password'] = 'required|min:2';
-            $clientSameUsername = Client::where('ApplicationID', "=", $applicationID)->where('Username', '=', $username)->first();
-            $clientSameEmail = Client::where('ApplicationID', "=", $applicationID)->where('Email', '=', $email)->first();
+            $clientSameUsername = Client::where('ApplicationID', $applicationID)->where('Username', $username)->first();
+            $clientSameEmail = Client::where('ApplicationID', $applicationID)->where('Email', $email)->first();
             if ($clientSameUsername)
             {
                 return $myResponse->error(trans('clients.username_must_be_unique'));
@@ -231,11 +231,11 @@ class ClientController extends Controller {
                 return $myResponse->error(trans('clients.user_not_found'));
             }
 
-            $clientSameUsername = Client::where('ApplicationID', "=", $applicationID)
-                ->where('Username', '=', $username)
+            $clientSameUsername = Client::where('ApplicationID', $applicationID)
+                ->where('Username', $username)
                 ->where('ClientID', "!=", $client->ClientID)->first();
-            $clientSameEmail = Client::where('ApplicationID', "=", $applicationID)
-                ->where('Email', '=', $email)
+            $clientSameEmail = Client::where('ApplicationID', $applicationID)
+                ->where('Email', $email)
                 ->where('ClientID', "!=", $client->ClientID)->first();
             if ($clientSameUsername)
             {
@@ -377,8 +377,8 @@ class ClientController extends Controller {
                 }
 
                 /* @var $client Client */
-                $clientSameUsername = Client::where('ApplicationID', "=", $applicationID)->where('Username', '=', $username)->first();
-                $clientSameEmail = Client::where('ApplicationID', "=", $applicationID)->where('Email', '=', $email)->first();
+                $clientSameUsername = Client::where('ApplicationID', $applicationID)->where('Username', $username)->first();
+                $clientSameEmail = Client::where('ApplicationID', $applicationID)->where('Email', $email)->first();
                 if ($clientSameUsername)
                 {
                     //user exists same
@@ -477,7 +477,7 @@ class ClientController extends Controller {
     public function updateclient($applicationID, $clientToken)
     {
         /* @var $client Client */
-        $client = Client::where('Token', '=', $clientToken)->first();
+        $client = Client::where('Token', $clientToken)->first();
         if (!$client)
         {
             return Redirect::to(str_replace("(:num)", $applicationID, __("route.clients_register")));
@@ -523,8 +523,8 @@ class ClientController extends Controller {
 
         if ($clientID == 0)
         {
-            $clientSameUsername = Client::where('ApplicationID', "=", $applicationID)->where('Username', '=', $username)->first();
-            $clientSameEmail = Client::where('ApplicationID', "=", $applicationID)->where('Email', '=', $email)->first();
+            $clientSameUsername = Client::where('ApplicationID', $applicationID)->where('Username', $username)->first();
+            $clientSameEmail = Client::where('ApplicationID', $applicationID)->where('Email', $email)->first();
             if ($clientSameUsername)
             {
                 return ajaxResponse::error(trans('clients.username_must_be_unique'));
@@ -550,8 +550,8 @@ class ClientController extends Controller {
                 return ajaxResponse::error(trans('clients.client_application_invalid'));
             }
 
-            $clientSameUsername = Client::where('ApplicationID', "=", $applicationID)->where('Username', '=', $username)->where('ClientID', "!=", $client->ClientID)->first();
-            $clientSameEmail = Client::where('ApplicationID', "=", $applicationID)->where('Email', '=', $email)->where('ClientID', "!=", $client->ClientID)->first();
+            $clientSameUsername = Client::where('ApplicationID', $applicationID)->where('Username', $username)->where('ClientID', "!=", $client->ClientID)->first();
+            $clientSameEmail = Client::where('ApplicationID', $applicationID)->where('Email', $email)->where('ClientID', "!=", $client->ClientID)->first();
             if ($clientSameUsername)
             {
                 return ajaxResponse::error(trans('clients.username_must_be_unique'));
@@ -614,7 +614,7 @@ class ClientController extends Controller {
         $email = $request->get("Email");
         $applicationID = $request->get("ApplicationID");
         /* @var $client Client */
-        $client = Client::where('ApplicationID', "=", $applicationID)->where('Email', '=', $email)->first();
+        $client = Client::where('ApplicationID', $applicationID)->where('Email', $email)->first();
         if (!$client)
         {
             return ajaxResponse::error(trans("clients.user_not_found"));
@@ -653,9 +653,9 @@ class ClientController extends Controller {
         $email = $request->get("email");
         $code = $request->get("code");
 
-        $client = Client::where("ApplicationID", "=", $applicationID)
-            ->where("Email", "=", $email)
-            ->where("PwRecoveryCode", "=", $code)
+        $client = Client::where("ApplicationID", $applicationID)
+            ->where("Email", $email)
+            ->where("PwRecoveryCode", $code)
             ->where("PwRecoveryDate", ">", DB::raw('ADDDATE(CURDATE(), INTERVAL -7 DAY)'))
             ->first();
 
@@ -697,9 +697,8 @@ class ClientController extends Controller {
         $applicationID = $request->get('ApplicationID');
 
         /* @var $client Client */
-        $client = $client = Client::where("ApplicationID", "=", $applicationID)
-            ->where("Email", "=", $request->get('Email'))
-            ->where("PwRecoveryCode", "=", $request->get('Code'))
+        $client = $client = Client::where("ApplicationID", $applicationID)
+            ->where("Email", $request->get('Email'))
             ->where("PwRecoveryDate", ">", DB::raw('ADDDATE(CURDATE(), INTERVAL -7 DAY)'))
             ->first();
         if (!$client)

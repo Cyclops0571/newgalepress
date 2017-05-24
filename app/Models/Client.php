@@ -91,7 +91,7 @@ class Client extends Model {
         if (!empty($deviceToken))
         {
             /* @var $client Client */
-            $client = Client::where("Token", "=", $accessToken)->first();
+            $client = Client::where("Token", $accessToken)->first();
             if ($client && $client->DeviceToken !== $deviceToken)
             {
                 $client->DeviceToken = $deviceToken;
@@ -209,7 +209,7 @@ class Client extends Model {
         $service = new Google_Service_AndroidPublisher($client);
         // use the purchase token to make a call to Google to get the subscription info
         /** @var Content $content */
-        $content = Content::where("Identifier", '=', $clientReceipt->SubscriptionID)->where("ApplicationID", '=', $this->Application->ApplicationID)->first();
+        $content = Content::where("Identifier", $clientReceipt->SubscriptionID)->where("ApplicationID", $this->Application->ApplicationID)->first();
         if ($content)
         {
             //content ise valide edip contenti erişebilir content listesine koyacağız...
@@ -301,7 +301,7 @@ class Client extends Model {
                 //expires_date_ms set edilmemis ise product satin almadir.
                 if (isset($inApp["product_id"]))
                 {
-                    $content = Content::where("Identifier", '=', $clientReceipt->SubscriptionID)->where("ApplicationID", '=', $this->Application->ApplicationID)->first();
+                    $content = Content::where("Identifier", $clientReceipt->SubscriptionID)->where("ApplicationID", $this->Application->ApplicationID)->first();
                     if (isset($content))
                     {
                         $this->addPurchasedItem($content->ContentID);
@@ -370,7 +370,7 @@ class Client extends Model {
         $service = new Google_Service_AndroidPublisher($client);
         // use the purchase token to make a call to Google to get the subscription info
         /** @var Content $content */
-        $content = Content::where("Identifier", '=', $clientReceipt->SubscriptionID)->where("ApplicationID", '=', $this->Application->ApplicationID)->first();
+        $content = Content::where("Identifier", $clientReceipt->SubscriptionID)->where("ApplicationID", $this->Application->ApplicationID)->first();
         if ($content)
         {
             //content ise valide edip contenti erişebilir content listesine koyacağız...
@@ -387,7 +387,7 @@ class Client extends Model {
     public function CheckReceiptCLI()
     {
         /** @var ClientReceipt[] $clientReceipts */
-        $clientReceipts = ClientReceipt::where('clientID', '=', $this->ClientID)
+        $clientReceipts = ClientReceipt::where('clientID', $this->ClientID)
             ->where_in('SubscriptionType', ['iospublisher#subscriptionPurchase', 'androidpublisher#subscriptionPurchase'])
             ->get();
 

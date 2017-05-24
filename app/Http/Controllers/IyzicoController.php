@@ -53,9 +53,9 @@ class IyzicoController extends Controller
 
 
         $cities = array();
-        $cities[] = City::where("CityID", "=", 34)->first();
-        $cities[] = City::where("CityID", "=", 6)->first();
-        $cities[] = City::where("CityID", "=", 35)->first();
+        $cities[] = City::where("CityID", 34)->first();
+        $cities[] = City::where("CityID", 6)->first();
+        $cities[] = City::where("CityID", 35)->first();
         $orderedCities = City::whereNotIn("CityID", array(6, 34, 35))->orderBy('CityName')->get();
         $cities = array_merge($cities, $orderedCities->all());
         $data = array();

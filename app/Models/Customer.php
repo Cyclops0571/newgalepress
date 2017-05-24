@@ -89,8 +89,8 @@ class Customer extends Model {
      */
     public static function getCustomerByID($CustomerID, $Active)
     {
-        return self::where('CustomerID', '=', $CustomerID)
-            ->where('StatusID', '=', $Active)
+        return self::where('CustomerID', $CustomerID)
+            ->where('StatusID', $Active)
             ->first();
     }
 

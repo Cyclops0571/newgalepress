@@ -65,14 +65,14 @@ class Banner extends Model
     public static function getAppBanner($applicationID, $showPassive = true)
     {
         if ($showPassive) {
-            return Banner::where("ApplicationID", "=", $applicationID)
+            return Banner::where("ApplicationID", $applicationID)
                 ->orderBy("OrderNo", "Desc")
                 ->get();
 
         }
 
-        return Banner::where("ApplicationID", "=", $applicationID)
-            ->where("Status", "=", eStatus::Active)
+        return Banner::where("ApplicationID", $applicationID)
+            ->where("Status", eStatus::Active)
             ->orderBy("OrderNo", "Desc")
             ->get();
     }

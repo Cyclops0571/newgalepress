@@ -142,7 +142,7 @@ class BannerController extends Controller {
         {
             //set a default dummy banner
             /* @var $maxOrderedBanner Banner */
-            $maxOrderedBanner = Banner::where("ApplicationID", "=", $application->ApplicationID)->orderBy("OrderNo", "DESC")->first();
+            $maxOrderedBanner = Banner::where("ApplicationID", $application->ApplicationID)->orderBy("OrderNo", "DESC")->first();
             $order = 1;
             if ($maxOrderedBanner)
             {

@@ -344,13 +344,13 @@ class ContentFile extends Model
                     $importCount = 0;
 
                     if (!$included) {
-                        $importCount = PageComponentProperty::where('PageComponentID', '=', $checkComponentID)
-                            ->where('Name', '=', 'import')
-                            ->where('Value', '=', 1)
+                        $importCount = PageComponentProperty::where('PageComponentID', $checkComponentID)
+                            ->where('Name', 'import')
+                            ->where('Value', 1)
                             ->count();
                     }
 
-                    $checkComponentCount = PageComponent::where('PageComponentID', '=', $checkComponentID)
+                    $checkComponentCount = PageComponent::where('PageComponentID', $checkComponentID)
                         ->count();
 
                     if ($importCount == 1) {
@@ -537,9 +537,9 @@ class ContentFile extends Model
     public function oldContentFile()
     {
         return ContentFile::where('ContentFileID', '<', $this->ContentFileID)
-            ->where('ContentID', '=', $this->ContentID)
-            ->where('Interactivity', '=', 1)
-            ->where('StatusID', '=', eStatus::Active)
+            ->where('ContentID', $this->ContentID)
+            ->where('Interactivity', 1)
+            ->where('StatusID', eStatus::Active)
             ->orderBy('ContentFileID', 'DESC')
             ->first();
     }

@@ -48,13 +48,15 @@
           </div>
         </div>
         <!-- end tabular_content-->
-        <div class="select">
-          @if($applicationID > 0)
-            {{ $rows->appends(array('applicationID' => $applicationID, 'search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
-          @else
-            {{ $rows->appends(array('search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
-          @endif
-        </div>
+        @if(count($rows))
+          <div class="select">
+            @if($applicationID > 0)
+              {{ $rows->appends(array('applicationID' => $applicationID, 'search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
+            @else
+              {{ $rows->appends(array('search' => $search, 'sort' => $sort, 'sort_dir' => $sort_dir))->links() }}
+            @endif
+          </div>
+        @endif
         <script type="text/javascript">
             $(function () {
                 $("div.pagination ul").addClass("pagination");

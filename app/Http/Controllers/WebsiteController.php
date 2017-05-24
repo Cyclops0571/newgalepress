@@ -87,7 +87,7 @@ class WebsiteController extends Controller {
             $errors['app_name'] = (string)__('website.tryit_form_error_required_appname');
         } else
         {
-            $applicationExits = Application::where('Name', '=', $appName)->first();
+            $applicationExits = Application::where('Name', $appName)->first();
             if ($applicationExits)
             {
                 $errors['app_name'] = (string)__('website.tryit_form_error_appname_exist');
@@ -127,15 +127,15 @@ class WebsiteController extends Controller {
 
         //$errors['customerLastName'] = $customerLastName;
 
-        $userExists = User::where('Email', '=', $email)->first();
-        $customerExists = Customer::where('Email', '=', $email)->first();
+        $userExists = User::where('Email', $email)->first();
+        $customerExists = Customer::where('Email', $email)->first();
 
         if ($userExists || $customerExists)
         {
             $errors['email_exist'] = (string)__('website.tryit_form_error2_email');
         }
 
-        $userNameExist = User::where('Username', '=', $userName)->first();
+        $userNameExist = User::where('Username', $userName)->first();
 
         if ($userNameExist && !empty($userName))
         {

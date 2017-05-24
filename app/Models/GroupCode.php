@@ -32,29 +32,33 @@ use Illuminate\Database\Query\JoinClause;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\GroupCode whereStatusID($value)
  * @mixin \Eloquent
  */
-class GroupCode extends Model
-{
+class GroupCode extends Model {
+
     public $timestamps = false;
     protected $table = 'GroupCode';
     protected $primaryKey = 'GroupCodeID';
 
     public function getDisplayName($languageID)
     {
-        $gcl = $this->belongsTo(GroupCodeLanguage::class, 'GroupCodeID')->getQuery()->where('LanguageID', '=', $languageID)->first();
-        if($gcl) {
+        $gcl = $this->belongsTo(GroupCodeLanguage::class, 'GroupCodeID')->getQuery()->where('LanguageID', $languageID)->first();
+        if ($gcl)
+        {
             return $gcl->DisplayName;
         }
+
         return '';
     }
 
-    public static function getGroupCodesWithName($name) {
+    public static function getGroupCodesWithName($name)
+    {
         return DB::table('GroupCode AS gc')
-            ->join('GroupCodeLanguage AS gcl', function (JoinClause $join) {
-                $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
-                $join->on('gcl.LanguageID', '=', DB::raw(Common::getLocaleId()));
+            ->join('GroupCodeLanguage AS gcl', function (JoinClause $join)
+            {
+                $join->on('gcl.GroupCodeID', 'gc.GroupCodeID');
             })
-            ->where('gc.GroupName', '=', $name)
-            ->where('gc.StatusID', '=', eStatus::Active)
+            ->where('gcl.LanguageID', DB::raw(Common::getLocaleId()))
+            ->where('gc.GroupName', $name)
+            ->where('gc.StatusID', eStatus::Active)
             ->orderBy('gc.DisplayOrder', 'ASC')
             ->orderBy('gcl.DisplayName', 'ASC')
             ->get();

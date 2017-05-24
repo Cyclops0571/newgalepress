@@ -42,7 +42,7 @@ class ContentServiceController extends Controller {
         WebService::checkServiceVersion($sv);
         /** @var Content $content */
         $content = Content::withoutGlobalScopes()
-            ->where('ContentID', '=', $contentID)
+            ->where('ContentID', $contentID)
             ->where(function (Builder $query)
             {
                 $query->where('StatusID', eStatus::Active)

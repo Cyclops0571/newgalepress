@@ -30,8 +30,7 @@ use Subscription;
 use URL;
 use Validator;
 
-class ApplicationController extends Controller
-{
+class ApplicationController extends Controller {
 
     public $page = '';
     public $route = '';
@@ -50,126 +49,117 @@ class ApplicationController extends Controller
         $this->pk = 'ApplicationID';
         $this->caption = __('common.applications_caption');
         $this->detailCaption = __('common.applications_caption_detail');
-        $this->fields = array(
-            0 => array('35px', __('common.applications_list_column1'), ''),
-            1 => array('55px', __('common.applications_list_column2'), 'ContentCount'),
-            2 => array('175px', __('common.applications_list_column3'), 'CustomerName'),
-            3 => array('', __('common.applications_list_column4'), 'Name'),
-            4 => array('155px', __('common.applications_list_column5'), 'ApplicationStatusName'),
-            5 => array('75px', __('common.applications_list_column6'), 'PackageName'),
-            6 => array('75px', __('common.applications_list_column7'), 'Blocked'),
-            7 => array('100px', __('common.applications_list_column8'), 'Status'),
-            8 => array('100px', __('common.applications_trail_title'), 'Trail'),
-            9 => array('90px', __('common.applications_list_column9'), 'ExpirationDate'),
-            10 => array('75px', __('common.applications_list_column10'), 'ApplicationID'),
-            11 => array('75px', __('common.applications_list_column11'), 'IsExpired')
-        );
+        $this->fields = [
+            0  => ['55px', __('common.applications_list_column2'), 'ContentCount'],
+            1  => ['175px', __('common.applications_list_column3'), 'CustomerName'],
+            2  => ['', __('common.applications_list_column4'), 'Name'],
+            3  => ['155px', __('common.applications_list_column5'), 'ApplicationStatusName'],
+            4  => ['75px', __('common.applications_list_column6'), 'PackageName'],
+            5  => ['75px', __('common.applications_list_column7'), 'Blocked'],
+            6  => ['100px', __('common.applications_list_column8'), 'Status'],
+            7  => ['100px', __('common.applications_trail_title'), 'Trail'],
+            8  => ['90px', __('common.applications_list_column9'), 'ExpirationDate'],
+            9  => ['75px', __('common.applications_list_column10'), 'ApplicationID'],
+            10 => ['75px', __('common.applications_list_column11'), 'IsExpired'],
+        ];
     }
 
     public function index(Request $request)
     {
         $currentUser = Auth::user();
 
-        if ((int)$currentUser->UserTypeID == eUserTypes::Manager) {
-            try {
-                $customerID = (int)$request->get('customerID', 0);
-                $search = $request->get('search', '');
-                $sort = $request->get('sort', $this->pk);
-                $sort_dir = $request->get('sort_dir', 'DESC');
-                $option = (int)$request->get('option', 0);
+        $customerID = (int)$request->get('customerID', 0);
+        $search = $request->get('search', '');
+        $sort = $request->get('sort', $this->pk);
+        $sort_dir = $request->get('sort_dir', 'DESC');
+        $option = (int)$request->get('option', 0);
 
-                $sql = '' .
-                    'SELECT ' .
-                    '(SELECT COUNT(*) FROM `Content` WHERE ApplicationID=a.ApplicationID AND StatusID=1) AS ContentCount, ' .
-                    'c.CustomerID, ' .
-                    'c.CustomerName, ' .
-                    'a.Name, ' .
-                    'IFNULL((SELECT DisplayName FROM `GroupCodeLanguage` WHERE GroupCodeID=a.ApplicationStatusID AND LanguageID=' . Common::getLocaleId() . '), \'\') AS ApplicationStatusName, ' .
-                    'IFNULL((SELECT Name FROM `Package` WHERE PackageID=a.PackageID), \'\') AS PackageName, ' .
-                    '(CASE a.Blocked WHEN 1 THEN \'' . __('common.applications_list_blocked1') . '\' ELSE \'' . __('common.applications_list_blocked0') . '\' END) AS Blocked, ' .
-                    '(CASE a.Status WHEN 1 THEN \'' . __('common.applications_list_status1') . '\' ELSE \'' . __('common.applications_list_status0') . '\' END) AS Status, ' .
-                    '(CASE a.Trail WHEN 2 THEN \'' . __('common.applications_trail_customer') . '\' ELSE \'' . __('common.applications_trail_demo') . '\' END) AS Trail, ' .
-                    '(CASE WHEN a.ExpirationDate < NOW() THEN \'' . __('common.applications_isexpired_yes') . '\' ELSE \'' . __('common.applications_isexpired_no') . '\' END) AS IsExpired, ' .
-                    'a.ExpirationDate, ' .
-                    'a.ApplicationID ' .
-                    'FROM `Customer` AS c ' .
-                    'INNER JOIN `Application` AS a ON a.CustomerID=c.CustomerID AND a.StatusID=1 ' .
-                    'WHERE c.StatusID=1';
+        $sql = '' .
+            'SELECT ' .
+            '(SELECT COUNT(*) FROM `Content` WHERE ApplicationID=a.ApplicationID AND StatusID=1) AS ContentCount, ' .
+            'c.CustomerID, ' .
+            'c.CustomerName, ' .
+            'a.Name, ' .
+            'IFNULL((SELECT DisplayName FROM `GroupCodeLanguage` WHERE GroupCodeID=a.ApplicationStatusID AND LanguageID=' . Common::getLocaleId() . '), \'\') AS ApplicationStatusName, ' .
+            'IFNULL((SELECT Name FROM `Package` WHERE PackageID=a.PackageID), \'\') AS PackageName, ' .
+            '(CASE a.Blocked WHEN 1 THEN \'' . __('common.applications_list_blocked1') . '\' ELSE \'' . __('common.applications_list_blocked0') . '\' END) AS Blocked, ' .
+            '(CASE a.Status WHEN 1 THEN \'' . __('common.applications_list_status1') . '\' ELSE \'' . __('common.applications_list_status0') . '\' END) AS Status, ' .
+            '(CASE a.Trail WHEN 2 THEN \'' . __('common.applications_trail_customer') . '\' ELSE \'' . __('common.applications_trail_demo') . '\' END) AS Trail, ' .
+            '(CASE WHEN a.ExpirationDate < NOW() THEN \'' . __('common.applications_isexpired_yes') . '\' ELSE \'' . __('common.applications_isexpired_no') . '\' END) AS IsExpired, ' .
+            'a.ExpirationDate, ' .
+            'a.ApplicationID ' .
+            'FROM `Customer` AS c ' .
+            'INNER JOIN `Application` AS a ON a.CustomerID=c.CustomerID AND a.StatusID=1 ' .
+            'WHERE c.StatusID=1';
 
-                $rs = DB::table(DB::raw('(' . $sql . ') t'))
-                    ->where(function (Builder $query) use ($customerID, $search) {
-                        if ($customerID > 0) {
-                            $query->where('CustomerID', '=', $customerID);
-                        }
-
-                        if (strlen(trim($search)) > 0) {
-                            $query->where('ContentCount', 'LIKE', '%' . $search . '%');
-                            $query->orWhere('CustomerName', 'LIKE', '%' . $search . '%');
-                            $query->orWhere('Name', 'LIKE', '%' . $search . '%');
-                            $query->orWhere('ApplicationStatusName', 'LIKE', '%' . $search . '%');
-                            $query->orWhere('PackageName', 'LIKE', '%' . $search . '%');
-                            $query->orWhere('Blocked', 'LIKE', '%' . $search . '%');
-                            $query->orWhere('Status', 'LIKE', '%' . $search . '%');
-                            $query->orWhere('ApplicationID', 'LIKE', '%' . $search . '%');
-                        }
-                    })
-                    ->orderBy($sort, $sort_dir);
-
-                if ($option == 1) {
-                    $data = array(
-                        'rows' => $rs->get()
-                    );
-                    return view('pages.applicationoptionlist', $data);
+        $rs = DB::table(DB::raw('(' . $sql . ') t'))
+            ->where(function (Builder $query) use ($customerID, $search)
+            {
+                if ($customerID > 0)
+                {
+                    $query->where('CustomerID', $customerID);
                 }
 
-                $rows = $rs->paginate(config('custom.rowcount'));
+                if (strlen(trim($search)) > 0)
+                {
+                    $query->where('ContentCount', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('CustomerName', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('Name', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('ApplicationStatusName', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('PackageName', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('Blocked', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('Status', 'LIKE', '%' . $search . '%');
+                    $query->orWhere('ApplicationID', 'LIKE', '%' . $search . '%');
+                }
+            })
+            ->orderBy($sort, $sort_dir);
 
-                $data = array(
-                    'page' => $this->page,
-                    'route' => $this->route,
-                    'caption' => $this->caption,
-                    'pk' => $this->pk,
-                    'fields' => $this->fields,
-                    'search' => $search,
-                    'sort' => $sort,
-                    'sort_dir' => $sort_dir,
-                    'rows' => $rows
-                );
-                return view('pages.applicationlist', $data);
-            } catch (Exception $e) {
-                throw new Exception($e->getMessage());
-                //				return Redirect::to(__('route.home'));
-            }
-        } else {
-            $option = (int)$request->get('option', 0);
+        $rows = $rs->paginate(config('custom.rowcount'));
 
-            if ($option == 1) {
-                $data = array(
-                    'rows' => $currentUser->Customer->Application
-                );
-                return view('pages.applicationoptionlist', $data);
-            }
-        }
-        return redirect()->route('home');
+        $data = [
+            'page'     => $this->page,
+            'route'    => $this->route,
+            'caption'  => $this->caption,
+            'pk'       => $this->pk,
+            'fields'   => $this->fields,
+            'search'   => $search,
+            'sort'     => $sort,
+            'sort_dir' => $sort_dir,
+            'rows'     => $rows,
+        ];
+
+        return view('pages.applicationlist', $data);
+
+    }
+
+    public function customerApplicationList(Request $request)
+    {
+        $data = [
+            'rows' => Auth::user()->Customer->Application,
+        ];
+
+        return view('pages.applicationoptionlist', $data);
     }
 
     public function create()
     {
-        if (Auth::user()->UserTypeID != eUserTypes::Manager) {
+        if (Auth::user()->UserTypeID != eUserTypes::Manager)
+        {
             return redirect()->route('home');
         }
 
-        $customers = Customer::where('StatusID', '=', eStatus::Active)
+        $customers = Customer::where('StatusID', eStatus::Active)
             ->orderBy('CustomerName', 'ASC')
             ->get();
 
         $groupcodes = DB::table('GroupCode AS gc')
-            ->join('GroupCodeLanguage AS gcl', function (JoinClause $join) {
-                $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
-                $join->on('gcl.LanguageID', '=', Common::getLocaleId());
+            ->join('GroupCodeLanguage AS gcl', function (JoinClause $join)
+            {
+                $join->on('gcl.GroupCodeID', 'gc.GroupCodeID');
             })
-            ->where('gc.GroupName', '=', 'ApplicationStatus')
-            ->where('gc.StatusID', '=', eStatus::Active)
+            ->where('gcl.LanguageID', Common::getLocaleId())
+            ->where('gc.GroupName', 'ApplicationStatus')
+            ->where('gc.StatusID', eStatus::Active)
             ->orderBy('gc.DisplayOrder', 'ASC')
             ->orderBy('gcl.DisplayName', 'ASC')
             ->get();
@@ -177,82 +167,90 @@ class ApplicationController extends Controller
         $packages = Package::orderBy('PackageID', 'ASC')->get();
 
         $app = new Application();
-        $data = array(
-            'app' => $app,
-            'customers' => $customers,
-            'groupcodes' => $groupcodes,
-            'packages' => $packages,
-            'page' => $this->page,
-            'route' => $this->route,
-            'caption' => $this->caption,
+        $data = [
+            'app'           => $app,
+            'customers'     => $customers,
+            'groupcodes'    => $groupcodes,
+            'packages'      => $packages,
+            'page'          => $this->page,
+            'route'         => $this->route,
+            'caption'       => $this->caption,
             'detailCaption' => $this->detailCaption,
-            'topics' => array(),
-        );
+            'topics'        => [],
+        ];
+
         return view('pages.' . Str::lower($this->table) . 'detail', $data);
     }
 
     public function show(Application $application)
     {
-
-        if (Auth::user()->UserTypeID != eUserTypes::Manager) {
+        if (Auth::user()->UserTypeID != eUserTypes::Manager)
+        {
             return redirect()->route('home');
         }
 
-        $customers = Customer::where('StatusID', '=', eStatus::Active)
+        $customers = Customer::where('StatusID', eStatus::Active)
             ->orderBy('CustomerName', 'ASC')
             ->get();
 
         $groupcodes = DB::table('GroupCode AS gc')
-            ->join('GroupCodeLanguage AS gcl', function (JoinClause $join) {
-                $join->on('gcl.GroupCodeID', '=', 'gc.GroupCodeID');
-                $join->on('gcl.LanguageID', '=', Common::getLocaleId());
+            ->join('GroupCodeLanguage AS gcl', function (JoinClause $join)
+            {
+                $join->on('gcl.GroupCodeID', 'gc.GroupCodeID');
             })
-            ->where('gc.GroupName', '=', 'ApplicationStatus')
-            ->where('gc.StatusID', '=', eStatus::Active)
+            ->where('gcl.LanguageID', Common::getLocaleId())
+            ->where('gc.GroupName', 'ApplicationStatus')
+            ->where('gc.StatusID', eStatus::Active)
             ->orderBy('gc.DisplayOrder', 'ASC')
             ->orderBy('gcl.DisplayName', 'ASC')
             ->get();
 
         $packages = Package::orderBy('PackageID', 'ASC')->get();
-        $data = array(
-            'app' => $application,
-            'customers' => $customers,
-            'groupcodes' => $groupcodes,
-            'packages' => $packages,
-            'page' => $this->page,
-            'route' => $this->route,
-            'caption' => $this->caption,
+        $data = [
+            'app'           => $application,
+            'customers'     => $customers,
+            'groupcodes'    => $groupcodes,
+            'packages'      => $packages,
+            'page'          => $this->page,
+            'route'         => $this->route,
+            'caption'       => $this->caption,
             'detailCaption' => $this->detailCaption,
-            'topics' => Topic::where('StatusID', '=', eStatus::Active )->get()
-        );
+            'topics'        => Topic::where('StatusID', eStatus::Active)->get(),
+        ];
+
         return view('pages.applicationdetail', $data);
 
     }
 
     public function push(Request $request, MyResponse $myResponse, $id)
     {
-        try {
-            $rules = array(
-                'NotificationText' => 'required'
-            );
+        try
+        {
+            $rules = [
+                'NotificationText' => 'required',
+            ];
             $v = Validator::make($request->all(), $rules);
-            if ($v->fails()) {
+            if ($v->fails())
+            {
                 throw new Exception(__('common.detailpage_validation'));
             }
 
             $chk = Common::CheckApplicationOwnership($id);
-            if (!$chk) {
+            if (!$chk)
+            {
                 //				throw new Exception("Unauthorized user attempt");
                 throw new Exception(__('error.unauthorized_user_attempt'));
             }
 
             $currentUser = Auth::user();
-            DB::transaction(function () use ($request, $currentUser, $id) {
+            DB::transaction(function () use ($request, $currentUser, $id)
+            {
                 $customerID = 0;
                 $applicationID = 0;
 
-                $app = DB::table('Application')->where('ApplicationID', '=', (int)$id)->first();
-                if ($app) {
+                $app = DB::table('Application')->where('ApplicationID', $id)->first();
+                if ($app)
+                {
                     $customerID = (int)$app->CustomerID;
                     $applicationID = (int)$app->ApplicationID;
                 }
@@ -270,13 +268,15 @@ class ApplicationController extends Controller
                 $s->save();
 
                 //Insert
-                $deviceTokens = array();
+                $deviceTokens = [];
                 //Son geleni son alalim... onemli
-                $tokens = Token::where('ApplicationID', '=', (int)$applicationID)
-                    ->where("StatusID", '=', eStatus::Active)
+                $tokens = Token::where('ApplicationID', $applicationID)
+                    ->where("StatusID", eStatus::Active)
                     ->get();
-                foreach ($tokens as $token) {
-                    if (!in_array($token->DeviceToken, $deviceTokens)) {
+                foreach ($tokens as $token)
+                {
+                    if (!in_array($token->DeviceToken, $deviceTokens))
+                    {
                         //save to push notification
                         $p = new PushNotificationDevice();
                         $p->PushNotificationID = $s->PushNotificationID;
@@ -307,27 +307,31 @@ class ApplicationController extends Controller
             $channel->basic_publish($msg, '', 'queue_pushnotification');
             $channel->close();
             $connection->close();
-        } catch (Exception $e) {
+        } catch (Exception $e)
+        {
             return $myResponse->error($e->getMessage());
         }
+
         return $myResponse->success();
     }
 
     public function save(Request $request, MyResponse $myResponse)
     {
         $currentUser = Auth::user();
-        if ((int)$currentUser->UserTypeID == eUserTypes::Manager) {
+        if ((int)$currentUser->UserTypeID == eUserTypes::Manager)
+        {
             $id = (int)$request->get($this->pk, '0');
 
-            $rules = array(
-                'CustomerID' => 'required',
-                'Name' => 'required',
-                'ExpirationDate' => 'required',
-                'PackageID' => 'required|integer',
+            $rules = [
+                'CustomerID'          => 'required',
+                'Name'                => 'required',
+                'ExpirationDate'      => 'required',
+                'PackageID'           => 'required|integer',
                 'ApplicationLanguage' => 'required',
-            );
+            ];
             $v = Validator::make($request->all(), $rules);
-            if ($v->passes()) {
+            if ($v->passes())
+            {
                 //File
                 $sourceFileName = $request->get('hdnCkPemName');
                 $sourceFilePath = 'files/temp';
@@ -336,13 +340,16 @@ class ApplicationController extends Controller
 
                 $targetFileName = $currentUser->UserID . '_' . date("YmdHis") . '_' . $sourceFileName;
 
-                if (!((int)$request->get('hdnCkPemSelected', 0) == 1 && File::exists($sourceFileNameFull))) {
+                if (!((int)$request->get('hdnCkPemSelected', 0) == 1 && File::exists($sourceFileNameFull)))
+                {
                     $targetFileName = $sourceFileName;
                 }
 
-                if ($id == 0) {
+                if ($id == 0)
+                {
                     $application = new Application();
-                } else {
+                } else
+                {
                     $application = Application::find($id);
                 }
                 $application->CustomerID = (int)$request->get('CustomerID');
@@ -369,17 +376,20 @@ class ApplicationController extends Controller
                 $application->CkPem = $targetFileName;
                 $application->TopicStatus = $request->get('topicStatus', 0) === "on";
                 $application->save();
-                if($request->get('hdnCkPemSelected', 0)) {
+                if ($request->get('hdnCkPemSelected', 0))
+                {
                     $application->handleCkPem($sourceFileNameFull);
                 }
 
                 $application->Topic()->sync($request->get('topicIds', []));
 
                 return $myResponse->success();
-            } else {
+            } else
+            {
                 return $myResponse->error(__('common.detailpage_validation'));
             }
         }
+
         return $myResponse->error(__('common.detailpage_validation'));
     }
 
@@ -389,12 +399,14 @@ class ApplicationController extends Controller
         $id = (int)$request->get($this->pk, '0');
         $s = Application::find($id);
 
-        if ((int)$currentUser->UserTypeID != eUserTypes::Manager || !$s) {
+        if ((int)$currentUser->UserTypeID != eUserTypes::Manager || !$s)
+        {
             return $myResponse->error(__('common.detailpage_validation'));
         }
 
         $s->StatusID = eStatus::Deleted;
         $s->save();
+
         return $myResponse->success();
     }
 
@@ -402,12 +414,12 @@ class ApplicationController extends Controller
     {
         $element = $request->get('element');
 
-        $options = array(
-            'upload_dir' => public_path('files/temp/'),
-            'upload_url' => URL::to('/files/temp/'),
-            'param_name' => $element,
-            'accept_file_types' => '/\.(pem)$/i'
-        );
+        $options = [
+            'upload_dir'        => public_path('files/temp/'),
+            'upload_url'        => URL::to('/files/temp/'),
+            'param_name'        => $element,
+            'accept_file_types' => '/\.(pem)$/i',
+        ];
         $upload_handler = new UploadHandler($options);
 
         if (!$request->ajax())
@@ -420,24 +432,28 @@ class ApplicationController extends Controller
     public function refresh_identifier(Request $request, MyResponse $myResponse)
     {
         $max = 1;
-        foreach (Subscription::types() as $key => $value) {
-            if ($key > $max) {
+        foreach (Subscription::types() as $key => $value)
+        {
+            if ($key > $max)
+            {
                 $max = $key;
             }
         }
 
-        $rules = array(
-            "ApplicationID" => "required|numeric|min:1",
+        $rules = [
+            "ApplicationID"     => "required|numeric|min:1",
             "SubscrioptionType" => "required|numeric|min:1|max:" . $max,
-        );
+        ];
         $v = Validator::make($request->all(), $rules);
-        if (!$v->passes()) {
-          return $myResponse->error($v->errors()->first());
+        if (!$v->passes())
+        {
+            return $myResponse->error($v->errors()->first());
         }
 
         $application = Application::find($request->get("ApplicationID"));
-        $subscriptionIdentifier = $application->SubscriptionIdentifier($request->get("SubscrioptionType"), TRUE);
+        $subscriptionIdentifier = $application->SubscriptionIdentifier($request->get("SubscrioptionType"), true);
         $application->save();
+
         return $myResponse->success(['SubscriptionIdentifier' => $subscriptionIdentifier]);
     }
 }

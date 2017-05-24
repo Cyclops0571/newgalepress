@@ -44,6 +44,7 @@ return array(
     'customers_delete' => 'customers/delete',
 
     'applications' => 'applications',
+    'applications_list' => 'applications/list',
     'applications_new' => 'applications/new',
     'applications_show' => 'applications/({application}',
     'applications_pushnotification' => 'applications/(:num)/push-notification',

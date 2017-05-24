@@ -262,17 +262,17 @@ class Common {
             $count = DB::table('Customer AS c')
                 ->join('Application AS a', function (JoinClause $join)
                 {
-                    $join->on('a.CustomerID', '=', 'c.CustomerID');
-                    $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
+                    $join->on('a.CustomerID', 'c.CustomerID');
                 })
                 ->join('Category AS t', function (JoinClause $join) use ($categoryID)
                 {
-                    $join->on('t.CategoryID', '=', DB::raw($categoryID));
-                    $join->on('t.ApplicationID', '=', 'a.ApplicationID');
-                    $join->on('t.StatusID', '=', DB::raw(eStatus::Active));
+                    $join->on('t.ApplicationID', 'a.ApplicationID');
                 })
-                ->where('c.CustomerID', '=', $currentUser->CustomerID)
-                ->where('c.StatusID', '=', eStatus::Active)
+                ->where('t.CategoryID', DB::raw($categoryID))
+                ->where('t.StatusID', DB::raw(eStatus::Active))
+                ->where('a.StatusID', DB::raw(eStatus::Active))
+                ->where('c.CustomerID', $currentUser->CustomerID)
+                ->where('c.StatusID', eStatus::Active)
                 ->count();
             if ($count > 0)
             {
@@ -299,18 +299,20 @@ class Common {
                 $count = DB::table('Customer AS c')
                     ->join('Application AS a', function (JoinClause $join) use ($applicationID)
                     {
-                        $join->on('a.ApplicationID', '=', DB::raw($applicationID));
-                        $join->on('a.CustomerID', '=', 'c.CustomerID');
-                        $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
+                        $join->on('a.CustomerID', 'c.CustomerID');
+
                     })
                     ->join('Category AS t', function (JoinClause $join) use ($categoryID)
                     {
-                        $join->on('t.CategoryID', '=', DB::raw($categoryID));
-                        $join->on('t.ApplicationID', '=', 'a.ApplicationID');
-                        $join->on('t.StatusID', '=', DB::raw(eStatus::Active));
+                        $join->on('t.ApplicationID', 'a.ApplicationID');
+
                     })
-                    ->where('c.CustomerID', '=', $currentUser->CustomerID)
-                    ->where('c.StatusID', '=', eStatus::Active)
+                    ->where('t.CategoryID', DB::raw($categoryID))
+                    ->where('t.StatusID', DB::raw(eStatus::Active))
+                    ->where('a.ApplicationID', DB::raw($applicationID))
+                    ->where('a.StatusID', DB::raw(eStatus::Active))
+                    ->where('c.CustomerID', $currentUser->CustomerID)
+                    ->where('c.StatusID', eStatus::Active)
                     ->count();
                 if ($count > 0)
                 {
@@ -319,9 +321,9 @@ class Common {
             } else
             {
                 $count = DB::table('Category')
-                    ->where('CategoryID', '=', $categoryID)
-                    ->where('ApplicationID', '=', $applicationID)
-                    ->where('StatusID', '=', eStatus::Active)
+                    ->where('CategoryID', $categoryID)
+                    ->where('ApplicationID', $applicationID)
+                    ->where('StatusID', eStatus::Active)
                     ->count();
                 if ($count > 0)
                 {
@@ -382,22 +384,22 @@ class Common {
             $count = DB::table('Customer AS c')
                 ->join('Application AS a', function (JoinClause $join)
                 {
-                    $join->on('a.CustomerID', '=', 'c.CustomerID');
-                    $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
+                    $join->on('a.CustomerID', 'c.CustomerID');
                 })
                 ->join('Content AS cn', function (JoinClause $join)
                 {
-                    $join->on('cn.ApplicationID', '=', 'a.ApplicationID');
-                    $join->on('cn.StatusID', '=', DB::raw(eStatus::Active));
+                    $join->on('cn.ApplicationID', 'a.ApplicationID');
                 })
                 ->join('ContentPassword AS cp', function (JoinClause $join) use ($contentPasswordID)
                 {
-                    $join->on('cp.ContentPasswordID', '=', DB::raw($contentPasswordID));
-                    $join->on('cp.ContentID', '=', 'cn.ContentID');
-                    $join->on('cp.StatusID', '=', DB::raw(eStatus::Active));
+                    $join->on('cp.ContentID', 'cn.ContentID');
                 })
-                ->where('c.CustomerID', '=', $currentUser->CustomerID)
-                ->where('c.StatusID', '=', eStatus::Active)
+                ->where('a.StatusID', DB::raw(eStatus::Active))
+                ->where('cn.StatusID', DB::raw(eStatus::Active))
+                ->where('cp.ContentPasswordID', DB::raw($contentPasswordID))
+                ->where('cp.StatusID', DB::raw(eStatus::Active))
+                ->where('c.CustomerID', $currentUser->CustomerID)
+                ->where('c.StatusID', eStatus::Active)
                 ->count();
             if ($count > 0)
             {
@@ -429,7 +431,7 @@ class Common {
     {
         if (Common::CheckApplicationOwnership($applicationID))
         {
-            $currentPDF = (int)Content::where('ApplicationID', '=', $applicationID)->where('Status', '=', 1)->where('StatusID', '=', eStatus::Active)->count();
+            $currentPDF = (int)Content::where('ApplicationID', $applicationID)->where('Status', 1)->where('StatusID', eStatus::Active)->count();
             $a = Application::find($applicationID);
             if ($a)
             {
@@ -456,16 +458,16 @@ class Common {
         $c = DB::table('Customer AS c')
             ->join('Application AS a', function (JoinClause $join)
             {
-                $join->on('a.CustomerID', '=', 'c.CustomerID');
-                $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
+                $join->on('a.CustomerID', 'c.CustomerID');
             })
             ->join('Content AS o', function (JoinClause $join) use ($ContentID)
             {
-                $join->on('o.ContentID', '=', DB::raw($ContentID));
-                $join->on('o.ApplicationID', '=', 'a.ApplicationID');
-                $join->on('o.StatusID', '=', DB::raw(eStatus::Active));
+                $join->on('o.ApplicationID', 'a.ApplicationID');
             })
-            ->where('c.StatusID', '=', eStatus::Active)
+            ->where('a.StatusID', DB::raw(eStatus::Active))
+            ->where('o.ContentID', DB::raw($ContentID))
+            ->where('o.StatusID', DB::raw(eStatus::Active))
+            ->where('c.StatusID', eStatus::Active)
             ->first(['c.CustomerID', 'a.ApplicationID', 'o.ContentID', 'o.IsProtected']);
         if ($c)
         {
@@ -478,8 +480,8 @@ class Common {
                 //Content
                 $authPwd = false;
                 $checkPwd = DB::table('Content')
-                    ->where('ContentID', '=', $oContentID)
-                    ->where('StatusID', '=', eStatus::Active)
+                    ->where('ContentID', $oContentID)
+                    ->where('StatusID', eStatus::Active)
                     ->first();
                 if ($checkPwd)
                 {
@@ -488,8 +490,8 @@ class Common {
                 //Content password
                 $authPwdList = false;
                 $checkPwdList = DB::table('ContentPassword')
-                    ->where('ContentID', '=', $oContentID)
-                    ->where('StatusID', '=', eStatus::Active)
+                    ->where('ContentID', $oContentID)
+                    ->where('StatusID', eStatus::Active)
                     ->get();
                 if ($checkPwdList)
                 {
@@ -520,8 +522,8 @@ class Common {
             }
 
             $cf = ContentFile::getQuery()
-                ->where('ContentID', '=', $oContentID)
-                ->where('StatusID', '=', eStatus::Active)
+                ->where('ContentID', $oContentID)
+                ->where('StatusID', eStatus::Active)
                 ->orderBy('ContentFileID', 'DESC')
                 ->first();
             if ($cf)
@@ -649,24 +651,24 @@ class Common {
         $content = DB::table('Customer AS c')
             ->join('Application AS a', function (JoinClause $join)
             {
-                $join->on('a.CustomerID', '=', 'c.CustomerID');
-                $join->on('a.StatusID', '=', DB::raw(eStatus::Active));
+                $join->on('a.CustomerID', 'c.CustomerID');
             })
             ->join('Content AS o', function (JoinClause $join) use ($ContentID)
             {
-                $join->on('o.ContentID', '=', DB::raw($ContentID));
-                $join->on('o.ApplicationID', '=', 'a.ApplicationID');
-                $join->on('o.StatusID', '=', DB::raw(eStatus::Active));
+                $join->on('o.ApplicationID', 'a.ApplicationID');
             })
-            ->where('c.StatusID', '=', eStatus::Active)
+            ->where('a.StatusID', DB::raw(eStatus::Active))
+            ->where('o.ContentID', DB::raw($ContentID))
+            ->where('o.StatusID', DB::raw(eStatus::Active))
+            ->where('c.StatusID', eStatus::Active)
             ->first(['c.CustomerID', 'a.ApplicationID', 'o.ContentID', 'o.IsProtected']);
         if (!$content)
         {
             throw new Exception(__('common.list_norecord'), "102");
         }
         $contentFile = DB::table('ContentFile')
-            ->where('ContentID', '=', $ContentID)
-            ->where('StatusID', '=', eStatus::Active)
+            ->where('ContentID', $ContentID)
+            ->where('StatusID', eStatus::Active)
             ->orderBy('ContentFileID', 'DESC')
             ->first();
 
@@ -675,8 +677,8 @@ class Common {
             throw new Exception(__('common.list_norecord'), "102");
         }
         $contentCoverImageFile = DB::table('ContentCoverImageFile')
-            ->where('ContentFileID', '=', $contentFile->ContentFileID)
-            ->where('StatusID', '=', eStatus::Active)
+            ->where('ContentFileID', $contentFile->ContentFileID)
+            ->where('StatusID', eStatus::Active)
             ->orderBy('ContentCoverImageFileID', 'DESC')
             ->first();
         if (!$contentCoverImageFile)
@@ -1061,17 +1063,17 @@ class Common {
             {
                 if ((int)$currentUser->UserTypeID == eUserTypes::Manager && $customerID > 0)
                 {
-                    $query->where('CustomerID', '=', $customerID);
+                    $query->where('CustomerID', $customerID);
                 } elseif ((int)$currentUser->UserTypeID == eUserTypes::Customer)
                 {
-                    $query->where('CustomerID', '=', $currentUser->CustomerID);
+                    $query->where('CustomerID', $currentUser->CustomerID);
                 }
 
                 if ($applicationID > 0)
                 {
                     if (Common::CheckApplicationOwnership($applicationID))
                     {
-                        $query->where('ApplicationID', '=', $applicationID);
+                        $query->where('ApplicationID', $applicationID);
                     }
                 }
 
@@ -1079,17 +1081,17 @@ class Common {
                 {
                     if (Common::CheckContentOwnership($contentID))
                     {
-                        $query->where('ContentID', '=', $contentID);
+                        $query->where('ContentID', $contentID);
                     }
                 }
 
                 if ($isCity)
                 {
-                    $query->where('Country', '=', (strlen($country) > 0 ? $country : '???'));
+                    $query->where('Country', (strlen($country) > 0 ? $country : '???'));
                 } elseif ($isDistrict)
                 {
-                    $query->where('Country', '=', (strlen($country) > 0 ? $country : '???'));
-                    $query->where('City', '=', (strlen($city) > 0 ? $city : '???'));
+                    $query->where('Country', (strlen($country) > 0 ? $country : '???'));
+                    $query->where('City', (strlen($city) > 0 ? $city : '???'));
                 }
             })
             ->distinct()
@@ -1320,6 +1322,7 @@ function localDateFormat($format = 'dd.MM.yyyy')
     {
         return 'mm/dd/yyyy';
     }
+
     return $format;
 }
 

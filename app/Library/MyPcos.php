@@ -154,7 +154,7 @@ class MyPcos
                 continue;
             }
 
-            $lastComponentNo = (int)PageComponent::where('ContentFilePageID', '=', $cfp->ContentFilePageID)->max('No');
+            $lastComponentNo = (int)PageComponent::where('ContentFilePageID', $cfp->ContentFilePageID)->max('No');
 
 
             //Web Link

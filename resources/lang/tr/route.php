@@ -45,6 +45,7 @@ return array(
 
     'applications' => 'uygulamalar',
     'applications_new' => 'uygulamalar/yeni',
+    'applications_list' => 'applications/list',
     'applications_show' => 'uygulamalar/{application}',
     'applications_pushnotification' => 'uygulamalar/(:num)/bildirim-gonder',
     'applications_save' => 'uygulamalar/kaydet',

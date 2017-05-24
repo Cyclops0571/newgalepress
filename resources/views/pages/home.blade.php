@@ -224,8 +224,8 @@
                                 value=""{{ ($contentID == 0 ? ' selected="selected"' : '') }}>{{ __('common.reports_select_content') }}</option>
                               <?php
                               $contents = DB::table('Content')
-                                  ->where('ApplicationID', '=', $applicationID)
-                                  ->where('StatusID', '=', eStatus::Active)
+                                  ->where('ApplicationID', $applicationID)
+                                  ->where('StatusID', eStatus::Active)
                                   ->orderBy('Name', 'ASC')
                                   ->get();
                               ?>

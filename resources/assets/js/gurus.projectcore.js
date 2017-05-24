@@ -221,8 +221,8 @@ var cApplication = new function () {
     this.loadApplicationOptionList = function () {
 
         var t = 'GET';
-        var u = '/' + currentLanguage + '/' + route["applications"];
-        var d = "customerID=" + $("#ddlCustomer").val() + "&option=1";
+        var u = '/' + currentLanguage + '/' + route["applications_list"];
+        var d = '';
         cApplication.doAsyncRequest(t, u, d, function (ret) {
             $("#ddlApplication").html(ret);
             $('#ddlApplication').trigger('chosen:updated');

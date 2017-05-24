@@ -154,7 +154,7 @@ class Content extends Model {
                 {
                     if ($applicationID > 0)
                     {
-                        $query->where('ApplicationID', '=', $applicationID);
+                        $query->where('ApplicationID', $applicationID);
                     }
 
                     if (strlen(trim($search)) > 0)
@@ -174,7 +174,7 @@ class Content extends Model {
                     {
                         if (strlen(trim($search)) > 0)
                         {
-                            $query->where('ApplicationID', '=', $applicationID);
+                            $query->where('ApplicationID', $applicationID);
                             $query->where(function (Builder $q) use ($search)
                             {
                                 $q->where('Name', 'LIKE', '%' . $search . '%');
@@ -186,11 +186,11 @@ class Content extends Model {
                             });
                         } else
                         {
-                            $query->where('ApplicationID', '=', $applicationID);
+                            $query->where('ApplicationID', $applicationID);
                         }
                     } else
                     {
-                        $query->where('ApplicationID', '=', -1);
+                        $query->where('ApplicationID', -1);
                     }
                 }
             })
@@ -229,7 +229,7 @@ class Content extends Model {
 
     public function Currency($languageID)
     {
-        $gc = GroupCode::where('GroupCodeID', '=', $this->CurrencyID)->first();
+        $gc = GroupCode::where('GroupCodeID', $this->CurrencyID)->first();
         if ($gc)
         {
             return $gc->getDisplayName($languageID);
@@ -240,12 +240,12 @@ class Content extends Model {
 
     public function Files($statusID = eStatus::Active)
     {
-        return $this->hasMany(ContentFile::class, self::$key)->getQuery()->where('StatusID', '=', $statusID)->get();
+        return $this->hasMany(ContentFile::class, self::$key)->getQuery()->where('StatusID', $statusID)->get();
     }
 
     public function ActiveFile()
     {
-        return $this->hasMany(ContentFile::class, self::$key)->getQuery()->where('StatusID', '=', eStatus::Active)->first();
+        return $this->hasMany(ContentFile::class, self::$key)->getQuery()->where('StatusID', eStatus::Active)->first();
     }
 
     public function setPassword($password)
@@ -264,7 +264,7 @@ class Content extends Model {
             //Unset IsProtected & password field due to https://github.com/galepress/gp/issues/7
             $this->IsProtected = 0;
             $this->Password = '';
-            $contents = Content::where('ApplicationID', '=', $this->ApplicationID)->get();
+            $contents = Content::where('ApplicationID', $this->ApplicationID)->get();
             foreach ($contents as $content)
             {
                 //INFO:Added due to https://github.com/galepress/gp/issues/18
@@ -290,7 +290,7 @@ class Content extends Model {
      */
     public static function find($contentID, $columns = ['*'])
     {
-        return Content::where(self::$key, "=", $contentID)->first($columns);
+        return Content::where(self::$key, $contentID)->first($columns);
     }
 
     public function save(array $options = [])
@@ -341,8 +341,8 @@ class Content extends Model {
     {
         if ((int)request('hdnFileSelected', 0) != 1)
         {
-            return ContentFile::where('ContentID', '=', $this->ContentID)
-                ->where('StatusID', '=', eStatus::Active)
+            return ContentFile::where('ContentID', $this->ContentID)
+                ->where('StatusID', eStatus::Active)
                 ->orderBy('ContentFileID', 'DESC')
                 ->first();
         }
@@ -626,11 +626,11 @@ class Content extends Model {
         }
 
         return Content::whereIn('ContentID', $contentIds)
-            ->where('StatusID', '=', eStatus::Active)
+            ->where('StatusID', eStatus::Active)
             ->where('PublishDate', '<=', DB::raw('now()'))
             ->where(function (\Illuminate\Database\Eloquent\Builder $query)
             {
-                $query->where('IsUnpublishActive', '=', 0);
+                $query->where('IsUnpublishActive', 0);
                 $query->orWhere('UnpublishDate', '>', DB::raw('now()'));
             })
             ->orderBy('OrderNo', 'DESC')
@@ -650,14 +650,14 @@ class Content extends Model {
         }
 
         return Content::whereIn('Content.ContentID', $contentIds)
-            ->where('StatusID', '=', eStatus::Active)
+            ->where('StatusID', eStatus::Active)
             ->where('PublishDate', '<=', DB::raw('now()'))
             ->where(function (\Illuminate\Database\Eloquent\Builder $query)
             {
-                $query->where('IsUnpublishActive', '=', 0);
+                $query->where('IsUnpublishActive', 0);
                 $query->orWhere('UnpublishDate', '>', DB::raw('now()'));
             })
-            ->join('ContentTopic', 'Content.ContentID', '=', 'ContentTopic.ContentID')
+            ->join('ContentTopic', 'Content.ContentID', 'ContentTopic.ContentID')
             ->orderBy('OrderNo', 'DESC')
             ->orderBy('MonthlyName', 'ASC')
             ->orderBy('Name', 'ASC')->get();

@@ -214,7 +214,7 @@ class AppController extends Controller {
         //We have a user now...
         if ($user->UserTypeID == eUserTypes::Customer)
         {
-            $applicationSet = Application::where('CustomerID', '=', $user->CustomerID)
+            $applicationSet = Application::where('CustomerID', $user->CustomerID)
                 ->whereDate('ExpirationDate', '>=', Carbon::today())
                 ->get();
         } else if ($user->UserTypeID == eUserTypes::Manager)
@@ -291,8 +291,8 @@ class AppController extends Controller {
         Config::set("application.language", $request->get("clientLanguage"));
         $surname = $request->get("surname");
         WebService::getCheckApplication($applicationID);
-        $client = Client::where("ApplicationID", "=", $applicationID)
-            ->where("Email", "=", $fbEmail)
+        $client = Client::where("ApplicationID", $applicationID)
+            ->where("Email", $fbEmail)
             ->orWhere("FbEmail", $fbEmail)->first();
         if ($client)
         {
@@ -312,8 +312,8 @@ class AppController extends Controller {
         do
         {
             $username = Str::ascii($name . $surname . $userNo);
-            $clientExists = Client::where("Username", "=", $username)
-                ->where("ApplicationID", "=", $applicationID)->exists();
+            $clientExists = Client::where("Username", $username)
+                ->where("ApplicationID", $applicationID)->exists();
             $userNo = 1 + (int)$userNo;
         } while ($clientExists);
 
@@ -377,7 +377,7 @@ class AppController extends Controller {
                 $productID = $productIds[$i]; //subscriptionIdentifier
                 //ise baslamadan gonderilen receipti kaydedelim...
                 /** @var ClientReceipt $clientReceipt */
-                $clientReceipt = ClientReceipt::where("Receipt", "=", $purchaseToken)->first();
+                $clientReceipt = ClientReceipt::where("Receipt", $purchaseToken)->first();
                 if (!$clientReceipt)
                 {
                     $clientReceipt = new ClientReceipt();
@@ -434,7 +434,7 @@ class AppController extends Controller {
 
         //ise baslamadan gonderilen receipti kaydedelim...
         /** @var ClientReceipt $clientReceipt */
-        $clientReceipt = ClientReceipt::where("Receipt", "=", $purchaseToken)->first();
+        $clientReceipt = ClientReceipt::where("Receipt", $purchaseToken)->first();
         if (!$clientReceipt)
         {
             $clientReceipt = new ClientReceipt();

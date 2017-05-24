@@ -85,7 +85,7 @@ class Order extends Model
             {
                 if ($applicationID > 0)
                 {
-                    $query->where('ApplicationID', '=', $applicationID);
+                    $query->where('ApplicationID', $applicationID);
                 }
 
                 if (strlen(trim($search)) > 0)

@@ -19,8 +19,7 @@ use Maatwebsite\Excel\Readers\LaravelExcelReader;
 use URL;
 use Validator;
 
-class MapController extends Controller
-{
+class MapController extends Controller {
 
 
     public $restful = true;
@@ -32,25 +31,27 @@ class MapController extends Controller
     public $caption = '';
 
 
-    private function init() {
+    private function init()
+    {
         $this->route = __('route.' . $this->page);
         $this->caption = __('common.maps_caption');
         $this->detailCaption = __('common.maps_caption_detail');
-        $this->fields = array();
-        $this->fields[] = array(__('common.maps_list_name'), 'Name');
-        $this->fields[] = array(__('common.maps_list_address'), 'Address');
-        $this->fields[] = array(__('common.maps_list_description'), 'Description');
-        $this->fields[] = array(__('common.maps_list_latitude'), 'Latitude');
-        $this->fields[] = array(__('common.maps_list_longitude'), 'Longitude');
-        $this->fields[] = array(__('common.maps_list_google_map_id'), 'GoogleMapID');
-        if (Auth::user() && (int)Auth::user()->UserTypeID == eUserTypes::Manager) {
-            $this->fields = array();
-            $this->fields[] = array(__('common.maps_list_customer'), 'CustomerName');
-            $this->fields[] = array(__('common.maps_list_application'), 'ApplicationName');
-            $this->fields[] = array(__('common.maps_list_name'), 'Name');
-            $this->fields[] = array(__('common.maps_list_latitude'), 'Latitude');
-            $this->fields[] = array(__('common.maps_list_longitude'), 'Longitude');
-            $this->fields[] = array(__('common.maps_list_google_map_id'), 'GoogleMapID');
+        $this->fields = [];
+        $this->fields[] = [__('common.maps_list_name'), 'Name'];
+        $this->fields[] = [__('common.maps_list_address'), 'Address'];
+        $this->fields[] = [__('common.maps_list_description'), 'Description'];
+        $this->fields[] = [__('common.maps_list_latitude'), 'Latitude'];
+        $this->fields[] = [__('common.maps_list_longitude'), 'Longitude'];
+        $this->fields[] = [__('common.maps_list_google_map_id'), 'GoogleMapID'];
+        if (Auth::user() && (int)Auth::user()->UserTypeID == eUserTypes::Manager)
+        {
+            $this->fields = [];
+            $this->fields[] = [__('common.maps_list_customer'), 'CustomerName'];
+            $this->fields[] = [__('common.maps_list_application'), 'ApplicationName'];
+            $this->fields[] = [__('common.maps_list_name'), 'Name'];
+            $this->fields[] = [__('common.maps_list_latitude'), 'Latitude'];
+            $this->fields[] = [__('common.maps_list_longitude'), 'Longitude'];
+            $this->fields[] = [__('common.maps_list_google_map_id'), 'GoogleMapID'];
         }
     }
 
@@ -61,37 +62,43 @@ class MapController extends Controller
         $applicationID = $request->get("applicationID", 0);
         $sort = $request->get('sort', $this->pk);
         $sort_dir = $request->get('sort_dir', 'DESC');
-        if (!Common::CheckApplicationOwnership($applicationID)) {
+        if (!Common::CheckApplicationOwnership($applicationID))
+        {
             return redirect()->route('home');
         }
 
         $markerSetQuery = DB::table('GoogleMap')
-            ->where('StatusID', '=', eStatus::Active);
-        if (!empty($search)) {
-            $markerSetQuery->where(function (Builder $query) use ($search) {
+            ->where('StatusID', eStatus::Active);
+        if (!empty($search))
+        {
+            $markerSetQuery->where(function (Builder $query) use ($search)
+            {
                 $searchWord = '%' . $search . '%';
                 $query->where('Name', 'LIKE', $searchWord);
                 $query->orWhere('Address', 'LIKE', $searchWord);
                 $query->orWhere('Description', 'LIKE', $searchWord);
             });
         }
-        if (Auth::user()->UserTypeID != eUserTypes::Manager) {
-            $markerSetQuery->where('ApplicationID', '=', $applicationID);
-        } else {
-            $markerSetQuery->join('Application as a', function (JoinClause $join) {
-                $join->on('a.ApplicationID', '=', 'GoogleMap.ApplicationID');
-                $join->on('a.StatusID', '=', eStatus::Active);
+        if (Auth::user()->UserTypeID != eUserTypes::Manager)
+        {
+            $markerSetQuery->where('ApplicationID', $applicationID);
+        } else
+        {
+            $markerSetQuery->join('Application as a', function (JoinClause $join)
+            {
+                $join->on('a.ApplicationID', 'GoogleMap.ApplicationID');
             });
 
-            $markerSetQuery->join('Customer AS c', function (JoinClause $join) {
-                $join->on('a.CustomerID', '=', 'c.CustomerID');
-                $join->on('c.StatusID', '=', eStatus::Active);
+            $markerSetQuery->join('Customer AS c', function (JoinClause $join)
+            {
+                $join->on('a.CustomerID', 'c.CustomerID');
             });
+            $markerSetQuery->where('a.StatusID', eStatus::Active)
+                ->where('c.StatusID', eStatus::Active);
         }
-
         $rows = $markerSetQuery->orderBy($sort, $sort_dir)->paginate(config('custom.rowcount'));
 
-        $data = array();
+        $data = [];
         $data['route'] = $this->route;
         $data['caption'] = $this->caption;
         $data['pk'] = $this->pk;
@@ -103,17 +110,19 @@ class MapController extends Controller
         $data['applicationID'] = $applicationID;
         $data['rows'] = $rows;
         $data['sampleXmlUrl'] = GoogleMap::getSampleXmlUrl();
+
         return view("pages.googlemaplist", $data);
     }
 
     public function show($id)
     {
         $googleMap = GoogleMap::find($id);
-        if (!$googleMap) {
+        if (!$googleMap)
+        {
             return redirect()->route('maps_list');
         }
 
-        $data = array();
+        $data = [];
         $applicationID = $googleMap->ApplicationID;
         $application = Application::find($applicationID);
         $initialLocation = $application->initialLocation();
@@ -122,6 +131,7 @@ class MapController extends Controller
         $data['route'] = $this->route = __('route.' . $this->page) . '?applicationID=' . $googleMap->ApplicationID;
         $data['caption'] = $this->caption;
         $data["initialLocation"] = $initialLocation;
+
         return view("pages.googlemapdetail", $data);
     }
 
@@ -130,13 +140,14 @@ class MapController extends Controller
         $applicationID = $request->get('applicationID', '0');
         $application = Application::find($applicationID);
         $initialLocation = $application->initialLocation();
-        $data = array();
+        $data = [];
         $data["ApplicationID"] = $applicationID;
-        $data["googleMap"] = FALSE;
+        $data["googleMap"] = false;
         $data['route'] = $this->route = __('route.' . $this->page) . '?applicationID=' . $data["ApplicationID"];
         $data['caption'] = $this->caption;
         $data['detailCaption'] = $this->detailCaption;
         $data["initialLocation"] = $initialLocation;
+
         return view('pages.googlemapdetail', $data);
     }
 
@@ -150,26 +161,31 @@ class MapController extends Controller
         $latitude = $request->get('latitude', '');
         $longitude = $request->get('longitude', '');
         $chk = Common::CheckApplicationOwnership($applicationID);
-        $rules = array(
+        $rules = [
             'applicationID' => 'required|integer|min:1',
-            'latitude' => 'required',
-            'longitude' => 'required',
-            'name' => 'required'
-        );
+            'latitude'      => 'required',
+            'longitude'     => 'required',
+            'name'          => 'required',
+        ];
         $v = Validator::make($request->all(), $rules);
-        if (!$v->passes()) {
+        if (!$v->passes())
+        {
             return $myResponse->error(__('common.detailpage_incorrect_input'));
         }
-        if (!$chk) {
+        if (!$chk)
+        {
             return $myResponse->error(__('common.detailpage_validation'));
         }
 
-        if ($GoogleMapID == 0) {
+        if ($GoogleMapID == 0)
+        {
             $googleMap = new GoogleMap();
             $googleMap->ApplicationID = $applicationID; //after first create appID can not be changed;
-        } else {
+        } else
+        {
             $googleMap = GoogleMap::find($GoogleMapID);
-            if (!$googleMap->CheckOwnership($applicationID)) {
+            if (!$googleMap->CheckOwnership($applicationID))
+            {
                 throw new Exception("Unauthorized user attempt");
             }
         }
@@ -181,31 +197,34 @@ class MapController extends Controller
         $googleMap->Longitude = $longitude;
         $googleMap->StatusID = eStatus::Active;
         $googleMap->save();
+
         return $myResponse->success();
     }
 
 
     public function webView(Application $application)
     {
-        $data = array();
+        $data = [];
         $data["googleMapSet"] = $application->GoogleMap;
         $data["initialLocation"] = $application->initialLocation();
+
         return view("pages.googlemapwebview", $data);
     }
 
     public function excelupload(Request $request, Application $application)
     {
-        if(!$application->checkUserAccess()) {
+        if (!$application->checkUserAccess())
+        {
             throw new Exception(__('error.unauthorized_user_attempt'));
         }
         ob_start();
         $element = $request->get('element');
-        $options = array(
-            'upload_dir' => public_path('files/temp/'),
-            'upload_url' => URL::to('/files/temp/'),
-            'param_name' => $element,
-            'accept_file_types' => '/\.(xls)$/i'
-        );
+        $options = [
+            'upload_dir'        => public_path('files/temp/'),
+            'upload_url'        => URL::to('/files/temp/'),
+            'param_name'        => $element,
+            'accept_file_types' => '/\.(xls)$/i',
+        ];
         $upload_handler = new UploadHandler($options);
 
         $upload_handler->post(false);
@@ -219,7 +238,7 @@ class MapController extends Controller
         $obj->status = 'Failed';
         $filePath = public_path('files/temp/' . $object->File[0]->name);
         $excelColumnNames = ['name', 'latitude', 'longitude', 'address', 'description'];
-        \Excel::load($filePath, function(LaravelExcelReader $reader) use ($obj, $excelColumnNames, $application)
+        \Excel::load($filePath, function (LaravelExcelReader $reader) use ($obj, $excelColumnNames, $application)
         {
             $invalidExcelRows = [];
             $addedCount = 0;
@@ -252,9 +271,9 @@ class MapController extends Controller
                     $invalidExcelRows[] = $rowNo;
                 }
 
-                $googleMap = GoogleMap::where('ApplicationID', '=', $application->ApplicationID)
-                    ->where('Latitude', '=', $tmp['latitude'])
-                    ->where("Longitude", "=", $tmp['longitude'])
+                $googleMap = GoogleMap::where('ApplicationID', $application->ApplicationID)
+                    ->where('Latitude', $tmp['latitude'])
+                    ->where("Longitude", $tmp['longitude'])
                     ->first();
                 if (!$googleMap)
                 {
@@ -276,28 +295,33 @@ class MapController extends Controller
             }
 
             $responseMsg = __('maplang.inserted_location_count') . $addedCount . " " . __('maplang.updated_location_count') . $updatedCount;
-            if(!empty($invalidExcelRows)) {
+            if (!empty($invalidExcelRows))
+            {
                 $responseMsg .= " " . trans('error.invalid_excel_row', ['rows' => implode(', ', $invalidExcelRows)]);
             }
             $obj->status = 'success';
             $obj->responseMsg = $responseMsg;
         });
+
         return response()->json($obj);
     }
 
     public function delete(Request $request, MyResponse $myResponse)
     {
         $googleMap = GoogleMap::find((int)$request->get('id'));
-        if (!$googleMap) {
+        if (!$googleMap)
+        {
             return $myResponse->error(__('common.detailpage_validation'));
         }
         $application = Application::find($googleMap->ApplicationID);
-        if (!$application || !$application->CheckOwnership()) {
+        if (!$application || !$application->CheckOwnership())
+        {
             return $myResponse->error(__('common.detailpage_validation'));
         }
 
         $googleMap->StatusID = eStatus::Deleted;
         $googleMap->save();
+
         return $myResponse->success();
     }
 

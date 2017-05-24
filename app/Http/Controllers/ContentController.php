@@ -105,7 +105,7 @@ class ContentController extends Controller {
 
 
         $rows = Content::contentList($request);
-        $categorySet = Category::where('ApplicationID', '=', $applicationID)->where("statusID", "=", eStatus::Active)->get();
+        $categorySet = Category::where('ApplicationID', $applicationID)->where("statusID", eStatus::Active)->get();
         $application = Application::find($applicationID);
         $data = [
             'page'          => $this->page,
@@ -131,8 +131,8 @@ class ContentController extends Controller {
         if ($user->UserTypeID == eUserTypes::Customer)
         {
             $appCount = DB::table('Application')
-                ->where('CustomerID', '=', Auth::user()->CustomerID)
-                ->where('ApplicationID', '=', $applicationID)
+                ->where('CustomerID', Auth::user()->CustomerID)
+                ->where('ApplicationID', $applicationID)
                 ->where('ExpirationDate', '>=', DB::raw('CURDATE()'))
                 ->count();
 
@@ -197,17 +197,17 @@ class ContentController extends Controller {
         if (((int)$currentUser->UserTypeID == eUserTypes::Manager))
         {
             $contentList = DB::table('Content')
-                // ->where('ApplicationID', '=', $row->ApplicationID)
+                // ->where('ApplicationID', $row->ApplicationID)
                 ->where('ContentID', '<>', $content->ContentID)
-                // ->where('StatusID', '=', eStatus::Active)
+                // ->where('StatusID', eStatus::Active)
                 ->get(['ContentID', 'Name', 'ApplicationID']);
         } else
         {
             //musteriler icin interactive oge kopyalamayi kapatiyorum.
             //            $contentList = DB::table('Content')
-            //                ->where('ApplicationID', '=', $row->ApplicationID)
+            //                ->where('ApplicationID', $row->ApplicationID)
             //                ->where('ContentID', '<>', $id)
-            //                ->where('StatusID', '=', eStatus::Active)
+            //                ->where('StatusID', eStatus::Active)
             //                ->get(array('ContentID', 'Name', 'ApplicationID'));
             $contentList = [];
         }
@@ -281,7 +281,7 @@ class ContentController extends Controller {
 
         if (!$content)
         {
-            $maxID = Content::where('ApplicationID', '=', $applicationID)->max('OrderNo');
+            $maxID = Content::where('ApplicationID', $applicationID)->max('OrderNo');
             $content = new Content();
             $content->OrderNo = $maxID + 1;
         } else if (!Common::CheckContentOwnership($id))
@@ -385,7 +385,7 @@ class ContentController extends Controller {
                 $c = Content::find($newContentID);
                 $customerID = Application::find($c->ApplicationID)->CustomerID;
                 $contentFile = DB::table('ContentFile')
-                    ->where('ContentID', '=', $sourceContentID)
+                    ->where('ContentID', $sourceContentID)
                     ->first();
 
 
@@ -419,7 +419,7 @@ class ContentController extends Controller {
                 $cf->save();
 
                 $contentCoverImageFile = DB::table('ContentCoverImageFile')
-                    ->where('ContentFileID', '=', $contentFile->ContentFileID)
+                    ->where('ContentFileID', $contentFile->ContentFileID)
                     ->first();
 
 
@@ -451,12 +451,12 @@ class ContentController extends Controller {
             }
 
             $contentFileControl = DB::table('ContentFile')
-                ->where('ContentID', '=', $newContentID)
+                ->where('ContentID', $newContentID)
                 ->orderBy('ContentFileID', 'DESC')
                 ->first();
 
             $contentFilePageControl = DB::table('ContentFilePage')
-                ->where('ContentFileID', '=', $contentFileControl->ContentFileID)
+                ->where('ContentFileID', $contentFileControl->ContentFileID)
                 ->get();
 
             if (sizeof($contentFilePageControl) == 0)

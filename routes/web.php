@@ -341,13 +341,4 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
 
 });
 
-/**********************CALISMAYANLAR*************************/
-
-
-
-
-
-
-Route::get('clients/reset-my-password', ['uses' => 'ClientController@resetPasswordForm']);
-
 event(new WebRouteLoadedEvent());

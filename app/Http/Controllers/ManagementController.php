@@ -13,7 +13,7 @@ class ManagementController extends Controller
     public $restful = true;
     public $table = 'Management';
 
-    public function get_list() {
+    public function index() {
         $customerSizes = Customer::CustomerFileSize();
         //        dd($customerSizes);
         $data = array();

@@ -1,4 +1,4 @@
-@layout('layouts.master')
+@extends('layouts.master')
 
 @section('content')
     {{ Html::script('js/managements.js?v=' . APP_VER) }}
@@ -8,7 +8,7 @@
                 <h2>Server Yönetimi</h2>
             </div>
             <div class="content controls">
-                <form method="post" action="{{route('managements_save')}}">
+                <form method="post" action="{{route('managements_list')}}">
                 <?php echo Form::token(); ?>
                 <div class="form-row">
                     <div class="col-md-4">
@@ -30,7 +30,7 @@
                             <tbody>
                             <form id="contentOrderForm">
                                 @foreach($rows as $size => $customer)
-                                    <tr class="{{ Common::htmlOddEven() }}">
+                                    <tr class="{{ Common::htmlOddEven('contentOrderForm') }}">
                                         <td>{{$customer->CustomerID}}</td>
                                         <td>{{$customer->CustomerName}}</td>
                                         <td>{{$size}}</td>

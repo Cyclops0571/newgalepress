@@ -334,10 +334,9 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="managements">
-    Route::get(trans('route.managements_list'), ['as' => 'managements_list', 'uses' => 'ManagementController@list']);
-    Route::get('managements/import', ['as' => 'managements_importlanguages', 'uses' => 'ManagementController@importlanguages']);
-    Route::post('managements/import', ['as' => 'managements_importlanguages', 'uses' => 'ManagementController@importlanguages']);
-    Route::post('managements/export', ['as' => 'managements_exportlanguages', 'uses' => 'ManagementController@exportlanguages']);
+    Route::get(trans('route.managements_list'), ['as' => 'managements_list', 'uses' => 'ManagementController@index']);
+    Route::any('managements/import', ['as' => 'managements_importlanguages', 'uses' => 'ManagementController@importlanguages']);
+    Route::any('managements/export', ['as' => 'managements_exportlanguages', 'uses' => 'ManagementController@exportlanguages']);
     // </editor-fold>
 
 });

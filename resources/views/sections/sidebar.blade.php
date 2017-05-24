@@ -49,7 +49,7 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
           <ul id="allApps">
               <?php foreach ($applicationSet as $app): ?>
             <li class="full-width">
-                <?php echo Html::link(__('route.contents') . '?applicationID=' . $app->ApplicationID, $app->Name, $app->sidebarClass()); ?>
+                <?php echo Html::link(route('contents_list', ['applicationID' => $app->ApplicationID]), $app->Name, $app->sidebarClass()); ?>
             </li>
               <?php endforeach; ?>
           </ul>
@@ -60,7 +60,7 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
         <ul id="allReports">
           @foreach($reportLinks as $reportLink)
             <li>
-              <a href="{{__('route.reports') . '?r=' . $reportLink}}">{{__('common.menu_report_' . $reportLink)}}</a>
+              <a href="{{route('reports', ['r' => $reportLink])}}">{{__('common.menu_report_' . $reportLink)}}</a>
             </li>
           @endforeach
         </ul>
@@ -97,7 +97,7 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
         </li>
       @endif
       <li>
-        <a href="{{__('common.tutorial_link')}}" target="_blank">
+        <a href="{{ __('common.tutorial_link')}}" target="_blank">
           <span class="icon-question-sign"></span> {{__('common.tutorial')}}
         </a>
       </li>
@@ -113,25 +113,25 @@ $reportLinks = array(101, 201, 301, 302, 1001, 1101, 1201, 1301, 1302);
     <li>
       <a href="#"><span class="icon-sitemap"></span> {{ __('common.menu_caption') }}</a>
       <ul>
-        <a href="{{__('route.customers')}}">{{__('common.menu_customers')}}</a>
-        <a href="{{__('route.applications')}}">{{__('common.menu_applications')}}</a>
-        <a href="{{__('route.contents')}}">{{__('common.menu_contents')}}</a>
-        <a href="{{__('route.orders')}}">{{__('common.menu_orders')}}</a>
+        <a href="{{route('customers')}}">{{__('common.menu_customers')}}</a>
+        <a href="{{route('applications')}}">{{__('common.menu_applications')}}</a>
+        <a href="{{route('contents_list')}}">{{__('common.menu_contents')}}</a>
+        <a href="{{route('orders')}}">{{__('common.menu_orders')}}</a>
       </ul>
     </li>
     <li>
       <a href="#"><span class="icon-file-text-alt"></span> {{ __('common.menu_caption_reports') }}</a>
       <ul id="allReports">
         @foreach($reportLinks as $reportLink)
-          <a href="{{__('route.reports') . '?r=' . $reportLink}}">{{__('common.menu_report_' . $reportLink)}}</a>
+          <a href="{{route('reports', ['r' => $reportLink])}}">{{__('common.menu_report_' . $reportLink)}}</a>
         @endforeach
       </ul>
     </li>
     <li>
       <a href="#"><span class="icon-user"></span>Kullanıcı Ayarları</a>
       <ul>
-        <a href="{{__('route.users')}}">{{__('common.menu_users')}}</a>
-        <a href="{{__('route.mydetail')}}">{{__('common.menu_mydetail')}}</a>
+        <a href="{{route('users')}}">{{__('common.menu_users')}}</a>
+        <a href="{{route('common_mydetail_get')}}">{{__('common.menu_mydetail')}}</a>
       </ul>
     </li>
     <li>

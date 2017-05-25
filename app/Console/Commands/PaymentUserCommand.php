@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\MyPayment;
 use App\Mail\PaymentAdminRemainderMailler;
 use App\Models\PaymentAccount;
 use Illuminate\Console\Command;

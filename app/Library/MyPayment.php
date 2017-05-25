@@ -1,14 +1,10 @@
 <?php
 
-
 namespace App\Library;
 
-
-use App\Models\Customer;
 use App\Models\PaymentAccount;
 use App\Models\PaymentTransaction;
 use App\Models\ServerErrorLog;
-use App\User;
 use Auth;
 use Iyzipay\Model\BasicPayment;
 use Iyzipay\Model\BasicThreedsInitialize;
@@ -56,7 +52,7 @@ class MyPayment {
 
     public static function getLang()
     {
-        switch (config('application.language'))
+        switch (app()->getLocale())
         {
             case 'tr':
                 return Locale::TR;
@@ -66,23 +62,9 @@ class MyPayment {
         }
     }
 
-    /**
-     * @return User
-     */
-    private function getUser()
-    {
-        if (app()->isLocal())
-        {
-            return User::find(65);
-        }
-
-        return Auth::user();
-    }
-
     public function paymentFromWeb(PaymentCard $pc)
     {
-        $user = $this->getUser();
-        $this->setPaymentAccount($user);
+        $this->paymentAccount = Auth::user()->Customer->getLastSelectedPaymentAccount();
         $this->setPaymentTransaction($this->paymentAccount);
         $request = $this->getRequest();
         $pc->setRegisterCard(1);
@@ -95,16 +77,15 @@ class MyPayment {
     }
 
     /**
-     * @param \Iyzipay\Model\PaymentCard $pc
-     * @return \Iyzipay\Model\BasicThreedsInitialize
+     * @param PaymentCard $pc
+     * @return BasicThreedsInitialize
      */
     public function paymentFromWebThreeD(PaymentCard $pc)
     {
-        $user = $this->getUser();
-        $this->setPaymentAccount($user);
+        $this->paymentAccount = Auth::user()->Customer->getLastSelectedPaymentAccount();
         $this->setPaymentTransaction($this->paymentAccount);
 
-        $request = $this->getRequest(config("custom.galepress_https_url") . '/' . config('application.language') . '/3d-secure-response');
+        $request = $this->getRequest(config("custom.galepress_https_url") . '/' . app()->getLocale() . '/3d-secure-response');
         $pc->setRegisterCard(1);
         $request->setPaymentCard($pc);
         $basicThreedsInitialize = BasicThreedsInitialize::create($request, $this->options);
@@ -160,16 +141,6 @@ class MyPayment {
         return $userInfoSet;
     }
 
-    /**
-     * @param User $user
-     * @return PaymentAccount
-     */
-    private function setPaymentAccount(User $user)
-    {
-        $customer = Customer::find($user->CustomerID);
-
-        return $this->paymentAccount = $customer->getLastSelectedPaymentAccount();
-    }
 
     /**
      * @param PaymentAccount $paymentAccount
@@ -193,7 +164,6 @@ class MyPayment {
      */
     private function getRequest($callbackUri = '')
     {
-
         $request = new CreateBasicPaymentRequest();
         $request->setLocale(MyPayment::getLang());
         $request->setConversationId($this->paymentTransaction->PaymentTransactionID);
@@ -204,7 +174,7 @@ class MyPayment {
         $request->setInstallment(1);
         $request->setPaidPrice($this->paymentAccount->Application->Price);
         $request->setPrice($this->paymentAccount->Application->Price);
-        $request->setCurrency(\Iyzipay\Model\Currency::TL);
+        $request->setCurrency(Currency::TL);
         if ($callbackUri)
         {
             $request->setCallbackUrl($callbackUri);

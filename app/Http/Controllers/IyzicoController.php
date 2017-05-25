@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-use App\Helpers\MyPayment;
+use App\Library\MyPayment;
 use App\Models\City;
 use App\Models\Qrcode;
 use Illuminate\Http\Request;

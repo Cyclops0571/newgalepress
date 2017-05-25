@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\MyPayment;
 use App\Library\IyzicoThreeDResponse;
+use App\Library\MyPayment;
 use App\Models\Application;
 use App\Models\City;
 use App\Models\Customer;

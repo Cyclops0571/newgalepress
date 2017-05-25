@@ -1,5 +1,5 @@
 <?php namespace App\Models;
-use App\Helpers\MyPayment;
+use App\Library\MyPayment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Iyzipay\Model\Address;

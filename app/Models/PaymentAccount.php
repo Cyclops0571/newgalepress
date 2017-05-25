@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Mail\ActivationMailler;
 use App\Mail\PaymentChargedMailler;
+use App\Scopes\StatusScope;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -86,6 +87,12 @@ class PaymentAccount extends Model
 {
     protected $table = 'PaymentAccount';
     protected $primaryKey = 'PaymentAccountID';
+
+    protected static function boot()
+    {
+        parent::boot();
+        self::addGlobalScope(new StatusScope);
+    }
 
     public function Application() {
         return $this->belongsTo(Application::class, 'ApplicationID');

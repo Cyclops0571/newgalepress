@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Helpers\MyPayment;
+use App\Library\MyPayment;
 use App\Mail\PaymentAdminRemainderMailler;
 use App\Models\PaymentAccount;
 use Illuminate\Console\Command;
+use Mail;
 
 class PaymentUserCommand extends Command
 {

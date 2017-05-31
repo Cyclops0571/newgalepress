@@ -61,6 +61,7 @@ return [
     ],
 
     'admin_email' => 'srdsaygili@gmail.com',
+    'accounting_emails' => env('ACCOUNTANT_MAILS', ['srdsaygili@gmail.com', 'guler.nesil@detaysoft.com', 'enes.taskiran@detaysoft.com']),
 
     /*
     |--------------------------------------------------------------------------

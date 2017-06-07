@@ -18,7 +18,7 @@
 		<span id="EmailValidator" class="text-center validationMessage"><?php echo __('common.detailpage_fill_this_arae'); ?></span>
 	    </div>
 	    <div class="btns">
-		<input type="button" value="<?php echo __('common.pushnotify_send'); ?>" onclick="sClient.forgotMyPassword();">                                        
+		<input type="button" value="<?php echo __('common.pushnotify_send'); ?>" onclick="sClient.sendPasswordRescueMail();">
 	    </div>
 	</form>
     </div>

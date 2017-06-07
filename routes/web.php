@@ -30,24 +30,26 @@ Route::get('test3', function ()
 Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
 {
 
-    Route::get(trans('route.clients_resetpw'), ['as' => 'clients_reset_password', 'uses' => 'ClientController@resetPasswordForm']);
-    Route::post('clients/clientregister', ['as' => 'clientsregistersave', 'uses' => 'ClientController@clientregister']);
-    Route::post('clients/forgotpassword', ['as' => 'clientsregistered', 'uses' => 'ClientController@forgotpassword']);
-    Route::post("clients/resetpw", ['as' => 'clientsresetpw', 'uses' => 'ClientController@resetpw']);
-    Route::post("clients/excelupload", ['before' => 'auth', 'uses' => "ClientController@excelupload"]);
+    Route::get('mobile-user/reset-password', ['as' => 'mobile_reset_password_form', 'uses' => 'Mobile\AuthController@resetPasswordForm']);
+    Route::any('mobile-user/send-token-mail', ['as' => 'mobile_user_send_token_mail', 'uses' => 'Mobile\AuthController@sendTokenMail']);
+    Route::post("mobile-user/update-password", ['as' => 'mobile_update_password', 'uses' => 'Mobile\AuthController@updatePassword']);
 
 
-    Route::get(trans('route.clients_register'), ['as' => 'clients_register', 'uses' => 'ClientController@register']);
-    Route::get(trans('route.clients_update'), ['as' => 'clients_register_save', 'uses' => 'ClientController@updateclient']);
-    Route::get(trans('route.clients_registered'), ['as' => 'clients_registered', 'uses' => function ()
+    Route::get('mobile-user/register/{application}', ['as' => 'mobile_user_register', 'uses' => 'Mobile\AuthController@register']);
+    Route::post('mobile-user/store', ['as' => 'mobile_user_store', 'uses' => 'Mobile\AuthController@store']);
+
+    Route::get('mobile-user/edit/{application}/{clientToken}', ['as' => 'clients_register_save', 'uses' => 'Mobile\AuthController@edit']);
+    Route::get('mobile-user/registration-success', ['as' => 'mobile_user_registration_success', 'uses' => function ()
     {
-        return view('clients.registered');
+        return view('mobile.registration_success');
     }]);
-    Route::get(trans('route.clients_forgotpassword'), ['as' => 'clients_forgot_password', 'uses' => 'ClientController@forgotpasswordform']);
-    Route::get(trans('route.clients_pw_reseted'), ['as' => 'clients_password_renewed', 'uses' => function ()
+    Route::get('mobile-user/forgot-password/{application}', ['as' => 'clients_forgot_password', 'uses' => 'Mobile\AuthController@forgotPasswordForm']);
+    Route::get('mobile-user/password-changed', ['as' => 'mobile_user_password_changed', 'uses' => function ()
     {
-        return view('clients.passwordreseted');
+        return view('mobile.password_changed');
     }]);
+
+
     // <editor-fold defaultstate="collapsed" desc="website">
     Route::get('/', ['as' => 'website_home', 'uses' => 'WebsiteController@index']);
 
@@ -263,6 +265,7 @@ Route::group(['middleware' => 'auth'], function ()
     Route::post('iyzicoqr', 'IyzicoController@save');
     Route::get('open_iyzico_iframe/{qrCode}', 'IyzicoController@openIyzicoIframe');
     Route::any('checkout_result_form', ['as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm']);
+    Route::post("clients/excelupload", ['before' => 'auth', 'uses' => "ClientController@excelupload"]);
 });
 
 /** Website Post */

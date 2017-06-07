@@ -2,74 +2,74 @@
 
 var sClient = new function () {
     this.validatePassword = function () {
-	if ($("#password").val() !== $("#confirmPassword").val()) {
-	    /*alert("Passwords Don't Match");*/
-	    $("#confirmMessage").css("display", "block");
-	} else {
-	    $("#confirmMessage").css("display", "none");
+        if ($("#password").val() !== $("#confirmPassword").val()) {
+            /*alert("Passwords Don't Match");*/
+            $("#confirmMessage").css("display", "block");
+        } else {
+            $("#confirmMessage").css("display", "none");
 
-	}
+        }
     };
 
     this.save = function () {
-	if(!myValidation()) {
-	    return false;
-	}
-	if ($("#password").val() !== $("#confirmPassword").val()) {
-	    $("#confirmMessage").css("display", "block");
-	    return false;
-	} else {
-	    $("#confirmMessage").css("display", "none");
-	}
+        if (!myValidation()) {
+            return false;
+        }
+        if ($("#password").val() !== $("#confirmPassword").val()) {
+            $("#confirmMessage").css("display", "block");
+            return false;
+        } else {
+            $("#confirmMessage").css("display", "none");
+        }
 
-	var fsuccess = function (response) {
-        if (typeof response !== "undefined" && response.successMsg !== "undefined") {
-		sNotification.success();
-            document.location.href = response.successMsg;
-	    }
+        var fsuccess = function (response) {
+            if (typeof response !== "undefined" && response.successMsg !== "undefined") {
+                sNotification.success();
+                document.location.href = response.successMsg;
+            }
 
-	};
-	sCommon.save('/' + currentLanguage + "/clients/clientregister", fsuccess);
+        };
+        sCommon.save('/' + currentLanguage + "/mobile-user/store", fsuccess);
     };
 
-    this.forgotMyPassword = function () {
-	if(!myValidation()) {
-	    return false;
-	}
-	sCommon.save('/' + currentLanguage + '/clients/forgotpassword');
+    this.sendPasswordRescueMail = function () {
+        if (!myValidation()) {
+            return false;
+        }
+        sCommon.save('/' + currentLanguage + '/mobile-user/send-token-mail');
     };
 
 
     this.resetMyPassword = function () {
-	if(!myValidation()) {
-	    return false;
-	}
-	var fsuccess = function (response) {
-        if (typeof response !== "undefined" && response.successMsg !== "undefined") {
-		sNotification.success();
-		//if opereation success go to login
-            document.location.href = response.successMsg;
-	    }
+        if (!myValidation()) {
+            return false;
+        }
+        var fsuccess = function (response) {
+            if (typeof response !== "undefined" && response.successMsg !== "undefined") {
+                sNotification.success();
+                //if opereation success go to login
+                document.location.href = response.successMsg;
+            }
 
-	};
-	sCommon.save('/' + currentLanguage + "/clients/resetpw", fsuccess);
+        };
+        sCommon.save('/' + currentLanguage + "/mobile-user/update-password", fsuccess);
     };
 
     var myValidation = function () {
-	var returnValue = true;
-	$("input").each(function () {
-	    if (typeof $(this).attr('name') !== "undefined") {
-		var validator = "#" + $(this).attr('name') + "Validator";
-		if($(validator).length) {
-		    if($(this).val().length === 0) {
-			$(validator).css("display", "block");
-			returnValue = false;
-		    } else {
-			$(validator).hide();
-		    }
-		}
-	    }
-	});
-	return returnValue;
+        var returnValue = true;
+        $("input").each(function () {
+            if (typeof $(this).attr('name') !== "undefined") {
+                var validator = "#" + $(this).attr('name') + "Validator";
+                if ($(validator).length) {
+                    if ($(this).val().length === 0) {
+                        $(validator).css("display", "block");
+                        returnValue = false;
+                    } else {
+                        $(validator).hide();
+                    }
+                }
+            }
+        });
+        return returnValue;
     };
 };

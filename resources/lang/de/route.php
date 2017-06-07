@@ -32,7 +32,6 @@ return array(
     'clients_register' => 'mobilnutzer/registrieren/{application}',
     'clients_update' => 'clients/update/(:num)/(:any)',
     'clients_register_save' => 'mobilnutzer/registrierungspeichern',
-    'clients_registered' => 'mobilnutzer/erfolgreichregistriert',
     'clients_forgotpassword' => 'mobilnutzer/passwortvergessen/{application}',
     'clients_resetpw' => 'mobilnutzer/passwortzuruecksetzen',
     'clients_pw_reseted' => 'mobilnutzer/passwortzurueckgesetzt',

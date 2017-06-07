@@ -34,7 +34,7 @@ class ClientPasswordResetMailler extends Mailable implements ShouldQueue {
     {
         app()->setLocale($this->locale);
         $subject = trans('clients.login_email_subject', ['Application' => $this->client->Application->Name]);
-        $url = route('clients_reset_password',
+        $url = route('mobile_reset_password_form',
             [
                 'ApplicationID' => $this->client->Application->ApplicationID,
                 'email'         => $this->client->Email,

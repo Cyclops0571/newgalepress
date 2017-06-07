@@ -180,10 +180,10 @@ class Client extends Model {
         // get p12 key file
         if (!empty($application->GoogleDeveloperKey))
         {
-            $key = file_get_contents(app_path('keys/' . $application->GoogleDeveloperKey));
+            $key = file_get_contents(storage_path('android_keys/' . $application->GoogleDeveloperKey));
         } else
         {
-            $key = file_get_contents(app_path('keys/GooglePlayAndroidDeveloper-74176ee02cd0.p12'));
+            $key = file_get_contents(storage_path('android_keys/GooglePlayAndroidDeveloper-74176ee02cd0.p12'));
         }
 
         if (!empty($application->GoogleDeveloperEmail))

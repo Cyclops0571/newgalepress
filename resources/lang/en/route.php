@@ -32,7 +32,6 @@ return array(
     'clients_register' => 'clients/register/{application}',
     'clients_update' => 'clients/update/(:num)/(:any)',
     'clients_register_save' => 'clients/register',
-    'clients_registered' => 'clients/successfully-registered',
     'clients_forgotpassword' => 'clients/forgot-password/{application}',
     'clients_resetpw' => 'clients/reset-my-password',
     'clients_pw_reseted' => 'clients/password-reseted',

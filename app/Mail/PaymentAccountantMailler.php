@@ -10,14 +10,13 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class PaymentAccountantMailler extends Mailable implements ShouldQueue{
+class PaymentAccountantMailler extends Mailable implements ShouldQueue {
 
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      *
-     * @return void
      */
     public function __construct()
     {
@@ -28,7 +27,8 @@ class PaymentAccountantMailler extends Mailable implements ShouldQueue{
      * @param PaymentAccount[] $paymentAccounts
      * @return array
      */
-    private function getAccountExcelData($paymentAccounts) {
+    private function getAccountExcelData($paymentAccounts)
+    {
         $accountExcelArray = [];
         if (!empty($paymentAccounts))
         {
@@ -75,6 +75,7 @@ class PaymentAccountantMailler extends Mailable implements ShouldQueue{
             $accountRow[] = $city->CityID; //bireysel mi
             $accountExcelArray[] = $accountRow;
         }
+
         return $accountExcelArray;
     }
 
@@ -89,10 +90,12 @@ class PaymentAccountantMailler extends Mailable implements ShouldQueue{
         //yeni cekilmis bir ucret var ise onu verecek
         //yeni acilmis bir account var ise onu verecek
 
+        /** @var PaymentAccount[] $paymentAccounts */
         $paymentAccounts = PaymentAccount::where("mail_send", "!=", 1)
             ->orderBy("PaymentAccountID", "DESC")
             ->get();
 
+        /** @var PaymentTransaction[] $paymentTransactions */
         $paymentTransactions = PaymentTransaction::where("mail_send", "!=", 1)
             ->where('paid', '1')
             ->where('amount', '>', 0)
@@ -152,8 +155,11 @@ class PaymentAccountantMailler extends Mailable implements ShouldQueue{
                 $paymentTransaction->mail_send = 1;
                 $paymentTransaction->save();
             }
+
             return $mail;
         }
+
+        return $this;
     }
 
     /**
@@ -179,7 +185,8 @@ class PaymentAccountantMailler extends Mailable implements ShouldQueue{
         foreach ($paymentTransactions as $paymentTransaction)
         {
             $paymentAccount = $paymentTransaction->PaymentAccount;
-            if (!$paymentAccount) {
+            if (!$paymentAccount)
+            {
                 continue;
             }
 
@@ -199,6 +206,7 @@ class PaymentAccountantMailler extends Mailable implements ShouldQueue{
             $transactionRow[] = date("Y-m-d"); //Fatura Vade
             $transactionExcelArray[] = $transactionRow;
         }
+
         return $transactionExcelArray;
     }
 }

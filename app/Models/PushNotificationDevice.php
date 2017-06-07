@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\StatusScope;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -49,8 +50,28 @@ class PushNotificationDevice extends Model
     public static $key = 'PushNotificationDeviceID';
     protected $primaryKey = 'PushNotificationDeviceID';
 
+    protected static function boot()
+    {
+        parent::boot();
+        self::addGlobalScope(new StatusScope());
+    }
+
     public function PushNotification()
     {
         return $this->belongsTo(PushNotification::class, 'PushNotificationID');
+    }
+
+    /**
+     * @return bool
+     */
+    public static function isUnsentNotificationExists() {
+        $tmp = PushNotificationDevice::where('Sent',  0)
+            ->where('ErrorCount',  0)
+            ->where('DateCreated', '>=', date('Y-m-d'))
+            ->first();
+        if($tmp && $tmp->PushNotification) {
+            return true;
+        }
+        return false;
     }
 }

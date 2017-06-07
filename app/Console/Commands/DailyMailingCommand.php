@@ -15,21 +15,21 @@ use Mail;
 use sts\config;
 use View;
 
-class DaillyMaillingCommand extends Command {
+class DailyMailingCommand extends Command {
 
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'zz-my-tasks:daily-mailing';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Sends daily mails';
 
     /**
      * Create a new command instance.

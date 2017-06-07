@@ -8,14 +8,14 @@ use App\Models\PaymentAccount;
 use Illuminate\Console\Command;
 use Mail;
 
-class PaymentUserCommand extends Command
+class CustomerInstallmentCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'zz-my-tasks:payment-user';
+    protected $signature = 'zz-my-tasks:customer-installment';
 
     /**
      * The console command description.

@@ -209,17 +209,7 @@ class Client extends Model {
         $application = $this->Application;
         // set Application Name to the name of the mobile app
         $client->setApplicationName($application->Name);
-        // get p12 key file
-        if (!empty($application->GoogleDeveloperKey))
-        {
-            $jsonFile = file_get_contents(storage_path('android_keys/' . $application->GoogleDeveloperKey));
-        } else
-        {
-            $jsonFile = file_get_contents(storage_path('android_keys/GooglePlayAndroidDeveloper-74176ee02cd0.p12'));
-        }
-
-        // add the credentials to the client
-        $client->setAuthConfig($jsonFile);
+        $client->setAuthConfig($application->getAndroidCredentialJsonPath());
         // create a new Android Publisher service class
         $service = new Google_Service_AndroidPublisher($client);
         // use the purchase token to make a call to Google to get the subscription info
@@ -392,5 +382,7 @@ class Client extends Model {
 
         return $rows;
     }
+
+
 
 }

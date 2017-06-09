@@ -6,7 +6,7 @@ use App\Models\Client;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class CheckReceipt extends Command
+class CheckReceiptCommand extends Command
 {
     /**
      * The name and signature of the console command.

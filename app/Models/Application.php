@@ -617,4 +617,13 @@ class Application extends Model {
     public function Users() {
         return $this->hasMany(User::class, 'CustomerID', 'CustomerID');
     }
+
+    public function getAndroidCredentialJsonPath()
+    {
+        if (\File::exists(storage_path('android_keys/' . $this->ApplicationID . ".json")))
+        {
+            return storage_path('android_keys/' . $this->ApplicationID . ".json");
+        }
+        return storage_path('android_keys/galepress.json');
+    }
 }

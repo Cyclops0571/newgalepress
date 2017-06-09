@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\PaymentAccountantMailler;
+use App\Mail\SubscriptionExpireMailler;
 use App\Models\Application;
 use App\Models\MailLog;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use Common;
 use DB;
 use eStatus;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\JoinClause;
 use Mail;
 use sts\config;
@@ -48,6 +50,8 @@ class DailyMailingCommand extends Command {
     public function handle()
     {
         Mail::to(config('mail.accounting_emails'))->queue(new PaymentAccountantMailler());
+        $this->applicationExpire();
+
         return;
         $this->tutorial();
         $this->webinar();
@@ -141,6 +145,37 @@ class DailyMailingCommand extends Command {
                 }
                 $m->StatusID = eStatus::Active;
                 $m->save();
+            }
+        }
+
+    }
+
+    private function applicationExpire()
+    {
+
+        /** @var Application[] $apps */
+        $apps = Application::where(function (Builder $query)
+        {
+            $query->where('ExpirationDate', Carbon::today()->addDays(15)->format('Y-m-d')); //son 15
+            $query->orWhere('ExpirationDate', Carbon::today()->addDays(7)->format('Y-m-d')); //son hafta
+            $query->orWhere('ExpirationDate', Carbon::today()->format('Y-m-d')); //son gun
+        })
+            ->get();
+
+        foreach ($apps as $app)
+        {
+            Mail::queue(new SubscriptionExpireMailler($app));
+            $expirationDate = new Carbon($app->ExpirationDate);
+
+
+            foreach ($app->Users as $user)
+            {
+                $emails = [
+                    "info@galepress.com",
+                    $user->Email,
+                ];
+                Mail::to($emails)->queue(new SubscriptionExpireMailler($app));
+
             }
         }
 

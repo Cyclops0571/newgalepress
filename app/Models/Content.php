@@ -94,6 +94,8 @@ use Illuminate\Http\Request;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereUnpublishDate($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereVersion($value)
  * @mixin \Eloquent
+ * @property int $CategoryID
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereCategoryID($value)
  */
 class Content extends Model {
 

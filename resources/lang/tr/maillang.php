@@ -9,11 +9,11 @@ return array(
     'activatesubscription' => "Üyeliğinizi aktive edin!",
 
     'subscription_expire_notice_subject' => "Uygulamanızın Geçerlilik Süresi Sonlanmak Üzere",
-    'subscription_expire_notice_0days_body' => "Sayın :FIRSTNAME :LASTNAME,\n"
-        . ":APPLICATIONNAME uygulamanızın geçerlilik süresi bugün sonlanacaktır.\n\nSaygılarımızla,\nGale Press",
-    'subscription_expire_notice_15days_body' => "Sayın :FIRSTNAME :LASTNAME,\n"
-        . ":APPLICATIONNAME uygulamanızın geçerlilik süresinin sonlanmasına :REMAINIGDAYS gün kaldı.\n\n"
-        . "Saygılarımızla,\nGale Press",
+    'subscription_expire_notice_0days_body' => "Sayın :FIRSTNAME :LASTNAME,<br/>"
+        . ":APPLICATIONNAME uygulamanızın geçerlilik süresi bugün sonlanacaktır.<br/><br/>Saygılarımızla,<br/>Gale Press",
+    'subscription_expire_notice_15days_body' => "Sayın :FIRSTNAME :LASTNAME,<br/>"
+        . ":APPLICATIONNAME uygulamanızın geçerlilik süresinin sonlanmasına :REMAINIGDAYS gün kaldı.<br/><br/>"
+        . "Saygılarımızla,<br/>Gale Press",
     'subscription_welcome_part1' => "Merhaba :NAME&nbsp;:SURNAME,<br/><br/>"
         . "Aramıza hoşgeldin! Artık bir Gale Press kullanıcısısın. Bu mail’ın sonunda bulacağın"
         . "linke tıklayıp kullanıcı adı ve şifren ile giriş yapabilirsin."

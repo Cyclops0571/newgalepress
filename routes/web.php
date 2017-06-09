@@ -345,3 +345,4 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['au
 });
 
 event(new WebRouteLoadedEvent());
+Auth::routes();

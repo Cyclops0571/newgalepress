@@ -10,16 +10,16 @@ return array(
     'activatesubscription' => "Click here to activate your subscription.",
 
     'subscription_expire_notice_subject' => "Gale Press Trial Expiration Notice",
-    'subscription_expire_notice_0days_body' => "Dear :FIRSTNAME :LASTNAME,\n"
+    'subscription_expire_notice_0days_body' => "Dear :FIRSTNAME :LASTNAME,<br/>"
         . "The trial period for your :APPLICATIONNAME application has expired and will be terminated today. "
         . "If you would like to continue use of Gale Press, please click the link to register "
-        . "and pay for your subscription. http://www.galepress.com/usa/shop\n\n"
-        . "Sincerely \nGale Press",
-    'subscription_expire_notice_15days_body' => "Dear :FIRSTNAME :LASTNAME,\n"
+        . "and pay for your subscription. http://www.galepress.com/usa/shop<br/><br/>"
+        . "Sincerely <br/>Gale Press",
+    'subscription_expire_notice_15days_body' => "Dear :FIRSTNAME :LASTNAME,<br/>"
         . "The trial period for your :APPLICATIONNAME application will be expired in :REMAINIGDAYS days."
         . "If you would like to continue use of Gale Press, please click the link to register "
-        . "and pay for your subscription. http://www.galepress.com/usa/shop\n\n"
-        . "Sincerely \nGale Press",
+        . "and pay for your subscription. http://www.galepress.com/usa/shop<br/><br/>"
+        . "Sincerely <br/>Gale Press",
     'subscription_welcome_part1' => "Dear :NAME&nbsp;:SURNAME,<br/><br/>"
         . "Welcome to the Gale Press Digital Publishing Platform!<br/><br/>"
         . "Click on the login button below to enter your username and password.  "

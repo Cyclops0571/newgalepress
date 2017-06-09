@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App;
 use App\Scopes\ApplicationScope;
+use App\User;
 use Auth;
 use Common;
 use Config;
@@ -85,7 +86,6 @@ use Subscription;
  * @property-read \App\Models\PaymentAccount $PaymentAccount
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationTag[] $Tags
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Topic[] $Topic
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ApplicationUser[] $Users
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereAndroidLink($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereAndroidVersion($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereApplicationID($value)
@@ -145,6 +145,7 @@ use Subscription;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereWeekIdentifier($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Application whereYearIdentifier($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $Users
  */
 class Application extends Model {
 
@@ -235,11 +236,6 @@ class Application extends Model {
         return $this->hasMany(Content::class, self::$key);
     }
 
-
-    public function Users()
-    {
-        return $this->hasMany(ApplicationUser::class, $this->primaryKey);
-    }
 
     public function Tags()
     {
@@ -616,5 +612,9 @@ class Application extends Model {
 
     public function Topic() {
         return $this->belongsToMany(Topic::class, 'ApplicationTopic', 'ApplicationID', 'TopicID');
+    }
+
+    public function Users() {
+        return $this->hasMany(User::class, 'CustomerID', 'CustomerID');
     }
 }

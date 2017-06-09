@@ -7,6 +7,7 @@ use App\Scopes\StatusScope;
 use eServiceError;
 use Exception;
 use Google_Client;
+use Google_Service_AndroidPublisher;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -66,6 +67,8 @@ use Log;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereUsername($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Client whereVersion($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ClientReceipt[] $ClientReceipt
+ * @property-read \App\Models\Application $Application
  */
 class Client extends Model {
 
@@ -152,7 +155,7 @@ class Client extends Model {
      * @param ClientReceipt $receipt
      * @throws Exception
      */
-    public function CheckReceipt($receipt)
+    public function CheckReceipt(ClientReceipt $receipt)
     {
         /** @var ClientReceipt $clientReceipt */
         switch ($receipt->Platform)
@@ -167,11 +170,40 @@ class Client extends Model {
         $this->save();
     }
 
+    public function CheckReceiptCLI()
+    {
+        /** @var ClientReceipt[] $clientReceipts */
+        $clientReceipts = $this->ClientReceipt
+            ->whereIn('SubscriptionType', ['iospublisher#subscriptionPurchase', 'androidpublisher#subscriptionPurchase']);
+
+        foreach ($clientReceipts as $clientReceipt)
+        {
+            try
+            {
+                switch ($clientReceipt->Platform)
+                {
+                    case 'android':
+                        $this->checkReceiptGoogle($clientReceipt);
+                        break;
+                    case 'ios':
+                        $this->checkReceiptIos($clientReceipt);
+                        break;
+                }
+            } catch (Exception $e)
+            {
+                Log::error($e->getMessage() . ' - Receipt ID: ' . $clientReceipt->ClientReceiptID);
+            }
+        }
+        $this->Version++;
+        $this->save();
+    }
+
+
     /**
-     * @param $clientReceipt
+     * @param ClientReceipt $clientReceipt
      * @throws Exception
      */
-    private function checkReceiptGoogle($clientReceipt)
+    private function checkReceiptGoogle(ClientReceipt $clientReceipt)
     {
         $client = new Google_Client();
         $application = $this->Application;
@@ -180,40 +212,26 @@ class Client extends Model {
         // get p12 key file
         if (!empty($application->GoogleDeveloperKey))
         {
-            $key = file_get_contents(storage_path('android_keys/' . $application->GoogleDeveloperKey));
+            $jsonFile = file_get_contents(storage_path('android_keys/' . $application->GoogleDeveloperKey));
         } else
         {
-            $key = file_get_contents(storage_path('android_keys/GooglePlayAndroidDeveloper-74176ee02cd0.p12'));
+            $jsonFile = file_get_contents(storage_path('android_keys/GooglePlayAndroidDeveloper-74176ee02cd0.p12'));
         }
 
-        if (!empty($application->GoogleDeveloperEmail))
-        {
-            $email = $application->GoogleDeveloperEmail;
-        } else
-        {
-            $email = '552236962262-compute@developer.gserviceaccount.com';
-        }
-
-        // create assertion credentials class and pass in:
-        // - service account email address
-        // - query scope as an array (which APIs the call will access)
-        // - the contents of the key file
-        $cred = new Google_Auth_AssertionCredentials(
-            $email,
-            ['https://www.googleapis.com/auth/androidpublisher'],
-            $key
-        );
         // add the credentials to the client
-        $client->setAssertionCredentials($cred);
+        $client->setAuthConfig($jsonFile);
         // create a new Android Publisher service class
         $service = new Google_Service_AndroidPublisher($client);
         // use the purchase token to make a call to Google to get the subscription info
         /** @var Content $content */
-        $content = Content::where("Identifier", $clientReceipt->SubscriptionID)->where("ApplicationID", $this->Application->ApplicationID)->first();
+        $content = Content::where("Identifier", $clientReceipt->SubscriptionID)
+            ->where("ApplicationID", $this->ApplicationID)
+            ->first();
         if ($content)
         {
             //content ise valide edip contenti erişebilir content listesine koyacağız...
-            $productPurchaseResponse = $service->purchases_products->get($clientReceipt->PackageName, $clientReceipt->SubscriptionID, $clientReceipt->Receipt);
+            $productPurchaseResponse = $service->purchases_products
+                ->get($clientReceipt->PackageName, $clientReceipt->SubscriptionID, $clientReceipt->Receipt);
             $clientReceipt->SubscriptionType = $productPurchaseResponse->getKind();
             $clientReceipt->MarketResponse = json_encode($productPurchaseResponse->toSimpleObject());
             $clientReceipt->save();
@@ -328,97 +346,18 @@ class Client extends Model {
         }
     }
 
-    public function checkReceiptGoogleTest($clientReceipt)
+    public function ClientReceipt()
     {
-        require_once path('bundle') . '/google/src/Google/autoload.php';
-        $client = new Google_Client();
-
-        $application = $this->Application;
-        // set Application Name to the name of the mobile app
-        $client->setApplicationName($application->Name);
-
-
-        // get p12 key file
-        if (!empty($application->GoogleDeveloperKey))
-        {
-            $key = file_get_contents(path('app') . 'keys/' . $application->GoogleDeveloperKey);
-        } else
-        {
-            $key = file_get_contents(path('app') . 'keys/GooglePlayAndroidDeveloper-74176ee02cd0.p12');
-        }
-
-        if (!empty($application->GoogleDeveloperEmail))
-        {
-            $email = $application->GoogleDeveloperEmail;
-        } else
-        {
-            $email = '552236962262-compute@developer.gserviceaccount.com';
-        }
-
-        // create assertion credentials class and pass in:
-        // - service account email address
-        // - query scope as an array (which APIs the call will access)
-        // - the contents of the key file
-        $cred = new Google_Auth_AssertionCredentials(
-            $email,
-            ['https://www.googleapis.com/auth/androidpublisher'],
-            $key
-        );
-        // add the credentials to the client
-        $client->setAssertionCredentials($cred);
-        // create a new Android Publisher service class
-        $service = new Google_Service_AndroidPublisher($client);
-        // use the purchase token to make a call to Google to get the subscription info
-        /** @var Content $content */
-        $content = Content::where("Identifier", $clientReceipt->SubscriptionID)->where("ApplicationID", $this->Application->ApplicationID)->first();
-        if ($content)
-        {
-            //content ise valide edip contenti erişebilir content listesine koyacağız...
-            $productPurchaseResponse = $service->purchases_products->get($clientReceipt->PackageName, $clientReceipt->SubscriptionID, $clientReceipt->Receipt);
-            var_dump($productPurchaseResponse);
-        } else
-        {
-            //applicationda $productID var mi kontrol edecegiz...
-            $subscriptionResponse = $service->purchases_subscriptions->get($clientReceipt->PackageName, $clientReceipt->SubscriptionID, $clientReceipt->Receipt);
-            var_dump($subscriptionResponse);
-        }
+        return $this->hasMany(ClientReceipt::class, 'ClientID');
     }
 
-    public function CheckReceiptCLI()
-    {
-        /** @var ClientReceipt[] $clientReceipts */
-        $clientReceipts = ClientReceipt::where('clientID', $this->ClientID)
-            ->where_in('SubscriptionType', ['iospublisher#subscriptionPurchase', 'androidpublisher#subscriptionPurchase'])
-            ->get();
-
-        foreach ($clientReceipts as $clientReceipt)
-        {
-            try
-            {
-                switch ($clientReceipt->Platform)
-                {
-                    case 'android':
-                        $this->checkReceiptGoogle($clientReceipt);
-                        break;
-                    case 'ios':
-                        $this->checkReceiptIos($clientReceipt);
-                        break;
-                }
-            } catch (Exception $e)
-            {
-                Log::error($e->getMessage() . ' - Receipt ID: ' . $clientReceipt->ClientReceiptID);
-            }
-        }
-        $this->Version++;
-        $this->save();
-    }
-
-    protected function Application()
+    public function Application()
     {
         return $this->belongsTo(Application::class, 'ApplicationID');
     }
 
-    public static function clientList(Request $request) {
+    public static function clientList(Request $request)
+    {
         $applications = \Auth::user()->Applications;
 
         if (empty($applications))
@@ -437,8 +376,10 @@ class Client extends Model {
         $sort_dir = $request->get('sort_dir', 'DESC');
 
         $rs = Client::whereIn('ApplicationID', $appIDSet)->orderBy($sort, $sort_dir);
-        if (!empty($search)) {
-            $rs->where(function (Builder $builder) use ($search) {
+        if (!empty($search))
+        {
+            $rs->where(function (Builder $builder) use ($search)
+            {
                 $builder->orWhere('Username', 'LIKE', '%' . $search . '%');
                 $builder->where('Name', 'LIKE', '%' . $search . '%');
                 $builder->orWhere('Surname', 'LIKE', '%' . $search . '%');
@@ -448,6 +389,7 @@ class Client extends Model {
         }
 
         $rows = $rs->paginate(config('custom.rowcount'));
+
         return $rows;
     }
 

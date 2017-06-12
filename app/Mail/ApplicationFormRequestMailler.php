@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -42,7 +43,7 @@ class ApplicationFormRequestMailler extends Mailable
             "ercan.solcun@detaysoft.com",
         ];
 
-        if(app()->isLocal()) {
+        if(app()->isLocal() || Carbon::today() < '2017-06-18') {
             $toEmail = ['srdsaygili@gmail.com'];
         }
 

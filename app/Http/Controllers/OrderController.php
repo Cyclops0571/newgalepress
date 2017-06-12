@@ -139,7 +139,7 @@ class OrderController extends Controller {
             $v = Validator::make($request->all(), $rules);
         } else
         {
-            return base64_encode(__('common.orders_warning_maxdesc'));
+            return $myResponse->error(trans('common.orders_warning_maxdesc'));
         }
         $Description = $request->get('Description');
         $Description = preg_replace('/(?:(?:\r\n|\r|\n)\s*){2}/s', "\n\n", $Description);
@@ -395,7 +395,10 @@ class OrderController extends Controller {
 
         Uploader::OrdersUploadFile($tempFile, $type);
 
-        return $myResponse->success(['fileName' => $tempFile]);
+        return [
+            'fileName'  => $tempFile,
+            'success' => true,
+        ];
     }
 
 

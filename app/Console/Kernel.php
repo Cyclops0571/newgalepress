@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\DailyMailingCommand::class,
         Commands\DatabaseBackupCommand::class,
         Commands\UpdateLocationCommand::class,
+        Commands\CalculateStorageUsageCommand::class,
 
     ];
 

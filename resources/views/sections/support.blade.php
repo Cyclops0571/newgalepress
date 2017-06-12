@@ -12,7 +12,7 @@
     height:20px;
 }
 </style>
-<?php if(app()->getLocale() != 'de'): ?>
+<?php if(false && app()->getLocale() != 'de'): ?>
 <div class="support-settings">
     <div class="support-settings-button vertical" onclick="location.href='<?php echo route('my_ticket') ?>'">
 	<span class="icon-question-sign"></span> 

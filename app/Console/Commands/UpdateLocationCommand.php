@@ -37,8 +37,6 @@ class UpdateLocationCommand extends Command
      */
     public function handle()
     {
-
-        ob_end_flush();
         for ($i = 0; $i < 90; $i++) {
             try {
                 $apiRequest = 0;
@@ -52,7 +50,11 @@ class UpdateLocationCommand extends Command
                     ->orderBy('StatisticID', 'DESC')
                     ->take(100)
                     ->get();
-                echo "current chunk of statistic: " . $i * 100, PHP_EOL;
+                if(!$statistics->count()) {
+                    echo 'There is not any statistics record found.', PHP_EOL;
+                    return;
+                }
+                echo "Current chunk of statistic: " . $i * 100, PHP_EOL;
                 foreach ($statistics as $statistic) {
                     if ((float)$statistic->Lat > 0 && (float)$statistic->Long > 0) {
                         echo "\t total api request count: " . $apiRequest, PHP_EOL;

@@ -167,8 +167,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::post(trans('route.contents_uploadcoverimage'), ['as' => 'contents_uploadcoverimage', 'uses' => 'ContentController@uploadCoverImage']);
     Route::post(trans('route.contents_interactivity_status'), ['uses' => "ContentController@interactivityStatus"]);
     Route::any(trans('route.contents_interactivity_status'), ['uses' => "ContentController@interactivityStatus"]);
-
     // </editor-fold>
+
+    Route::get(trans('route.contents_passwords'), array('as' => 'contents_passwords', 'uses' => 'ContentController@passwordList'));
+    Route::post(trans('route.contents_passwords_save'), array('as' => 'contents_passwords_save', 'uses' => 'ContentController@passwordSave'));
+    Route::post(trans('route.contents_passwords_delete'), array('as' => 'contents_passwords_delete', 'uses' => 'ContentController@passwordDelete'));
 
 
     Route::get(trans('route.forgotmypassword'), ['as' => 'CommonController_forgotmypassword_get', function ()

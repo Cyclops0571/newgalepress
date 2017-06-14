@@ -13,6 +13,7 @@ use App\Models\Content;
 use App\Models\ContentCategory;
 use App\Models\ContentCoverImageFile;
 use App\Models\ContentFile;
+use App\Models\ContentPassword;
 use App\Models\GroupCode;
 use App\User;
 use Auth;
@@ -27,6 +28,7 @@ use eStatus;
 use eUserTypes;
 use Exception;
 use File;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Interactivity;
@@ -242,15 +244,11 @@ class ContentController extends Controller {
                     }
                 }
 
-                return View::make('pages.' . Str::lower($this->table) . 'detail', $data);
-            } else
-            {
-                return Redirect::to($this->route);
+                return View::make('pages.contentdetail', $data);
             }
-        } else
-        {
-            return Redirect::to($this->route);
         }
+
+        return Redirect::route('contents_list');
     }
 
     public function save(Request $request, MyResponse $myResponse)
@@ -663,7 +661,7 @@ class ContentController extends Controller {
         for ($i = 0; $i < 240; $i++)
         {
             $contentFile = ContentFile::find($contentFileID);
-            dd($contentFile);
+            //571571
 
             if ($contentFile && $contentFile->HasCreated)
             {
@@ -673,5 +671,128 @@ class ContentController extends Controller {
         }
 
         return AjaxResponse::error(trans('error.interactivity_error'));
+    }
+
+    public function passwordList(Request $request)
+    {
+        $contentID = (int)$request->get('contentID', 0);
+        $rows = ContentPassword::where('ContentID', $contentID)
+            ->orderBy('Name', 'ASC')
+            ->get();
+
+        $data = [
+            'rows'      => $rows,
+            'contentID' => $contentID,
+        ];
+        $type = $request->get('type', '');
+        if ($type == "qty")
+        {
+            $qty = 0;
+            foreach ($rows as $row)
+            {
+                $qty = $qty + (int)$row->Qty;
+            }
+
+            return $qty;
+        }
+
+        return View::make('pages.contentpasswordlist', $data);
+    }
+
+    public function passwordSave(Request $request, MyResponse $myResponse)
+    {
+
+        $currentUser = Auth::user();
+
+        $rules = [
+            'ContentPasswordID'        => 'required|integer',
+            'ContentPasswordContentID' => 'required|integer',
+            'ContentPasswordName'      => 'required',
+            'ContentPasswordPassword'  => 'required',
+            'ContentPasswordQty'       => 'required|integer|min:1',
+        ];
+        $v = Validator::make($request->all(), $rules);
+        if ($v->fails())
+        {
+            return $myResponse->error($v->errors()->first());
+        }
+
+        $id = (int)$request->get('ContentPasswordID', '0');
+        $contentID = (int)$request->get('ContentPasswordContentID', '0');
+
+        $chk = Common::CheckContentOwnership($contentID);
+        if (!$chk)
+        {
+            return $myResponse->error(trans('common.detailpage_validation'));
+        }
+
+        if ($id == 0)
+        {
+            $s = new ContentPassword();
+        } else
+        {
+            $chk = Common::CheckContentPasswordOwnership($id);
+            if (!$chk)
+            {
+                return $myResponse->error(trans('common.detailpage_validation'));
+            }
+            $s = ContentPassword::find($id);
+        }
+        //$s->ApplicationID = (int)$request->get('CategoryApplicationID');
+
+        /** @var  $s ContentPassword */
+        $s->ContentID = $contentID;
+        $s->Name = $request->get('ContentPasswordName');
+        if (strlen(trim($request->get('ContentPasswordPassword'))) > 0)
+        {
+            $s->Password = Hash::make($request->get('ContentPasswordPassword'));
+        }
+        $s->Qty = (int)$request->get('ContentPasswordQty');
+        if ($id == 0)
+        {
+            $s->StatusID = eStatus::Active;
+            $s->CreatorUserID = $currentUser->UserID;
+            $s->DateCreated = new DateTime();
+        }
+        $s->ProcessUserID = $currentUser->UserID;
+        $s->ProcessDate = new DateTime();
+        if ($id == 0)
+        {
+            $s->ProcessTypeID = eProcessTypes::Insert;
+        } else
+        {
+            $s->ProcessTypeID = eProcessTypes::Update;
+        }
+        $s->save();
+
+        return $myResponse->success();
+
+    }
+
+    public function passwordDelete(Request $request, MyResponse $myResponse)
+    {
+
+        $currentUser = Auth::user();
+
+        $id = (int)$request->get('ContentPasswordID', '0');
+
+        $chk = Common::CheckContentPasswordOwnership($id);
+        if (!$chk)
+        {
+            return $myResponse->error(trans('common.detailpage_validation'));
+        }
+
+        $s = ContentPassword::find($id);
+        if ($s)
+        {
+            $s->StatusID = eStatus::Deleted;
+            $s->ProcessUserID = $currentUser->UserID;
+            $s->ProcessDate = new DateTime();
+            $s->ProcessTypeID = eProcessTypes::Update;
+            $s->save();
+        }
+
+        return $myResponse->success();
+
     }
 }

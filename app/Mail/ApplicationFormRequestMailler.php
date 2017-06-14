@@ -43,7 +43,7 @@ class ApplicationFormRequestMailler extends Mailable
             "ercan.solcun@detaysoft.com",
         ];
 
-        if(app()->isLocal() || Carbon::today() < '2017-06-18') {
+        if(app()->isLocal()) {
             $toEmail = ['srdsaygili@gmail.com'];
         }
 

@@ -424,8 +424,8 @@
                    onclick="cContent.showPasswordList();" data-toggle="modal"><span class="icon-group"></span></a>
               </div>
               <div class="col-md-8">
-                <input type="password" name="Password" id="Password" class="form-control textbox"
-                       value="" {{ ((int)$IsMaster == 1 ? 'disabled="disabled"' : '') }}/>
+                <input type="text" name="Password" id="Password" class="form-control textbox"
+                       value="{{$content->PasswordRaw}}" {{ ((int)$IsMaster == 1 ? 'disabled="disabled"' : '') }}/>
               </div>
               <div class="col-md-1">
                 <a class="tipr" title="{{ __('common.contents_tooltip_password') }}"><span
@@ -778,7 +778,7 @@
                     <label for="ContentPasswordPassword">{{ __('common.contents_password_pwd') }}</label>
                   </div>
                   <div class="col-md-8">
-                    <input type="password" name="ContentPasswordPassword" id="ContentPasswordPassword"
+                    <input type="test" name="ContentPasswordPassword" id="ContentPasswordPassword"
                            class="form-control textbox required" value=""/>
                   </div>
                 </div>

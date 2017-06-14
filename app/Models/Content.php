@@ -96,6 +96,8 @@ use Illuminate\Http\Request;
  * @mixin \Eloquent
  * @property int $CategoryID
  * @method static \Illuminate\Database\Query\Builder|\App\Models\Content whereCategoryID($value)
+ * @property string $PasswordRaw
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\Content wherePasswordRaw($value)
  */
 class Content extends Model {
 
@@ -252,9 +254,12 @@ class Content extends Model {
 
     public function setPassword($password)
     {
+        $this->PasswordRaw = $password;
         if (strlen(trim($password)) > 0)
         {
-            $this->Password = Hash::make(request('Password'));
+            $this->Password = Hash::make($password);
+        } else {
+            $this->Password = '';
         }
     }
 

@@ -46,10 +46,10 @@
         <div class="col-md-12">
           <div class="section-title text-center wow bounceInDown">
             <h3 class="small-space"
-                style="font-size:3.7em; color:#777; font-weight:lighter;">{{__('website.home_intro_title')}}</h3>
+                style="font-size:3.7em; color:#777; font-weight:lighter;">{!! trans('website.home_intro_title') !!}</h3>
 
             <p class="lead lighter"
-               style="font-size:1.7em; color:black; font-weight:lighter;">{{__('website.home_intro_text')}}</p>
+               style="font-size:1.7em; color:black; font-weight:lighter;">{!! trans('website.home_intro_text') !!}</p>
           </div>
         </div>
       </div>
@@ -59,7 +59,7 @@
     <div id="charts-wrapper" class="section-shade sep-top-3x sep-bottom-3x">
       <div class="container">
         <div data-wow-delay="1s" class="section-title sep-bottom-md text-center wow bounceInDown">
-          <h1 class="light" style="letter-spacing:5px; font-weight:200;">{{__('website.home_sectors_title')}}</h1>
+          <h1 class="light" style="letter-spacing:5px; font-weight:200;">{!! __('website.home_sectors_title') !!}</h1>
         </div>
         <div class="row">
           <div class="col-md-12">
@@ -78,7 +78,7 @@
                   <img src="/images/website/sectors/new/egitim.png" data-wow-delay="1.1s" class="wow fadeInUp">
                 </a>
                 <a href="{{route('website_sectors_education')}}">
-                  <p data-wow-delay="1.1s" class="lead x2 wow fadeInLeft">{{__('website.home_sectors_education')}}</p>
+                  <p data-wow-delay="1.1s" class="lead x2 wow fadeInLeft">{!! __('website.home_sectors_education') !!}</p>
                 </a>
               </div>
               <div data-wow-delay="0.5s" class="sectors col-md-4 col-xs-6 col-sm-4 text-center light wow fadeInUp">
@@ -86,7 +86,7 @@
                   <img src="/images/website/sectors/new/perakende.png" data-wow-delay="1.7s" class="wow fadeInUp">
                 </a>
                 <a href="{{route('website_sectors_retail')}}">
-                  <p data-wow-delay="1.7s" class="lead x2 wow fadeInLeft">{{__('website.home_sectors_retail')}}</p>
+                  <p data-wow-delay="1.7s" class="lead x2 wow fadeInLeft">{!! __('website.home_sectors_retail') !!}</p>
                 </a>
               </div>
             </div>
@@ -179,8 +179,9 @@
         <div class="col-md-4 text-right">
           <div class="sep-top-md sep-bottom-md">
             <div class="bordered-right section-title">
-              <h2 class="upper"><span class="light"
-                                      style="color:white;">{{__('website.home_interactive_editor_word1')}}</span> {{__('website.home_interactive_editor_word2')}}
+              <h2 class="upper">
+                <span class="light" style="color:white;">{!! __('website.home_interactive_editor_word1') !!}</span>
+                {!! __('website.home_interactive_editor_word2') !!}
               </h2>
             </div>
             <p class="lead">{{__('website.home_interactive_editor_description')}}</p>
@@ -188,7 +189,7 @@
             <div class="sep-top-xs">
               <a href="{{route('website_tryit')}}" data-wow-delay=".5s"
                  class="btn btn-light btn-bordered btn-lg wow bounceInLeft animated"
-                 style="visibility: visible; -webkit-animation-delay: 0.5s;">{{__('website.menu_tryit')}}</a>
+                 style="visibility: visible; -webkit-animation-delay: 0.5s;">{!! __('website.menu_tryit') !!}</a>
             </div>
           </div>
         </div>
@@ -238,9 +239,9 @@
             <img src="/images/website/infographic/gray/1.png">
 
             <div class="icon-box-content">
-              <h5 class="upper">{{__('website.home_interactive_editor')}}</h5>
+              <h5 class="upper">{!! __('website.home_interactive_editor') !!}</h5>
 
-              <p>{{__('website.home_interactive_editor_text')}}</p>
+              <p>{!! __('website.home_interactive_editor_text') !!}</p>
             </div>
           </div>
         </div>
@@ -249,9 +250,9 @@
             <img src="/images/website/infographic/gray/2.png">
 
             <div class="icon-box-content">
-              <h5 class="upper" style="color:#0986c2;">{{__('website.home_interactive_compenents')}}</h5>
+              <h5 class="upper" style="color:#0986c2;">{!! __('website.home_interactive_compenents') !!}</h5>
 
-              <p>{{__('website.home_interactive_compenents_text')}}</p>
+              <p>{!! __('website.home_interactive_compenents_text') !!}</p>
             </div>
           </div>
         </div>
@@ -260,9 +261,9 @@
             <img src="/images/website/infographic/gray/3.png">
 
             <div class="icon-box-content">
-              <h5 class="upper" style="color:#0986c2;">{{__('website.home_push_notification')}}</h5>
+              <h5 class="upper" style="color:#0986c2;">{!! __('website.home_push_notification') !!}</h5>
 
-              <p>{{__('website.home_push_notification_text')}}</p>
+              <p>{!! __('website.home_push_notification_text') !!}</p>
             </div>
           </div>
         </div>
@@ -270,9 +271,9 @@
           <div class="icon-box icon-horizontal icon-lg">
             <img src="/images/website/infographic/gray/6.png">
             <div class="icon-box-content">
-              <h5 class="upper" style="color:#0986c2;">{{__('website.home_reports')}}</h5>
+              <h5 class="upper" style="color:#0986c2;">{!! __('website.home_reports') !!}</h5>
 
-              <p>{{__('website.home_reports_text')}}</p>
+              <p>{!! __('website.home_reports_text') !!}</p>
             </div>
           </div>
         </div>
@@ -283,9 +284,9 @@
             <img src="/images/website/infographic/gray/4.png">
 
             <div class="icon-box-content">
-              <h5 class="upper" style="color:#0986c2;">{{__('website.home_security')}}</h5>
+              <h5 class="upper" style="color:#0986c2;">{!! __('website.home_security') !!}</h5>
 
-              <p>{{__('website.home_security_text')}}</p>
+              <p>{!! __('website.home_security_text') !!}</p>
             </div>
           </div>
         </div>
@@ -294,9 +295,9 @@
             <img src="/images/website/infographic/gray/7.png">
 
             <div class="icon-box-content">
-              <h5 class="upper" style="color:#0986c2;">{{__('website.home_speed')}}</h5>
+              <h5 class="upper" style="color:#0986c2;">{!! __('website.home_speed') !!}</h5>
 
-              <p>{{__('website.home_speed_text')}}</p>
+              <p>{!! __('website.home_speed_text') !!}</p>
             </div>
           </div>
         </div>
@@ -305,9 +306,9 @@
             <img src="/images/website/infographic/gray/5.png">
 
             <div class="icon-box-content">
-              <h5 class="upper" style="color:#0986c2;">{{__('website.home_speed_theworldisyours')}}</h5>
+              <h5 class="upper" style="color:#0986c2;">{!! __('website.home_speed_theworldisyours') !!}</h5>
 
-              <p>{{__('website.home_speed_theworldisyours_text')}}</p>
+              <p>{!! __('website.home_speed_theworldisyours_text') !!}</p>
             </div>
           </div>
         </div>

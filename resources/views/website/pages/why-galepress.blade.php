@@ -173,123 +173,54 @@
   </section>
 
 
+  <?php
 
+  $leftProperties = $rightProperties = [];
+  $leftProperties[] = ['img' => 'video.png', 'title' => __('website.howitworks_comp_video'), 'subtitle' => __('website.howitworks_comp_video_text')];
+  $leftProperties[] = ['img' => 'ses.png', 'title' => __('website.howitworks_comp_audio'), 'subtitle' => __('website.howitworks_comp_audio_text')];
+  $leftProperties[] = ['img' => 'harita.png', 'title' => __('website.howitworks_comp_map'), 'subtitle' => __('website.howitworks_comp_map_text')];
+  $leftProperties[] = ['img' => 'link.png', 'title' => __('website.howitworks_comp_link'), 'subtitle' => __('website.howitworks_comp_link_text')];
+  $leftProperties[] = ['img' => 'web.png', 'title' => __('website.howitworks_comp_web'), 'subtitle' => __('website.howitworks_comp_web_text')];
+  $rightProperties[] = ['img' => 'tooltip.png', 'title' => __('website.howitworks_comp_tooltip'), 'subtitle' => __('website.howitworks_comp_tooltip_text')];
+  $rightProperties[] = ['img' => 'scroller.png', 'title' => __('website.howitworks_comp_scroller'), 'subtitle' => __('website.howitworks_comp_scroller_text')];
+  $rightProperties[] = ['img' => 'slider.png', 'title' => __('website.howitworks_comp_slider'), 'subtitle' => __('website.howitworks_comp_slider_text')];
+  $rightProperties[] = ['img' => '360.png', 'title' => __('website.howitworks_comp_360'), 'subtitle' => __('website.howitworks_comp_360')];
+  $rightProperties[] = ['img' => 'bookmark.png', 'title' => __('website.howitworks_comp_bookmark'), 'subtitle' => __('website.howitworks_comp_bookmark_text')];
+
+
+  ?>
   <section id="services" class="sep-top-md sep-bottom-2x" style="background:#EAEAEA;">
     <div class="container">
       <div class="row" style="text-align:left;">
         <div class="col-md-5 col-md-offset-1 col-sm-6">
-          <div data-wow-delay="1s"
-               class="icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
-               style="visibility: visible; -webkit-animation-delay: 1s;">
-            <div class="icon-content img-circle transparent">
-              <img src="/images/website/icons/video.png"/>
+          @foreach($leftProperties as $property)
+            <div data-wow-delay="1s"
+                 class="col-md-10 icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
+                 style="visibility: visible; -webkit-animation-delay: 1s;">
+              <div class="icon-content img-circle transparent">
+                <img src="/images/website/icons/{{$property['img']}}"/>
+              </div>
+              <div class="icon-box-content">
+                <h5 class="howDoesCompTitle">{{$property['title']}}</h5>
+                <p class="howDoesCompSubTitle">{{$property['subtitle']}}</p>
+              </div>
             </div>
-            <div class="icon-box-content">
-              <h5 class="howDoesCompTitle">{{__('website.howitworks_comp_video')}}</h5>
-              <p class="howDoesCompSubTitle">{{__('website.howitworks_comp_video_text')}}</p>
-            </div>
-          </div>
-          <div data-wow-delay="1s"
-               class="icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
-               style="visibility: visible; -webkit-animation-delay: 1s;">
-            <div class="icon-content img-circle transparent">
-              <img src="/images/website/icons/ses.png"/>
-            </div>
-            <div class="icon-box-content">
-              <h5 class="howDoesCompTitle">{{__('website.howitworks_comp_audio')}}</h5>
-              <p class="howDoesCompSubTitle">{{__('website.howitworks_comp_audio_text')}}</p>
-            </div>
-          </div>
-          <div data-wow-delay="1s"
-               class="icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
-               style="visibility: visible; -webkit-animation-delay: 1s;">
-            <div class="icon-content img-circle transparent">
-              <img src="/images/website/icons/harita.png"/>
-            </div>
-            <div class="icon-box-content">
-              <h5 class="howDoesCompTitle">{{__('website.howitworks_comp_map')}}</h5>
-              <p class="howDoesCompSubTitle">{{__('website.howitworks_comp_map_text')}}</p>
-            </div>
-          </div>
-          <div data-wow-delay="1s"
-               class="icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
-               style="visibility: visible; -webkit-animation-delay: 1s;">
-            <div class="icon-content img-circle transparent">
-              <img src="/images/website/icons/link.png"/>
-            </div>
-            <div class="icon-box-content">
-              <h5 class="howDoesCompTitle">{{__('website.howitworks_comp_link')}}</h5>
-              <p class="howDoesCompSubTitle">{{__('website.howitworks_comp_link_text')}}</p>
-            </div>
-          </div>
-          <div data-wow-delay="1s"
-               class="icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
-               style="visibility: visible; -webkit-animation-delay: 1s;">
-            <div class="icon-content img-circle transparent">
-              <img src="/images/website/icons/web.png"/>
-            </div>
-            <div class="icon-box-content">
-              <h5 class="howDoesCompTitle">{{__('website.howitworks_comp_web')}}</h5>
-              <p class="howDoesCompSubTitle">{{__('website.howitworks_comp_web_text')}}</p>
-            </div>
-          </div>
+          @endforeach
         </div>
         <div class="col-md-6 col-sm-6">
-          <div data-wow-delay="1s"
-               class="icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
-               style="visibility: visible; -webkit-animation-delay: 1s;">
-            <div class="icon-content img-circle transparent">
-              <img src="/images/website/icons/tooltip.png"/>
+          @foreach($rightProperties as $property)
+            <div data-wow-delay="1s"
+                 class="col-md-10 icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
+                 style="visibility: visible; -webkit-animation-delay: 1s;">
+              <div class="icon-content img-circle transparent">
+                <img src="/images/website/icons/{{$property['img']}}"/>
+              </div>
+              <div class="icon-box-content">
+                <h5 class="howDoesCompTitle">{{$property['title']}}</h5>
+                <p class="howDoesCompSubTitle">{{$property['subtitle']}}</p>
+              </div>
             </div>
-            <div class="icon-box-content">
-              <h5 class="howDoesCompTitle">{{__('website.howitworks_comp_tooltip')}}</h5>
-              <p class="howDoesCompSubTitle">{{__('website.howitworks_comp_tooltip_text')}}</p>
-            </div>
-          </div>
-          <div data-wow-delay="1s"
-               class="icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
-               style="visibility: visible; -webkit-animation-delay: 1s;">
-            <div class="icon-content img-circle transparent">
-              <img src="/images/website/icons/scroller.png"/>
-            </div>
-            <div class="icon-box-content">
-              <h5 class="howDoesCompTitle">{{__('website.howitworks_comp_scroller')}}</h5>
-              <p class="howDoesCompSubTitle">{{__('website.howitworks_comp_scroller_text')}}</p>
-            </div>
-          </div>
-          <div data-wow-delay="1s"
-               class="icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
-               style="visibility: visible; -webkit-animation-delay: 1s;">
-            <div class="icon-content img-circle transparent">
-              <img src="/images/website/icons/slider.png"/>
-            </div>
-            <div class="icon-box-content">
-              <h5 class="howDoesCompTitle">{{__('website.howitworks_comp_slider')}}</h5>
-              <p class="howDoesCompSubTitle">{{__('website.howitworks_comp_slider_text')}}</p>
-            </div>
-          </div>
-          <div data-wow-delay="1s"
-               class="icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
-               style="visibility: visible; -webkit-animation-delay: 1s;">
-            <div class="icon-content img-circle transparent">
-              <img src="/images/website/icons/360.png"/>
-            </div>
-            <div class="icon-box-content">
-              <h5 class="howDoesCompTitle">{{__('website.howitworks_comp_360°')}}</h5>
-              <p class="howDoesCompSubTitle">{{__('website.howitworks_comp_360°_text')}}</p>
-            </div>
-          </div>
-          <div data-wow-delay="1s"
-               class="icon-box icon-lg sep-top-md sep-top-sm icon-gradient wow bounceInRight animated"
-               style="visibility: visible; -webkit-animation-delay: 1s;">
-            <div class="icon-content img-circle transparent">
-              <img src="/images/website/icons/bookmark.png"/>
-            </div>
-            <div class="icon-box-content">
-              <h5 class="howDoesCompTitle">{{__('website.howitworks_comp_bookmark')}}</h5>
-              <p class="howDoesCompSubTitle">{{__('website.howitworks_comp_bookmark_text')}}</p>
-            </div>
-          </div>
+          @endforeach
         </div>
       </div>
     </div>

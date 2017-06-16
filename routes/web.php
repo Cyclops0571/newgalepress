@@ -151,8 +151,8 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::get(trans('route.website_payment_result'), ['as' => 'website_payment_result', 'uses' => 'PaymentController@paymentResult']);
 
     // <editor-fold defaultstate="collapsed" desc="Crop">
-    Route::get(trans('route.crop_image'), ['as' => 'crop_image', 'before' => 'auth', 'uses' => 'CropController@image']);
-    Route::post(trans('route.crop_image'), ['as' => 'crop_image_post', 'before' => 'auth', 'uses' => 'CropController@save']);
+    Route::get(trans('route.crop_image'), ['as' => 'crop_image', 'uses' => 'CropController@image']);
+    Route::post(trans('route.crop_image'), ['as' => 'crop_image_post', 'uses' => 'CropController@save']);
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Contents">
@@ -215,11 +215,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Reports">
-    Route::get(trans('route.reports'), ['as' => 'reports', 'before' => 'auth', 'uses' => 'ReportController@index']);
-    Route::get(trans('route.reports') . "/{id}", ['as' => 'reports_show', 'before' => 'auth', 'uses' => 'ReportController@show']);
-    Route::get(trans('route.reports_location_country'), ['as' => 'reports_location_country', 'before' => 'auth', 'uses' => 'ReportController@country']);
-    Route::get(trans('route.reports_location_city'), ['as' => 'reports_location_city', 'before' => 'auth', 'uses' => 'ReportController@city']);
-    Route::get(trans('route.reports_location_district'), ['as' => 'reports_location_district', 'before' => 'auth', 'uses' => 'ReportController@district']);
+    Route::get(trans('route.reports'), ['as' => 'reports',  'uses' => 'ReportController@index']);
+    Route::get(trans('route.reports') . "/{id}", ['as' => 'reports_show',  'uses' => 'ReportController@show']);
+    Route::get(trans('route.reports_location_country'), ['as' => 'reports_location_country',  'uses' => 'ReportController@country']);
+    Route::get(trans('route.reports_location_city'), ['as' => 'reports_location_city',  'uses' => 'ReportController@city']);
+    Route::get(trans('route.reports_location_district'), ['as' => 'reports_location_district',  'uses' => 'ReportController@district']);
     // </editor-fold>
 
 
@@ -264,11 +264,12 @@ Route::get("banners/service_view/{applicationId}", ['as' => 'banners_service_vie
 
 Route::group(['middleware' => 'auth'], function ()
 {
+    Route::get('phpinfo', 'AdminController@index');
     Route::post("contents/order/{myApplication}", ['as' => 'contents_order', 'uses' => 'ContentController@order']);
     Route::post('iyzicoqr', 'IyzicoController@save');
     Route::get('open_iyzico_iframe/{qrCode}', 'IyzicoController@openIyzicoIframe');
     Route::any('checkout_result_form', ['as' => 'get_checkout_result_form', 'uses' => 'IyzicoController@checkoutIyzicoResultForm']);
-    Route::post("clients/excelupload", ['before' => 'auth', 'uses' => "ClientController@excelupload"]);
+    Route::post("clients/excelupload", ['uses' => "ClientController@excelupload"]);
 });
 
 /** Website Post */

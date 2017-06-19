@@ -18,6 +18,11 @@
     <link rel="shortcut icon" href="/images/website/favicon2.ico">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Web Fonts Start -->
+    <script src="https://use.typekit.net/gyn6uqi.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <!-- Web Fonts End -->
+
     <link rel="stylesheet" href="{{ elixir('css/website.css') }}">
 
 @if(App::isLocale('tr'))

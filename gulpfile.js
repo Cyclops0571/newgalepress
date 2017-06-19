@@ -120,7 +120,19 @@ elixir((mix) => {
 
     mix.sass('website/font-awesome.scss');
 
-    mix.version(['js/jquery-ui.js', 'js/website.js', 'js/jquery.js', 'css/website.css', 'css/galepress-all.css', 'css/interactive.css', 'js/gurus.js', 'js/interactive.js', 'js/galepress-interactivity.js']);
+    mix.version(
+        [
+            'js/jquery-ui.js',
+            'js/website.js',
+            'js/jquery.js',
+            'css/website.css',
+            'css/galepress-all.css',
+            'css/interactive.css',
+            'js/gurus.js',
+            'js/interactive.js',
+            'js/galepress-interactivity.js',
+            'js/projectcore.js'
+        ]);
 
 
 

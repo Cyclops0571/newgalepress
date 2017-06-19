@@ -61,6 +61,7 @@
         <script src="/jqplot/jqplot.dateAxisRenderer.min.js"></script>
         <script src="/jqplot/jqplot.categoryAxisRenderer.min.js"></script>
         <script src="{{elixir('/js/gurus.js')}}"></script>
+        <script src="{{elixir('/js/projectcore.js')}}"></script>
         <script src="/js/session-check.js"></script>
         <script src="/js/lib.js"></script>
 

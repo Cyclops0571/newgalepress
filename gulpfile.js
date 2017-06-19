@@ -95,10 +95,7 @@ elixir((mix) => {
     ], 'public/css/interactive.css');
 
     mix.scripts([
-        'website/bootstrap.js',
-        'jquery.cookie.js',
-        'website/queryloader2.min.js',
-        'fullscreen.js',
+        'website/jquery.placeholder.js',
         'SCF.ui/Equalizer.js',
         'SCF.ui/appreciate.js',
         'SCF.ui/commutator.js',
@@ -112,16 +109,14 @@ elixir((mix) => {
         'SCF.ui/radio.js',
         'SCF.ui/player.js',
         'SCF.ui/currentlyPlaying.js',
-        'website/jquery.placeholder.js'
+        'jquery.cookie.js'
     ], 'public/js/interactive.js');
 
     mix.scripts([
-        'gurus.string.js',
         'gurus.common.js',
-        'gurus.date.js',
-        'gurus.projectcore.js'
+        'gurus.string.js',
+        'gurus.date.js'
     ], 'public/js/gurus.js');
-    mix.scripts('galepress-interactivity.js')
 
     mix.sass('website/font-awesome.scss');
 

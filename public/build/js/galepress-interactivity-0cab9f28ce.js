@@ -375,4 +375,30 @@ var cInteractivity = new function () {
         $("div.component-info div").addClass("hide");
     };
 };
-//# sourceMappingURL=galepress-interactivity.js.map
+
+var cForm = new function () {
+    this.validate = function (formObj) {
+        var ret = true;
+        formObj.each(function () {
+            $("div.error", $(this)).removeClass("error");
+            $(".required", $(this)).each(function () {
+                if (!$(this).val()) {
+                    ret = false;
+                    $(this).prev().addClass("error");
+                    $(this).parent().prev().addClass("error");
+                }
+            });
+        });
+        return ret;
+    };
+
+    this.serialize = function (formObj) {
+        var ret = "";
+        formObj.each(function () {
+            if ($(this).is("form")) {
+                ret = ret + "&" + $(this).serialize();
+            }
+        });
+        return ret;
+    };
+};

@@ -14,6 +14,7 @@
     <!-- Included CSS Files -->
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700&subset=all" />
     <link rel="stylesheet" href="/css/interactive.css">
+    <link rel="stylesheet" href="/chosen_v1.0.0/chosen.css"/>
     <link rel="stylesheet" href="/uploadify/uploadify.css">
     @include('js.language')
   </head>
@@ -27,7 +28,7 @@
     <script src="/uploadify/jquery.uploadify-3.1.min.js" ></script>
     <script src="/js/fullscreen.js"></script>
     <script src="/js/SCF.ui.js" ></script>
-    <script src="/chosen_v1.0.0/chosen.jquery.js" ></script>
+    <script src="/chosen_v1.0.0/chosen.jquery.min.js" ></script>
 
     <script src="/js/interactive.js" ></script>
 

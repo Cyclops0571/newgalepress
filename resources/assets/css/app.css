@@ -760,7 +760,7 @@ h5 {
 }
 /* line 53, ../sass/library/selects.scss */
 .select .selected .icon, .select-arrowed .selected .icon {
-  background: url('/img/select/selected-icon.png?1362763283') 0 0 no-repeat;
+  background: url('/img/select/selected-icon.png') 0 0 no-repeat;
   border-radius: 50%;
   height: 19px;
   position: absolute;
@@ -808,7 +808,7 @@ h5 {
   background: #b7882f;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ebaf3c), color-stop(100%, #b7882f));
   background-image: -webkit-linear-gradient(top, #ebaf3c, #b7882f);
-  background-image: -moz-linear-gradient(top, #ebaf3c, #b7882f);
+  background-image: -moz-linear-gradient(top, #ebaFf3c, #b7882f);
   background-image: -ms-linear-gradient(top, #ebaf3c, #b7882f);
   background-image: -o-linear-gradient(top, #ebaf3c, #b7882f);
   background-image: linear-gradient(top, #ebaf3c, #b7882f);

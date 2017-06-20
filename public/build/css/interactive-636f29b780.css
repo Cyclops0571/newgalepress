@@ -808,7 +808,7 @@ h5 {
   background: #b7882f;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ebaf3c), color-stop(100%, #b7882f));
   background-image: -webkit-linear-gradient(top, #ebaf3c, #b7882f);
-  background-image: -moz-linear-gradient(top, #ebaf3c, #b7882f);
+  background-image: -moz-linear-gradient(top, #ebaFf3c, #b7882f);
   background-image: -ms-linear-gradient(top, #ebaf3c, #b7882f);
   background-image: -o-linear-gradient(top, #ebaf3c, #b7882f);
   background-image: linear-gradient(top, #ebaf3c, #b7882f);

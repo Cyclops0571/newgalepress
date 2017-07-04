@@ -202,6 +202,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::get(trans('route.maps'), ['as' => 'maps_list', 'uses' => 'MapController@index']);
     // </editor-fold>
 
+//    echo ; exit;
     // <editor-fold defaultstate="collapsed" desc="Applications">
     Route::get(trans('route.applications_list'), ['as' => 'customer_application_list', 'uses' => 'ApplicationController@customerApplicationList']);
     Route::get(trans('route.applications_new'), ['as' => 'applications_new', 'uses' => 'ApplicationController@create']);

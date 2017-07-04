@@ -760,7 +760,7 @@ h5 {
 }
 /* line 53, ../sass/library/selects.scss */
 .select .selected .icon, .select-arrowed .selected .icon {
-  background: url('/img/select/selected-icon.png?1362763283') 0 0 no-repeat;
+  background: url('/img/select/selected-icon.png') 0 0 no-repeat;
   border-radius: 50%;
   height: 19px;
   position: absolute;

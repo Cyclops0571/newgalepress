@@ -46,7 +46,7 @@ return array(
     'applications_new' => 'uygulamalar/yeni',
     'applications_list' => 'applications/list',
     'applications_show' => 'uygulamalar/{application}',
-    'applications_pushnotification' => 'uygulamalar/(:num)/bildirim-gonder',
+    'applications_pushnotification' => 'uygulamalar/{application}/bildirim-gonder',
     'applications_save' => 'uygulamalar/kaydet',
     'applications_delete' => 'uygulamalar/sil',
     'applications_uploadfile' => 'uygulamalar/dosya-yukle',

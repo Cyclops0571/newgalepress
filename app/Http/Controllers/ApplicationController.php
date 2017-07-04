@@ -222,7 +222,7 @@ class ApplicationController extends Controller {
 
     }
 
-    public function push(Request $request, MyResponse $myResponse, $id)
+    public function push(Request $request, MyResponse $myResponse, Application $application)
     {
         try
         {
@@ -235,24 +235,18 @@ class ApplicationController extends Controller {
                 throw new Exception(__('common.detailpage_validation'));
             }
 
-            $chk = Common::CheckApplicationOwnership($id);
-            if (!$chk)
-            {
-                //				throw new Exception("Unauthorized user attempt");
-                throw new Exception(__('error.unauthorized_user_attempt'));
-            }
 
+            $application->checkUserAccess();
             $currentUser = Auth::user();
-            DB::transaction(function () use ($request, $currentUser, $id)
+            DB::transaction(function () use ($request, $currentUser, $application)
             {
                 $customerID = 0;
                 $applicationID = 0;
 
-                $app = DB::table('Application')->where('ApplicationID', $id)->first();
-                if ($app)
+                if ($application)
                 {
-                    $customerID = (int)$app->CustomerID;
-                    $applicationID = (int)$app->ApplicationID;
+                    $customerID = (int)$application->CustomerID;
+                    $applicationID = (int)$application->ApplicationID;
                 }
 
                 $s = new PushNotification();

@@ -158,8 +158,8 @@
                     }
                 }
             });
-            CKEDITOR.instances.editor.setData(content);
-            CKEDITOR.instances.editor.addContentsCss("/css/ckeditor/fonts/fonts.css");
+            // CKEDITOR.instances.editor.setData(content);
+            // CKEDITOR.instances.editor.addContentsCss("/css/ckeditor/fonts/fonts.css");
         }
 
         return this.each(function () {

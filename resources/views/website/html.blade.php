@@ -23,7 +23,30 @@
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
     <!-- Web Fonts End -->
 
-    <link rel="stylesheet" href="{{ elixir('css/website.css') }}">
+    {{--<link rel="stylesheet" href="{{ elixir('css/website.css') }}">--}}
+
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/font-awesome.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/owl.carousel.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/owl.theme.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/slit-slider-style.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/slit-slider-custom.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/idangerous.swiper.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/yamm.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/animate.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/prettyPhoto.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/bootstrap-slider.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/device-mockups2.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/bootstrap.min.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/main.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/main-responsive.css?v=96">
+    <link id="primary_color_scheme" rel="stylesheet"
+          href="http://www.galepress.com/website/styles/theme_royalblue.css?v=96">
+    <link rel="stylesheet" href="http://www.galepress.com/website/styles/myStyles.css?v=96">
+    <script src="http://www.galepress.com/website/scripts/vendor/modernizr.js"></script>
+    <noscript>
+        <link rel="stylesheet" href="http://www.galepress.com/website/styles/styleNoJs.css?v=96">
+    </noscript>
+
 
 @if(App::isLocale('tr'))
 <!--Start of Tawk.to Script-->

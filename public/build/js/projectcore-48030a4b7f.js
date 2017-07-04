@@ -251,10 +251,8 @@ var cApplication = new function () {
     this.pushNotification = function () {
         cNotification.hide();
         var frm = $("#formPushNotification");
-        var applicationID = parseInt($("[name='ApplicationID']", frm).val());
-        var url = '/' + currentLanguage + '/' + route["applications_pushnotification"];
-        url = url.replace('(:num)', applicationID);
         var validate = cForm.validate(frm);
+        let url = frm.attr('action');
         if (validate) {
             cNotification.loader();
             var t = 'POST';

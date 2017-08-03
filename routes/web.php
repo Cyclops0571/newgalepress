@@ -17,18 +17,18 @@ define("PATH_TEMP_FILE", "files/temp");
 define("TAB_COUNT", 2);
 define("GO_BACK_TO_SHOP", 'gobacktoshop');
 
-Route::get('test/ifreame', function() {return view('test.iframelogin')});
+Route::get('test/iframe', function () {
+    return view('test.iframelogin');
+});
 Route::get('test', ['as' => 'mahmut', 'uses' => 'TTestController@index']);
 Route::get('test', ['prefix' => LaravelLocalization::setLocale(), 'as' => 'mahmut', 'uses' => 'TTestController@index']);
 Route::get('test2', ['as' => 'mytest2', 'uses' => 'TTestController@test2']);
-Route::get('test3', function ()
-{
+Route::get('test3', function () {
     return View::make('test/test3');
 });
 
 
-Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
-{
+Route::group(['prefix' => LaravelLocalization::setLocale()], function () {
 
     Route::get('mobile-user/reset-password', ['as' => 'mobile_reset_password_form', 'uses' => 'Mobile\AuthController@resetPasswordForm']);
     Route::any('mobile-user/send-token-mail', ['as' => 'mobile_user_send_token_mail', 'uses' => 'Mobile\AuthController@sendTokenMail']);
@@ -39,13 +39,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     Route::post('mobile-user/store', ['as' => 'mobile_user_store', 'uses' => 'Mobile\AuthController@store']);
 
     Route::get('mobile-user/edit/{application}/{clientToken}', ['as' => 'clients_register_save', 'uses' => 'Mobile\AuthController@edit']);
-    Route::get('mobile-user/registration-success', ['as' => 'mobile_user_registration_success', 'uses' => function ()
-    {
+    Route::get('mobile-user/registration-success', ['as' => 'mobile_user_registration_success', 'uses' => function () {
         return view('mobile.registration_success');
     }]);
     Route::get('mobile-user/forgot-password/{application}', ['as' => 'clients_forgot_password', 'uses' => 'Mobile\AuthController@forgotPasswordForm']);
-    Route::get('mobile-user/password-changed', ['as' => 'mobile_user_password_changed', 'uses' => function ()
-    {
+    Route::get('mobile-user/password-changed', ['as' => 'mobile_user_password_changed', 'uses' => function () {
         return view('mobile.password_changed');
     }]);
 
@@ -53,81 +51,64 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function ()
     // <editor-fold defaultstate="collapsed" desc="website">
     Route::get('/', ['as' => 'website_home', 'uses' => 'WebsiteController@index']);
 
-    Route::get(trans('route.website_showcase'), ['as' => 'website_showcase', 'uses' => function ()
-    {
+    Route::get(trans('route.website_showcase'), ['as' => 'website_showcase', 'uses' => function () {
         return View::make('website.pages.showcase');
     }]);
 
-    Route::get(trans('route.website_tutorials'), ['as' => 'website_tutorials', 'uses' => function ()
-    {
+    Route::get(trans('route.website_tutorials'), ['as' => 'website_tutorials', 'uses' => function () {
         return View::make('website.pages.tutorials');
     }]);
 
-    Route::get(trans('route.website_contact'), ['as' => 'website_contact', 'uses' => function ()
-    {
+    Route::get(trans('route.website_contact'), ['as' => 'website_contact', 'uses' => function () {
         return View::make('website.pages.contact');
     }]);
 
-    Route::get(trans('route.website_sectors'), ['as' => 'website_sectors', 'uses' => function ()
-    {
+    Route::get(trans('route.website_sectors'), ['as' => 'website_sectors', 'uses' => function () {
         return View::make('website.pages.sectors');
     }]);
 
-    Route::get(trans('route.website_sectors_retail'), ['as' => 'website_sectors_retail', 'uses' => function ()
-    {
+    Route::get(trans('route.website_sectors_retail'), ['as' => 'website_sectors_retail', 'uses' => function () {
         return View::make('website.pages.sectors-retail');
     }]);
-    Route::get(trans('route.website_sectors_humanresources'), ['as' => 'website_sectors_humanresources', 'uses' => function ()
-    {
+    Route::get(trans('route.website_sectors_humanresources'), ['as' => 'website_sectors_humanresources', 'uses' => function () {
         return View::make('website.pages.sectors-humanresources');
     }]);
-    Route::get(trans('route.website_sectors_education'), ['as' => 'website_sectors_education', 'uses' => function ()
-    {
+    Route::get(trans('route.website_sectors_education'), ['as' => 'website_sectors_education', 'uses' => function () {
         return View::make('website.pages.sectors-education');
     }]);
 
-    Route::get(trans('route.website_sectors_realty'), ['as' => 'website_sectors_realty', 'uses' => function ()
-    {
+    Route::get(trans('route.website_sectors_realty'), ['as' => 'website_sectors_realty', 'uses' => function () {
         return View::make('website.pages.sectors-realty');
     }]);
-    Route::get(trans('route.website_sectors_medicine'), ['as' => 'website_sectors_medicine', 'uses' => function ()
-    {
+    Route::get(trans('route.website_sectors_medicine'), ['as' => 'website_sectors_medicine', 'uses' => function () {
         return View::make('website.pages.sectors-medicine');
     }]);
-    Route::get(trans('route.website_sectors_digitalpublishing'), ['as' => 'website_sectors_digitalpublishing', 'uses' => function ()
-    {
+    Route::get(trans('route.website_sectors_digitalpublishing'), ['as' => 'website_sectors_digitalpublishing', 'uses' => function () {
         return View::make('website.pages.sectors-digitalpublishing');
     }]);
-    Route::get(trans('route.website_why_galepress'), ['as' => 'website_why_galepress', 'uses' => function ()
-    {
+    Route::get(trans('route.website_why_galepress'), ['as' => 'website_why_galepress', 'uses' => function () {
         return View::make('website.pages.why-galepress');
     }]);
-    Route::get(trans('route.website_tryit'), ['as' => 'website_tryit', 'uses' => function ()
-    {
+    Route::get(trans('route.website_tryit'), ['as' => 'website_tryit', 'uses' => function () {
         return View::make('website.pages.tryit');
     }]); //571571 MeCaptcha\Captcha not found...
 
-    Route::get('deneyin-test', ['as' => 'deneyin-test', 'uses' => function ()
-    {
+    Route::get('deneyin-test', ['as' => 'deneyin-test', 'uses' => function () {
         return View::make('website.pages.tryit-test');
     }]);//571571 MeCaptcha\Captcha not found...
 
-    Route::get(trans('route.login'), ['middleware' => 'RedirectIfAuthenticated', 'as' => 'common_login_get', 'uses' => function ()
-    {
+    Route::get(trans('route.login'), ['middleware' => 'RedirectIfAuthenticated', 'as' => 'common_login_get', 'uses' => function () {
         return view('pages.login');
     }]);
     Route::post(trans('route.login'), ['as' => 'common_login_post', 'uses' => 'CommonController@login']);
 
-    Route::get(trans('route.sign_up'), function ()
-    {
+    Route::get(trans('route.sign_up'), function () {
         return view('website.signup');
     });
-    Route::get(trans('route.forgot_password'), function ()
-    {
+    Route::get(trans('route.forgot_password'), function () {
         return view('website.forgotpassword');
     });
-    Route::get(trans('route.sign_in'), function ()
-    {
+    Route::get(trans('route.sign_in'), function () {
         return view('website.signin');
     });
     // </editor-fold>
@@ -140,8 +121,7 @@ Route::get('payment/paymentAccountByApplicationID/{applicationID}', ['as' => 'ap
 Route::post('payment-galepress', ['as' => 'website_payment_galepress', 'before' => 'auth', 'uses' => 'PaymentController@paymentGalepress']);
 
 
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function ()
-{
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'auth'], function () {
     Route::get(trans('route.home'), ['as' => 'home', 'uses' => 'CommonController@home']);
 
     Route::any('3d-secure-response', ['as' => 'iyzico_3ds_return_url', 'uses' => 'PaymentController@secure3dResponse']);
@@ -169,13 +149,12 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::any(trans('route.contents_interactivity_status'), ['uses' => "ContentController@interactivityStatus"]);
     // </editor-fold>
 
-    Route::get(trans('route.contents_passwords'), array('as' => 'contents_passwords', 'uses' => 'ContentController@passwordList'));
-    Route::post(trans('route.contents_passwords_save'), array('as' => 'contents_passwords_save', 'uses' => 'ContentController@passwordSave'));
-    Route::post(trans('route.contents_passwords_delete'), array('as' => 'contents_passwords_delete', 'uses' => 'ContentController@passwordDelete'));
+    Route::get(trans('route.contents_passwords'), ['as' => 'contents_passwords', 'uses' => 'ContentController@passwordList']);
+    Route::post(trans('route.contents_passwords_save'), ['as' => 'contents_passwords_save', 'uses' => 'ContentController@passwordSave']);
+    Route::post(trans('route.contents_passwords_delete'), ['as' => 'contents_passwords_delete', 'uses' => 'ContentController@passwordDelete']);
 
 
-    Route::get(trans('route.forgotmypassword'), ['as' => 'CommonController_forgotmypassword_get', function ()
-    {
+    Route::get(trans('route.forgotmypassword'), ['as' => 'CommonController_forgotmypassword_get', function () {
         return View::make('pages.forgotmypassword');
     }]);
     Route::post(trans('route.forgotmypassword'), ['as' => 'CommonController_forgotmypassword_post', 'uses' => 'CommonController@forgotmypassword']);
@@ -202,7 +181,7 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     Route::get(trans('route.maps'), ['as' => 'maps_list', 'uses' => 'MapController@index']);
     // </editor-fold>
 
-//    echo ; exit;
+    //    echo ; exit;
     // <editor-fold defaultstate="collapsed" desc="Applications">
     Route::get(trans('route.applications_list'), ['as' => 'customer_application_list', 'uses' => 'ApplicationController@customerApplicationList']);
     Route::get(trans('route.applications_new'), ['as' => 'applications_new', 'uses' => 'ApplicationController@create']);
@@ -216,11 +195,11 @@ Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => 'aut
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="Reports">
-    Route::get(trans('route.reports'), ['as' => 'reports',  'uses' => 'ReportController@index']);
-    Route::get(trans('route.reports') . "/{id}", ['as' => 'reports_show',  'uses' => 'ReportController@show']);
-    Route::get(trans('route.reports_location_country'), ['as' => 'reports_location_country',  'uses' => 'ReportController@country']);
-    Route::get(trans('route.reports_location_city'), ['as' => 'reports_location_city',  'uses' => 'ReportController@city']);
-    Route::get(trans('route.reports_location_district'), ['as' => 'reports_location_district',  'uses' => 'ReportController@district']);
+    Route::get(trans('route.reports'), ['as' => 'reports', 'uses' => 'ReportController@index']);
+    Route::get(trans('route.reports') . "/{id}", ['as' => 'reports_show', 'uses' => 'ReportController@show']);
+    Route::get(trans('route.reports_location_country'), ['as' => 'reports_location_country', 'uses' => 'ReportController@country']);
+    Route::get(trans('route.reports_location_city'), ['as' => 'reports_location_city', 'uses' => 'ReportController@city']);
+    Route::get(trans('route.reports_location_district'), ['as' => 'reports_location_district', 'uses' => 'ReportController@district']);
     // </editor-fold>
 
 
@@ -263,8 +242,7 @@ Route::post("banners/order/{applicationId}", ['as' => 'banners_order', 'before' 
 Route::get("banners/service_view/{applicationId}", ['as' => 'banners_service_view', 'uses' => 'BannerController@service_view']);
 
 
-Route::group(['middleware' => 'auth'], function ()
-{
+Route::group(['middleware' => 'auth'], function () {
     Route::get('phpinfo', 'AdminController@index');
     Route::post("contents/order/{myApplication}", ['as' => 'contents_order', 'uses' => 'ContentController@order']);
     Route::post('iyzicoqr', 'IyzicoController@save');
@@ -310,8 +288,7 @@ Route::get("/template/{application}", ['as' => 'template_index', 'before' => 'au
 Route::get('maps/webview/{application}', ['as' => 'map_view', 'uses' => 'MapController@webView']);
 
 
-Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['auth', 'admin']], function ()
-{
+Route::group(['prefix' => LaravelLocalization::setLocale(), 'middleware' => ['auth', 'admin']], function () {
     Route::get(trans('route.applications'), ['as' => 'applications', 'uses' => 'ApplicationController@index']);
 
     // <editor-fold defaultstate="collapsed" desc="Users">

@@ -1,6 +1,13 @@
-@extends('layouts.master')
+<!doctype html>
 
-@section('content')
-{!! dd($user) !!}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
 
-@endsection
+    <title>The HTML5 Herald</title>
+  </head>
+
+  <body>
+    <script src="js/deneme.js"></script>
+  </body>
+</html>

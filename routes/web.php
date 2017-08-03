@@ -17,7 +17,7 @@ define("PATH_TEMP_FILE", "files/temp");
 define("TAB_COUNT", 2);
 define("GO_BACK_TO_SHOP", 'gobacktoshop');
 
-
+Route::get('test/ifreame', function() {return view('test.iframelogin')});
 Route::get('test', ['as' => 'mahmut', 'uses' => 'TTestController@index']);
 Route::get('test', ['prefix' => LaravelLocalization::setLocale(), 'as' => 'mahmut', 'uses' => 'TTestController@index']);
 Route::get('test2', ['as' => 'mytest2', 'uses' => 'TTestController@test2']);
